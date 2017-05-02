@@ -1,31 +1,43 @@
-## Welcome to GitHub Pages
+## NetXP
+Cross-Platform Framework For .Net, Starting From NetStandard To NetCore, NetFramework, And Xamarin (For Future Releases).
 
-You can use the [editor on GitHub](https://github.com/juandrn/NetXP/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+For more information visit: [Net Standard](https://docs.microsoft.com/en-us/dotnet/articles/standard/library).
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
-### Markdown
+### Starting
+Download source fonts and add a reference to:
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## For Net Core Projects
+Add NetXP.NetStandard Project referenc and then Add NetXP.NetStandard.NetCore
+
+## For Net Frameworks Projects
+Add `NetXP.NetStandard` Project referenc and then Add `NetXP.NetStandard.NetFramework`
+
+**NOTE:** _UnitTest is optional._
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ```markdown
 Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
 - Bulleted
 - List
-
 1. Numbered
 2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+and ![Image](src)
 ```
-
 For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
 
 ### Jekyll Themes
