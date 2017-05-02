@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.5</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='SelfWebApi-Debug|AnyCPU'" />
+
+  <ItemGroup>
+    <Compile Remove="Exceptions\enm\**" />
+    <EmbeddedResource Remove="Exceptions\enm\**" />
+    <None Remove="Exceptions\enm\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Network\Email\Implementation\MailSender.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="6.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="1.1.1" />
+    <PackageReference Include="StructureMap" Version="4.4.5" />
+    <PackageReference Include="System.IO" Version="4.3.0" />
+    <PackageReference Include="System.Linq.Expressions" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.Serialization.Json" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.Serialization.Xml" Version="4.3.0" />
+    <PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.3.0" />
+    <PackageReference Include="System.Security.Cryptography.Primitives" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Network\Email\Implementation\" />
+    <Folder Include="Network\Email\Implementation\" />
+  </ItemGroup>
+
+</Project>
