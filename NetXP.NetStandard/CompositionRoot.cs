@@ -102,8 +102,8 @@ namespace NetXP.NetStandard
             //TODO: SSL Crypter
             //uc.Register<IAsymetricCrypt, AsymetricCryptWithOpenSSL>(LifeTime.Trasient);
             uc.Register<INameResolverFactory<IAsymetricCrypt>, AsymetricFactory>(LifeTime.Singleton);
-            uc.Register<IHash, HashSHA256>(LifeTime.Trasient);
             uc.Register<IHash, HashMD5>(HashType.MD5.ToString(), LifeTime.Trasient);
+            uc.Register<IHash, HashSHA256>(LifeTime.Trasient);
             uc.Register<IHashFactory, HashFactory>(LifeTime.Singleton);
 
             //sys
