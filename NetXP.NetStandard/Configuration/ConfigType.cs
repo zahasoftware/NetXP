@@ -2,7 +2,8 @@
 {
     public enum ConfigType
     {
-        Basic, //Both
-        Secure
+        Basic,
+        Secure,
+        None
     }
 }

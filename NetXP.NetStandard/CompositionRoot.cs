@@ -21,6 +21,8 @@ using NetXP.NetStandard.Compression;
 using NetXP.NetStandard.Serialization.Implementations;
 using NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps;
 using NetXP.NetStandard.Factories;
+using NetXP.NetStandard.Configuration;
+using NetXP.NetStandard.Configuration.Implementations;
 
 namespace NetXP.NetStandard
 {
@@ -36,8 +38,8 @@ namespace NetXP.NetStandard
             //oIUC.RegisterType<cnf.ISecureRemoteSDMConf, helper.cnf.i.SecureRemoteSDMConf>(new ContainerControlledLifetimeManager());
             //uc.RegisterType<IConfig, Configuration.i.SecureAppConfig>(ConfigType.AppConfigSecurity.ToString(), new ContainerControlledLifetimeManager());
             //uc.RegisterType<IConfig, cnf.i.SecureWebConfig>(ConfigType.WebConfigSecurity.ToString(), new ContainerControlledLifetimeManager());
-
             //c.Register<IConfig, ConfigDefault>(new ContainerControlledLifetimeManager());
+            uc.Register<IConfigFactory, ConfigFactory>();
 
             //var loggerMock = new Mock<ILogger>();
             //uc.RegisterInstance<ILogger>(loggerMock.Object, LifeTime.Singleton);
@@ -97,13 +99,9 @@ namespace NetXP.NetStandard
             uc.Register<ISerializer, Serialize2Xml>(SerializerType.Xml.ToString(), LifeTime.Singleton);
 
             //crypt
-            //uc.Register<ISymetricCrypt, Symetric>(LifeTime.Singleton);
-
-            //TODO: SSL Crypter
-            //uc.Register<IAsymetricCrypt, AsymetricCryptWithOpenSSL>(LifeTime.Trasient);
             uc.Register<INameResolverFactory<IAsymetricCrypt>, AsymetricFactory>(LifeTime.Singleton);
-            uc.Register<IHash, HashSHA256>(LifeTime.Trasient);
             uc.Register<IHash, HashMD5>(HashType.MD5.ToString(), LifeTime.Trasient);
+            uc.Register<IHash, HashSHA256>(LifeTime.Trasient);
             uc.Register<IHashFactory, HashFactory>(LifeTime.Singleton);
 
             //sys

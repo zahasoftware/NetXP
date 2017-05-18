@@ -18,13 +18,13 @@ namespace NetXP.NetStandard.Configuration.Implementations
 
         public IConfig Resolve(ConfigType configType = ConfigType.Basic)
         {
-            if (configType != ConfigType.Basic)
+            if (configType == ConfigType.None)
             {
-                return this.uc.Resolve<IConfig>(configType.ToString());
+                return this.uc.Resolve<IConfig>();
             }
             else
             {
-                return this.uc.Resolve<IConfig>();
+                return this.uc.Resolve<IConfig>(configType.ToString());
             }
         }
     }

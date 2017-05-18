@@ -14,7 +14,7 @@ using di = NetXP.NetStandard.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using NetXP.NetStandard.Network.Email;
 
-namespace NetXP.NetStandard.NetFramework.Cryptography.Tests
+namespace NetXP.NetStandard.NetCore.Cryptography.Tests
 {
     [TestClass()]
     public class Email_Tests
