@@ -12,10 +12,10 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementation
     /// </summary>
     public class ServerLJP : IServerLJP
     {
-        private readonly IServerTCP oIServerTCP;
+        private readonly IServerConnector oIServerTCP;
         private readonly IFactoryClientLJP oIFactoryClientLJP;
 
-        public ServerLJP(IServerTCP serverTCP
+        public ServerLJP(IServerConnector serverTCP
             , IFactoryClientLJP factoryClientTCP
             )
         {

@@ -14,12 +14,11 @@ using NetXP.NetStandard.Factories;
 
 namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementation
 {
-    public class ClientSLJP : ITCPClient
+    public class SLPClientConnector : IClientConnector
     {
 
-        public ClientSLJP(
-              //[Dependency("normal")] ITCPClient client
-              IFactoryProducer factoryProducer
+        public SLPClientConnector(
+              IClientConnectorFactoryProducer clientConnectorFactory
             , INameResolverFactory<IAsymetricCrypt> IAsymetricCryptFactory
             , ISymetricCrypt ISymetric
             , ISerializer ISerializeT
@@ -28,6 +27,7 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementation
             , IPersistentPrivateKeyProvider IPersistentPrivateKeyProvider
             , ICompression ICompression
             , ISecureProtocolHandshake secureProtocolHandshake
+            , IClientConnector clientConnector
             , IOptions<SLJPOption> sljpOptions = null
         )
         {
@@ -35,8 +35,9 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementation
             this.asymetricToEncrypt = IAsymetricCryptFactory.Resolve();
             this.firstAsymetricHandshakeToDecrypt = IAsymetricCryptFactory.Resolve();
             this.firstAsymetricHandshakeToEncrypt = IAsymetricCryptFactory.Resolve();
-
-            this.textPlainTCPChannel = factoryProducer.Create(NetworkFactory.TransmissionControlProtocol).Create();
+            this.textPlainTCPChannel = clientConnectorFactory
+                                            .CreateClient(ConnectorFactory.TransmissionControlProtocol)
+                                                .Create(clientConnector);
             this.ISymetric = ISymetric;
             this.ISerializeT = ISerializeT;
             this.logger = ILogger;
@@ -44,12 +45,8 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementation
             this.IPersistentPrivateKeyProvider = IPersistentPrivateKeyProvider;
             this.ICompression = ICompression;
             this.secureProtocolHandshake = secureProtocolHandshake;
-
             var SecurityMaxSizeToReceive = sljpOptions.Value.SecurityMaxSizeToReceive;//config.Get("SecurityMaxSizeToReceive");
-
             this.sljpOptions = sljpOptions.Value ?? new SLJPOption();
-
-
         }
 
         public bool IsConnected { get { return this.textPlainTCPChannel.IsConnected; } }
@@ -394,7 +391,7 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementation
         public const byte FLAGS_SERVER_REQUEST = 0x01;
 
         private readonly IAsymetricCrypt asymetricForDecrypt;
-        private readonly ITCPClient textPlainTCPChannel;
+        private readonly IClientConnector textPlainTCPChannel;
         private readonly ISerializer ISerializeT;
         private readonly ISymetricCrypt ISymetric;
 

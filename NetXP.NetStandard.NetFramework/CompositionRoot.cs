@@ -3,7 +3,7 @@ using NetXP.NetStandard.DependencyInjection;
 using NetXP.NetStandard.NetFramework.Cryptography;
 using NetXP.NetStandard.NetFramework.Cryptography.Implementations;
 using NetXP.NetStandard.Network.TCP;
-using NetXP.NetStandard.Network.TCP.Implementation;
+using NetXP.NetStandard.Network.TCP.Implementations;
 using System;
 using System.Collections.Generic;
 using System.Linq;

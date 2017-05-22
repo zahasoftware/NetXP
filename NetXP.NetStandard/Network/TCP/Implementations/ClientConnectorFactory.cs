@@ -6,18 +6,18 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.Network.TCP.Implementation
+namespace NetXP.NetStandard.Network.TCP.Implementations
 {
-    public class FactoryClientTCP : IFactoryClientTCP
+    public class ClientConnectorFactory : IClientConnectorFactory
     {
         private IContainer oIUC;
 
-        public FactoryClientTCP(IContainer oIUC)
+        public ClientConnectorFactory(IContainer oIUC)
         {
             this.oIUC = oIUC;
         }
 
-        public ITCPClient Create(params object[] aParams)
+        public IClientConnector Create(object[] aParams)
         {
             if (aParams.Length != 0)
             {
@@ -27,15 +27,11 @@ namespace NetXP.NetStandard.Network.TCP.Implementation
                 if (socket == null)
                     throw new ArgumentException("Only one socket is supported in constructor parameter.");
 
-                return this.oIUC.Resolve<ITCPClient>("normal-socket",
-                    ctor =>
-                    {
-                        ctor.InjectInstance("socket", socket);
-                    });
+                return new SocketClientConnector(socket);
             }
             else
             {
-                return this.oIUC.Resolve<ITCPClient>("normal");
+                return this.oIUC.Resolve<IClientConnector>("normal");
             }
         }
     }

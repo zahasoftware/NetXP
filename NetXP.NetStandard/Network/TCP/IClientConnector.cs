@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace NetXP.NetStandard.Network.TCP
 {
-    public interface ITCPClient
+    public interface IClientConnector
     {
-        int Receive(byte[] aInputBuffer, int iOffset, int iLength);
-        int Send(byte[] aOutputBuffer, int iOffset, int iLength);
-        void Connect(IPAddress oIPAddress, int iPort);
+        int Receive(byte[] inputBuffer, int offset, int length);
+        int Send(byte[] outputBuffer, int offset, int length);
+        void Connect(IPAddress ipAddress, int port);
         void Disconnect();
         bool IsConnected { get; }
         string RemoteEndPoint { get; }

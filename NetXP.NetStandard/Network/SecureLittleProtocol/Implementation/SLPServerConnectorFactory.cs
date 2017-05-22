@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementation
 {
-    class SLPServerFactory
+    class SLPServerConnectorFactory
     {
     }
 }

@@ -1,8 +1,7 @@
 ﻿namespace NetXP.NetStandard.Network
 {
-    public enum NetworkFactory
+    public enum ConnectorFactory
     {
-        LittleJsonProtocol,
         SecureLitleProtocol,
         TransmissionControlProtocol,
     }

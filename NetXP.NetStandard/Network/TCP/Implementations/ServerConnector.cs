@@ -6,16 +6,16 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.Network.TCP.Implementation
+namespace NetXP.NetStandard.Network.TCP.Implementations
 {
-    public class ServerTCP : IServerTCP
+    public class ServerConnector : IServerConnector
     {
         private TcpListener tcpListener;
-        private readonly IFactoryClientTCP oIFactoryClientTCP;
+        private readonly IClientConnectorFactory clientConnectorFactory;
 
-        public ServerTCP(IFactoryProducer factoryProducer)
+        public ServerConnector(IClientConnectorFactory clientConnectorFactory)
         {
-            this.oIFactoryClientTCP = factoryProducer.Create(NetworkFactory.TransmissionControlProtocol);
+            this.clientConnectorFactory = clientConnectorFactory;
         }
 
         public void Listen(IPAddress ipAddress, int port)
@@ -24,12 +24,12 @@ namespace NetXP.NetStandard.Network.TCP.Implementation
             tcpListener.Start();
         }
 
-        public async Task<ITCPClient> Accept()
+        public async Task<IClientConnector> Accept()
         {
             try
             {
                 var socket = await this.tcpListener.AcceptSocketAsync();
-                ITCPClient tcpClient = this.oIFactoryClientTCP.Create(socket);
+                IClientConnector tcpClient = this.clientConnectorFactory.Create(socket);
 
                 return tcpClient;
             }

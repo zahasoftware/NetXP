@@ -14,8 +14,8 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementation
 {
     public class ClientLJP : IClientLJP
     {
-        private readonly IFactoryClientTCP factoryClientTCP;
-        private ITCPClient _oIClientTCP;//Not do readonly because is used by other classes.
+        private readonly IClientConnectorFactory factoryClientTCP;
+        private IClientConnector _oIClientTCP;//Not do readonly because is used by other classes.
         private readonly IReflector reflector;
         private readonly ILogger logger;
         private List<Type> aPrimitiveTypes = new List<Type>{
@@ -37,7 +37,7 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementation
 
         public ClientLJP
         (
-            IFactoryClientTCP factoryClientTCP
+            IClientConnectorFactory factoryClientTCP
             , IReflector reflector
             , ILogger logger
             , IFactoryClientLJP factoryClientLJP
@@ -479,7 +479,7 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementation
             throw new NotImplementedException();
         }
 
-        public ITCPClient oIClientTCP
+        public IClientConnector oIClientTCP
         {
             get
             {

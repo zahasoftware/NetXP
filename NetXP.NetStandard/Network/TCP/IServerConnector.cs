@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace NetXP.NetStandard.Network.TCP
 {
-    public interface IServerTCP
+    public interface IServerConnector
     {
 
-        Task<ITCPClient> Accept();
+        Task<IClientConnector> Accept();
         /// 
         /// <param name="port"></param>
         void Listen(IPAddress ipAddress, int port);

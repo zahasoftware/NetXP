@@ -39,7 +39,7 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol
 
         void Disconnect();
 
-        ITCPClient oIClientTCP { get; set; }
+        IClientConnector oIClientTCP { get; set; }
 
         bool bKeepAlive { get; set; }
 

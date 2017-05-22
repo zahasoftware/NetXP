@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace NetXP.NetStandard.Network.TCP
 {
-    public interface IFactoryClientTCP
+    public interface IClientConnectorFactory
     {
-        ITCPClient Create(params object[] aParams);
+        IClientConnector Create( params object[] aParams);
     }
 }

@@ -1,19 +1,19 @@
 ﻿using NetXP.NetStandard.Exceptions;
 using System.Net.Sockets;
 
-namespace NetXP.NetStandard.Network.TCP.Implementation
+namespace NetXP.NetStandard.Network.TCP.Implementations
 {
-    public class SocketClient : ITCPClient
+    public class SocketClientConnector : IClientConnector
     {
         private System.Net.Sockets.Socket _oSocket;
         private readonly TCPOption tcpOptions;
 
-        public SocketClient()
+        public SocketClientConnector()
         {
             this.tcpOptions = new TCPOption();
         }
 
-        public SocketClient(Socket socket)
+        public SocketClientConnector(Socket socket)
         {
             if (this.tcpOptions == null)
             {
@@ -23,7 +23,7 @@ namespace NetXP.NetStandard.Network.TCP.Implementation
             this.oSocket.ReceiveTimeout = tcpOptions.ReceiveTimeOut;
         }
 
-        public SocketClient(TCPOption tcpOptions, Socket socket) : this(socket)
+        public SocketClientConnector(TCPOption tcpOptions, Socket socket) : this(socket)
         {
             this.tcpOptions = tcpOptions;
         }

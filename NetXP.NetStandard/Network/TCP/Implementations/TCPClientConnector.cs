@@ -7,20 +7,20 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.Network.TCP.Implementation
+namespace NetXP.NetStandard.Network.TCP.Implementations
 {
-    public class TCPClientWrapper : ITCPClient
+    public class TCPClientConnector : IClientConnector
     {
         private readonly TCPOption tcpOptions;
         private TcpClient tcpClient;
         private Stream stream;
 
-        public TCPClientWrapper()
+        public TCPClientConnector()
         {
             this.tcpOptions = new TCPOption();
         }
 
-        public TCPClientWrapper(Socket socket)
+        public TCPClientConnector(Socket socket)
         {
             if (this.tcpOptions == null)
             {
@@ -32,7 +32,7 @@ namespace NetXP.NetStandard.Network.TCP.Implementation
             this.stream.ReadTimeout = tcpOptions.ReceiveTimeOut;
         }
 
-        public TCPClientWrapper(TCPOption tcpOptions, Socket socket) : this(socket)
+        public TCPClientConnector(TCPOption tcpOptions, Socket socket) : this(socket)
         {
             this.tcpOptions = tcpOptions;
         }

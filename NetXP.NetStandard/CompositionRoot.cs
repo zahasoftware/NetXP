@@ -1,14 +1,12 @@
 ﻿using NetXP.NetStandard.Network;
 using System;
-using System.Net.Sockets;
 using NetXP.NetStandard.Serialization;
 using NetXP.NetStandard.Cryptography;
 using NetXP.NetStandard.DateAndTime;
 using NetXP.NetStandard.DependencyInjection;
-using NetXP.NetStandard;
 using NetXP.NetStandard.Compression.Implementations;
 using NetXP.NetStandard.Network.TCP;
-using NetXP.NetStandard.Network.TCP.Implementation;
+using NetXP.NetStandard.Network.TCP.Implementations;
 using NetXP.NetStandard.Network.SecureLittleProtocol.Implementation;
 using Microsoft.Extensions.Options;
 using NetXP.NetStandard.Network.LittleJsonProtocol;
@@ -19,7 +17,6 @@ using NetXP.NetStandard.Reflection.Implementations;
 using NetXP.NetStandard.DateAndTime.Implementation;
 using NetXP.NetStandard.Compression;
 using NetXP.NetStandard.Serialization.Implementations;
-using NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps;
 using NetXP.NetStandard.Factories;
 using NetXP.NetStandard.Configuration;
 using NetXP.NetStandard.Configuration.Implementations;
@@ -49,22 +46,20 @@ namespace NetXP.NetStandard
 
             #region NET 
             //TCP
-            uc.Register<IServerTCP, ServerTCP>("normal", LifeTime.Trasient);
-            uc.Register<ITCPClient, SocketClient>("normal", LifeTime.Trasient);
-            uc.Register<ITCPClient, SocketClient>("normal-socket",
+            uc.Register<IServerConnector, ServerConnector>("normal", LifeTime.Trasient);
+            uc.Register<IClientConnector, SocketClientConnector>("normal", LifeTime.Trasient);
+            uc.Register<IClientConnector, SocketClientConnector>("normal-socket",
                                      LifeTime.Trasient,
                                      (ctor) =>
                                      {
                                          ctor.WithParameter<System.Net.Sockets.Socket>();
                                      });
-
-
-            uc.Register<IFactoryClientTCP, FactoryClientTCP>("normal", LifeTime.Singleton);
+            uc.Register<IClientConnectorFactory, ClientConnectorFactory>("normal", LifeTime.Singleton);
 
             //SLP
-            uc.Register<ITCPClient, ClientSLJP>(LifeTime.Trasient);
-            uc.Register<IServerTCP, ServerSLJP>(LifeTime.Trasient);
-            uc.Register<IFactoryClientTCP, FactoryClientSLJP>(LifeTime.Singleton);
+            uc.Register<IClientConnector, SLPClientConnector>(LifeTime.Trasient);
+            uc.Register<IServerConnector, SLPServerConnector>(LifeTime.Trasient);
+            uc.Register<IClientConnectorFactory, SLPClientConnectorFactory>(LifeTime.Singleton);
             uc.Register<IPersistentPrivateKeyProvider, PersistentPrivateKeyProvider>(LifeTime.Singleton,
                                                                                     (ctor) =>
                                                                                     {
