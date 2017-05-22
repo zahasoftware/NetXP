@@ -20,6 +20,8 @@ using NetXP.NetStandard.Serialization.Implementations;
 using NetXP.NetStandard.Factories;
 using NetXP.NetStandard.Configuration;
 using NetXP.NetStandard.Configuration.Implementations;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace NetXP.NetStandard
 {
@@ -44,7 +46,7 @@ namespace NetXP.NetStandard
             //cmpr
             uc.Register<ICompression, DeflateCompress>(LifeTime.Singleton);
 
-            #region NET 
+            #region Network
             //TCP
             uc.Register<IServerConnector, ServerConnector>("normal", LifeTime.Trasient);
             uc.Register<IClientConnector, SocketClientConnector>("normal", LifeTime.Trasient);
@@ -70,6 +72,13 @@ namespace NetXP.NetStandard
                                                                                         ctor.WithParameter<IOptions<TCPOption>>();
                                                                                         ctor.InjectInstance(string.Empty);
                                                                                     });
+
+            var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json");
+            var config = builder.Build();
+            var slpOptions = new SLJPOption();
+            config.GetSection("SLP").Get<SLJPOption>();
+
+            uc.RegisterInstance<IOptions<SLJPOption>, OptionsInstance<SLJPOption>>(new OptionsInstance<SLJPOption>(slpOptions), LifeTime.Singleton);
 
             //LJP
             uc.Register<IServerLJP, ServerLJP>(LifeTime.Trasient);

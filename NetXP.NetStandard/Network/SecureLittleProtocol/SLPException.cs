@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace NetXP.NetStandard.Network.LittleJsonProtocol
 {
-    public class SLJPException : Exception
+    public class SLPException : Exception
     {
-        public SLJPException(string sMsg) : base(sMsg)
+        public SLPException(string sMsg) : base(sMsg)
         {
 
         }

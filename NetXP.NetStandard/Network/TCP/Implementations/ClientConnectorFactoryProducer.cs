@@ -5,7 +5,6 @@ using System.Text;
 
 namespace NetXP.NetStandard.Network.TCP.Implementations
 {
-    [Obsolete("Don't use, Delete this")]
     public class ClientConnectorFactoryProducer : IClientConnectorFactoryProducer
     {
         private readonly IContainer container;

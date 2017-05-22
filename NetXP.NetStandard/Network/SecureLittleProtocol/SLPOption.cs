@@ -1,4 +1,4 @@
-﻿namespace NetXP.NetStandard.Network.i
+﻿namespace NetXP.NetStandard.Network
 {
     public class SLJPOption
     {

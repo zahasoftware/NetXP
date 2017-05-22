@@ -6,7 +6,6 @@ using System.Linq;
 using System.Net;
 using NetXP.NetStandard.Network.LittleJsonProtocol;
 using NetXP.NetStandard.Compression;
-using NetXP.NetStandard.Network.i;
 using NetXP.NetStandard.Network.TCP;
 using NetXP.NetStandard;
 using Microsoft.Extensions.Options;
@@ -182,7 +181,7 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementation
 
             if (iReceivedBytes == 0)
             {
-                throw new SLJPException($"Not data received, Error code:{iReceivedBytes}");
+                throw new SLPException($"Not data received, Error code:{iReceivedBytes}");
             }
 
             byte yMajor = aLittleBuffer[HEADER_MAJOR_OFFSET];//Extract Major
@@ -190,7 +189,7 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementation
 
             if (yMajor != 1 || yMinor != 0)
             {
-                throw new SLJPException("Receive:Invalid versión or data.");
+                throw new SLPException("Receive:Invalid versión or data.");
             }
             else
             {
@@ -199,7 +198,7 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementation
 
                 if (!(new List<byte>() { 1, 2, 3 }.Contains(yType)))
                 {
-                    throw new SLJPException("Receive:Invalid type.");
+                    throw new SLPException("Receive:Invalid type.");
                 }
 
                 if (yType == TYPE_FIRST_HANDSHAKE)//(Used In Connection And Accept as part of protocol SLJP)
@@ -293,7 +292,7 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementation
                 var ppk = this.IPersistentPrivateKeyProvider.Read(this.remotePublicKey);
                 if (ppk == null)
                 {
-                    throw new SLJPException("Secure protocol, ppk not founded, probably delete of ppk.");//TODO: From configuration.
+                    throw new SLPException("Secure protocol, ppk not founded, probably delete of ppk.");//TODO: From configuration.
                 }
 
                 PublicKey PubKey = new PublicKey { yExponent = ppk.PrivateKey.yExponent, yModulus = ppk.PrivateKey.yModulus };
