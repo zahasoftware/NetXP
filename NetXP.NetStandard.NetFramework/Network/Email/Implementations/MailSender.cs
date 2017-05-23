@@ -6,7 +6,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.NetFramework.Network.Email
+namespace NetXP.NetStandard.NetFramework.Network.Email.Implementations
 {
     public class MailSender : IMailSender, IDisposable
     {

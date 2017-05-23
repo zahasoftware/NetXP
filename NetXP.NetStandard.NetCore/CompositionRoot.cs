@@ -7,7 +7,7 @@ namespace NetXP.NetStandard.NetCore
 {
     public static class CompositionRoot
     {
-        public static void Init(IRegister cfg)
+        public static void RegisterNetCore(this IRegister cfg)
         {
             NetXP.NetStandard.CompositionRoot.RegisterNetStandard(cfg);
 

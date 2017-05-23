@@ -28,7 +28,7 @@ namespace NetXP.NetStandard.NetFramework.Cryptography.Tests
 
             container.Configuration.Configure(smre =>
             {
-                CompositionRoot.Init(smre);
+                CompositionRoot.RegisterNetFramework(smre);
                 smre.RegisterInstance<IContainer, SMContainer>(container, LifeTime.Trasient);
             });
 

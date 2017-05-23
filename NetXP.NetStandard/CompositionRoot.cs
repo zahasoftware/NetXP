@@ -7,10 +7,10 @@ using NetXP.NetStandard.DependencyInjection;
 using NetXP.NetStandard.Compression.Implementations;
 using NetXP.NetStandard.Network.TCP;
 using NetXP.NetStandard.Network.TCP.Implementations;
-using NetXP.NetStandard.Network.SecureLittleProtocol.Implementation;
+using NetXP.NetStandard.Network.SecureLittleProtocol.Implementations;
 using Microsoft.Extensions.Options;
 using NetXP.NetStandard.Network.LittleJsonProtocol;
-using NetXP.NetStandard.Network.LittleJsonProtocol.Implementation;
+using NetXP.NetStandard.Network.LittleJsonProtocol.Implementations;
 using NetXP.NetStandard.Cryptography.Implementations;
 using NetXP.NetStandard.Reflection;
 using NetXP.NetStandard.Reflection.Implementations;
@@ -27,7 +27,7 @@ namespace NetXP.NetStandard
 {
     public static class CompositionRoot
     {
-        public static void RegisterNetStandard(this IRegister uc)
+        public static void RegisterNetStandard(this IRegister uc, string appSettingFile = null)
         {
             Type serializerType = typeof(ISerializer);
             Type hashType = typeof(IHash);
@@ -73,14 +73,17 @@ namespace NetXP.NetStandard
                                                                                         ctor.WithParameter<IOptions<TCPOption>>();
                                                                                         ctor.InjectInstance(string.Empty);
                                                                                     });
+
+            var config = new ConfigurationBuilder()
+                                .SetBasePath(Directory.GetCurrentDirectory())
+                                .AddJsonFile(appSettingFile ?? "appsettings.json")
+                                .Build();
+            var slpOptions = new SLJPOption();
+            config.GetSection("SLP").Bind(slpOptions);
+            uc.RegisterInstance<IOptions<SLJPOption>, OptionsInstance<SLJPOption>>(new OptionsInstance<SLJPOption>(slpOptions), LifeTime.Singleton);
+
             //SLP And TCP
             uc.Register<IClientConnectorFactoryProducer, ClientConnectorFactoryProducer>(LifeTime.Singleton);
-
-            var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json");
-            var config = builder.Build();
-            var slpOptions = new SLJPOption();
-            config.GetSection("SLP").Get<SLJPOption>();
-            uc.RegisterInstance<IOptions<SLJPOption>, OptionsInstance<SLJPOption>>(new OptionsInstance<SLJPOption>(slpOptions), LifeTime.Singleton);
 
             //LJP
             uc.Register<IServerLJP, ServerLJP>(LifeTime.Trasient);

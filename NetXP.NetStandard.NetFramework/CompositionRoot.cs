@@ -14,7 +14,7 @@ namespace NetXP.NetStandard.NetFramework
 {
     public static class CompositionRoot
     {
-        public static void Init(IRegister cfg)
+        public static void RegisterNetFramework(IRegister cfg)
         {
             cfg.RegisterNetStandard();
 
@@ -23,7 +23,7 @@ namespace NetXP.NetStandard.NetFramework
             cfg.Register<NetStandard.Cryptography.IAsymetricCrypt, AsymetricCryptWithOpenSSL>();
 
             //Mail
-            cfg.Register<NetStandard.Network.Email.IMailSender, Network.Email.MailSender>();
+            cfg.Register<NetStandard.Network.Email.IMailSender, Network.Email.Implementations.MailSender>();
 
         }
     }

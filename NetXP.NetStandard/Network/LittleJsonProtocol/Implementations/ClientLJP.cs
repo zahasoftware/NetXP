@@ -10,7 +10,7 @@ using NetXP.NetStandard;
 using System.Runtime.Serialization.Json;
 using System.Runtime.Serialization;
 
-namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementation
+namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
 {
     public class ClientLJP : IClientLJP
     {

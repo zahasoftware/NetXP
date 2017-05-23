@@ -11,7 +11,7 @@ using NetXP.NetStandard;
 using Microsoft.Extensions.Options;
 using NetXP.NetStandard.Factories;
 
-namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementation
+namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
 {
     public class SLPClientConnector : IClientConnector
     {

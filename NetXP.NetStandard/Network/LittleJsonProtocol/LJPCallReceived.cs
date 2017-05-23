@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using NetXP.NetStandard.Network.LittleJsonProtocol.Implementation;
+using NetXP.NetStandard.Network.LittleJsonProtocol.Implementations;
 
 namespace NetXP.NetStandard.Network.LittleJsonProtocol
 {

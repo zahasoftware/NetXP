@@ -4,7 +4,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementation
+namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
 {
     public class MessageExtractor_v0_0 : ILJPMessageFactory
     {

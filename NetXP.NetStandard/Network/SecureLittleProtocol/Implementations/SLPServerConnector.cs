@@ -11,7 +11,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementation
+namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
 {
     public class SLPServerConnector : IServerConnector
     {

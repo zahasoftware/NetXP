@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementation
+namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
 {
     /// <summary>
     /// Service Manager Protocol for "Little Json Protocol"
