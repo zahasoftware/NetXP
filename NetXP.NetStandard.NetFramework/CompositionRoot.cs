@@ -16,7 +16,7 @@ namespace NetXP.NetStandard.NetFramework
     {
         public static void Init(IRegister cfg)
         {
-            NetXP.NetStandard.CompositionRoot.Init(cfg);
+            cfg.RegisterNetStandard();
 
             //Cryptography
             cfg.Register<NetStandard.Cryptography.ISymetricCrypt, Symetric>();

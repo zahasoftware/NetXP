@@ -27,7 +27,7 @@ namespace NetXP.NetStandard
 {
     public static class CompositionRoot
     {
-        public static void Init(IRegister uc)
+        public static void RegisterNetStandard(this IRegister uc)
         {
             Type serializerType = typeof(ISerializer);
             Type hashType = typeof(IHash);
@@ -58,6 +58,7 @@ namespace NetXP.NetStandard
                                      });
             uc.Register<IClientConnectorFactory, ClientConnectorFactory>("normal", LifeTime.Singleton);
 
+
             //SLP
             uc.Register<IClientConnector, SLPClientConnector>(LifeTime.Trasient);
             uc.Register<IServerConnector, SLPServerConnector>(LifeTime.Trasient);
@@ -72,12 +73,13 @@ namespace NetXP.NetStandard
                                                                                         ctor.WithParameter<IOptions<TCPOption>>();
                                                                                         ctor.InjectInstance(string.Empty);
                                                                                     });
+            //SLP And TCP
+            uc.Register<IClientConnectorFactoryProducer, ClientConnectorFactoryProducer>(LifeTime.Singleton);
 
             var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json");
             var config = builder.Build();
             var slpOptions = new SLJPOption();
             config.GetSection("SLP").Get<SLJPOption>();
-
             uc.RegisterInstance<IOptions<SLJPOption>, OptionsInstance<SLJPOption>>(new OptionsInstance<SLJPOption>(slpOptions), LifeTime.Singleton);
 
             //LJP
@@ -102,17 +104,17 @@ namespace NetXP.NetStandard
             uc.Register<ISerializer, Serialize2Json>(SerializerType.Json.ToString(), LifeTime.Singleton);
             uc.Register<ISerializer, Serialize2Xml>(SerializerType.Xml.ToString(), LifeTime.Singleton);
 
-            //crypt
+            #region Crypt
             uc.Register<INameResolverFactory<IAsymetricCrypt>, AsymetricFactory>(LifeTime.Singleton);
             uc.Register<IHash, HashMD5>(HashType.MD5.ToString(), LifeTime.Trasient);
             uc.Register<IHash, HashSHA256>(LifeTime.Trasient);
             uc.Register<IHashFactory, HashFactory>(LifeTime.Singleton);
+            #endregion
 
             //sys
             //ISysInfo and IStorageInfo need to be implemented in their os system.
             //uc.Register<sys.ISysInfo, sys.i.SysInfo>(LifeTime.Singleton);
             //uc.Register<sys.IStorageInfo, sys.i.SysInfo>(LifeTime.Singleton);
-
             var customDateTime = new CustomDateTime(0);
             uc.RegisterInstance<ICustomDateTime, CustomDateTime>(customDateTime, LifeTime.Singleton);
         }

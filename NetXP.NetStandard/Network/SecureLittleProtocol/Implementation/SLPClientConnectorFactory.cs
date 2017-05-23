@@ -40,13 +40,25 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementation
                     container.Resolve<IPersistentPrivateKeyProvider>(),
                     container.Resolve<ICompression>(),
                     container.Resolve<ISecureProtocolHandshake>(),
-                    container.Resolve<IClientConnector>(),
+                    tcpClient,
                     container.Resolve<IOptions<SLJPOption>>()
                 );
             }
             else
             {
-                return this.container.Resolve<IClientConnector>();
+                return new SLPClientConnector(
+                    container.Resolve<IClientConnectorFactoryProducer>(),
+                    container.Resolve<INameResolverFactory<IAsymetricCrypt>>(),
+                    container.Resolve<ISymetricCrypt>(),
+                    container.Resolve<ISerializer>(),
+                    container.Resolve<ILogger>(),
+                    container.Resolve<IHash>(),
+                    container.Resolve<IPersistentPrivateKeyProvider>(),
+                    container.Resolve<ICompression>(),
+                    container.Resolve<ISecureProtocolHandshake>(),
+                    container.Resolve<IClientConnector>("normal"),
+                    container.Resolve<IOptions<SLJPOption>>()
+                );
             }
         }
     }

@@ -19,12 +19,12 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementation
         public SLPClientConnector(
               IClientConnectorFactoryProducer clientConnectorFactory
             , INameResolverFactory<IAsymetricCrypt> IAsymetricCryptFactory
-            , ISymetricCrypt ISymetric
-            , ISerializer ISerializeT
-            , ILogger ILogger
-            , IHash IHash
+            , ISymetricCrypt symetric
+            , ISerializer serializeT
+            , ILogger logger
+            , IHash hash
             , IPersistentPrivateKeyProvider IPersistentPrivateKeyProvider
-            , ICompression ICompression
+            , ICompression compression
             , ISecureProtocolHandshake secureProtocolHandshake
             , IClientConnector clientConnector
             , IOptions<SLJPOption> sljpOptions = null
@@ -34,17 +34,17 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementation
             this.asymetricToEncrypt = IAsymetricCryptFactory.Resolve();
             this.firstAsymetricHandshakeToDecrypt = IAsymetricCryptFactory.Resolve();
             this.firstAsymetricHandshakeToEncrypt = IAsymetricCryptFactory.Resolve();
-            this.textPlainTCPChannel = clientConnectorFactory
-                                            .CreateClient(ConnectorFactory.TransmissionControlProtocol)
-                                                .Create(clientConnector);
-            this.ISymetric = ISymetric;
-            this.ISerializeT = ISerializeT;
-            this.logger = ILogger;
-            this.IHash = IHash;
+
+            this.textPlainTCPChannel = clientConnector;
+
+            this.symetric = symetric;
+            this.serializeT = serializeT;
+            this.logger = logger;
+            this.hash = hash;
             this.IPersistentPrivateKeyProvider = IPersistentPrivateKeyProvider;
-            this.ICompression = ICompression;
+            this.compression = compression;
             this.secureProtocolHandshake = secureProtocolHandshake;
-            var SecurityMaxSizeToReceive = sljpOptions.Value.SecurityMaxSizeToReceive;//config.Get("SecurityMaxSizeToReceive");
+            var SecurityMaxSizeToReceive = sljpOptions.Value.SecurityMaxSizeToReceive;
             this.sljpOptions = sljpOptions.Value ?? new SLJPOption();
         }
 
@@ -115,8 +115,8 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementation
             bytesHeader[HEADER_TYPE_OFFSET] = TYPE_FIRST_HANDSHAKE;
 
             //Making Symetric Key.
-            var symetricKey = this.ISymetric.Generate();
-            var symetricKeySerialized = this.ISerializeT.Serialize(symetricKey);
+            var symetricKey = this.symetric.Generate();
+            var symetricKeySerialized = this.serializeT.Serialize(symetricKey);
 
             var firstPublicKeyToEncrypt = secureProtocolHandshake.GetFirstPublickKey();
             this.firstAsymetricHandshakeToEncrypt.SetPublicKey(firstPublicKeyToEncrypt);
@@ -125,15 +125,15 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementation
             ByteHelper.UIntToByte(bytesHeader, HEADER_TYPE_3_SYMKEY_LENGTH_OFFSET, (uint)symetricKeyEncrypted.Length);
 
             //Making Body
-            var publicKeySerialized = ISerializeT.Serialize(publicKey);
-            var publicKeyCompressed = this.ICompression.Compress(new ByteArray(publicKeySerialized.Take(publicKeySerialized.Length).ToArray()));
-            var bodyEncrypted = this.ISymetric.Encrypt(publicKeyCompressed, symetricKey);
+            var publicKeySerialized = serializeT.Serialize(publicKey);
+            var publicKeyCompressed = this.compression.Compress(new ByteArray(publicKeySerialized.Take(publicKeySerialized.Length).ToArray()));
+            var bodyEncrypted = this.symetric.Encrypt(publicKeyCompressed, symetricKey);
             ByteHelper.UIntToByte(bytesHeader, HEADER_TYPE_3_BODY_LENGTH_OFFSET, (uint)bodyEncrypted.Length);
 
             var bytesToSend = bytesHeader.Concat(symetricKeyEncrypted).Concat(bodyEncrypted).ToArray();
 
 #if DEBUG
-            var publicKeyHash = IHash.Generate(new ByteArray(publicKeySerialized));
+            var publicKeyHash = hash.Generate(new ByteArray(publicKeySerialized));
             logger.Debug($"Sending PK (FromServer={isFromServer},Founded={isPpkFound}) \"{BitConverter.ToString(publicKeyHash)}\"");
 #endif
             textPlainTCPChannel.Send(bytesToSend, 0, bytesToSend.Length);
@@ -247,21 +247,21 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementation
             header[HEADER_TYPE_OFFSET] = TYPE_MESSAGE;
             ByteHelper.UIntToByte(header, HEADER_TYPE_3_SYMKEY_LENGTH_OFFSET, (uint)iSymetricLength);
             ByteHelper.UIntToByte(header, HEADER_TYPE_3_BODY_LENGTH_OFFSET, (uint)iBodyLength);
-            var aReceivedHash = IHash.Generate(new ByteArray(header.Concat(aLittleBuffer.Take(iSymetricLength).ToArray()).Concat(aDinamicBuffer).ToArray()));
+            var aReceivedHash = hash.Generate(new ByteArray(header.Concat(aLittleBuffer.Take(iSymetricLength).ToArray()).Concat(aDinamicBuffer).ToArray()));
             this.logger.Debug($"Receiving Message Hash \"{BitConverter.ToString(aReceivedHash)}\", BodyLenth={iBodyLength}");
 
-            var aPUBKEYToDecrypt = this.IHash.Generate(new ByteArray(this.ISerializeT.Serialize(asymetricCrypt.GetPublicKey())));
+            var aPUBKEYToDecrypt = this.hash.Generate(new ByteArray(this.serializeT.Serialize(asymetricCrypt.GetPublicKey())));
             this.logger.Debug($"PUBKEY to decrypt the message {BitConverter.ToString(aPUBKEYToDecrypt)}");
 #endif
             #endregion
 
             //SymetricKey Decrypting and deserialization 
             byte[] aSymetricKey = asymetricCrypt.Decrypt(aLittleBuffer.Take(iSymetricLength).ToArray());
-            SymetricKey symetricKey = this.ISerializeT.Deserialize<SymetricKey>(aSymetricKey);
+            SymetricKey symetricKey = this.serializeT.Deserialize<SymetricKey>(aSymetricKey);
 
             //Decrypting and Decrompres and deserialization of Body with symetric key
-            var aDecryptedMessageCompressed = this.ISymetric.Decrypt(aDinamicBuffer.Take(iBodyLength).ToArray(), symetricKey);
-            aDecryptedMessage = this.ICompression.Decrompress(new ByteArray(aDecryptedMessageCompressed));
+            var aDecryptedMessageCompressed = this.symetric.Decrypt(aDinamicBuffer.Take(iBodyLength).ToArray(), symetricKey);
+            aDecryptedMessage = this.compression.Decrompress(new ByteArray(aDecryptedMessageCompressed));
             aDinamicBuffer = null;
         }
 
@@ -282,7 +282,7 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementation
                                );
 
             ReceivingEncryptedMessage(this.firstAsymetricHandshakeToDecrypt);
-            this.remotePublicKey = ISerializeT.Deserialize<PublicKey>(aDecryptedMessage);
+            this.remotePublicKey = serializeT.Deserialize<PublicKey>(aDecryptedMessage);
 
             ///[ServerHandshake turn]Receiving serialize public key 
             if (
@@ -311,7 +311,7 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementation
                 this.asymetricForDecrypt.GenerateKeys();
                 this.thisPrivateKey = this.asymetricForDecrypt.GetPrivateKey();
 #if DEBUG
-                var aPUBKEYToDecrypt = this.IHash.Generate(new ByteArray(this.ISerializeT.Serialize(this.asymetricForDecrypt.GetPublicKey())));
+                var aPUBKEYToDecrypt = this.hash.Generate(new ByteArray(this.serializeT.Serialize(this.asymetricForDecrypt.GetPublicKey())));
                 this.logger.Debug($"Saving a New PrivateKey, PUBKEY (HASH) is = {BitConverter.ToString(aPUBKEYToDecrypt)}");
 #endif
                 var ppk = new PersistentPrivateKey
@@ -343,20 +343,20 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementation
             aHeader[HEADER_TYPE_OFFSET] = TYPE_MESSAGE;
 
             //Making Symetric Key.
-            var symetricKey = this.ISymetric.Generate();
-            var aSymetricKeySerialized = this.ISerializeT.Serialize(symetricKey);
+            var symetricKey = this.symetric.Generate();
+            var aSymetricKeySerialized = this.serializeT.Serialize(symetricKey);
 
             var aSymetricKeyEncrypted = this.asymetricToEncrypt.Encrypt(aSymetricKeySerialized);
             ByteHelper.UIntToByte(aHeader, HEADER_TYPE_3_SYMKEY_LENGTH_OFFSET, (uint)aSymetricKeyEncrypted.Length);
 
             //Making Body
-            var aOutputBufferCompressed = this.ICompression.Compress(new ByteArray(aOutputBuffer.Skip(iOffset).Take(iLength).ToArray()));
-            var aBodyEncrypted = this.ISymetric.Encrypt(aOutputBufferCompressed, symetricKey);
+            var aOutputBufferCompressed = this.compression.Compress(new ByteArray(aOutputBuffer.Skip(iOffset).Take(iLength).ToArray()));
+            var aBodyEncrypted = this.symetric.Encrypt(aOutputBufferCompressed, symetricKey);
             ByteHelper.UIntToByte(aHeader, HEADER_TYPE_3_BODY_LENGTH_OFFSET, (uint)aBodyEncrypted.Length);
 
             var aToSend = aHeader.Concat(aSymetricKeyEncrypted).Concat(aBodyEncrypted).ToArray();
 
-            var aToSendHash = IHash.Generate(new ByteArray(aToSend));
+            var aToSendHash = hash.Generate(new ByteArray(aToSend));
             logger.Debug($"Sending Secure Message {BitConverter.ToString(aToSendHash)}, Length:({aBodyEncrypted?.Length})");
             return this.textPlainTCPChannel.Send(aToSend, iOffset, aToSend.Length);
         }
@@ -391,8 +391,8 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementation
 
         private readonly IAsymetricCrypt asymetricForDecrypt;
         private readonly IClientConnector textPlainTCPChannel;
-        private readonly ISerializer ISerializeT;
-        private readonly ISymetricCrypt ISymetric;
+        private readonly ISerializer serializeT;
+        private readonly ISymetricCrypt symetric;
 
         private PublicKey remotePublicKey
         {
@@ -432,10 +432,10 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementation
         }
 
         private readonly ILogger logger;
-        private readonly IHash IHash;
+        private readonly IHash hash;
         private readonly IAsymetricCrypt asymetricToEncrypt;
         private readonly IPersistentPrivateKeyProvider IPersistentPrivateKeyProvider;
-        private readonly ICompression ICompression;
+        private readonly ICompression compression;
         private SLJPOption sljpOptions;
         private readonly ISecureProtocolHandshake secureProtocolHandshake;
         private readonly IAsymetricCrypt firstAsymetricHandshakeToDecrypt;

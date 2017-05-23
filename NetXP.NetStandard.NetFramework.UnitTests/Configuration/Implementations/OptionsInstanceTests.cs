@@ -21,7 +21,7 @@ namespace SmartSecurity.NetStandard.NetFramework.UnitTests.Configuration.Impleme
 
             container.Configuration.Configure(smre =>
             {
-                CompositionRoot.Init(smre);
+                CompositionRoot.RegisterNetStandard(smre);
                 smre.RegisterInstance<IContainer, SMContainer>(container, LifeTime.Trasient);
             });
         }
