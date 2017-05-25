@@ -27,7 +27,7 @@ namespace NetXP.NetStandard
 {
     public static class CompositionRoot
     {
-        public static void RegisterNetStandard(this IRegister uc, string appSettingFile = null)
+        public static void RegisterNetXPStandard(this IRegister uc, string appSettingFile = null)
         {
             Type serializerType = typeof(ISerializer);
             Type hashType = typeof(IHash);
