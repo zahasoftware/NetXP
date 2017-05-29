@@ -58,7 +58,6 @@ namespace NetXP.NetStandard
                                      });
             uc.Register<IClientConnectorFactory, ClientConnectorFactory>("normal", LifeTime.Singleton);
 
-
             //SLP
             uc.Register<IClientConnector, SLPClientConnector>(LifeTime.Trasient);
             uc.Register<IServerConnector, SLPServerConnector>(LifeTime.Trasient);
@@ -80,7 +79,7 @@ namespace NetXP.NetStandard
                                 .Build();
             var slpOptions = new SLJPOption();
             config.GetSection("SLP").Bind(slpOptions);
-            uc.RegisterInstance<IOptions<SLJPOption>, OptionsInstance<SLJPOption>>(new OptionsInstance<SLJPOption>(slpOptions), LifeTime.Singleton);
+            uc.RegisterInstance<IOptions<SLJPOption>>(new OptionsInstance<SLJPOption>(slpOptions), LifeTime.Singleton);
 
             //SLP And TCP
             uc.Register<IClientConnectorFactoryProducer, ClientConnectorFactoryProducer>(LifeTime.Singleton);
@@ -119,7 +118,7 @@ namespace NetXP.NetStandard
             //uc.Register<sys.ISysInfo, sys.i.SysInfo>(LifeTime.Singleton);
             //uc.Register<sys.IStorageInfo, sys.i.SysInfo>(LifeTime.Singleton);
             var customDateTime = new CustomDateTime(0);
-            uc.RegisterInstance<ICustomDateTime, CustomDateTime>(customDateTime, LifeTime.Singleton);
+            uc.RegisterInstance<ICustomDateTime>(customDateTime, LifeTime.Singleton);
         }
     }
 }

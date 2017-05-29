@@ -16,7 +16,7 @@ namespace NetXP.NetStandard.NetFramework
     {
         public static void RegisterNetFramework(IRegister cfg)
         {
-            cfg.RegisterNetStandard();
+            cfg.RegisterNetXPStandard();
 
             //Cryptography
             cfg.Register<NetStandard.Cryptography.ISymetricCrypt, Symetric>();

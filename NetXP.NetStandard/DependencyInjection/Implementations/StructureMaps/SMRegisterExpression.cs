@@ -74,13 +74,13 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps
             SetLifeTime(lifeTime, register);
         }
 
-        public void RegisterInstance<TInterface, TImplement>(TInterface instance, LifeTime lifeTime) where TImplement : TInterface
+        public void RegisterInstance<TInterface>(TInterface instance, LifeTime lifeTime) 
         {
             var register = this.container.For<TInterface>().Use(o => instance);
             SetLifeTime(lifeTime, register);
         }
 
-        public void RegisterInstance<TInterface, TImplement>(string name, TInterface instance, LifeTime lifeTime) where TImplement : TInterface
+        public void RegisterInstance<TInterface>(string name, TInterface instance, LifeTime lifeTime) 
         {
             var register = this.container.For<TInterface>().Use(o => instance).Named(name);
             SetLifeTime(lifeTime, register);
