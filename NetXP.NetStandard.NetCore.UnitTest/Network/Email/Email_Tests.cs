@@ -31,9 +31,9 @@ namespace NetXP.NetStandard.NetCore.Cryptography.Tests
 
             container.Configuration.Configure(smre =>
             {
-                CompositionRoot.RegisterNetCore(smre);
-                NetCore.CompositionRoot.RegisterNetCore(smre);
-                smre.RegisterInstance<di.IContainer, SMContainer>(container, LifeTime.Trasient);
+                CompositionRoot.RegisterNetXPCore(smre);
+                NetCore.CompositionRoot.RegisterNetXPCore(smre);
+                smre.RegisterInstance<di.IContainer>(container, LifeTime.Trasient);
             });
 
         }

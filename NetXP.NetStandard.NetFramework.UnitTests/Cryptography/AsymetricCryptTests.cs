@@ -29,7 +29,7 @@ namespace NetXP.NetStandard.NetFramework.Cryptography.Tests
             container.Configuration.Configure(smre =>
             {
                 CompositionRoot.RegisterNetFramework(smre);
-                smre.RegisterInstance<IContainer, SMContainer>(container, LifeTime.Trasient);
+                smre.RegisterInstance<IContainer>(container, LifeTime.Trasient);
             });
 
         }

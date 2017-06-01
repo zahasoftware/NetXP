@@ -15,8 +15,9 @@ namespace NetXP.NetStandard
         /// <param name="bytes">array of bytes</param>
         public ByteArray(byte[] bytes)
         {
-            this.Bytes = bytes;
+            this.bytes = bytes;
             this.Length = bytes.Length;
+            offsetBytes = bytes;
         }
 
         /// <summary>
@@ -25,8 +26,9 @@ namespace NetXP.NetStandard
         /// <param name="length">Length from 0 index</param>
         public ByteArray(int length)
         {
-            this.Bytes = new byte[length];
+            this.bytes = new byte[length];
             this.Length = length;
+            offsetBytes = bytes.Take(length).ToArray();
         }
 
         /// <summary>
@@ -39,13 +41,28 @@ namespace NetXP.NetStandard
         {
             this.Offset = offset;
             this.Length = length;
+            this.bytes = bytes;
+            offsetBytes = bytes.Skip(offset).Take(length).ToArray();
         }
 
         public int Offset { get; private set; }
         public int Length { get; private set; }
 
         private byte[] bytes;
+        private byte[] offsetBytes;
 
-        public byte[] Bytes { get { return bytes; } set { bytes = value; } }
+        /// <summary>
+        /// Bytes passed as parameter in constructor
+        /// </summary>
+        public byte[] Bytes
+        {
+            get { return bytes; }
+        }
+
+        /// <summary>
+        /// Return offsetted bytes array "from Bytes Skip Offset And Take Length"
+        /// </summary>
+        public byte[] OffsettedBytes { get => offsetBytes; }
+
     }
 }

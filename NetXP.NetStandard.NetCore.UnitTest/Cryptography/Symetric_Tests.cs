@@ -28,7 +28,7 @@ namespace NetXP.NetStandard.NetFramework.Cryptography.Tests
             container.Configure(cnf =>
             {
                 SMRegisterExpression smre = new SMRegisterExpression(cnf);
-                NetXP.NetStandard.NetCore.CompositionRoot.RegisterNetCore(smre);
+                NetXP.NetStandard.NetCore.CompositionRoot.RegisterNetXPCore(smre);
             });
 
             c = new SMContainer(container);
