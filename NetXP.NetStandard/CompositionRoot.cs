@@ -22,6 +22,7 @@ using NetXP.NetStandard.Configuration;
 using NetXP.NetStandard.Configuration.Implementations;
 using Microsoft.Extensions.Configuration;
 using System.IO;
+using NetXP.NetStandard.Auditory;
 
 namespace NetXP.NetStandard
 {
