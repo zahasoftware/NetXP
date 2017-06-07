@@ -63,7 +63,7 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
                 var socket = await tcpServer.Accept();
                 IClientConnector secureClient = clientConnectorFactoryProducer
                                                     .CreateClient(ConnectorFactory.SecureLitleProtocol)
-                                                        .Create(socket);
+                                                    .Create(socket);
 
                 //Receive PublicKey And Send Their PublicKey
                 secureClient.Receive(aLittleBuffer, 0, aLittleBuffer.Length);

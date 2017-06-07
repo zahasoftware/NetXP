@@ -14,9 +14,11 @@ namespace NetXP.NetStandard.NetFramework
 {
     public static class CompositionRoot
     {
-        public static void RegisterNetFramework(IRegister cfg)
+        public static void AddNetFrameworkRegisters(this IRegister cfg,IContainer container)
         {
-            cfg.RegisterNetXPStandard();
+            cfg.RegisterNetXPStandard(container);
+
+            cfg.Register<NetStandard.Auditory.ILogger, Auditory.Implementations.Log4NetLogger>(LifeTime.Singleton);
 
             //Cryptography
             cfg.Register<NetStandard.Cryptography.ISymetricCrypt, Symetric>();

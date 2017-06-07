@@ -13,14 +13,14 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
     public class ServerLJP : IServerLJP
     {
         private readonly IServerConnector oIServerTCP;
-        private readonly IFactoryClientLJP oIFactoryClientLJP;
+        private readonly IFactoryClientLJP factoryClientLJP;
 
         public ServerLJP(IServerConnector serverTCP
             , IFactoryClientLJP factoryClientTCP
             )
         {
             this.oIServerTCP = serverTCP;
-            this.oIFactoryClientLJP = factoryClientTCP;
+            this.factoryClientLJP = factoryClientTCP;
 
         }
 
@@ -31,9 +31,9 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
 
         public async Task<IClientLJP> Accept()
         {
-            IClientLJP oIClientJLP = this.oIFactoryClientLJP.Create();
-            oIClientJLP.clientTCP = await this.oIServerTCP.Accept();
-            return oIClientJLP;
+            IClientLJP clientJLP = this.factoryClientLJP.Create();
+            clientJLP.ClientTCP = await this.oIServerTCP.Accept();
+            return clientJLP;
         }
     }
 }

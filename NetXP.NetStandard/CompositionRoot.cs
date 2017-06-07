@@ -28,11 +28,14 @@ namespace NetXP.NetStandard
 {
     public static class CompositionRoot
     {
-        public static void RegisterNetXPStandard(this IRegister uc, string appSettingFile = null)
+        public static void RegisterNetXPStandard(this IRegister uc, IContainer container, string appSettingFile = null)
         {
             Type serializerType = typeof(ISerializer);
             Type hashType = typeof(IHash);
             Type loggerType = typeof(ILogger);
+
+            //DI 
+            uc.RegisterInstance(container, LifeTime.Singleton);
 
             //cnf
             //oIUC.RegisterType<cnf.ISecureRemoteSDMConf, helper.cnf.i.SecureRemoteSDMConf>(new ContainerControlledLifetimeManager());
@@ -58,6 +61,7 @@ namespace NetXP.NetStandard
                                          ctor.WithParameter<System.Net.Sockets.Socket>();
                                      });
             uc.Register<IClientConnectorFactory, ClientConnectorFactory>("normal", LifeTime.Singleton);
+            uc.Register<IServerConnectorFactory, ServerConnectorFactory>(LifeTime.Singleton);
 
             //SLP
             uc.Register<IClientConnector, SLPClientConnector>(LifeTime.Trasient);
@@ -103,7 +107,7 @@ namespace NetXP.NetStandard
             uc.Register<IReflector, Reflector>(LifeTime.Singleton);
 
             //Serializer
-            uc.Register<IFactorySerializer, SerializeTFactory>(LifeTime.Singleton);
+            uc.Register<ISerializerFactory, SerializeTFactory>(LifeTime.Singleton);
             uc.Register<ISerializer, Serialize2Json>(SerializerType.Json.ToString(), LifeTime.Singleton);
             uc.Register<ISerializer, Serialize2Xml>(SerializerType.Xml.ToString(), LifeTime.Singleton);
 

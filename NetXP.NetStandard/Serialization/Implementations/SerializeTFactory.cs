@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NetXP.NetStandard.Serialization.Implementations
 {
-    public class SerializeTFactory : IFactorySerializer
+    public class SerializeTFactory : ISerializerFactory
     {
         private readonly IContainer uc;
 

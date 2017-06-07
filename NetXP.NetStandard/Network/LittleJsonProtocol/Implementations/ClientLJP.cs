@@ -72,11 +72,11 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
                     + "\n"
                     + $"{sJsonFinal}";
 
-                this.logger.Debug($"SendCall To [{this.clientTCP.RemoteEndPoint?.ToString() ?? "null"}] => CommmandId = {sendCallParameter?.Id ?? -1},Msg = {sJsonFinal}");
+                this.logger.Debug($"SendCall To [{this.ClientTCP.RemoteEndPoint?.ToString() ?? "null"}] => CommmandId = {sendCallParameter?.Id ?? -1},Msg = {sJsonFinal}");
 
                 var aMessage = Encoding.UTF8.GetBytes(message);
 
-                this.clientTCP.Send(aMessage, 0, aMessage.Length);
+                this.ClientTCP.Send(aMessage, 0, aMessage.Length);
             }
         }
 
@@ -105,11 +105,11 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
                 , sJson
             );
 
-            this.logger.Debug($"SendReponse [Lenght={iLength}]-[{this.clientTCP.RemoteEndPoint.ToString()}] {sJson}");
+            this.logger.Debug($"SendReponse [Lenght={iLength}]-[{this.ClientTCP.RemoteEndPoint.ToString()}] {sJson}");
             var aMessage = Encoding.UTF8.GetBytes(message);
 
 
-            this.clientTCP.Send(aMessage, 0, aMessage.Length);
+            this.ClientTCP.Send(aMessage, 0, aMessage.Length);
         }
 
 
@@ -122,7 +122,7 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
 
                 //Receive Header 
                 Array.Clear(aReceiveBuffer, 0, aReceiveBuffer.Length);
-                this.clientTCP.Receive(this.aReceiveBuffer, 0, this.aReceiveBuffer.Length);
+                this.ClientTCP.Receive(this.aReceiveBuffer, 0, this.aReceiveBuffer.Length);
                 var indexOfHeaderAndBodySeparator = ByteHelper.IndexOf(aReceiveBuffer
                                                         , 0
                                                         , new byte[] { Convert.ToByte('\n'), Convert.ToByte('\n') });
@@ -247,7 +247,7 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
                 while (receivedToNow < oLJPCallResponse.iLength)
                 {
                     Array.Clear(aReceiveBuffer, 0, aReceiveBuffer.Length);
-                    this.clientTCP.Receive(aReceiveBuffer, 0, aReceiveBuffer.Length);
+                    this.ClientTCP.Receive(aReceiveBuffer, 0, aReceiveBuffer.Length);
 
                     int indexOfEnd = ByteHelper.IndexOf(aReceiveBuffer, 0, nullByteInArray);
                     indexOfEnd = indexOfEnd == -1 ? aReceiveBuffer.Length : indexOfEnd;
@@ -294,7 +294,7 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
         {
             //Receive Header 
             Array.Clear(aReceiveBuffer, 0, aReceiveBuffer.Length);
-            this.clientTCP.Receive(aReceiveBuffer, 0, aReceiveBuffer.Length);
+            this.ClientTCP.Receive(aReceiveBuffer, 0, aReceiveBuffer.Length);
             return ConvertToLJPResponse(tpeNamespace, aReceiveBuffer, bThrowExceptionWithNotData);
         }
 
@@ -390,7 +390,7 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
                 while (receivedToNow < oLJPResponse.iLength)
                 {
                     Array.Clear(aReceiveBuffer, 0, aReceiveBuffer.Length);
-                    this.clientTCP.Receive(aReceiveBuffer, 0, aReceiveBuffer.Length);
+                    this.ClientTCP.Receive(aReceiveBuffer, 0, aReceiveBuffer.Length);
 
                     int indexOfEnd = ByteHelper.IndexOf(aReceiveBuffer, 0, nullByteInArray);
                     indexOfEnd = indexOfEnd == -1 ? aReceiveBuffer.Length : indexOfEnd;
@@ -446,13 +446,13 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
 
         public void Connect(System.Net.IPAddress oIPAddress, int iPort)
         {
-            this.clientTCP = this.factoryClientTCP.Create();
-            this.clientTCP.Connect(oIPAddress, iPort);
+            this.ClientTCP = this.factoryClientTCP.Create();
+            this.ClientTCP.Connect(oIPAddress, iPort);
         }
         public void Disconnect()
         {
             this.bKeepAlive = false;
-            this.clientTCP?.Disconnect();
+            this.ClientTCP?.Disconnect();
         }
 
         public void Dispose()
@@ -480,7 +480,7 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
             throw new NotImplementedException();
         }
 
-        public IClientConnector clientTCP
+        public IClientConnector ClientTCP
         {
             get
             {
