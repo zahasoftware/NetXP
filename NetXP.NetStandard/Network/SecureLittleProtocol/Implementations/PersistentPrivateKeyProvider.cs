@@ -11,6 +11,7 @@ using NetXP.NetStandard.DateAndTime;
 using NetXP.NetStandard;
 using Microsoft.Extensions.Options;
 using NetXP.NetStandard.Network.SecureLittleProtocol.Implementation;
+using NetXP.NetStandard.Auditory;
 
 namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
 {

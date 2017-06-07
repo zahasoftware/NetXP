@@ -10,6 +10,7 @@ using NetXP.NetStandard.Network.TCP;
 using NetXP.NetStandard;
 using Microsoft.Extensions.Options;
 using NetXP.NetStandard.Factories;
+using NetXP.NetStandard.Auditory;
 
 namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
 {

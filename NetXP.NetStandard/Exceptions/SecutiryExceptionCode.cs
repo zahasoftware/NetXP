@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.Exceptions.enm
+namespace NetXP.NetStandard.Exceptions
 {
     public enum SecurityExceptionCode
     {

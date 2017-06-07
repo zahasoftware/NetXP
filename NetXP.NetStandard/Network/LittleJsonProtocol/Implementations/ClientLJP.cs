@@ -9,6 +9,7 @@ using NetXP.NetStandard.Network.TCP;
 using NetXP.NetStandard;
 using System.Runtime.Serialization.Json;
 using System.Runtime.Serialization;
+using NetXP.NetStandard.Auditory;
 
 namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
 {
@@ -66,8 +67,8 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
                     + $"Id={sendCallParameter.Id}\n"
                     + $"KeepAlive={sendCallParameter.KeepAlive}\n"
                     + $"NeedResponse={sendCallParameter.NeedResponse}\n"
-                    + $"Interface={sendCallParameter.NameInterface}\n"
-                    + $"Method={sendCallParameter.NameMethod}\n"
+                    + $"Interface={sendCallParameter.InterfaceName}\n"
+                    + $"Method={sendCallParameter.MethodName}\n"
                     + "\n"
                     + $"{sJsonFinal}";
 

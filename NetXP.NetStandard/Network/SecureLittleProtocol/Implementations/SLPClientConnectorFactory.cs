@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
+using NetXP.NetStandard.Auditory;
 using NetXP.NetStandard.Compression;
 using NetXP.NetStandard.Configuration;
 using NetXP.NetStandard.Cryptography;

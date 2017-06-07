@@ -1,4 +1,5 @@
 ﻿using NetXP.NetStandard;
+using NetXP.NetStandard.Auditory;
 using NetXP.NetStandard.Cryptography;
 using NetXP.NetStandard.Factories;
 using NetXP.NetStandard.Network.TCP;
