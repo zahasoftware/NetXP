@@ -58,22 +58,15 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
 
         public async Task<IClientConnector> Accept()
         {
-            try
-            {
-                var socket = await tcpServer.Accept();
-                IClientConnector secureClient = clientConnectorFactoryProducer
-                                                    .CreateClient(ConnectorFactory.SecureLitleProtocol)
-                                                    .Create(socket);
+            var socket = await tcpServer.Accept();
+            IClientConnector secureClient = clientConnectorFactoryProducer
+                                                .CreateClient(ConnectorFactory.SecureLitleProtocol)
+                                                .Create(socket);
 
-                //Receive PublicKey And Send Their PublicKey
-                secureClient.Receive(aLittleBuffer, 0, aLittleBuffer.Length);
+            //Receive PublicKey And Send Their PublicKey
+            secureClient.Receive(aLittleBuffer, 0, aLittleBuffer.Length);
 
-                return secureClient;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            return secureClient;
         }
     }
 }

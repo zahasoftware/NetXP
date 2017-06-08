@@ -13,9 +13,9 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
         private TcpListener tcpListener;
         private readonly IClientConnectorFactory clientConnectorFactory;
 
-        public ServerConnector(IClientConnectorFactory clientConnectorFactory)
+        public ServerConnector(IClientConnectorFactoryProducer clientConnectorFactoryProducer)
         {
-            this.clientConnectorFactory = clientConnectorFactory;
+            this.clientConnectorFactory = clientConnectorFactoryProducer.CreateClient(ConnectorFactory.TransmissionControlProtocol);
         }
 
         public void Listen(IPAddress ipAddress, int port)
@@ -26,17 +26,11 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
 
         public async Task<IClientConnector> Accept()
         {
-            try
-            {
-                var socket = await this.tcpListener.AcceptSocketAsync();
-                IClientConnector tcpClient = this.clientConnectorFactory.Create(socket);
+            var socket = await this.tcpListener.AcceptSocketAsync();
 
-                return tcpClient;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            IClientConnector tcpClient = this.clientConnectorFactory.Create(socket);
+
+            return tcpClient;
         }
     }
 }
