@@ -8,8 +8,11 @@
 
   <ItemGroup>
     <Compile Remove="Exceptions\enm\**" />
+    <Compile Remove="Network\Email\Implementation\**" />
     <EmbeddedResource Remove="Exceptions\enm\**" />
+    <EmbeddedResource Remove="Network\Email\Implementation\**" />
     <None Remove="Exceptions\enm\**" />
+    <None Remove="Network\Email\Implementation\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,10 +28,6 @@
     <PackageReference Include="System.Runtime.Serialization.Xml" Version="4.3.0" />
     <PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.3.0" />
     <PackageReference Include="System.Security.Cryptography.Primitives" Version="4.3.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Network\Email\Implementation\" />
   </ItemGroup>
 
 </Project>
