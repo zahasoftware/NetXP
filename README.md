@@ -9,7 +9,7 @@ Download source fonts and add a reference for:
 ### For Net Core Projects (1.0)
 Add NetXP.NetStandard Project referenc and then Add NetXP.NetStandard.NetCore
 
-### For Net Frameworks Projects (4.5.2)
+### For Net Frameworks Projects (4.6.2)
 Add `NetXP.NetStandard` Project referenc and then Add `NetXP.NetStandard.NetFramework`
 
 ### Examples
