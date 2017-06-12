@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace NetXP.NetStandard.DependencyInjection
 {
@@ -9,6 +10,7 @@ namespace NetXP.NetStandard.DependencyInjection
         TInterface Resolve<TInterface>(Action<ICtorInjectorExpression> ctorInjectorExpression);
         TInterface Resolve<TInterface>(string name, Action<ICtorInjectorExpression> ctorInjectorExpression);
 
+        IEnumerable<TInterface> ResolveAll<TInterface>();
         object Resolve(Type interfaceType);
     }
 }

@@ -1,11 +1,5 @@
-﻿using NetXP.NetStandard.DependencyInjection;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using StructureMap;
-using NetXP.NetStandard.Cryptography;
 
 namespace NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps
 {
@@ -62,6 +56,11 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps
         public object Resolve(Type interfaceType)
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<TInterface> ResolveAll<TInterface>()
+        {
+            return this.container.GetAllInstances<TInterface>();
         }
     }
 }

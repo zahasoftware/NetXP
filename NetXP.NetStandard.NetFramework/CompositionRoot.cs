@@ -14,7 +14,7 @@ namespace NetXP.NetStandard.NetFramework
 {
     public static class CompositionRoot
     {
-        public static void AddNetFrameworkRegisters(this IRegister cfg,IContainer container)
+        public static void AddNetXPNetFrameworkRegisters(this IRegister cfg, IContainer container)
         {
             cfg.RegisterNetXPStandard(container);
 
@@ -26,6 +26,10 @@ namespace NetXP.NetStandard.NetFramework
 
             //Mail
             cfg.Register<NetStandard.Network.Email.IMailSender, Network.Email.Implementations.MailSender>();
+
+            //SystemInfo
+            cfg.Register<NetStandard.SystemInformation.ISystemInfo, SystemInformation.Implementations.SysInfo>();
+            cfg.Register<NetStandard.SystemInformation.IStorageInfo, SystemInformation.Implementations.SysInfo>();
 
         }
     }
