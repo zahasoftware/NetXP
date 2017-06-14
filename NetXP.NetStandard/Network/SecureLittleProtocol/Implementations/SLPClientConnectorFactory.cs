@@ -7,6 +7,7 @@ using NetXP.NetStandard.Cryptography.Implementations;
 using NetXP.NetStandard.DependencyInjection;
 using NetXP.NetStandard.Factories;
 using NetXP.NetStandard.Network.TCP;
+using NetXP.NetStandard.Network.TCP.Implementations;
 using NetXP.NetStandard.Serialization;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,10 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
             {
                 var tryTcpClient = @params.SingleOrDefault(o => o is IClientConnector);
                 var tcpClient = tryTcpClient as IClientConnector;
+                if (tcpClient == null)
+                {
+                    throw new ArgumentException("Parameter should be of IClientConnector type");
+                }
 
                 return new SLPClientConnector(
                     container.Resolve<IClientConnectorFactoryProducer>(),

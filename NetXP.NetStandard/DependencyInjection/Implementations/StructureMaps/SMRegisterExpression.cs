@@ -11,32 +11,34 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps
 {
     public class SMRegisterExpression : IRegister
     {
-        private ConfigurationExpression container;
+        private ConfigurationExpression configuration;
+        private readonly Container container;
 
-        public SMRegisterExpression(ConfigurationExpression container)
+        public SMRegisterExpression(ConfigurationExpression configuration, Container container)
         {
+            this.configuration = configuration;
             this.container = container;
         }
 
         public void Register<TInterface, TImplement>() where TImplement : TInterface
         {
-            this.container.For<TInterface>().Use<TImplement>();
+            this.configuration.For<TInterface>().Use<TImplement>();
         }
 
         public void Register<TInterface, TImplement>(LifeTime lifeTime) where TImplement : TInterface
         {
-            var register = this.container.For<TInterface>().Use<TImplement>();
+            var register = this.configuration.For<TInterface>().Use<TImplement>();
             SetLifeTime(lifeTime, register);
         }
 
         public void Register<TInterface, TImplement>(string name) where TImplement : TInterface
         {
-            this.container.For<TInterface>().Use<TImplement>().Named(name);
+            this.configuration.For<TInterface>().Use<TImplement>().Named(name);
         }
 
         public void Register<TInterface, TImplement>(string name, LifeTime lifeTime) where TImplement : TInterface
         {
-            var register = this.container.For<TInterface>().Use<TImplement>().Named(name);
+            var register = this.configuration.For<TInterface>().Use<TImplement>().Named(name);
             SetLifeTime(lifeTime, register);
         }
 
@@ -46,15 +48,14 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps
                                                      Action<ICtorSelectorExpression<TImplement, TInterface>> ctorInjectorExpression)
                                                      where TImplement : TInterface
         {
-            var register = this.container.For<TInterface>()
-            .Use<TImplement>()
-            .Transient();
+            var @for = this.configuration.For<TInterface>();
+            var use = @for.Use<TImplement>();
 
             var ctorSelectorExpression = new SMCtorSelectorExpression<TImplement, TInterface>();
-            ctorSelectorExpression.Register(register);
+            ctorSelectorExpression.Register(@for, use, null, lifeTime, SetLifeTime);//Use, lifeTime, setLifeTime and Name only used for Empty constructors
             ctorInjectorExpression(ctorSelectorExpression);
 
-            SetLifeTime(lifeTime, register);
+            SetLifeTime(lifeTime, use);
         }
 
         public void Register<TInterface, TImplement>(string name,
@@ -62,27 +63,28 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps
                                                      Action<ICtorSelectorExpression<TImplement, TInterface>> ctorInjectorExpression)
                                                      where TImplement : TInterface
         {
-            var register = this.container.For<TInterface>()
-            .Use<TImplement>()
-            .Named(name)
-            .Transient();
+            var register = this.configuration.For<TInterface>();
+            var use = register.Use<TImplement>();
+            use.Named(name);
 
             var ctorSelectorExpression = new SMCtorSelectorExpression<TImplement, TInterface>();
-            ctorSelectorExpression.Register(register);
+            ctorSelectorExpression.Register(register, use, name, lifeTime, SetLifeTime);//Use, lifeTime, setLifeTime and Name only used for Empty constructors
             ctorInjectorExpression(ctorSelectorExpression);
 
+            register.Use(() => Activator.CreateInstance<TImplement>());
+
+            SetLifeTime(lifeTime, use);
+        }
+
+        public void RegisterInstance<TInterface>(TInterface instance, LifeTime lifeTime)
+        {
+            var register = this.configuration.For<TInterface>().Use(o => instance);
             SetLifeTime(lifeTime, register);
         }
 
-        public void RegisterInstance<TInterface>(TInterface instance, LifeTime lifeTime) 
+        public void RegisterInstance<TInterface>(string name, TInterface instance, LifeTime lifeTime)
         {
-            var register = this.container.For<TInterface>().Use(o => instance);
-            SetLifeTime(lifeTime, register);
-        }
-
-        public void RegisterInstance<TInterface>(string name, TInterface instance, LifeTime lifeTime) 
-        {
-            var register = this.container.For<TInterface>().Use(o => instance).Named(name);
+            var register = this.configuration.For<TInterface>().Use(o => instance).Named(name);
             SetLifeTime(lifeTime, register);
         }
 

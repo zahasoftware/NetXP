@@ -2,8 +2,8 @@
 {
     public enum LifeTime
     {
-        Singleton,
-        Scoped,
-        Trasient
+        Singleton,//Only One Instance
+        Scoped,//Request life time
+        Trasient//Always Unique
     }
 }

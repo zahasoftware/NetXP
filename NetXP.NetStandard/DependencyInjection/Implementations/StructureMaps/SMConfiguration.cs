@@ -21,7 +21,7 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps
         {
             this.container.Configure(cnf =>
             {
-                expression(new SMRegisterExpression(cnf));
+                expression(new SMRegisterExpression(cnf,container));
             });
         }
     }

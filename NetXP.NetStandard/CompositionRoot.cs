@@ -23,6 +23,7 @@ using NetXP.NetStandard.Configuration.Implementations;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 using NetXP.NetStandard.Auditory;
+using NetXP.NetStandard.Network.SecureLittleProtocol.Implementation;
 
 namespace NetXP.NetStandard
 {
@@ -53,18 +54,17 @@ namespace NetXP.NetStandard
             #region Network
             //TCP
             uc.Register<IServerConnector, ServerConnector>("normal", LifeTime.Trasient);
-            uc.Register<IClientConnector, SocketClientConnector>("normal", LifeTime.Trasient);
-            uc.Register<IClientConnector, SocketClientConnector>("normal-socket",
-                                     LifeTime.Trasient,
-                                     (ctor) =>
-                                     {
-                                         ctor.WithParameter<System.Net.Sockets.Socket>();
-                                     });
             uc.Register<IClientConnectorFactory, ClientConnectorFactory>("normal", LifeTime.Singleton);
             uc.Register<IServerConnectorFactory, ServerConnectorFactory>(LifeTime.Singleton);
 
             //SLP
-            uc.Register<IClientConnector, SLPClientConnector>(LifeTime.Trasient);
+            uc.Register<System.Net.Sockets.Socket, System.Net.Sockets.Socket>(LifeTime.Trasient, ctor => ctor.Empty());
+
+            uc.Register<IClientConnector, SocketClientConnector>("normal", LifeTime.Trasient, (ctor) => ctor.Empty());
+            //uc.Register<IClientConnector, SocketClientConnector>("normal-socket",
+            //                         LifeTime.Trasient, (ctor) => ctor.WithParameter<System.Net.Sockets.Socket>());
+            //uc.Register<IClientConnector, SLPClientConnector>(LifeTime.Trasient);
+
             uc.Register<IServerConnector, SLPServerConnector>(LifeTime.Trasient);
             uc.Register<IClientConnectorFactory, SLPClientConnectorFactory>(LifeTime.Singleton);
             uc.Register<IPersistentPrivateKeyProvider, PersistentPrivateKeyProvider>(LifeTime.Singleton,
@@ -78,14 +78,25 @@ namespace NetXP.NetStandard
                                                                                         ctor.InjectInstance(string.Empty);
                                                                                     });
 
-            var config = new ConfigurationBuilder()
-                                .SetBasePath(Directory.GetCurrentDirectory())
-                                .AddJsonFile(appSettingFile ?? "appsettings.json")
-                                .Build();
+            IConfigurationRoot config = null;
+            if (!string.IsNullOrEmpty(appSettingFile)
+                && File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json")))
+            {
+
+                config = new ConfigurationBuilder()
+                                    .SetBasePath(Directory.GetCurrentDirectory())
+                                    .AddJsonFile(appSettingFile ?? "appsettings.json")
+                                    .Build();
+            }
+
             var slpOptions = new SLJPOption();
-            config.GetSection("SLP").Bind(slpOptions);
+            config?.GetSection("SLP")?.Bind(slpOptions);
             uc.RegisterInstance<IOptions<SLJPOption>>(new OptionsInstance<SLJPOption>(slpOptions), LifeTime.Singleton);
 
+            var persistenPrivateKeyConfiguration = new PersistenPrivateKeyConfiguration();
+            config?.GetSection("PPKConf")?.Bind(slpOptions);
+            uc.RegisterInstance<IOptions<PersistenPrivateKeyConfiguration>>(
+                new OptionsInstance<PersistenPrivateKeyConfiguration>(persistenPrivateKeyConfiguration), LifeTime.Singleton);
             //SLP And TCP
             uc.Register<IClientConnectorFactoryProducer, ClientConnectorFactoryProducer>(LifeTime.Singleton);
 

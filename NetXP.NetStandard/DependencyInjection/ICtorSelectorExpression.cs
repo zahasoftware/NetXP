@@ -6,5 +6,6 @@ namespace NetXP.NetStandard.DependencyInjection
     {
         void WithParameter<T>();
         void InjectInstance<T>(T instance);
+        void Empty();
     }
 }
