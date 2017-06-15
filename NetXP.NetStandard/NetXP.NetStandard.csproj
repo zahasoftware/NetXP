@@ -6,6 +6,10 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='SelfWebApi-Debug|AnyCPU'" />
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Debice|AnyCPU'" />
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Device|AnyCPU'" />
+
   <ItemGroup>
     <Compile Remove="Exceptions\enm\**" />
     <Compile Remove="Network\Email\Implementation\**" />

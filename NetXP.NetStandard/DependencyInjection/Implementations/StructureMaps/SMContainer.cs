@@ -45,17 +45,17 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps
             //{
             //    this.container.GetInstance<TInterface>();
             //}
-            throw new NotImplementedException();
+            throw new NotImplementedException("Not implemented in Structure Map.");
         }
 
         public TInterface Resolve<TInterface>(string name, Action<ICtorInjectorExpression> ctorInjectorExpression)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("Not implemented in Structure Map.");
         }
 
         public object Resolve(Type interfaceType)
         {
-            throw new NotImplementedException();
+            return this.container.GetInstance(interfaceType);
         }
 
         public IEnumerable<TInterface> ResolveAll<TInterface>()
