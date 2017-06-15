@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace NetXP.NetStandard.Cryptography
 {
+    [DataContract]
     public class SymetricKey
     {
         public SymetricKey()
@@ -13,6 +15,7 @@ namespace NetXP.NetStandard.Cryptography
             this.iIteration = 1042;
         }
 
+        [DataMember(Name = "k")]
         private byte[] _yKey;
         public byte[] yKey
         {
@@ -54,6 +57,7 @@ namespace NetXP.NetStandard.Cryptography
             }
         }
 
+        [DataMember(Name = "S")]
         private byte[] _ySalt;
         public byte[] ySalt
         {
@@ -87,6 +91,7 @@ namespace NetXP.NetStandard.Cryptography
             }
         }
 
+        [DataMember(Name = "I")]
         public int iIteration;
     }
 }
