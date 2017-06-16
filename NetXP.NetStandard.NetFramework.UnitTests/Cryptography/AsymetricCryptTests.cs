@@ -28,7 +28,7 @@ namespace NetXP.NetStandard.NetFramework.Cryptography.Tests
 
             container.Configuration.Configure(smre =>
             {
-                CompositionRoot.RegisterNetFramework(smre);
+                CompositionRoot.AddNetXPNetFrameworkRegisters(smre,container);
                 smre.RegisterInstance<IContainer>(container, LifeTime.Trasient);
             });
 
@@ -62,7 +62,7 @@ namespace NetXP.NetStandard.NetFramework.Cryptography.Tests
         public void NF_IAsymetricCryptBynarySerialize()
         {
             var asymetricCrypt = this.container.Resolve<IAsymetricCrypt>();
-            var serializeTFactory = this.container.Resolve<IFactorySerializer>();
+            var serializeTFactory = this.container.Resolve<ISerializerFactory>();
 
             asymetricCrypt.GenerateKeys();
 

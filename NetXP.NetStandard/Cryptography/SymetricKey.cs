@@ -12,16 +12,16 @@ namespace NetXP.NetStandard.Cryptography
     {
         public SymetricKey()
         {
-            this.iIteration = 1042;
+            this.Iteration = 1042;
         }
 
         [DataMember(Name = "k")]
-        private byte[] _yKey;
-        public byte[] yKey
+        private byte[] key;
+        public byte[] Key
         {
             get
             {
-                return _yKey;
+                return key;
             }
             set
             {
@@ -39,29 +39,29 @@ namespace NetXP.NetStandard.Cryptography
                         yBytes16[i] = (byte)'X';
                     }
 
-                    _yKey = yBytes16;
+                    key = yBytes16;
                 }
                 else if (value.Length > 16) //Cut to get 16 bytes
                 {
-                    _yKey = value.Take(16).ToArray();
+                    key = value.Take(16).ToArray();
                 }
                 else
                 {
-                    _yKey = value;
+                    key = value;
                 }
 
-                if (ySalt == null || ySalt.Length == 0)
+                if (Salt == null || Salt.Length == 0)
                 {
-                    ySalt = yKey;
+                    Salt = Key;
                 }
             }
         }
 
-        [DataMember(Name = "S")]
-        private byte[] _ySalt;
-        public byte[] ySalt
+        [DataMember(Name = "s")]
+        private byte[] salt;
+        public byte[] Salt
         {
-            get { return _ySalt; }
+            get { return salt; }
             set
             {
                 if (value.Length < 16) //Padding with X to get 16 bytes
@@ -78,20 +78,20 @@ namespace NetXP.NetStandard.Cryptography
                         yBytes16[i] = (byte)'X';
                     }
 
-                    _ySalt = yBytes16;
+                    salt = yBytes16;
                 }
                 else if (value.Length > 16) //Cut to get 16 bytes
                 {
-                    _ySalt = value.Take(16).ToArray();
+                    salt = value.Take(16).ToArray();
                 }
                 else
                 {
-                    _ySalt = value;
+                    salt = value;
                 }
             }
         }
 
-        [DataMember(Name = "I")]
-        public int iIteration;
+        [DataMember(Name = "i")]
+        public int Iteration;
     }
 }
