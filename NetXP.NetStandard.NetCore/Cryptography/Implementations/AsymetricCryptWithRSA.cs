@@ -155,8 +155,8 @@ namespace NetXP.NetStandard.NetCore.Cryptography.Implementations
             //rsa.PublicExponent = OpenSSL.Core.BigNumber.FromArray(publicKey.yExponent);
 
             RSAParameters rsaParam = new RSAParameters();
-            rsaParam.Modulus = privKey.yModulus;
-            rsaParam.Exponent = privKey.yExponent;
+            rsaParam.Modulus =  publicKey.yModulus;
+            rsaParam.Exponent = publicKey.yExponent;
 
             rsa.ImportParameters(rsaParam);
 
