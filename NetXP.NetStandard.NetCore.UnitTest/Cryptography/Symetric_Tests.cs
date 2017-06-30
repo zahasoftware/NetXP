@@ -42,8 +42,8 @@ namespace NetXP.NetStandard.NetFramework.Cryptography.Tests
             SymetricKey SymetricKey = new SymetricKey();
 
             var aes = Aes.Create();
-            SymetricKey.yKey = aes.Key;
-            SymetricKey.ySalt = aes.IV;
+            SymetricKey.Key = aes.Key;
+            SymetricKey.Salt = aes.IV;
 
             string sText = "Encriptando texto con llave aleatoria.";
             byte[] aText = Encoding.ASCII.GetBytes(sText);
@@ -61,7 +61,7 @@ namespace NetXP.NetStandard.NetFramework.Cryptography.Tests
         {
             SymetricKey SymetricKey = new SymetricKey()
             {
-                yKey = Encoding.ASCII.GetBytes("MyPassword")
+                Key = Encoding.ASCII.GetBytes("MyPassword")
             };
 
             string sText = "Encriptando texto.";
@@ -79,7 +79,7 @@ namespace NetXP.NetStandard.NetFramework.Cryptography.Tests
         public void NC_ISymetric_Encrypt_And_Decrypt_WithGreaterThan16Bytes()
         {
             SymetricKey SymetricKey = new SymetricKey();
-            SymetricKey.yKey = Encoding.ASCII.GetBytes("MyPasswordMyPassword");
+            SymetricKey.Key = Encoding.ASCII.GetBytes("MyPasswordMyPassword");
 
             string sText = "Encriptando texto.";
             byte[] aText = Encoding.ASCII.GetBytes(sText);

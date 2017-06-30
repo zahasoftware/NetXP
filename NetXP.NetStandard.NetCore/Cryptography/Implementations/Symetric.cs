@@ -29,12 +29,12 @@ namespace NetXP.NetStandard.NetCore.Cryptography.Implementations
         {
 
             SymmetricAlgorithm algorithm = Aes.Create();
-            algorithm.Key = SymetricKey.yKey;
-            algorithm.IV = SymetricKey.ySalt;
+            algorithm.Key = SymetricKey.Key;
+            algorithm.IV = SymetricKey.Salt;
             algorithm.Mode = this.Mode;
             //algorithm.Padding = PaddingMode.PKCS7;
 
-            ICryptoTransform transform = algorithm.CreateEncryptor(SymetricKey.yKey, SymetricKey.ySalt);
+            ICryptoTransform transform = algorithm.CreateEncryptor(SymetricKey.Key, SymetricKey.Salt);
 
             using (MemoryStream buffer = new MemoryStream())
             {
@@ -48,16 +48,16 @@ namespace NetXP.NetStandard.NetCore.Cryptography.Implementations
 
         public byte[] Decrypt(byte[] aEncryptedMessage, SymetricKey SymetricKey)
         {
-            DeriveBytes rgb = new Rfc2898DeriveBytes(SymetricKey.yKey, SymetricKey.ySalt, SymetricKey.iIteration);
+            DeriveBytes rgb = new Rfc2898DeriveBytes(SymetricKey.Key, SymetricKey.Salt, SymetricKey.Iteration);
 
             SymmetricAlgorithm algorithm = Aes.Create();
-            algorithm.Key = SymetricKey.yKey;
-            algorithm.IV = SymetricKey.ySalt;
+            algorithm.Key = SymetricKey.Key;
+            algorithm.IV = SymetricKey.Salt;
 
             algorithm.Mode = this.Mode;
             //algorithm.Padding = PaddingMode.PKCS7;
 
-            ICryptoTransform transform = algorithm.CreateDecryptor(SymetricKey.yKey, SymetricKey.ySalt);
+            ICryptoTransform transform = algorithm.CreateDecryptor(SymetricKey.Key, SymetricKey.Salt);
 
             using (MemoryStream buffer = new MemoryStream(aEncryptedMessage))
             using (CryptoStream stream = new CryptoStream(buffer, transform, CryptoStreamMode.Read))
@@ -73,8 +73,8 @@ namespace NetXP.NetStandard.NetCore.Cryptography.Implementations
         {
             var symetricKey = new SymetricKey();
             SymmetricAlgorithm algorithm = Aes.Create();
-            symetricKey.yKey = algorithm.Key;
-            symetricKey.ySalt = algorithm.IV;
+            symetricKey.Key = algorithm.Key;
+            symetricKey.Salt = algorithm.IV;
             return symetricKey;
         }
     }

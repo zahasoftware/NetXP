@@ -27,9 +27,7 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
         public async Task<IClientConnector> Accept()
         {
             var socket = await this.tcpListener.AcceptSocketAsync();
-
             IClientConnector tcpClient = this.clientConnectorFactory.Create(socket);
-
             return tcpClient;
         }
     }
