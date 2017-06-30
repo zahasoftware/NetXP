@@ -119,8 +119,8 @@ namespace NetXP.NetStandard
 
             //Serializer
             uc.Register<ISerializerFactory, SerializeTFactory>(LifeTime.Singleton);
-            uc.Register<ISerializer, Serialize2Json>(SerializerType.Json.ToString(), LifeTime.Singleton);
             uc.Register<ISerializer, Serialize2Xml>(SerializerType.Xml.ToString(), LifeTime.Singleton);
+            uc.Register<ISerializer, Serialize2Json>(SerializerType.Json.ToString(), LifeTime.Singleton);
 
             #region Crypt
             uc.Register<INameResolverFactory<IAsymetricCrypt>, AsymetricFactory>(LifeTime.Singleton);

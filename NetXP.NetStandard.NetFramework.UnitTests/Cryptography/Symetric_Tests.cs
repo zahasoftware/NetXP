@@ -26,13 +26,12 @@ namespace NetXP.NetStandard.NetFramework.Cryptography.Tests
         public void Init()
         {
             var container = new Container();
+            c = new SMContainer(container);
             container.Configure(cnf =>
             {
-                SMRegisterExpression smre = new SMRegisterExpression(cnf);
-                CompositionRoot.RegisterNetFramework(smre);
+                SMRegisterExpression smre = new SMRegisterExpression(cnf, container);
+                CompositionRoot.AddNetXPNetFrameworkRegisters(smre, c);
             });
-
-            c = new SMContainer(container);
 
             this.ISymetric = this.c.Resolve<ISymetricCrypt>();
         }
@@ -40,21 +39,21 @@ namespace NetXP.NetStandard.NetFramework.Cryptography.Tests
         [TestMethod()]
         public void NF_ISymetric_Encrypt_And_Decrypt()
         {
-            SymetricKey SymetricKey = new SymetricKey();
+            SymetricKey symetricKey = new SymetricKey();
 
             AesManaged aes = new AesManaged();
-            SymetricKey.yKey = aes.Key;
-            SymetricKey.ySalt = aes.IV;
+            symetricKey.yKey = aes.Key;
+            symetricKey.ySalt = aes.IV;
 
-            string sText = "Encriptando texto con llave aleatoria.";
-            byte[] aText = Encoding.ASCII.GetBytes(sText);
+            string text = "Encriptando texto con llave aleatoria.";
+            byte[] aText = Encoding.ASCII.GetBytes(text);
 
-            var aEncryptedText = this.ISymetric.Encrypt(aText, SymetricKey);
-            var aUnencryptedText = this.ISymetric.Decrypt(aEncryptedText, SymetricKey);
+            var aEncryptedText = this.ISymetric.Encrypt(aText, symetricKey);
+            var aUnencryptedText = this.ISymetric.Decrypt(aEncryptedText, symetricKey);
 
             string sUnencryptedText = Encoding.ASCII.GetString(aUnencryptedText);
 
-            Assert.AreEqual(sText, sUnencryptedText);
+            Assert.AreEqual(text, sUnencryptedText);
         }
 
         [TestMethod()]
@@ -91,5 +90,6 @@ namespace NetXP.NetStandard.NetFramework.Cryptography.Tests
             string unencryptedText = Encoding.ASCII.GetString(aUnencryptedText);
             Assert.AreEqual(sText, unencryptedText);
         }
+
     }
 }
