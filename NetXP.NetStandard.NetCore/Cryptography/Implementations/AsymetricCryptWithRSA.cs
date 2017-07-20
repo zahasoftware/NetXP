@@ -108,7 +108,6 @@ namespace NetXP.NetStandard.NetCore.Cryptography.Implementations
                 rsa = RSA.Create();
                 rsa.KeySize = 2048;
 
-
                 privKey = null;
                 this.publicKey = null;
             }
@@ -157,9 +156,7 @@ namespace NetXP.NetStandard.NetCore.Cryptography.Implementations
             RSAParameters rsaParam = new RSAParameters();
             rsaParam.Modulus =  publicKey.yModulus;
             rsaParam.Exponent = publicKey.yExponent;
-
             rsa.ImportParameters(rsaParam);
-
             this.publicKey = publicKey;
         }
     }

@@ -14,9 +14,9 @@ namespace NetXP.NetStandard.NetFramework
 {
     public static class CompositionRoot
     {
-        public static void AddNetXPNetFrameworkRegisters(this IRegister cfg, IContainer container)
+        public static void AddNetXPNetFrameworkRegisters(this IRegister cfg, IContainer container, string appSettingFile = null)
         {
-            cfg.RegisterNetXPStandard(container);
+            cfg.RegisterNetXPStandard(container, appSettingFile);
 
             cfg.Register<NetStandard.Auditory.ILogger, Auditory.Implementations.Log4NetLogger>(LifeTime.Singleton);
 

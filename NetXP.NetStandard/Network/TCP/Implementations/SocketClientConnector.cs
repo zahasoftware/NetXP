@@ -43,10 +43,7 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
             if (this.oSocket.Connected)
             {
                 try { this.oSocket.Shutdown(System.Net.Sockets.SocketShutdown.Both); }
-                finally
-                {
-                    try { this.oSocket.Dispose(); } finally { }
-                }
+                finally { try { this.oSocket.Dispose(); } finally { } }
             }
         }
 
