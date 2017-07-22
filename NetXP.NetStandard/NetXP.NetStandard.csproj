@@ -10,6 +10,8 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Device|AnyCPU'" />
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Manager|AnyCPU'" />
+
   <ItemGroup>
     <Compile Remove="Exceptions\enm\**" />
     <Compile Remove="Network\Email\Implementation\**" />
