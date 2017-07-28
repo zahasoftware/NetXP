@@ -105,7 +105,6 @@ namespace NetXP.NetStandard.SystemInformation
         //
         public long TotalSize { get; set; }
 
-
         //
         // Summary:
         //     Gets the total size of storage space on a drive, in a human readable.

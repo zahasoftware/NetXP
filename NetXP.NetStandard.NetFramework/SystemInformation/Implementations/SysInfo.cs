@@ -12,10 +12,17 @@ namespace NetXP.NetStandard.NetFramework.SystemInformation.Implementations
 {
     public class SysInfo : ISystemInfo, IStorageInfo
     {
-        public IDictionary<string, string> GetOSInfo()
+        public OSInfo GetOSInfo()
         {
             var aOperatingSystemInfo = ManagementClassToDictionary("Win32_OperatingSystem");
-            return aOperatingSystemInfo;
+            var osInfo = new OSInfo();
+            foreach (var values in aOperatingSystemInfo)
+            {
+                var osInfoType = osInfo.GetType();
+                var property = osInfoType.GetProperty(values.Key);
+                property?.SetValue(osInfo, values.Value);
+            }
+            return osInfo;
         }
 
         public IDictionary<string, string> GetProcessorInfo()

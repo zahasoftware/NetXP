@@ -12,7 +12,7 @@
         NoRootDirectory = 1,
         //
         // Summary:
-        //     The drive is a removable storage device, such as a floppy disk drive or a USB
+        //     The drive is a removable storage device, such as a floppy disk drive or a USB.
         //     flash drive.
         Removable = 2,
         //

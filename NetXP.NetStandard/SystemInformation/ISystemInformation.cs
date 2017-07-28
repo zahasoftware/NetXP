@@ -11,13 +11,14 @@ namespace NetXP.NetStandard.SystemInformation
     public interface ISystemInfo
     {
         string MotherBoardSerialNumber();
-        IDictionary<string, string> GetOSInfo();
+        OSInfo GetOSInfo();
 
         IDictionary<string, string> GetProcessorInfo();
 
         IDictionary<string, string> GetServiceInfo();
 
         IDictionary<string, string> GetBaseBoardInfo();
+
 
     }
 }
