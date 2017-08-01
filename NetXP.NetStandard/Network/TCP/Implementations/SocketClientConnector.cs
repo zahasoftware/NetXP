@@ -38,12 +38,31 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
             this.oSocket.Connect(oIPAddress, port);
         }
 
-        public void Disconnect()
+        public void Disconnect(bool dispose = true)
         {
-            if (this.oSocket.Connected)
+            if (!this.Disposed)
             {
-                try { this.oSocket.Shutdown(System.Net.Sockets.SocketShutdown.Both); }
-                finally { try { this.oSocket.Dispose(); } finally { } }
+                if (this.oSocket.Connected)
+                {
+                    try
+                    {
+                        this.oSocket.Shutdown(System.Net.Sockets.SocketShutdown.Both);
+                    }
+                    finally
+                    {
+                        try
+                        {
+                            if (dispose)
+                            {
+                                this.oSocket.Dispose();
+                                this.Disposed = true;
+                            }
+                        }
+                        finally
+                        {
+                        }
+                    }
+                }
             }
         }
 
@@ -76,7 +95,7 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
         {
             get
             {
-                return this.oSocket.Connected;
+                return !this.Disposed && this.oSocket.Connected;
             }
         }
 
@@ -84,7 +103,7 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
         {
             get
             {
-                return this.oSocket?.RemoteEndPoint?.ToString();
+                return this.Disposed ? $"[{nameof(this.Disposed)}]" : this.oSocket?.RemoteEndPoint?.ToString();
             }
         }
 
@@ -92,8 +111,10 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
         {
             get
             {
-                return this.oSocket?.LocalEndPoint?.ToString();
+                return this.Disposed ? $"[{nameof(this.Disposed)}]" : this.oSocket?.LocalEndPoint?.ToString();
             }
         }
+
+        public bool Disposed { get; private set; } = false;
     }
 }

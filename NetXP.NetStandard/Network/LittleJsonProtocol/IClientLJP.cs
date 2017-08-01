@@ -37,7 +37,7 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol
 
         void Connect(IPAddress oIPAddress, int iPort);
 
-        void Disconnect();
+        void Disconnect(bool dispose = true);
 
         IClientConnector ClientTCP { get; set; }
 

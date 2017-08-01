@@ -449,10 +449,10 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
             this.ClientTCP = this.factoryClientTCP.Create();
             this.ClientTCP.Connect(oIPAddress, iPort);
         }
-        public void Disconnect()
+        public void Disconnect(bool dispose = true)
         {
             this.bKeepAlive = false;
-            this.ClientTCP?.Disconnect();
+            this.ClientTCP?.Disconnect(dispose);
         }
 
         public void Dispose()

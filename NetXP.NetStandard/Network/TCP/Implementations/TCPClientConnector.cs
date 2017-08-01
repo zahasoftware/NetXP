@@ -46,15 +46,27 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
             stream.ReadTimeout = this.tcpOptions.ReceiveTimeOut;
         }
 
-        public void Disconnect()
+        public void Disconnect(bool dispose = true)
         {
-            if (tcpClient.Connected)
+            if (!this.Disposed && tcpClient.Connected)
             {
-                try { this.stream.Dispose(); }
+                try
+                {
+                    this.stream.Dispose();
+                }
                 finally
                 {
-                    try { this.tcpClient.Dispose(); }
-                    finally { }
+                    try
+                    {
+                        if (dispose)
+                        {
+                            this.tcpClient.Dispose();
+                            this.Disposed = true;
+                        }
+                    }
+                    finally
+                    {
+                    }
                 }
             }
         }
@@ -75,7 +87,7 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
         {
             get
             {
-                return this.tcpClient.Connected;
+                return !this.Disposed && this.tcpClient.Connected;
             }
         }
 
@@ -83,7 +95,7 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
         {
             get
             {
-                return this.tcpClient.Client.RemoteEndPoint.ToString();
+                return this.Disposed ? $"[{nameof(this.Disposed)}]" : this.tcpClient.Client.RemoteEndPoint.ToString();
             }
         }
 
@@ -91,10 +103,10 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
         {
             get
             {
-                return this.tcpClient.Client.LocalEndPoint.ToString();
+                return this.Disposed ? $"[{nameof(this.Disposed)}]" : this.tcpClient.Client.LocalEndPoint.ToString();
             }
         }
 
-
+        public bool Disposed { get; private set; } = false;
     }
 }

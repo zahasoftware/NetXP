@@ -140,9 +140,9 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
             textPlainTCPChannel.Send(bytesToSend, 0, bytesToSend.Length);
         }
 
-        public void Disconnect()
+        public void Disconnect(bool dispose = true)
         {
-            this.textPlainTCPChannel.Disconnect();
+            this.textPlainTCPChannel.Disconnect(dispose);
         }
 
         private void ReceiveAll(byte[] aMessage, int iLength)

@@ -12,7 +12,7 @@ namespace NetXP.NetStandard.Network.TCP
         int Receive(byte[] inputBuffer, int offset, int length);
         int Send(byte[] outputBuffer, int offset, int length);
         void Connect(IPAddress ipAddress, int port);
-        void Disconnect();
+        void Disconnect(bool dispose = true);
         bool IsConnected { get; }
         string RemoteEndPoint { get; }
         string LocalEndPoint { get; }
