@@ -20,11 +20,9 @@ namespace NetXP.NetStandard.NetFramework.Auditory.Implementations
                                 [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",
                                 [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
         {
-#if DEBUG
             ReloadConfig();
             string @class = Path.GetFileNameWithoutExtension(sourceFilePath);
             log.Debug($"<{sourceLineNumber}:{@class}.{memberName}>: {msg}");
-#endif
         }
 
         private static void ReloadConfig()
