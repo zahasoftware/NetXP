@@ -2,14 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.5</TargetFramework>
+    <Configurations>Debug;Release;Debug_Device;Debug_Manager</Configurations>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='SelfWebApi-Debug|AnyCPU'" />
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Debice|AnyCPU'" />
-
+  
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Device|AnyCPU'" />
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Manager|AnyCPU'" />
 
   <ItemGroup>
