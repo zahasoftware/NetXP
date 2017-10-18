@@ -73,7 +73,7 @@ namespace NetXP.NetStandard.Reflection.Implementations
 
             if (typeToTryResolve == null)
             {
-                throw new ArgumentException($"Type not found in assembly of reference type:{referenceType.Name}");
+                throw new ArgumentException($"Type \"{typeToFound}\" not found in assembly with reference type \"{referenceType.Name}\"");
             }
             return typeToTryResolve;
         }
