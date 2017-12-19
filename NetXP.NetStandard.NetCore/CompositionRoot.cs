@@ -7,7 +7,7 @@ namespace NetXP.NetStandard.NetCore
 {
     public static class CompositionRoot
     {
-        public static void RegisterNetXPCore(this IRegister cfg, IContainer container)
+        public static void AddNetXPNetCoreRegisters(this IRegister cfg, IContainer container)
         {
             NetXP.NetStandard.CompositionRoot.RegisterNetXPStandard(cfg, container);
 
@@ -15,8 +15,9 @@ namespace NetXP.NetStandard.NetCore
             cfg.Register<NetStandard.Cryptography.ISymetricCrypt, Cryptography.Implementations.Symetric>();
             cfg.Register<NetStandard.Cryptography.IAsymetricCrypt, Cryptography.Implementations.AsymetricCryptWithMSRSA>();
 
-            //Mail
-            cfg.Register<NetStandard.Network.Email.IMailSender, Network.Email.Implementations.MailKitWrapper>();
+            //Process
+            cfg.Register<NetStandard.Processes.IIOTerminal, NetStandard.Processes.Implementations.IOTerminal>();
+            cfg.Register<NetStandard.SystemInformation.ISystemInformation, NetStandard.NetCore.SystemInformation.Implementations.SysInfo>();
 
         }
     }

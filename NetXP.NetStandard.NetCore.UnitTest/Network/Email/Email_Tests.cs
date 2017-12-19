@@ -26,16 +26,13 @@ namespace NetXP.NetStandard.NetCore.Cryptography.Tests
         [TestInitialize]
         public void Init()
         {
-            var smContainer = new StructureMap.Container();
-            container = new SMContainer(smContainer);
+            Container smapContainer = new Container();
 
-            container.Configuration.Configure(smre =>
+            container = new SMContainer(smapContainer);
+            container.Configuration.Configure((IRegister cnf) =>
             {
-                CompositionRoot.RegisterNetXPCore(smre);
-                NetCore.CompositionRoot.RegisterNetXPCore(smre);
-                smre.RegisterInstance<di.IContainer>(container, LifeTime.Trasient);
+                cnf.AddNetXPNetCoreRegisters(container);
             });
-
         }
 
         [TestMethod]
@@ -55,9 +52,6 @@ namespace NetXP.NetStandard.NetCore.Cryptography.Tests
             //                "FromAlias": "your_password"
             //            }
             //        }
-
-            throw new NotImplementedException("Comment this to test.");
-
             var confBuilder = new ConfigurationBuilder()
                 .AddJsonFile("unversionSettings.json");
             var conf = confBuilder.Build();

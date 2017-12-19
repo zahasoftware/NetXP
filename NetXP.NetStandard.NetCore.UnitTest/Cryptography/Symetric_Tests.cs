@@ -11,6 +11,7 @@ using NetXP.NetStandard.Cryptography;
 using NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps;
 using StructureMap;
 using di = NetXP.NetStandard.DependencyInjection;
+using NetXP.NetStandard.NetCore;
 
 namespace NetXP.NetStandard.NetFramework.Cryptography.Tests
 {
@@ -24,14 +25,13 @@ namespace NetXP.NetStandard.NetFramework.Cryptography.Tests
         [TestInitialize]
         public void Init()
         {
-            var container = new Container();
-            container.Configure(cnf =>
-            {
-                SMRegisterExpression smre = new SMRegisterExpression(cnf);
-                NetXP.NetStandard.NetCore.CompositionRoot.RegisterNetXPCore(smre);
-            });
+            Container smapContainer = new Container();
 
-            c = new SMContainer(container);
+            c = new SMContainer(smapContainer);
+            c.Configuration.Configure((IRegister cnf) =>
+            {
+                cnf.AddNetXPNetCoreRegisters(c);
+            });
 
             this.ISymetric = this.c.Resolve<ISymetricCrypt>();
         }

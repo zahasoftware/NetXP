@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace NetXP.NetStandard.NetFramework.SystemInformation.Implementations
 {
-    public class SysInfo : ISystemInfo, IStorageInfo
+    public class SysInfo : ISystemInformation, IStorageInfo
     {
         public OSInfo GetOSInfo()
         {

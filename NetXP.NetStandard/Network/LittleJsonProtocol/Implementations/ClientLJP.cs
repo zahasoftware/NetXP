@@ -132,7 +132,6 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
                 }
 
                 #region Parsing Raw Data Header Of SendCall Message
-                //TODO: Mark 
 
                 var headerBytes = new byte[indexOfHeaderAndBodySeparator];
                 Array.Copy(aReceiveBuffer, headerBytes, indexOfHeaderAndBodySeparator);

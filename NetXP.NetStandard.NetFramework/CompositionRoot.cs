@@ -28,7 +28,7 @@ namespace NetXP.NetStandard.NetFramework
             cfg.Register<NetStandard.Network.Email.IMailSender, Network.Email.Implementations.MailSender>();
 
             //SystemInfo
-            cfg.Register<NetStandard.SystemInformation.ISystemInfo, SystemInformation.Implementations.SysInfo>();
+            cfg.Register<NetStandard.SystemInformation.ISystemInformation, SystemInformation.Implementations.SysInfo>();
             cfg.Register<NetStandard.SystemInformation.IStorageInfo, SystemInformation.Implementations.SysInfo>();
 
         }

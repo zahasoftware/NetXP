@@ -1,15 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetXP.NetStandard.NetFramework.Cryptography;
 using NetXP.NetStandard.Cryptography;
 using NetXP.NetStandard.DependencyInjection;
 using NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps;
-using NetXP.NetStandard.NetFramework;
 using NetXP.NetStandard.Serialization;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using NetXP.NetStandard.NetCore;
+using StructureMap;
 
 /// NOTE: Rebuild project if fail
 namespace NetXP.NetStandard.NetFramework.Cryptography.Tests
@@ -18,38 +15,34 @@ namespace NetXP.NetStandard.NetFramework.Cryptography.Tests
     [TestClass()]
     public class AsymetricCryptTests
     {
-        public IContainer iuc { get; private set; }
+        public DependencyInjection.IContainer container { get; private set; }
 
         [TestInitialize]
         public void Init()
         {
-            var container = new StructureMap.Container();
-            container.Configure(cnf =>
-            {
-                SMRegisterExpression smre = new SMRegisterExpression(cnf);
-                CompositionRoot.RegisterNetXPStandard(smre);
-                NetCore.CompositionRoot.RegisterNetXPCore(smre);
+            Container smapContainer = new Container();
 
-                iuc = new SMContainer(container);
-                smre.RegisterInstance<IContainer>(iuc, LifeTime.Trasient);
-            });
-
+            container = new SMContainer(smapContainer);
+            container.Configuration.Configure((IRegister cnf) =>
+           {
+               cnf.AddNetXPNetCoreRegisters(container);
+           });
         }
 
         [TestMethod()]
         public void NC_IAsymetricCrypt_GenerateKeys()
         {
-            var asymetricCrypt = this.iuc.Resolve<IAsymetricCrypt>();
+            var asymetricCrypt = this.container.Resolve<IAsymetricCrypt>();
             asymetricCrypt.GenerateKeys();
         }
 
         [TestMethod()]
         public void NC_IAsymetricCryptWithMSRSA_Decrypt()
         {
-            var asymetricCrypt = this.iuc.Resolve<IAsymetricCrypt>();
+            var asymetricCrypt = this.container.Resolve<IAsymetricCrypt>();
             asymetricCrypt.GenerateKeys();
 
-            string message = "Hola";
+            string message = "Hi";
             var encryptedMessage = asymetricCrypt.Encrypt(Encoding.ASCII.GetBytes(message));
 
             var decryptedMessage = asymetricCrypt.Decrypt(encryptedMessage);
@@ -62,8 +55,8 @@ namespace NetXP.NetStandard.NetFramework.Cryptography.Tests
         [TestMethod()]
         public void NC_IAsymetricCryptBynarySerialize()
         {
-            var asymetricCrypt = this.iuc.Resolve<IAsymetricCrypt>();
-            var serializeTFactory = this.iuc.Resolve<IFactorySerializer>();
+            var asymetricCrypt = this.container.Resolve<IAsymetricCrypt>();
+            var serializeTFactory = this.container.Resolve<ISerializerFactory>();
 
             asymetricCrypt.GenerateKeys();
 
@@ -76,7 +69,7 @@ namespace NetXP.NetStandard.NetFramework.Cryptography.Tests
 
             PrivateKey privateKey = jsonSerliazer.Deserialize<PrivateKey>(privateKeySerialized);
 
-            asymetricCrypt = this.iuc.Resolve<IAsymetricCrypt>();
+            asymetricCrypt = this.container.Resolve<IAsymetricCrypt>();
             asymetricCrypt.SetPrivateKey(privateKey);
 
             string message = "Test for serialized privatekey";

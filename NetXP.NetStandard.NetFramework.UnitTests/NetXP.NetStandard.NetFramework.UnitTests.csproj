@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SmartSecurity.NetStandard.NetFramework.UnitTests</RootNamespace>
     <AssemblyName>SmartSecurity.NetStandard.NetFramework.UnitTests</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">15.0</VisualStudioVersion>
@@ -183,7 +183,6 @@
     <Compile Include="Cryptography\AsymetricCryptTests.cs" />
     <Compile Include="Cryptography\Symetric_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Serialization\Implementations\Serialize2JsonTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -206,6 +205,9 @@
       <Project>{9b6bcc3a-aee8-4d41-b69d-176510b97891}</Project>
       <Name>NetXP.NetStandard</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Serialization\Implementations\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

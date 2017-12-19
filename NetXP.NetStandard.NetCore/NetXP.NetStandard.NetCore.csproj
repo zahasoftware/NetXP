@@ -1,14 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <Configurations>Debug;Release;Debug_Manager</Configurations>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Manager|AnyCPU'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Manager|AnyCPU'">
+    <DefineConstants>DEBUG;TRACE;DEBUG_MANAGER;NETCOREAPP2_0</DefineConstants>
+  </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="MailKit" Version="1.16.1" />
-  </ItemGroup>
+  <PropertyGroup>
+  <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+</PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\NetXP.NetStandard\NetXP.NetStandard.csproj" />

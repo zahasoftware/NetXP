@@ -24,6 +24,9 @@ using Microsoft.Extensions.Configuration;
 using System.IO;
 using NetXP.NetStandard.Auditory;
 using NetXP.NetStandard.Network.SecureLittleProtocol.Implementation;
+using NetXP.NetStandard.Network.Email.Implementations;
+using NetXP.NetStandard.Network.Email;
+using NetXP.NetStandard.Auditory.Implementations;
 
 namespace NetXP.NetStandard
 {
@@ -44,9 +47,7 @@ namespace NetXP.NetStandard
             //uc.RegisterType<IConfig, cnf.i.SecureWebConfig>(ConfigType.WebConfigSecurity.ToString(), new ContainerControlledLifetimeManager());
             //c.Register<IConfig, ConfigDefault>(new ContainerControlledLifetimeManager());
             uc.Register<IConfigFactory, ConfigFactory>();
-
-            //var loggerMock = new Mock<ILogger>();
-            //uc.RegisterInstance<ILogger>(loggerMock.Object, LifeTime.Singleton);
+            uc.Register<ILogger, Log4NetLogger>(LifeTime.Singleton);
 
             //cmpr
             uc.Register<ICompression, DeflateCompress>(LifeTime.Singleton);
@@ -109,8 +110,7 @@ namespace NetXP.NetStandard
             uc.Register<ILJPMessageFactory, MessageExtractor_v1_0>("1.0", LifeTime.Singleton);
 
             //MAIL 
-            //TODO: Mail Sender
-            //uc.Register<IMailSender, net.mail.i.MailSender>();
+            uc.Register<IMailSender, MailSender>();
 
             #endregion
 

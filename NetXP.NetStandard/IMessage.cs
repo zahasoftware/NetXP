@@ -8,10 +8,10 @@ namespace NetXP.NetStandard
 {
     public interface IMessage
     {
-        void Warn(string s);
-        void Error(string s);
-        void Info(string s);
-        void Fatal(string s);
-        bool Confirm(string s);
+        void Warn(string message);
+        void Error(string message);
+        void Info(string message);
+        void Fatal(string message);
+        bool Confirm(string message);
     }
 }
