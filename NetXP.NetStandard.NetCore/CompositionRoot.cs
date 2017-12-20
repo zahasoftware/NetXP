@@ -16,8 +16,7 @@ namespace NetXP.NetStandard.NetCore
             cfg.Register<NetStandard.Cryptography.IAsymetricCrypt, Cryptography.Implementations.AsymetricCryptWithMSRSA>();
 
             //Process
-            cfg.Register<NetStandard.Processes.IIOTerminal, NetStandard.Processes.Implementations.IOTerminal>();
-            cfg.Register<NetStandard.SystemInformation.ISystemInformation, NetStandard.NetCore.SystemInformation.Implementations.SysInfo>();
+            cfg.Register<NetStandard.SystemInformation.ISystemInformation, NetStandard.SystemInformation.Implementations.SysInfo>();
 
         }
     }

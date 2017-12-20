@@ -114,6 +114,12 @@ namespace NetXP.NetStandard
 
             #endregion
 
+            #region Processes
+
+            uc.Register<NetStandard.Processes.IIOTerminal, NetStandard.Processes.Implementations.IOTerminal>();
+
+            #endregion
+
             //Reflect
             uc.Register<IReflector, Reflector>(LifeTime.Singleton);
 
