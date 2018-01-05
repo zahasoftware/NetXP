@@ -18,23 +18,22 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
     {
 
         public SLPClientConnector(
-              IClientConnectorFactoryProducer clientConnectorFactory
-            , INameResolverFactory<IAsymetricCrypt> IAsymetricCryptFactory
-            , ISymetricCrypt symetric
-            , ISerializer serializeT
-            , ILogger logger
-            , IHash hash
-            , IPersistentPrivateKeyProvider IPersistentPrivateKeyProvider
-            , ICompression compression
-            , ISecureProtocolHandshake secureProtocolHandshake
-            , IClientConnector clientConnector
-            , IOptions<SLJPOption> sljpOptions = null
+              INameResolverFactory<IAsymetricCrypt> asymetricCryptFactory,
+              ISymetricCrypt symetric,
+              ISerializer serializeT,
+              ILogger logger,
+              IHash hash,
+              IPersistentPrivateKeyProvider persistentPrivateKeyProvider,
+              ICompression compression,
+              ISecureProtocolHandshake secureProtocolHandshake,
+              IClientConnector clientConnector,
+              IOptions<SLJPOption> sljpOptions = null
         )
         {
-            this.asymetricForDecrypt = IAsymetricCryptFactory.Resolve();
-            this.asymetricToEncrypt = IAsymetricCryptFactory.Resolve();
-            this.firstAsymetricHandshakeToDecrypt = IAsymetricCryptFactory.Resolve();
-            this.firstAsymetricHandshakeToEncrypt = IAsymetricCryptFactory.Resolve();
+            this.asymetricForDecrypt = asymetricCryptFactory.Resolve();
+            this.asymetricToEncrypt = asymetricCryptFactory.Resolve();
+            this.firstAsymetricHandshakeToDecrypt = asymetricCryptFactory.Resolve();
+            this.firstAsymetricHandshakeToEncrypt = asymetricCryptFactory.Resolve();
 
             this.textPlainTCPChannel = clientConnector;
 
@@ -42,7 +41,7 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
             this.serializeT = serializeT;
             this.logger = logger;
             this.hash = hash;
-            this.IPersistentPrivateKeyProvider = IPersistentPrivateKeyProvider;
+            this.IPersistentPrivateKeyProvider = persistentPrivateKeyProvider;
             this.compression = compression;
             this.secureProtocolHandshake = secureProtocolHandshake;
             var SecurityMaxSizeToReceive = sljpOptions.Value.SecurityMaxSizeToReceive;

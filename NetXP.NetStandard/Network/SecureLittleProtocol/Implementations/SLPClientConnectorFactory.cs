@@ -37,7 +37,6 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
                 }
 
                 return new SLPClientConnector(
-                    container.Resolve<IClientConnectorFactoryProducer>(),
                     container.Resolve<INameResolverFactory<IAsymetricCrypt>>(),
                     container.Resolve<ISymetricCrypt>(),
                     container.Resolve<ISerializer>(),
@@ -53,7 +52,6 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
             else
             {
                 return new SLPClientConnector(
-                    container.Resolve<IClientConnectorFactoryProducer>(),
                     container.Resolve<INameResolverFactory<IAsymetricCrypt>>(),
                     container.Resolve<ISymetricCrypt>(),
                     container.Resolve<ISerializer>(),

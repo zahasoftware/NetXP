@@ -8,6 +8,6 @@ namespace NetXP.NetStandard.Network.TCP
 {
     public interface IClientConnectorFactory
     {
-        IClientConnector Create( params object[] aParams);
+        IClientConnector Create( params object[] @params);
     }
 }

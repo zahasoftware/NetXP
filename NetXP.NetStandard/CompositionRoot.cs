@@ -27,6 +27,7 @@ using NetXP.NetStandard.Network.SecureLittleProtocol.Implementation;
 using NetXP.NetStandard.Network.Email.Implementations;
 using NetXP.NetStandard.Network.Email;
 using NetXP.NetStandard.Auditory.Implementations;
+using NetXP.NetStandard.Network.Proxy.Implementations;
 
 namespace NetXP.NetStandard
 {
@@ -56,18 +57,21 @@ namespace NetXP.NetStandard
             //TCP
             uc.Register<IServerConnector, ServerConnector>("normal", LifeTime.Trasient);
             uc.Register<IClientConnectorFactory, ClientConnectorFactory>("normal", LifeTime.Singleton);
-            uc.Register<IServerConnectorFactory, ServerConnectorFactory>(LifeTime.Singleton);
+
+            //Proxy Connector
+            uc.Register<IClientConnectorFactory, ClientProxyConnectorFactory>(LifeTime.Singleton);
 
             //SLP
             uc.Register<System.Net.Sockets.Socket, System.Net.Sockets.Socket>(LifeTime.Trasient, ctor => ctor.Empty());
 
             uc.Register<IClientConnector, SocketClientConnector>("normal", LifeTime.Trasient, (ctor) => ctor.Empty());
+
             //uc.Register<IClientConnector, SocketClientConnector>("normal-socket",
             //                         LifeTime.Trasient, (ctor) => ctor.WithParameter<System.Net.Sockets.Socket>());
             //uc.Register<IClientConnector, SLPClientConnector>(LifeTime.Trasient);
 
             uc.Register<IServerConnector, SLPServerConnector>(LifeTime.Trasient);
-            uc.Register<IClientConnectorFactory, SLPClientConnectorFactory>(LifeTime.Singleton);
+            uc.Register<IClientConnectorFactory, SLPClientConnectorFactory>("secure", LifeTime.Singleton);
             uc.Register<IPersistentPrivateKeyProvider, PersistentPrivateKeyProvider>(LifeTime.Singleton,
                                                                                     (ctor) =>
                                                                                     {
@@ -98,8 +102,10 @@ namespace NetXP.NetStandard
             config?.GetSection("PPKConf")?.Bind(slpOptions);
             uc.RegisterInstance<IOptions<PersistenPrivateKeyConfiguration>>(
                 new OptionsInstance<PersistenPrivateKeyConfiguration>(persistenPrivateKeyConfiguration), LifeTime.Singleton);
+
             //SLP And TCP
             uc.Register<IClientConnectorFactoryProducer, ClientConnectorFactoryProducer>(LifeTime.Singleton);
+            uc.Register<IServerConnectorFactory, ServerConnectorFactory>(LifeTime.Singleton);
 
             //LJP
             uc.Register<IServerLJP, ServerLJP>(LifeTime.Trasient);
