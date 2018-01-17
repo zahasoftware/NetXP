@@ -66,7 +66,7 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
                     Arguments = "-OutputFormat Text -InputFormat Text -File -"
                 });
                 result.StandardOutput =
-                    result.StandardOutput.Skip(1).Take(1)
+                    result.StandardOutput.Where(o => !string.IsNullOrEmpty(o?.Trim())).Skip(1).Take(1)
                     .Where(o => o?.Trim()?.Equals("") != true).ToArray();
                 // Assert
             }

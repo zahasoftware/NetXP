@@ -39,8 +39,24 @@ namespace NetXP.NetStandard
             Type hashType = typeof(IHash);
             Type loggerType = typeof(ILogger);
 
+            IConfigurationRoot config = null;
+            if (
+                   File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json"))
+                || File.Exists(Path.Combine(Directory.GetCurrentDirectory(), appSettingFile))
+            )
+            {
+                config = new ConfigurationBuilder()
+                                    .SetBasePath(Directory.GetCurrentDirectory())
+                                    .AddJsonFile(appSettingFile ?? "appsettings.json")
+                                    .Build();
+            }
+
             //DI 
             uc.RegisterInstance(container, LifeTime.Singleton);
+
+
+            //Auditory
+            uc.Register<ILogger, Log4NetLogger>(LifeTime.Singleton);
 
             //cnf
             //oIUC.RegisterType<cnf.ISecureRemoteSDMConf, helper.cnf.i.SecureRemoteSDMConf>(new ContainerControlledLifetimeManager());
@@ -58,8 +74,14 @@ namespace NetXP.NetStandard
             uc.Register<IServerConnector, ServerConnector>("normal", LifeTime.Trasient);
             uc.Register<IClientConnectorFactory, ClientConnectorFactory>("normal", LifeTime.Singleton);
 
-            //Proxy Connector
-            uc.Register<IClientConnectorFactory, ClientProxyConnectorFactory>(LifeTime.Singleton);
+
+            //Proxy 
+            ///Configuration
+            var proxyOptions = new ProxyOptions();
+            config?.GetSection("Proxy")?.Bind(proxyOptions);
+            uc.RegisterInstance<IOptions<ProxyOptions>>(new OptionsInstance<ProxyOptions>(proxyOptions), LifeTime.Singleton);
+            ///Proxy Connector
+            uc.Register<IClientConnectorFactory, ClientProxyConnectorFactory>("proxy", LifeTime.Singleton);
 
             //SLP
             uc.Register<System.Net.Sockets.Socket, System.Net.Sockets.Socket>(LifeTime.Trasient, ctor => ctor.Empty());
@@ -71,7 +93,7 @@ namespace NetXP.NetStandard
             //uc.Register<IClientConnector, SLPClientConnector>(LifeTime.Trasient);
 
             uc.Register<IServerConnector, SLPServerConnector>(LifeTime.Trasient);
-            uc.Register<IClientConnectorFactory, SLPClientConnectorFactory>("secure", LifeTime.Singleton);
+            uc.Register<IClientConnectorFactory, SLPClientConnectorFactory>(LifeTime.Singleton);
             uc.Register<IPersistentPrivateKeyProvider, PersistentPrivateKeyProvider>(LifeTime.Singleton,
                                                                                     (ctor) =>
                                                                                     {
@@ -83,25 +105,16 @@ namespace NetXP.NetStandard
                                                                                         ctor.InjectInstance(string.Empty);
                                                                                     });
 
-            IConfigurationRoot config = null;
-            if (!string.IsNullOrEmpty(appSettingFile)
-                && File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json")))
-            {
-
-                config = new ConfigurationBuilder()
-                                    .SetBasePath(Directory.GetCurrentDirectory())
-                                    .AddJsonFile(appSettingFile ?? "appsettings.json")
-                                    .Build();
-            }
 
             var slpOptions = new SLJPOption();
             config?.GetSection("SLP")?.Bind(slpOptions);
             uc.RegisterInstance<IOptions<SLJPOption>>(new OptionsInstance<SLJPOption>(slpOptions), LifeTime.Singleton);
 
             var persistenPrivateKeyConfiguration = new PersistenPrivateKeyConfiguration();
-            config?.GetSection("PPKConf")?.Bind(slpOptions);
+            config?.GetSection("PPKConf")?.Bind(persistenPrivateKeyConfiguration);
             uc.RegisterInstance<IOptions<PersistenPrivateKeyConfiguration>>(
                 new OptionsInstance<PersistenPrivateKeyConfiguration>(persistenPrivateKeyConfiguration), LifeTime.Singleton);
+
 
             //SLP And TCP
             uc.Register<IClientConnectorFactoryProducer, ClientConnectorFactoryProducer>(LifeTime.Singleton);

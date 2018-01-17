@@ -18,7 +18,7 @@ namespace NetXP.NetStandard.NetFramework
         {
             cfg.RegisterNetXPStandard(container, appSettingFile);
 
-            cfg.Register<NetStandard.Auditory.ILogger, Auditory.Implementations.Log4NetLogger>(LifeTime.Singleton);
+
 
             //Cryptography
             cfg.Register<NetStandard.Cryptography.ISymetricCrypt, Symetric>();

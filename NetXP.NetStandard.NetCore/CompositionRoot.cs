@@ -7,9 +7,9 @@ namespace NetXP.NetStandard.NetCore
 {
     public static class CompositionRoot
     {
-        public static void AddNetXPNetCoreRegisters(this IRegister cfg, IContainer container)
+        public static void AddNetXPNetCoreRegisters(this IRegister cfg, IContainer container, string appSettingFile = null)
         {
-            NetXP.NetStandard.CompositionRoot.RegisterNetXPStandard(cfg, container);
+            NetXP.NetStandard.CompositionRoot.RegisterNetXPStandard(cfg, container, appSettingFile);
 
             //Cryptography
             cfg.Register<NetStandard.Cryptography.ISymetricCrypt, Cryptography.Implementations.Symetric>();

@@ -32,9 +32,9 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
             switch (connectorFactory)
             {
                 case ConnectorFactory.ProxyProtocol:
-                    return container.Resolve<IClientConnectorFactory>();
+                    return container.Resolve<IClientConnectorFactory>("proxy");
                 case ConnectorFactory.SecureLitleProtocol:
-                    return container.Resolve<IClientConnectorFactory>("secure");
+                    return container.Resolve<IClientConnectorFactory>();
                 case ConnectorFactory.TransmissionControlProtocol:
                     return container.Resolve<IClientConnectorFactory>("normal");
                 default: throw new NotImplementedException();
