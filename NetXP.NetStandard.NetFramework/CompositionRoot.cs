@@ -29,7 +29,7 @@ namespace NetXP.NetStandard.NetFramework
 
             //SystemInfo
             cfg.Register<NetStandard.SystemInformation.ISystemInformation, SystemInformation.Implementations.SysInfo>();
-            cfg.Register<NetStandard.SystemInformation.IStorageInfo, SystemInformation.Implementations.SysInfo>();
+
 
         }
     }

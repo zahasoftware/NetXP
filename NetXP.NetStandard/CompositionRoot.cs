@@ -28,6 +28,7 @@ using NetXP.NetStandard.Network.Email.Implementations;
 using NetXP.NetStandard.Network.Email;
 using NetXP.NetStandard.Auditory.Implementations;
 using NetXP.NetStandard.Network.Proxy.Implementations;
+using NetXP.NetStandard.Processes.Implementations;
 
 namespace NetXP.NetStandard
 {
@@ -42,7 +43,7 @@ namespace NetXP.NetStandard
             IConfigurationRoot config = null;
             if (
                    File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json"))
-                || File.Exists(Path.Combine(Directory.GetCurrentDirectory(), appSettingFile))
+                || (!string.IsNullOrEmpty(appSettingFile?.Trim()) && File.Exists(Path.Combine(Directory.GetCurrentDirectory(), appSettingFile)))
             )
             {
                 config = new ConfigurationBuilder()
@@ -50,6 +51,7 @@ namespace NetXP.NetStandard
                                     .AddJsonFile(appSettingFile ?? "appsettings.json")
                                     .Build();
             }
+
 
             //DI 
             uc.RegisterInstance(container, LifeTime.Singleton);
@@ -59,10 +61,6 @@ namespace NetXP.NetStandard
             uc.Register<ILogger, Log4NetLogger>(LifeTime.Singleton);
 
             //cnf
-            //oIUC.RegisterType<cnf.ISecureRemoteSDMConf, helper.cnf.i.SecureRemoteSDMConf>(new ContainerControlledLifetimeManager());
-            //uc.RegisterType<IConfig, Configuration.i.SecureAppConfig>(ConfigType.AppConfigSecurity.ToString(), new ContainerControlledLifetimeManager());
-            //uc.RegisterType<IConfig, cnf.i.SecureWebConfig>(ConfigType.WebConfigSecurity.ToString(), new ContainerControlledLifetimeManager());
-            //c.Register<IConfig, ConfigDefault>(new ContainerControlledLifetimeManager());
             uc.Register<IConfigFactory, ConfigFactory>();
             uc.Register<ILogger, Log4NetLogger>(LifeTime.Singleton);
 
@@ -73,6 +71,7 @@ namespace NetXP.NetStandard
             //TCP
             uc.Register<IServerConnector, ServerConnector>("normal", LifeTime.Trasient);
             uc.Register<IClientConnectorFactory, ClientConnectorFactory>("normal", LifeTime.Singleton);
+            uc.Register<IClientConnector, SocketClientConnector>("normal", LifeTime.Trasient, (ctor) => ctor.Empty());
 
 
             //Proxy 
@@ -82,16 +81,13 @@ namespace NetXP.NetStandard
             uc.RegisterInstance<IOptions<ProxyOptions>>(new OptionsInstance<ProxyOptions>(proxyOptions), LifeTime.Singleton);
             ///Proxy Connector
             uc.Register<IClientConnectorFactory, ClientProxyConnectorFactory>("proxy", LifeTime.Singleton);
+            uc.Register<IClientConnector, ClientProxyConnector>("proxy", LifeTime.Trasient);
 
             //SLP
             uc.Register<System.Net.Sockets.Socket, System.Net.Sockets.Socket>(LifeTime.Trasient, ctor => ctor.Empty());
-
-            uc.Register<IClientConnector, SocketClientConnector>("normal", LifeTime.Trasient, (ctor) => ctor.Empty());
-
             //uc.Register<IClientConnector, SocketClientConnector>("normal-socket",
             //                         LifeTime.Trasient, (ctor) => ctor.WithParameter<System.Net.Sockets.Socket>());
             //uc.Register<IClientConnector, SLPClientConnector>(LifeTime.Trasient);
-
             uc.Register<IServerConnector, SLPServerConnector>(LifeTime.Trasient);
             uc.Register<IClientConnectorFactory, SLPClientConnectorFactory>(LifeTime.Singleton);
             uc.Register<IPersistentPrivateKeyProvider, PersistentPrivateKeyProvider>(LifeTime.Singleton,
@@ -135,7 +131,11 @@ namespace NetXP.NetStandard
 
             #region Processes
 
-            uc.Register<NetStandard.Processes.IIOTerminal, NetStandard.Processes.Implementations.IOTerminal>();
+            //Process
+            var ioTerminalOptions = new IOTerminalOptions();
+            config?.GetSection("IOTerminal")?.Bind(ioTerminalOptions);
+            uc.RegisterInstance<IOptions<IOTerminalOptions>>(new OptionsInstance<IOTerminalOptions>(ioTerminalOptions), LifeTime.Singleton);
+            uc.Register<NetStandard.Processes.IIOTerminal, IOTerminal>();
 
             #endregion
 
@@ -154,10 +154,9 @@ namespace NetXP.NetStandard
             uc.Register<IHashFactory, HashFactory>(LifeTime.Singleton);
             #endregion
 
-            //sys
-            //ISysInfo and IStorageInfo need to be implemented in their os system.
-            //uc.Register<sys.ISysInfo, sys.i.SysInfo>(LifeTime.Singleton);
-            //uc.Register<sys.IStorageInfo, sys.i.SysInfo>(LifeTime.Singleton);
+            //System Information
+            //ISysInfo need to be implemented in their os system.
+            uc.Register<NetStandard.SystemInformation.IStorageInfo, SystemInformation.Implementations.SysInfo>();
             var customDateTime = new CustomDateTime(0);
             uc.RegisterInstance<ICustomDateTime>(customDateTime, LifeTime.Singleton);
         }

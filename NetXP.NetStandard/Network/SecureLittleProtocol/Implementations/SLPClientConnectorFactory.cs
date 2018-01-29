@@ -60,7 +60,7 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
                     container.Resolve<IPersistentPrivateKeyProvider>(),
                     container.Resolve<ICompression>(),
                     container.Resolve<ISecureProtocolHandshake>(),
-                    container.Resolve<IClientConnector>("normal"),
+                    container.Resolve<IClientConnector>("proxy"),
                     container.Resolve<IOptions<SLJPOption>>()
                 );
             }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Options;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
@@ -9,6 +10,18 @@ namespace NetXP.NetStandard.Processes.Implementations
 {
     public class IOTerminal : IIOTerminal
     {
+        private IOTerminalOptions ioTerminalOptions;
+
+        public IOTerminal(IOptions<IOTerminalOptions> ioTerminalOptions)
+        {
+            this.ioTerminalOptions = ioTerminalOptions.Value;
+
+            if (this.ioTerminalOptions.WaitTimeOut == 0)
+            {
+                this.ioTerminalOptions.WaitTimeOut = 7000;
+            }
+        }
+
         public ProcessOutput Execute(ProcessInput processInput)
         {
             var psi = new ProcessStartInfo();
@@ -37,7 +50,7 @@ namespace NetXP.NetStandard.Processes.Implementations
                     Func<Task<string>> funcStandardOutput = async () =>
                     {
                         var task = r.ReadToEndAsync();
-                        if (await Task.WhenAny(task, Task.Delay(5000)) != task) throw new TimeoutException("Standard Output Timeout");
+                        if (await Task.WhenAny(task, Task.Delay(this.ioTerminalOptions.WaitTimeOut)) != task) throw new TimeoutException("Standard Output Timeout");
                         return task.Result;
                     };
                     var standarOutput = funcStandardOutput();
@@ -45,12 +58,12 @@ namespace NetXP.NetStandard.Processes.Implementations
                     Func<Task<string>> funcErrorOutput = async () =>
                     {
                         var task = e.ReadToEndAsync();
-                        if (await Task.WhenAny(task, Task.Delay(5000)) != task) throw new TimeoutException("Standard Error Timeout");
+                        if (await Task.WhenAny(task, Task.Delay(this.ioTerminalOptions.WaitTimeOut)) != task) throw new TimeoutException("Standard Error Timeout");
                         return task.Result;
                     };
                     var errorOutput = funcErrorOutput();
 
-                    if (!pro.WaitForExit(5000)) throw new TimeoutException("Shell wait exit");
+                    if (!pro.WaitForExit(this.ioTerminalOptions.WaitTimeOut)) throw new TimeoutException("Shell wait exit");
                     else
                     {
                         output.StandardOutput = Regex.Split(standarOutput.Result, "\r\n");

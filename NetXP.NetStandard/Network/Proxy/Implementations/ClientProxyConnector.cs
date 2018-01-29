@@ -17,12 +17,14 @@ namespace NetXP.NetStandard.Network.Proxy.Implementations
         private byte[] buffer = new byte[1024];
 
         public ClientProxyConnector(
-            IClientConnector clientConnector,
+            IClientConnectorFactoryProducer clientConnectorFactoryProducer,
             IOptions<ProxyOptions> proxyOptions,
             ILogger logger
             )
         {
-            this.clientConnector = clientConnector;
+            this.clientConnector = clientConnectorFactoryProducer.CreateClient(ConnectorFactory.TransmissionControlProtocol)
+                                        .Create();
+
             this.proxyOptions = proxyOptions.Value;
             this.logger = logger;
         }
@@ -55,6 +57,10 @@ namespace NetXP.NetStandard.Network.Proxy.Implementations
                         Server = Dns.GetHostAddresses(proxyUri.Host)[0].ToString()
                     };
                 }
+                catch (ProxyNotFoundException)
+                {
+                    proxyOptions = null;
+                }
                 catch (Exception ex)
                 {
                     this.logger.Error(ex);
@@ -64,10 +70,13 @@ namespace NetXP.NetStandard.Network.Proxy.Implementations
 
             if (proxyOptions != null)///Proxy found
             {
+                /// Basic of Proxy Protocol
+                /// CONNECT: https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/CONNECT
                 clientConnector.Connect(IPAddress.Parse(proxyOptions.Server), proxyOptions.Port);
 
                 ///Proxy Handshake Connection
-                var message = Encoding.ASCII.GetBytes($"CONNECT {ipAddress.ToString()}:{port} HTTP/1.1\r\n\r\n");
+                var message = Encoding.ASCII.GetBytes($"CONNECT {ipAddress.ToString()}:{port} HTTP/1.1\r\n"
+                                                    + $"Connection: keep-alive\r\n\r\n");
                 clientConnector.Send(message, 0, message.Length);
 
                 ///Receiving Proxy Response

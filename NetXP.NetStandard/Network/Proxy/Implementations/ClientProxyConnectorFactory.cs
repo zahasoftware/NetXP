@@ -39,7 +39,7 @@ namespace NetXP.NetStandard.Network.Proxy.Implementations
 
                 return new ClientProxyConnector
                 (
-                    tcpClient,
+                    container.Resolve<IClientConnectorFactoryProducer>(),
                     container.Resolve<IOptions<ProxyOptions>>(),
                     logger
                 );
@@ -48,7 +48,7 @@ namespace NetXP.NetStandard.Network.Proxy.Implementations
             {
                 return new ClientProxyConnector
                 (
-                    clientConnectorFactory.Create(),
+                    container.Resolve<IClientConnectorFactoryProducer>(),
                     container.Resolve<IOptions<ProxyOptions>>(),
                     logger
                 );
