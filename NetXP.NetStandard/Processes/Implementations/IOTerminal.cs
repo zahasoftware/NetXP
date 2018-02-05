@@ -66,8 +66,8 @@ namespace NetXP.NetStandard.Processes.Implementations
                     if (!pro.WaitForExit(this.ioTerminalOptions.WaitTimeOut)) throw new TimeoutException("Shell wait exit");
                     else
                     {
-                        output.StandardOutput = Regex.Split(standarOutput.Result, "\r\n");
-                        output.StandardError = Regex.Split(errorOutput.Result, "\r\n");
+                        output.StandardOutput = Regex.Split(standarOutput.Result, System.Environment.NewLine);
+                        output.StandardError = Regex.Split(errorOutput.Result, System.Environment.NewLine);
 
                         for (int i = 0; i < (output.StandardOutput?.Length ?? 0); i++)
                         {
