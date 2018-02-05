@@ -8,13 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using NetXP.NetStandard.Cryptography;
 
-namespace NetXP.NetStandard.NetCore.Cryptography.Implementations
+namespace NetXP.NetStandard.Cryptography.Implementations
 {
-    public class Symetric : ISymetricCrypt
+    public class SymetricAes : ISymetricCrypt
     {
         public CipherMode Mode { get; private set; }
 
-        public Symetric()
+        public SymetricAes()
         {
             this.Mode = CipherMode.ECB;
         }

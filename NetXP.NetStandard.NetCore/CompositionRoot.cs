@@ -12,7 +12,7 @@ namespace NetXP.NetStandard.NetCore
             NetXP.NetStandard.CompositionRoot.RegisterNetXPStandard(cfg, container, appSettingFile);
 
             //Cryptography
-            cfg.Register<NetStandard.Cryptography.ISymetricCrypt, Cryptography.Implementations.Symetric>();
+            cfg.Register<NetStandard.Cryptography.ISymetricCrypt, Cryptography.Implementations.SymetricAes>();
             cfg.Register<NetStandard.Cryptography.IAsymetricCrypt, Cryptography.Implementations.AsymetricCryptWithMSRSA>();
 
             //Process

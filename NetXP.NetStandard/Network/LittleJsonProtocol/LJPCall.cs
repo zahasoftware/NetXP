@@ -18,6 +18,6 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol
 
         public string InterfaceName { get; set; }
         public string MethodName { get; set; }
-        
+
     }
 }

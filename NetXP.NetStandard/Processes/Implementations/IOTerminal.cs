@@ -79,6 +79,8 @@ namespace NetXP.NetStandard.Processes.Implementations
                             output.StandardError[i] = output.StandardError[i]?.Trim();
                         }
                     }
+
+                    output.ExitCode = pro.ExitCode;
                 }
             }
             return output;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using NetXP.NetStandard.Cryptography;
 using System.Security.Cryptography;
 
-namespace NetXP.NetStandard.NetCore.Cryptography.Implementations
+namespace NetXP.NetStandard.Cryptography.Implementations
 {
     public class AsymetricCryptWithMSRSA : IAsymetricCrypt, IDisposable
     {

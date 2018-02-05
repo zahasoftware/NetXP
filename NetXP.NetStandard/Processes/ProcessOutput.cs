@@ -7,5 +7,6 @@ namespace NetXP.NetStandard.Processes
         public string[] StandardOutput { get; set; }
 
         public string[] StandardError { get; set; }
+        public int ExitCode { get; internal set; }
     }
 }
