@@ -6,8 +6,13 @@ using System.Threading.Tasks;
 using NetXP.NetStandard.Cryptography;
 using System.Security.Cryptography;
 
-namespace NetXP.NetStandard.Cryptography.Implementations
+namespace NetXP.NetStandard.NetCore.Cryptography.Implementations
 {
+
+    /// <summary>
+    /// https://stackoverflow.com/questions/41986995/implement-rsa-in-net-core 
+    /// This implementation only work in net core
+    /// </summary>
     public class AsymetricCryptWithMSRSA : IAsymetricCrypt, IDisposable
     {
         private RSA rsa;
@@ -23,6 +28,7 @@ namespace NetXP.NetStandard.Cryptography.Implementations
             return rsa.Decrypt(encryptedBytes, RSAEncryptionPadding.Pkcs1);
         }
 
+
         public byte[] Encrypt(byte[] decryptedBytes)
         {
             return rsa.Encrypt(decryptedBytes, RSAEncryptionPadding.Pkcs1);
@@ -36,17 +42,17 @@ namespace NetXP.NetStandard.Cryptography.Implementations
             var rsaParam = rsa.ExportParameters(true);
             if (privKey == null)
             {
-                byte[] yQ = new byte[rsaParam.Q.Length];//SecretPrimeFactorQ.Bytes];//Prime Factor
-                byte[] yP = new byte[rsaParam.P.Length];//.SecretPrimeFactorQ.Bytes];//Prime Factor
+                byte[] yQ = new byte[rsaParam.Q.Length];
+                byte[] yP = new byte[rsaParam.P.Length];
 
-                byte[] yInverseQ = new byte[rsaParam.InverseQ.Length];// IQmodP.Bytes];//Prime Factor
+                byte[] yInverseQ = new byte[rsaParam.InverseQ.Length];
                 byte[] yDP = new byte[rsaParam.DP.Length];
                 byte[] yDQ = new byte[rsaParam.DQ.Length];
 
                 //Public Part Key
                 byte[] yPm = new byte[rsaParam.Modulus.Length];
                 byte[] yPe = new byte[rsaParam.Exponent.Length];
-                byte[] yD = new byte[rsaParam.D.Length]; //PrivateExponent.Bytes];
+                byte[] yD = new byte[rsaParam.D.Length];
 
                 privKey = new PrivateKey()
                 {
@@ -154,7 +160,7 @@ namespace NetXP.NetStandard.Cryptography.Implementations
             //rsa.PublicExponent = OpenSSL.Core.BigNumber.FromArray(publicKey.yExponent);
 
             RSAParameters rsaParam = new RSAParameters();
-            rsaParam.Modulus =  publicKey.yModulus;
+            rsaParam.Modulus = publicKey.yModulus;
             rsaParam.Exponent = publicKey.yExponent;
             rsa.ImportParameters(rsaParam);
             this.publicKey = publicKey;
