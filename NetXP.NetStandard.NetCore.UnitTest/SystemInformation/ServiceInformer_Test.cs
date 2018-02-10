@@ -51,7 +51,6 @@ namespace NetXP.NetStandard.NetCore.Cryptography.Tests
             var serviceInformer = container.Resolve<IServiceInformer>();
             var services = serviceInformer.GetServices();
         }
-        
     }
     
 }

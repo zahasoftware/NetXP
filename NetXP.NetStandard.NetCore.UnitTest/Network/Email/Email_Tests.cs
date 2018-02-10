@@ -35,7 +35,7 @@ namespace NetXP.NetStandard.NetCore.Cryptography.Tests
             });
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void NC_IMailSender()
         {
             // Make a file with name unversionSettings.json with the follow data:
