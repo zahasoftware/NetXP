@@ -29,20 +29,27 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
             //Window 
             if (osInfo.Platform == OSPlatformType.Windows)
             {
+                throw new PlatformNotSupportedException("Cannot get all state of service with Net Core, Please use NetFramework implementation for windows system.");
+
                 var services = ServiceController.GetServices();
                 foreach (var service in services)
                 {
-                    servicesInformations.Add(new ServiceInformation
+                    var serviceInformation = new ServiceInformation
                     {
-                        ServiceName = service.ServiceName
-                    });
+                        ServiceName = service.ServiceName,
+                        Description = null,
+                        State = service.Status == ServiceControllerStatus.Running ? ServiceState.Running :
+                                                    service.Status == ServiceControllerStatus.Stopped ? ServiceState.Stopped : ServiceState.Unknown
+                    };
+
+                    servicesInformations.Add(serviceInformation);
                 }
             }
             else if (osInfo.Platform == OSPlatformType.Linux)
             {
                 ProcessOutput output = terminal.Execute(new ProcessInput
                 {
-                    Command = "systemctl list-unit-files --all --type=service | grep ''",
+                    Command = "systemctl list-units --type=service | grep ''",
                     ShellName = "/bin/bash",
                     MaxOfSecondToWaitCommand = 5,
                     Arguments = ""
@@ -54,21 +61,68 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
                     {
                         continue;
                     }
-                    var lineSplited = line.Split(new char[] { ' ' }, 2, StringSplitOptions.RemoveEmptyEntries);
-                    if (lineSplited.Length != 2)
+                    var lineSplited = line.Split(new char[] { ' ' }, 5, StringSplitOptions.RemoveEmptyEntries);
+                    if (lineSplited.Length != 5)
                     {
                         throw new SystemInformationException("Service Output Failed, The systemctl Output has changed");
                     }
 
                     servicesInformations.Add(new ServiceInformation
                     {
-                        ServiceName = lineSplited[0]
+                        ServiceName = lineSplited[0],
+                        Description = lineSplited[4],
+                        State = GetServiceState(OSPlatformType.Linux, lineSplited),
+                        StartupState = GetServiceStartupState(OSPlatformType.Linux, lineSplited)
                     });
                 }
 
             }
 
             return servicesInformations.Count > 0 ? servicesInformations : null;
+        }
+
+        private ServiceStartupState GetServiceStartupState(OSPlatformType osPlatform, string[] lineSplited)
+        {
+            if (osPlatform == OSPlatformType.Linux)
+            {
+                if (lineSplited[2].ToLower().Contains("active"))
+                {
+                    return ServiceStartupState.Active;
+                }
+                else if (lineSplited[2].ToLower().Contains("disabled"))
+                {
+                    return ServiceStartupState.Disabled;
+                }
+                else{
+                    throw new SystemInformationException($"ServiceStartupState \"{lineSplited[2]}\" not recognized in linux system.");
+                }
+            }
+            else
+            {
+                throw new PlatformNotSupportedException("Platform not supported to get service startup state");
+            }
+        }
+
+        private ServiceState GetServiceState(OSPlatformType osPlatformType, string[] lineSplited)
+        {
+            if (osPlatformType == OSPlatformType.Linux)
+            {
+                if (lineSplited[3].ToLower().Contains("running")) ///Service 
+                {
+                    return ServiceState.Running;
+                }
+                else if (lineSplited[3].ToLower().Contains("exited")) ///Service 
+                {
+                    return ServiceState.Stopped;
+                }
+                else{
+                    throw new SystemInformationException($"ServiceStartupState \"{lineSplited[2]}\" not recognized in linux system.");
+                }
+            }
+            else
+            {
+                throw new PlatformNotSupportedException("Platform not supported to get service state");
+            }
         }
     }
 }

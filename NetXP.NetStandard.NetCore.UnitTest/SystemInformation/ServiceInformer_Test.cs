@@ -40,14 +40,6 @@ namespace NetXP.NetStandard.NetCore.Cryptography.Tests
         [TestMethod]
         public void NC_GetServices()
         {
-            var terminal =container.Resolve<IIOTerminal>();
-            ProcessOutput output = terminal.Execute(new ProcessInput
-                {
-                    Command = "systemctl list-unit-files --all --type=service | grep ''",
-                    ShellName = "/bin/bash",
-                    MaxOfSecondToWaitCommand = 5,
-                    Arguments = ""
-                });
             var serviceInformer = container.Resolve<IServiceInformer>();
             var services = serviceInformer.GetServices();
         }
