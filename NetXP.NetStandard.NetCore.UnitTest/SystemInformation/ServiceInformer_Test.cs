@@ -14,6 +14,7 @@ using di = NetXP.NetStandard.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using NetXP.NetStandard.Network.Email;
 using NetXP.NetStandard.Processes;
+using NetXP.NetStandard.SystemInformation;
 
 namespace NetXP.NetStandard.NetCore.Cryptography.Tests
 {
@@ -42,11 +43,13 @@ namespace NetXP.NetStandard.NetCore.Cryptography.Tests
             var terminal =container.Resolve<IIOTerminal>();
             ProcessOutput output = terminal.Execute(new ProcessInput
                 {
-                    Command = "systemctl list-units --all --type=service | grep ''",
+                    Command = "systemctl list-unit-files --all --type=service | grep ''",
                     ShellName = "/bin/bash",
                     MaxOfSecondToWaitCommand = 5,
                     Arguments = ""
                 });
+            var serviceInformer = container.Resolve<IServiceInformer>();
+            var services = serviceInformer.GetServices();
         }
         
     }
