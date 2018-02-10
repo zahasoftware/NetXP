@@ -42,13 +42,12 @@ namespace NetXP.NetStandard.NetCore.Cryptography.Tests
             var terminal =container.Resolve<IIOTerminal>();
             ProcessOutput output = terminal.Execute(new ProcessInput
                 {
-                    Command = "systemctl list-units --all --type=service | grep ''",
+                    Command = "systemctl list-unit-files --all --type=service | grep ''",
                     ShellName = "/bin/bash",
                     MaxOfSecondToWaitCommand = 5,
                     Arguments = ""
                 });
         }
-        
     }
     
 }

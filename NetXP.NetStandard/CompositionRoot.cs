@@ -29,6 +29,8 @@ using NetXP.NetStandard.Network.Email;
 using NetXP.NetStandard.Auditory.Implementations;
 using NetXP.NetStandard.Network.Proxy.Implementations;
 using NetXP.NetStandard.Processes.Implementations;
+using NetXP.NetStandard.SystemInformation;
+using NetXP.NetStandard.SystemInformation.Implementations;
 
 namespace NetXP.NetStandard
 {
@@ -159,6 +161,7 @@ namespace NetXP.NetStandard
             uc.Register<NetStandard.SystemInformation.IStorageInfo, SystemInformation.Implementations.SysInfo>();
             var customDateTime = new CustomDateTime(0);
             uc.RegisterInstance<ICustomDateTime>(customDateTime, LifeTime.Singleton);
+            uc.Register<IServiceInformer, ServiceInformer>(LifeTime.Singleton);
         }
     }
 }
