@@ -8,8 +8,8 @@ namespace NetXP.NetStandard.SystemInformation
     public enum ServiceState
     {
         Running,///Service is active and running.
-        Stopped, ///Service is active but It's stoped.
-        Disabled,///Service is disabled, and It cannot start in boot startup.
+        Stopped,///Service is active but It's stoped.
+        Paused,///Service is active but It's paused.
         Unknown,///Service is in an unrecognized state.
     }
 }

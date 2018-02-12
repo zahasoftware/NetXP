@@ -15,8 +15,9 @@ using Microsoft.Extensions.Configuration;
 using NetXP.NetStandard.Network.Email;
 using NetXP.NetStandard.Processes;
 using NetXP.NetStandard.SystemInformation;
+using NetXP.NetStandard.NetFramework;
 
-namespace NetXP.NetStandard.NetCore.Cryptography.Tests
+namespace NetXP.NetStandard.NetFramework.Cryptography.Tests
 {
     [TestClass()]
     public class ServiceInformation_Tests
@@ -33,12 +34,12 @@ namespace NetXP.NetStandard.NetCore.Cryptography.Tests
             container = new SMContainer(smapContainer);
             container.Configuration.Configure((IRegister cnf) =>
             {
-                cnf.AddNetXPNetCoreRegisters(container);
+                cnf.AddNetXPNetFrameworkRegisters(container);
             });
         }
 
         [TestMethod]
-        public void NC_GetServices()
+        public void NF_GetServices()
         {
             var serviceInformer = container.Resolve<IServiceInformer>();
             var services = serviceInformer.GetServices();

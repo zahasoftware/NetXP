@@ -4,6 +4,7 @@ using NetXP.NetStandard.NetFramework.Cryptography;
 using NetXP.NetStandard.NetFramework.Cryptography.Implementations;
 using NetXP.NetStandard.Network.TCP;
 using NetXP.NetStandard.Network.TCP.Implementations;
+using SmartSecurity.NetStandard.NetFramework.SystemInformation.Implementations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,7 @@ namespace NetXP.NetStandard.NetFramework
 
             //SystemInfo
             cfg.Register<NetStandard.SystemInformation.ISystemInformation, SystemInformation.Implementations.SysInfo>();
+            cfg.Register<NetStandard.SystemInformation.IServiceInformer, ServiceInformerWindowsOnly>();
 
 
         }

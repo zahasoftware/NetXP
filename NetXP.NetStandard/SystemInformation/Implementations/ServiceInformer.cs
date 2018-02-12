@@ -31,19 +31,7 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
             {
                 throw new PlatformNotSupportedException("Cannot get all state of service with Net Core, Please use NetFramework implementation for windows system.");
 
-                var services = ServiceController.GetServices();
-                foreach (var service in services)
-                {
-                    var serviceInformation = new ServiceInformation
-                    {
-                        ServiceName = service.ServiceName,
-                        Description = null,
-                        State = service.Status == ServiceControllerStatus.Running ? ServiceState.Running :
-                                                    service.Status == ServiceControllerStatus.Stopped ? ServiceState.Stopped : ServiceState.Unknown
-                    };
-
-                    servicesInformations.Add(serviceInformation);
-                }
+            
             }
             else if (osInfo.Platform == OSPlatformType.Linux)
             {
