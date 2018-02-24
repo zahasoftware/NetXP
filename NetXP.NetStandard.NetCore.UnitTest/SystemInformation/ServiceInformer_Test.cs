@@ -38,7 +38,7 @@ namespace NetXP.NetStandard.NetCore.Cryptography.Tests
         }
 
         [TestMethod]
-        public void NC_GetServices()
+        public void NS_GetServices()
         {
             var serviceInformer = container.Resolve<IServiceInformer>();
             var services = serviceInformer.GetServices();

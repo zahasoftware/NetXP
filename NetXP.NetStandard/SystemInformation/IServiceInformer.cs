@@ -7,5 +7,6 @@ namespace NetXP.NetStandard.SystemInformation
     public interface IServiceInformer
     {
         List<ServiceInformation> GetServices();
+        ServiceInformation GetService(string serviceName);
     }
 }

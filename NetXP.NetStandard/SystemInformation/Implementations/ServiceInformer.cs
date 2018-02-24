@@ -22,6 +22,51 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
             this.terminal = terminal;
         }
 
+        public ServiceInformation GetService(string serviceName)
+        {
+            List<ServiceInformation> servicesInformations = new List<ServiceInformation>();
+            var osInfo = systemInformation.GetOSInfo();
+            //Window 
+            if (osInfo.Platform == OSPlatformType.Windows)
+            {
+                throw new PlatformNotSupportedException("Cannot get all state of service with Net Core, Please use NetFramework implementation for windows system.");
+            }
+            else if (osInfo.Platform == OSPlatformType.Linux)
+            {
+                ProcessOutput output = terminal.Execute(new ProcessInput
+                {
+                    Command = "systemctl list-units --type=service | grep '${serviceName}'",
+                    ShellName = "/bin/bash",
+                    MaxOfSecondToWaitCommand = 5,
+                    Arguments = ""
+                });
+
+                foreach (var line in output.StandardOutput.Skip(1))
+                {
+                    if (!line.Contains("service"))
+                    {
+                        continue;
+                    }
+                    var lineSplited = line.Split(new char[] { ' ' }, 5, StringSplitOptions.RemoveEmptyEntries);
+                    if (lineSplited.Length != 5)
+                    {
+                        throw new SystemInformationException("Service Output Failed, The systemctl Output has changed");
+                    }
+
+                    servicesInformations.Add(new ServiceInformation
+                    {
+                        ServiceName = lineSplited[0],
+                        Description = lineSplited[4],
+                        State = GetServiceState(OSPlatformType.Linux, lineSplited),
+                        StartupState = GetServiceStartupState(OSPlatformType.Linux, lineSplited)
+                    });
+                }
+
+            }
+
+            return servicesInformations.Count > 0 ? servicesInformations.Single() : null;
+        }
+
         public List<ServiceInformation> GetServices()
         {
             List<ServiceInformation> servicesInformations = new List<ServiceInformation>();
@@ -31,7 +76,7 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
             {
                 throw new PlatformNotSupportedException("Cannot get all state of service with Net Core, Please use NetFramework implementation for windows system.");
 
-            
+
             }
             else if (osInfo.Platform == OSPlatformType.Linux)
             {
@@ -81,7 +126,8 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
                 {
                     return ServiceStartupState.Disabled;
                 }
-                else{
+                else
+                {
                     throw new SystemInformationException($"ServiceStartupState \"{lineSplited[2]}\" not recognized in linux system.");
                 }
             }
@@ -103,7 +149,8 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
                 {
                     return ServiceState.Stopped;
                 }
-                else{
+                else
+                {
                     throw new SystemInformationException($"ServiceStartupState \"{lineSplited[2]}\" not recognized in linux system.");
                 }
             }
