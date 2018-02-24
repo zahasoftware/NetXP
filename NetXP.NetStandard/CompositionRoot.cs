@@ -31,6 +31,8 @@ using NetXP.NetStandard.Network.Proxy.Implementations;
 using NetXP.NetStandard.Processes.Implementations;
 using NetXP.NetStandard.SystemInformation;
 using NetXP.NetStandard.SystemInformation.Implementations;
+using NetXP.NetStandard.SystemManagers;
+using NetXP.NetStandard.SystemManagers.Implementations;
 
 namespace NetXP.NetStandard
 {
@@ -162,6 +164,9 @@ namespace NetXP.NetStandard
             var customDateTime = new CustomDateTime(0);
             uc.RegisterInstance<ICustomDateTime>(customDateTime, LifeTime.Singleton);
             uc.Register<IServiceInformer, ServiceInformer>(LifeTime.Singleton);
+
+            ///System Managers
+            uc.Register<IServiceManager, ServiceManager>(LifeTime.Singleton);
         }
     }
 }

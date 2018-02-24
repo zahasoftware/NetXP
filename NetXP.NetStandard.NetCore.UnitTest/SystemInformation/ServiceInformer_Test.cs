@@ -19,7 +19,7 @@ using NetXP.NetStandard.SystemInformation;
 namespace NetXP.NetStandard.NetCore.Cryptography.Tests
 {
     [TestClass()]
-    public class ServiceInformation_Tests
+    public class ServiceInformer_Tests
     {
         private di.IContainer container;
 

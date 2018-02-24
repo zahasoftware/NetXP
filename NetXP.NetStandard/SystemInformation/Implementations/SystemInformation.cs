@@ -31,7 +31,7 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
                 Platform = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? OSPlatformType.Linux :
                            RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? OSPlatformType.Windows :
                            RuntimeInformation.IsOSPlatform(OSPlatform.OSX) ? OSPlatformType.OSX :
-                           OSPlatformType.Unknown
+                           OSPlatformType.Unknown,
             };
             return osInfo;
         }
