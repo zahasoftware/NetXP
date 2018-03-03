@@ -11,5 +11,6 @@ namespace NetXP.NetStandard.SystemInformation
         Stopped,///Service is active but It's stoped.
         Paused,///Service is active but It's paused.
         Unknown,///Service is in an unrecognized state.
+        Failed,///Service With Error.
     }
 }

@@ -4,9 +4,11 @@ namespace NetXP.NetStandard.SystemInformation
     public enum ServiceStartupState
     {
 
-        ///Indicates that the service is to be started (or was started) by the operating system
+        ///Service will be started (or was started) by the operating system
         Active,
-        ///Indicates that the service is disabled, so that it cannot be start on system startup
+        ///Service is disabled, so it cannot be start on system startup
         Disabled,
+        ///Service cannot start because exits an error.
+        Failed
     }
 }
