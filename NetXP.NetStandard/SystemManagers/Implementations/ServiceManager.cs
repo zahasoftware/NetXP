@@ -66,7 +66,7 @@ namespace NetXP.NetStandard.SystemManagers.Implementations {
 
                     var outputFilePath = $"/etc/systemd/system/{serviceName}{(serviceName.Contains(".service") ? "" : ".service")}";
 
-                    using (var f = File.Open (outputFilePath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
+                    using (var f = File.Open (outputFilePath, FileMode.CreateNew, FileAccess.Write, FileShare.None))
                     using (var w = new StreamWriter (f)) {
                         w.Write (serviceFile);
                     }
@@ -87,64 +87,112 @@ namespace NetXP.NetStandard.SystemManagers.Implementations {
                     throw new SystemManagerException (string.Join (Environment.NewLine, output.StandardOutput));
                 }
             } else if (systemInformation.GetOSInfo ().Platform == SystemInformation.Implementations.OSPlatformType.Linux) {
+                try
+                {
+                    var output = this.terminal.Execute(new ProcessInput
+                    {
+                        ShellName = "/bin/bash",
+                        Command = $"systemctl disable \"{serviceName}\""
+                    });
 
+                    if (output.ExitCode != 0)
+                    {
+                        throw new SystemManagerException(string.Join(Environment.NewLine, output.StandardError));
+                    }
+
+                    var outputFilePath = $"/etc/systemd/system/{serviceName}{(serviceName.Contains(".service") ? "" : ".service")}";
+                    File.Delete(outputFilePath);
+                }
+                catch (IOException ioe)
+                {
+                    throw new SystemManagerException("Cannot make service", ioe);
+                }
             }
         }
 
-        public void Start (string serviceName) {
-            if (systemInformation.GetOSInfo ().Platform == SystemInformation.Implementations.OSPlatformType.Windows) {
-                var output = this.terminal.Execute (new ProcessInput {
+        public void Start(string serviceName)
+        {
+            if (systemInformation.GetOSInfo().Platform == SystemInformation.Implementations.OSPlatformType.Windows)
+            {
+                var output = this.terminal.Execute(new ProcessInput
+                {
                     ShellName = "cmd",
-                        Arguments = $"/c sc start \"{serviceName}\""
+                    Arguments = $"/c sc start \"{serviceName}\""
                 });
 
-                if (output.ExitCode != 0) {
-                    throw new SystemManagerException (string.Join (Environment.NewLine, output.StandardOutput));
+                if (output.ExitCode != 0)
+                {
+                    throw new SystemManagerException(string.Join(Environment.NewLine, output.StandardOutput));
                 }
-            } else if (systemInformation.GetOSInfo ().Platform == SystemInformation.Implementations.OSPlatformType.Linux) {
-                var output = this.terminal.Execute (new ProcessInput {
+            }
+            else if (systemInformation.GetOSInfo().Platform == SystemInformation.Implementations.OSPlatformType.Linux)
+            {
+                var output = this.terminal.Execute(new ProcessInput
+                {
                     ShellName = "/bin/bash",
                     Command = $"systemctl start \"{serviceName}\""
                 });
 
-                if (output.ExitCode != 0) {
-                    throw new SystemManagerException (string.Join (Environment.NewLine, output.StandardError));
+                if (output.ExitCode != 0)
+                {
+                    throw new SystemManagerException(string.Join(Environment.NewLine, output.StandardError));
                 }
 
                 var serviceInformation = this.serviceInformer.GetService(serviceName);
                 if (serviceInformation.State == ServiceState.Failed)
                 {
-                    throw new SystemManagerException( "Service failed, See service state from systemctl for more information");
+                    throw new SystemManagerException("Service failed, See service state from systemctl for more information");
                 }
             }
         }
 
-        public void Stop (string serviceName) {
-            if (systemInformation.GetOSInfo ().Platform == SystemInformation.Implementations.OSPlatformType.Windows) {
-                var output = this.terminal.Execute (new ProcessInput {
+        public void Stop(string serviceName)
+        {
+            if (systemInformation.GetOSInfo().Platform == SystemInformation.Implementations.OSPlatformType.Windows)
+            {
+                var output = this.terminal.Execute(new ProcessInput
+                {
                     ShellName = "cmd",
-                        Arguments = $"/c sc stop \"{serviceName}\""
+                    Arguments = $"/c sc stop \"{serviceName}\""
                 });
 
-                if (output.ExitCode != 0) {
-                    throw new SystemManagerException (string.Join (Environment.NewLine, output.StandardOutput));
+                if (output.ExitCode != 0)
+                {
+                    throw new SystemManagerException(string.Join(Environment.NewLine, output.StandardOutput));
                 }
-            } else if (systemInformation.GetOSInfo ().Platform == SystemInformation.Implementations.OSPlatformType.Linux) {
+            }
+            else if (systemInformation.GetOSInfo().Platform == SystemInformation.Implementations.OSPlatformType.Linux)
+            {
+                var serviceInformation = this.serviceInformer.GetService(serviceName);
+                if (serviceInformation.State == ServiceState.Running)
+                {
+                    var output = this.terminal.Execute(new ProcessInput
+                    {
+                        ShellName = "/bin/bash",
+                        Command = $"systemctl stop \"{serviceName}\""
+                    });
 
+                    if (output.ExitCode != 0)
+                    {
+                        throw new SystemManagerException(string.Join(Environment.NewLine, output.StandardError));
+                    }
+                }
+                else
+                {
+                    throw new SystemManagerException("Service is not runnning.");
+                }
             }
         }
 
-        public void Uninstall (string serviceName) {
-            if (systemInformation.GetOSInfo ().Platform == SystemInformation.Implementations.OSPlatformType.Windows) {
-                var serviceInformation = this.serviceInformer.GetService (serviceName);
-                if (serviceInformation.State == ServiceState.Running) {
-                    this.Stop (serviceName);
-                }
-
-                this.Delete (serviceName);
-            } else if (systemInformation.GetOSInfo ().Platform == SystemInformation.Implementations.OSPlatformType.Linux) {
-
+        public void Uninstall(string serviceName)
+        {
+            var serviceInformation = this.serviceInformer.GetService(serviceName);
+            if (serviceInformation.State == ServiceState.Running)
+            {
+                this.Stop(serviceName);
             }
+
+            this.Delete(serviceName);
         }
     }
 }
