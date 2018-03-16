@@ -166,7 +166,10 @@ namespace NetXP.NetStandard
             uc.Register<IServiceInformer, ServiceInformer>(LifeTime.Singleton);
 
             ///System Managers
+            uc.Register<IServiceManager, ServiceManagerForWindows>(OSPlatformType.Windows.ToString(), LifeTime.Singleton);
+            uc.Register<IServiceManager, ServiceManagerForLinux>(OSPlatformType.Linux.ToString(), LifeTime.Singleton);
             uc.Register<IServiceManager, ServiceManager>(LifeTime.Singleton);
+            uc.Register<IServiceManagerFactory, ServiceManagerFactory>(LifeTime.Singleton);
         }
     }
 }

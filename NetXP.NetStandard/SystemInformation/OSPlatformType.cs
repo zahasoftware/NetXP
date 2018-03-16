@@ -1,4 +1,4 @@
-﻿namespace NetXP.NetStandard.SystemInformation.Implementations
+﻿namespace NetXP.NetStandard.SystemInformation
 {
     public enum OSPlatformType
     {

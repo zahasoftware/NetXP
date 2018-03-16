@@ -13,6 +13,7 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol
     {
         public LJPCall()
         {
+            ///Version used to change some implementation, used in SendCall Implementations
             this.Version = "1.0";
         }
 

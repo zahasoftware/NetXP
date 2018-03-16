@@ -34,7 +34,7 @@ namespace NetXP.NetStandard.NetCore.UnitTest.Processes.Implementations
             var systemInformation = container.Resolve<NetStandard.SystemInformation.ISystemInformation>();
             ProcessOutput result = null;
 
-            if (systemInformation.GetOSInfo().Platform == SystemInformation.Implementations.OSPlatformType.Windows)
+            if (systemInformation.GetOSInfo().Platform == SystemInformation.OSPlatformType.Windows)
             {
                 // Act
                 IIOTerminal iOTerminal = this.CreateIOTerminal();
@@ -50,7 +50,7 @@ namespace NetXP.NetStandard.NetCore.UnitTest.Processes.Implementations
                     .Where(o => o?.Trim()?.Equals("") != true).ToArray();
                 // Assert
             }
-            else if (systemInformation.GetOSInfo().Platform == SystemInformation.Implementations.OSPlatformType.Linux)
+            else if (systemInformation.GetOSInfo().Platform == SystemInformation.OSPlatformType.Linux)
             {
                 // Act
                 IIOTerminal iOTerminal = this.CreateIOTerminal();
@@ -67,8 +67,7 @@ namespace NetXP.NetStandard.NetCore.UnitTest.Processes.Implementations
                 // Assert
             }
 
-
-                Assert.AreNotEqual(result.StandardOutput, 0);
+            Assert.AreNotEqual(result.StandardOutput, 0);
         }
 
         private IIOTerminal CreateIOTerminal()

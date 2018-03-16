@@ -55,7 +55,7 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
             // Arrange
             ProcessOutput result = null;
 
-            if (GetOSInfo().Platform == SystemInformation.Implementations.OSPlatformType.Windows)
+            if (GetOSInfo().Platform == SystemInformation.OSPlatformType.Windows)
             {
                 // Act
                 result = this.ioTerminal.Execute(new ProcessInput
@@ -70,7 +70,7 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
                     .Where(o => o?.Trim()?.Equals("") != true).ToArray();
                 // Assert
             }
-            else if (GetOSInfo().Platform == SystemInformation.Implementations.OSPlatformType.Linux)
+            else if (GetOSInfo().Platform == SystemInformation.OSPlatformType.Linux)
             {
                 // Act
                 result = this.ioTerminal.Execute(new ProcessInput
