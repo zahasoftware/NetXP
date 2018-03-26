@@ -26,7 +26,6 @@ namespace NetXP.NetStandard.SystemManagers.Implementations
 
         public void Create(string serviceName, string binPath, ServiceCreateOptions serviceCreateOptions)
         {
-
             try
             {
                 var description = string.IsNullOrEmpty(serviceCreateOptions?.Description?.Trim()) ?
@@ -40,7 +39,7 @@ namespace NetXP.NetStandard.SystemManagers.Implementations
                 var serviceFile =
                     $"[Unit]{Environment.NewLine}" +
                     $"Description=\"{description}\"{Environment.NewLine}" +
-                    $"After=\"{after}\"{Environment.NewLine}" +
+                    //$"After=\"{after}\"{Environment.NewLine}" +
                     $"[Service]{Environment.NewLine}" +
                     $"ExecStart={binPath}{Environment.NewLine}" +
                     $"[Install]{Environment.NewLine}" +
@@ -52,38 +51,65 @@ namespace NetXP.NetStandard.SystemManagers.Implementations
                 using (var w = new StreamWriter(f))
                 {
                     w.Write(serviceFile);
+                    w.Flush();
                 }
+
+                this.Enable(serviceName);
+                this.ReloadDaemon();
             }
             catch (IOException ioe)
             {
                 throw new SystemManagerException("Cannot make service", ioe);
+            }
+        }
+
+        private void ReloadDaemon()
+        {
+            var output = this.terminal.Execute(new ProcessInput
+            {
+                ShellName = "/bin/bash",
+                Command = $"systemctl daemon-reload"
+            });
+
+            if (output.ExitCode != 0)
+            {
+                throw new SystemManagerException(string.Join(Environment.NewLine, output.StandardError));
             }
         }
 
         public void Delete(string serviceName)
         {
-
-            try
+            var output = this.terminal.Execute(new ProcessInput
             {
-                var output = this.terminal.Execute(new ProcessInput
-                {
-                    ShellName = "/bin/bash",
-                    Command = $"systemctl disable \"{serviceName}\""
-                });
+                ShellName = "/bin/bash",
+                Command = $"systemctl disable \"{serviceName}\""
+            });
 
-                if (output.ExitCode != 0)
-                {
-                    throw new SystemManagerException(string.Join(Environment.NewLine, output.StandardError));
-                }
-
-                var outputFilePath = $"/etc/systemd/system/{serviceName}{(serviceName.Contains(".service") ? "" : ".service")}";
-                File.Delete(outputFilePath);
+            if (output.ExitCode != 0)
+            {
+                throw new SystemManagerException(string.Join(Environment.NewLine, output.StandardError));
             }
-            catch (IOException ioe)
+
+            var outputFilePath = $"/etc/systemd/system/{serviceName}{(serviceName.Contains(".service") ? "" : ".service")}";
+            File.Delete(outputFilePath);
+        }
+
+
+        public void Enable(string serviceName)
+        {
+            var output = this.terminal.Execute(new ProcessInput
             {
-                throw new SystemManagerException("Cannot make service", ioe);
+                ShellName = "/bin/bash",
+                Command = $"systemctl enable \"{serviceName}\""
+            });
+
+            if (output.ExitCode != 0)
+            {
+                throw new SystemManagerException(string.Join(Environment.NewLine, output.StandardError));
             }
         }
+
+
 
         public void Start(string serviceName)
         {
