@@ -20,27 +20,23 @@ namespace NetXP.NetStandard.Reflection.Implementations
             this.container = container;
         }
 
-        public object InvokeMethod(Type tpeNamespace, string sInterface, string sMethod, object[] aParams)
+        public object InvokeMethod(Type namespaceType, string @interface, string method, object[] @params)
         {
-            object oInterfaceResolved;
-            MethodInfo method;
-            ResolveInterfaceAndMethod(tpeNamespace, sInterface, sMethod, out oInterfaceResolved, out method);
+            ResolveInterfaceAndMethod(namespaceType, @interface, method, out object oInterfaceResolved, out MethodInfo methodInfo);
 
             //Serialicing Parameter
-            ParameterInfo[] aParametersInfo = method.GetParameters();
-            if (aParametersInfo.Count() != aParams.Length) throw new InvalidOperationException("Method don't have all parameters.");
+            ParameterInfo[] aParametersInfo = methodInfo.GetParameters();
+            if (aParametersInfo.Count() != @params.Length) throw new ReflectorException("Method doesn't have all the parameters.");
 
-            object oReturn = method.Invoke(oInterfaceResolved, aParams);
+            object oReturn = methodInfo.Invoke(oInterfaceResolved, @params);
             return oReturn;
         }
 
-        public object InvokeMethodWithJSONParameters(Type tpeNamespace, string sInterface, string sMethod, string[] aParams)
+        public object InvokeMethodWithJSONParameters(Type namespaceType, string @interface, string method, string[] @params)
         {
-            object oInterfaceResolved;
-            MethodInfo method;
-            this.ResolveInterfaceAndMethod(tpeNamespace, sInterface, sMethod, out oInterfaceResolved, out method);
+            this.ResolveInterfaceAndMethod(namespaceType, @interface, method, out object oInterfaceResolved, out MethodInfo methodInfo);
 
-            var aParameterInfo = method.GetParameters();
+            var aParameterInfo = methodInfo.GetParameters();
 
             List<object> aParametersToMethod = new List<object>();
 
@@ -52,7 +48,7 @@ namespace NetXP.NetStandard.Reflection.Implementations
                 {
                     using (StreamWriter oSW = new StreamWriter(oMS))
                     {
-                        oSW.Write(aParams[i]);
+                        oSW.Write(@params[i]);
                         oSW.Flush();
                         oMS.Position = 0;
                         var oObject = oJsonSerializer.ReadObject(oMS);
@@ -61,7 +57,7 @@ namespace NetXP.NetStandard.Reflection.Implementations
                 }
             }
 
-            object oReturn = method.Invoke(oInterfaceResolved, aParametersToMethod.ToArray());
+            object oReturn = methodInfo.Invoke(oInterfaceResolved, aParametersToMethod.ToArray());
             return oReturn;
         }
 
@@ -78,63 +74,63 @@ namespace NetXP.NetStandard.Reflection.Implementations
             return typeToTryResolve;
         }
 
-        public bool TryGetType(Type tpeNamespace, string sType, out Type tpeInterface)
+        public bool TryGetType(Type namespaceType, string type, out Type interfaceType)
         {
             //Resolving Interface
             try
             {
-                if (sType.Contains("`") && sType.Contains("["))
+                if (type.Contains("`") && type.Contains("["))
                 {
                     //TODO: Need a List or Array Type Resolver
-                    tpeInterface = Type.GetType(sType);
+                    interfaceType = Type.GetType(type);
                 }
                 else
                 {
-                    tpeInterface = this.GetType(tpeNamespace, sType);
+                    interfaceType = this.GetType(namespaceType, type);
                 }
-                return tpeInterface != null;
+                return interfaceType != null;
 
             }
             catch (Exception)
             {
-                tpeInterface = null;
+                interfaceType = null;
                 return false;
             }
         }
 
-        public MethodInfo ReflectMethod(Type typeNamespace, string sInterface, string sMethod)
+        public MethodInfo ReflectMethod(Type namespaceType, string @interface, string method)
         {
-            if (typeNamespace == null) { throw new ArgumentNullException("typeNamespace null"); }
-            if (sInterface == null) { throw new ArgumentNullException("sInterface null"); }
-            if (sMethod == null) { throw new ArgumentNullException("sMethod null"); }
+            if (namespaceType == null) { throw new ArgumentNullException("Namespace Type null"); }
+            if (@interface == null) { throw new ArgumentNullException("Interface null"); }
+            if (method == null) { throw new ArgumentNullException("Method null"); }
 
             //Resolving Interface
-            Type tpeInterface = null;
-            tpeInterface = Type.GetType(typeNamespace.Namespace + "." + sInterface + ", " + typeNamespace.Namespace);
+            Type interfaceType = null;
+            interfaceType = Type.GetType(namespaceType.Namespace + "." + @interface + ", " + namespaceType.Assembly.FullName);
 
-            if (tpeInterface == null) throw new CustomApplicationException("Bad Interface or namespaces");
+            if (interfaceType == null) throw new ReflectorException($"Interface doesn't exist in namespace of type \"{namespaceType.Name}\"");
 
             //Reflecting Method
-            return tpeInterface.GetTypeInfo().GetMethod(sMethod);
+            return interfaceType.GetTypeInfo().GetMethod(method);
         }
 
-        private void ResolveInterfaceAndMethod(Type tpeNamespace, string sInterface, string sMethod, out object oInterfaceResolved, out MethodInfo method)
+        private void ResolveInterfaceAndMethod(Type namespaceType, string @interface, string method, out object interfaceResolved, out MethodInfo outMethod)
         {
-            if (tpeNamespace == null) { throw new ArgumentNullException("typeNamespace null"); }
-            if (sInterface == null) { throw new ArgumentNullException("sInterface null"); }
-            if (sMethod == null) { throw new ArgumentNullException("sMethod null"); }
+            if (namespaceType == null) { throw new ArgumentNullException("Namespace Type null"); }
+            if (@interface == null) { throw new ArgumentNullException("Interface null"); }
+            if (method == null) { throw new ArgumentNullException("Method null"); }
 
             //Resolving Interface
             Type tpeInterface = null;
-            tpeInterface = Type.GetType(tpeNamespace.Namespace + "." + sInterface + ", " + tpeNamespace.Namespace);
+            tpeInterface = Type.GetType(namespaceType.Namespace + "." + @interface + ", " + namespaceType.Assembly.FullName);
 
-            if (tpeInterface == null) throw new CustomApplicationException("Bad Interface or namespaces");
-            oInterfaceResolved = container.Resolve(tpeInterface);
+            if (tpeInterface == null) throw new ReflectorException("Interface doesn't exist.");
+            interfaceResolved = container.Resolve(tpeInterface);
 
-            if (oInterfaceResolved == null) throw new CustomApplicationException("Can't Resolve");
+            if (interfaceResolved == null) throw new ReflectorException("Can't resolve interface");
 
             //Reflecting Method
-            method = tpeInterface.GetTypeInfo().GetMethod(sMethod);
+            outMethod = tpeInterface.GetTypeInfo().GetMethod(method);
         }
 
 

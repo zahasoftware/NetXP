@@ -16,7 +16,6 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
 {
     public class SLPClientConnector : IClientConnector
     {
-
         public SLPClientConnector(
               INameResolverFactory<IAsymetricCrypt> asymetricCryptFactory,
               ISymetricCrypt symetric,

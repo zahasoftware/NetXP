@@ -89,39 +89,12 @@ namespace NetXP.NetStandard.SystemInformation
 
         //
         // Summary:
-        //     Gets the total amount of free space available on a drive, in human readable.
-        //
-        // Returns:
-        //     The total free space available on a drive, in human readable ex: 10GB or 10MB.
-        //
-        public string TotalFreeSpaceInHumanReadable { get { return TotalFreeSpace.BytesToHumanReadable(); } }
-
-        //
-        // Summary:
         //     Gets the total size of storage space on a drive, in bytes.
         //
         // Returns:
         //     The total size of the drive, in bytes.
         //
         public long TotalSize { get; set; }
-
-        //
-        // Summary:
-        //     Gets the total size of storage space on a drive, in a human readable.
-        //
-        // Returns:
-        //     The total size of the drive, in MB GB Or Any other.
-        //
-        // Exceptions:
-        //   T:System.UnauthorizedAccessException:
-        //     Access to the drive information is denied.
-        //
-        //   T:System.IO.DriveNotFoundException:
-        //     The drive is not mapped or does not exist.
-        //
-        //   T:System.IO.IOException:
-        //     An I/O error occurred (for example, a disk error or a drive was not ready).
-        public string TotalSizeInHumanReadable { get { return TotalSize.BytesToHumanReadable(); } }
 
         //
         // Summary:
