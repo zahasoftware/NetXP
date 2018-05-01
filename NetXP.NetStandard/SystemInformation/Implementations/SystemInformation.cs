@@ -60,10 +60,9 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
                 // Act
                 result = this.ioTerminal.Execute(new ProcessInput
                 {
-                    Command = "Get-WmiObject Win32_BaseBoard | Format-Wide -Property SerialNumber",
-                    ShellName = "powershell",
+                    ShellName = "cmd",
                     MaxOfSecondToWaitCommand = 5,
-                    Arguments = "-OutputFormat Text -InputFormat Text -File -"
+                    Arguments = "/c wmic baseboard get serialnumber"
                 });
                 result.StandardOutput =
                     result.StandardOutput.Where(o => !string.IsNullOrEmpty(o?.Trim())).Skip(1).Take(1)
