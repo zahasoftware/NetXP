@@ -91,21 +91,51 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
 
         public ICollection<StorageInfo> GetStorageInfo()
         {
-            var storageInfoes = DriveInfo.GetDrives().Where(o => o.IsReady).Select(o =>
-                                    new StorageInfo
-                                    {
-                                        VolumeLabel = o.VolumeLabel,
-                                        AvailableFreeSpace = o.AvailableFreeSpace,
-                                        DriveFormat = o.DriveFormat,
-                                        TotalSize = o.TotalSize,
-                                        DriveType = (NetStandard.SystemInformation.DriveType)Enum.Parse(typeof(NetStandard.SystemInformation.DriveType), o.DriveType.ToString()),
-                                        IsReady = o.IsReady,
-                                        Name = o.Name,
-                                        RootDirectory = o.RootDirectory,
-                                        TotalFreeSpace = o.TotalFreeSpace
-                                    }
-                                );
-            return storageInfoes.ToList();
+            var storageInfoesToReturn = new List<StorageInfo>();
+            var storageInfoes = DriveInfo.GetDrives().Where(o => o.IsReady);
+
+            foreach (var o in storageInfoes)
+            {
+                bool @continue = true;
+                while(@continue)
+                try
+                {
+                    if (!Enum.TryParse(o.DriveType.ToString(), out NetStandard.SystemInformation.DriveType driveType))
+                    {
+                        driveType = DriveType.Unknown;
+                    }
+
+                    var storageInfo = new StorageInfo();
+                    storageInfo.VolumeLabel = o.VolumeLabel;
+                    storageInfo.AvailableFreeSpace = o.AvailableFreeSpace;
+                    storageInfo.DriveFormat = o.DriveFormat;
+                    storageInfo.TotalSize = o.TotalSize;
+                    storageInfo.DriveType = driveType;
+                    storageInfo.IsReady = o.IsReady;
+                    storageInfo.Name = o.Name;
+                    storageInfo.RootDirectory = o.RootDirectory;
+                    storageInfo.TotalFreeSpace = o.TotalFreeSpace;
+
+                    storageInfoesToReturn.Add(storageInfo);
+                    @continue = false;
+                }
+                catch (IOException ioe)
+                {
+                    if (ioe.HResult == 19)//No such device, when It is loading information yet
+                    {
+                        Task.Delay(500);
+                    }
+                    else{
+                        continue;
+                    }
+                }
+                catch(Exception ex)
+                {
+
+                }
+            }
+
+            return storageInfoesToReturn.ToList();
         }
     }
 }
