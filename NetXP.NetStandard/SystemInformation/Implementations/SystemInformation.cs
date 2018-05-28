@@ -105,34 +105,39 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
                         driveType = DriveType.Unknown;
                     }
 
-                    var storageInfo = new StorageInfo();
-                    storageInfo.VolumeLabel = o.VolumeLabel;
-                    storageInfo.AvailableFreeSpace = o.AvailableFreeSpace;
-                    storageInfo.DriveFormat = o.DriveFormat;
-                    storageInfo.TotalSize = o.TotalSize;
-                    storageInfo.DriveType = driveType;
-                    storageInfo.IsReady = o.IsReady;
-                    storageInfo.Name = o.Name;
-                    storageInfo.RootDirectory = o.RootDirectory;
-                    storageInfo.TotalFreeSpace = o.TotalFreeSpace;
+                        var storageInfo = new StorageInfo();
+                        storageInfo.VolumeLabel = o.VolumeLabel;
+                        storageInfo.AvailableFreeSpace = o.AvailableFreeSpace;
+                        storageInfo.DriveFormat = o.DriveFormat;
+                        storageInfo.TotalSize = o.TotalSize;
+                        storageInfo.DriveType = driveType;
+                        storageInfo.IsReady = o.IsReady;
+                        storageInfo.Name = o.Name;
+                        storageInfo.RootDirectory = o.RootDirectory;
+                        storageInfo.TotalFreeSpace = o.TotalFreeSpace;
 
-                    storageInfoesToReturn.Add(storageInfo);
-                    @continue = false;
-                }
-                catch (IOException ioe)
-                {
-                    if (ioe.HResult == 19)//No such device, when It is loading information yet
+                        storageInfoesToReturn.Add(storageInfo);
+                        @continue = false;
+                    }
+                    catch (IOException ioe)
                     {
-                        Task.Delay(500);
+                        if (ioe.HResult == 19)//No such device, when It is loading information yet
+                        {
+                            Task.Delay(500);
+                        }
+                        else if (ioe.HResult == 112)
+                        {
+                            Task.Delay(500);
+                        }
+                        else
+                        {
+                            continue;
+                        }
                     }
-                    else{
-                        continue;
-                    }
-                }
-                catch(Exception ex)
-                {
+                    catch (Exception ex)
+                    {
 
-                }
+                    }
             }
 
             return storageInfoesToReturn.ToList();

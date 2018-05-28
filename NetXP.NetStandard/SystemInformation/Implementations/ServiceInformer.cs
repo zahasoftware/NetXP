@@ -155,6 +155,7 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
         }
 
 
+        //TODO: Need to get all service, Include not installed service by error
         public List<ServiceInformation> GetServices()
         {
             List<ServiceInformation> servicesInformations = new List<ServiceInformation>();
@@ -182,7 +183,7 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
                         continue;
                     }
                     var cleanedLine = line.Replace("●", ""); ///systemctl list failed service with "●", and It cannot parse normally
-                    var lineSplited = cleanedLine .Split(new char[] { ' ' }, 5, StringSplitOptions.RemoveEmptyEntries);
+                    var lineSplited = cleanedLine.Split(new char[] { ' ' }, 5, StringSplitOptions.RemoveEmptyEntries);
                     if (lineSplited.Length != 5)
                     {
                         throw new SystemInformationException("Service Output Failed, The systemctl Output has changed");
@@ -202,7 +203,7 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
             return servicesInformations.Count > 0 ? servicesInformations : null;
         }
 
-        private ServiceStartupState GetServiceStartupState(OSPlatformType osPlatform, string startupState,string serviceName)
+        private ServiceStartupState GetServiceStartupState(OSPlatformType osPlatform, string startupState, string serviceName)
         {
             if (osPlatform == OSPlatformType.Linux)
             {
