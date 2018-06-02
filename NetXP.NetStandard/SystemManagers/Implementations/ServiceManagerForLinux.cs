@@ -33,17 +33,21 @@ namespace NetXP.NetStandard.SystemManagers.Implementations
                 var after = string.IsNullOrEmpty(serviceCreateOptions?.After?.Trim()) ?
                     "network.target" : serviceCreateOptions.After;
                 var wantedBy = string.IsNullOrEmpty(serviceCreateOptions?.WantedBy?.Trim()) ?
-                    "default.target" : serviceCreateOptions.WantedBy;
+                    "multi-user.target" : serviceCreateOptions.WantedBy;
 
                 //https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/sect-managing_services_with_systemd-unit_files
-                var serviceFile =
-                    $"[Unit]{Environment.NewLine}" +
-                    $"Description=\"{description}\"{Environment.NewLine}" +
-                    //$"After=\"{after}\"{Environment.NewLine}" +
-                    $"[Service]{Environment.NewLine}" +
-                    $"ExecStart={binPath}{Environment.NewLine}" +
-                    $"[Install]{Environment.NewLine}" +
-                    $"WantedBy={wantedBy}{Environment.NewLine}";
+                var serviceFile = $"[Unit]{Environment.NewLine}" ;
+                serviceFile +=     $"Description=\"{description}\"{Environment.NewLine}" ;
+                //serviceFile += //$"After=\"{after}\"{Environment.NewLine}" +
+                serviceFile += $"[Service]{Environment.NewLine}" ;
+                serviceFile += $"ExecStart={binPath}{Environment.NewLine}" ;
+
+                if (!string.IsNullOrEmpty(serviceCreateOptions?.WorkingDirectory))
+                {
+                    serviceFile += $"WorkingDirectory={serviceCreateOptions?.WorkingDirectory}{Environment.NewLine}";
+                }
+                serviceFile += $"[Install]{Environment.NewLine}" ;
+                serviceFile += $"WantedBy={wantedBy}{Environment.NewLine}";
 
                 var outputFilePath = $"/etc/systemd/system/{serviceName}{(serviceName.Contains(".service") ? "" : ".service")}";
 

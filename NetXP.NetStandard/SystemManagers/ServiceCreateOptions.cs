@@ -16,5 +16,6 @@ namespace NetXP.NetStandard.SystemManagers
 
         public string After { get; set; }
         public string WantedBy { get; set; }
+        public string WorkingDirectory {get;set;}
     }
 }
