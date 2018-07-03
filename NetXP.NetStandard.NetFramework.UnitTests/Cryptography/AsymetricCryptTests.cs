@@ -30,7 +30,7 @@ namespace NetXP.NetStandard.NetFramework.Cryptography.Tests
             container.Configuration.Configure(smre =>
             {
                 CompositionRoot.AddNetXPNetFrameworkRegisters(smre, container);
-                smre.RegisterInstance<IContainer>(container, LifeTime.Trasient);
+                smre.RegisterInstance<IContainer>(container, DILifeTime.Trasient);
                 smre.Register<IAsymetricCrypt, Implementations.AsymetricCryptWithRSACng>();
             });
 

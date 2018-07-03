@@ -68,7 +68,7 @@ namespace NetXP.NetStandard.NetCore.Cryptography.Tests
             ///Trying connection without configuration (ProxyOptions = null)
             container.Configuration.Configure((IRegister cnf) =>
             {
-                cnf.RegisterInstance<IOptions<ProxyOptions>>(new OptionsInstance<ProxyOptions>(null), LifeTime.Singleton);
+                cnf.RegisterInstance<IOptions<ProxyOptions>>(new OptionsInstance<ProxyOptions>(null), DILifeTime.Singleton);
             });
 
             var clientConnectorFactory = container.Resolve<IClientConnectorFactory>("proxy");///Proxy Factory

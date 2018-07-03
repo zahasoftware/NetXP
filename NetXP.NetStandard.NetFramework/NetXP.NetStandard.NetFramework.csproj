@@ -50,7 +50,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\..\stnet\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -85,7 +85,6 @@
     <Compile Include="Cryptographic\Implementations\AsymetricCryptWithOpenSSL.cs" />
     <Compile Include="Cryptographic\Implementations\AsymetricCryptWithRSACng.cs" />
     <Compile Include="Cryptographic\Implementations\Symetric.cs" />
-    <Compile Include="Network\Email\Implementations\MailSender.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemInformation\Implementations\SysInfo.cs" />
     <Compile Include="SystemInformation\Implementations\ServiceInformerWindowsOnly.cs" />
@@ -94,6 +93,10 @@
     <ProjectReference Include="..\..\openssl-net\ManagedOpenSsl\ManagedOpenSsl.csproj">
       <Project>{73dcc218-655b-485f-8eac-0ce5f2f7343d}</Project>
       <Name>ManagedOpenSsl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NetXP.NetStandard.Networks\NetXP.NetStandard.Network.csproj">
+      <Project>{65fdc768-8e60-4ef7-95e2-b800eac7ab02}</Project>
+      <Name>NetXP.NetStandard.Network</Name>
     </ProjectReference>
     <ProjectReference Include="..\NetXP.NetStandard\NetXP.NetStandard.csproj">
       <Project>{9b6bcc3a-aee8-4d41-b69d-176510b97891}</Project>

@@ -19,14 +19,9 @@ namespace NetXP.NetStandard.NetFramework
         {
             cfg.RegisterNetXPStandard(container, appSettingFile);
 
-
-
             //Cryptography
             cfg.Register<NetStandard.Cryptography.ISymetricCrypt, Symetric>();
             cfg.Register<NetStandard.Cryptography.IAsymetricCrypt, AsymetricCryptWithOpenSSL>();
-
-            //Mail
-            cfg.Register<NetStandard.Network.Email.IMailSender, Network.Email.Implementations.MailSender>();
 
             //SystemInfo
             cfg.Register<NetStandard.SystemInformation.ISystemInformation, SystemInformation.Implementations.SysInfo>();

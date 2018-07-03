@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using AutoMapper;
 
-namespace NetXP.NetStandard
+namespace NetXP.NetStandard.Mappers
 {
     /// <summary>
     /// Mapper interface by convention
