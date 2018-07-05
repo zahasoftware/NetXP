@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetXP.NetStandard.NetFramework.Cryptography;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +18,7 @@ using System.Net;
 using NetXP.NetStandard.Configuration.Implementations;
 using Microsoft.Extensions.Options;
 
-namespace NetXP.NetStandard.NetCore.Cryptography.Tests
+namespace NetXP.NetStandard.NetCore.UnitTest.Network.Proxy
 {
     [TestClass()]
     public class Proxy_Tests

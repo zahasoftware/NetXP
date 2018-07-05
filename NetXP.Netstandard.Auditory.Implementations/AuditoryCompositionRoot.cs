@@ -6,9 +6,9 @@ using System.Text;
 
 namespace NetXP.NetStandard.Auditory.Implementations
 {
-    class AuditoryCompositionRoot
+    public static class AuditoryCompositionRoot
     {
-        public static void Init(IRegister uc)
+        public static void RegisterAuditory(this IRegister uc)
         {
             //Auditory
             uc.Register<ILogger, Log4NetLogger>(DILifeTime.Singleton);

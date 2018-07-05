@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps\NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps.csproj" />
     <ProjectReference Include="..\NetXP.NetStandard.NetCore\NetXP.NetStandard.NetCore.csproj" />
     <ProjectReference Include="..\NetXP.NetStandard.Networks\NetXP.NetStandard.Network.csproj" />
     <ProjectReference Include="..\NetXP.NetStandard\NetXP.NetStandard.csproj" />

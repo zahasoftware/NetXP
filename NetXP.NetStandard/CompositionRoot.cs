@@ -9,8 +9,6 @@ using NetXP.NetStandard.Reflection;
 using NetXP.NetStandard.Reflection.Implementations;
 using NetXP.NetStandard.DateAndTime.Implementation;
 using NetXP.NetStandard.Compression;
-using NetXP.NetStandard.Serialization.Implementations;
-using NetXP.NetStandard.Factories;
 using NetXP.NetStandard.Configuration;
 using NetXP.NetStandard.Configuration.Implementations;
 using Microsoft.Extensions.Configuration;
@@ -70,12 +68,6 @@ namespace NetXP.NetStandard
 
             //Reflect
             uc.Register<IReflector, Reflector>(DILifeTime.Singleton);
-
-            //Serializer
-            uc.Register<ISerializerFactory, SerializeTFactory>(DILifeTime.Singleton);
-            uc.Register<ISerializer, Serialize2Xml>(SerializerType.Xml.ToString(), DILifeTime.Singleton);
-            uc.Register<ISerializer, Serialize2Json>(SerializerType.Json.ToString(), DILifeTime.Singleton);
-
 
             //System Information
             //ISysInfo need to be implemented in their os system.

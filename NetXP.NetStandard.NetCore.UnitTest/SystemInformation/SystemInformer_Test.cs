@@ -1,22 +1,13 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetXP.NetStandard.NetFramework.Cryptography;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Security.Cryptography;
 using NetXP.NetStandard.DependencyInjection;
 using NetXP.NetStandard.Cryptography;
 using NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps;
 using StructureMap;
 using di = NetXP.NetStandard.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-using NetXP.NetStandard.Network.Email;
-using NetXP.NetStandard.Processes;
 using NetXP.NetStandard.SystemInformation;
 
-namespace NetXP.NetStandard.NetCore.Cryptography.Tests
+namespace NetXP.NetStandard.NetCore.SystemInformation.Tests
 {
     [TestClass()]
     public class SystemInformer_Tests

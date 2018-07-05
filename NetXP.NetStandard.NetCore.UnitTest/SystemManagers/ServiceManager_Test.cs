@@ -8,7 +8,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetXP.NetStandard.Cryptography;
 using NetXP.NetStandard.DependencyInjection;
 using NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps;
-using NetXP.NetStandard.NetFramework.Cryptography;
 using StructureMap;
 using di = NetXP.NetStandard.DependencyInjection;
 using Microsoft.Extensions.Configuration;
@@ -16,7 +15,7 @@ using NetXP.NetStandard.Network.Email;
 using NetXP.NetStandard.Processes;
 using NetXP.NetStandard.SystemManagers;
 
-namespace NetXP.NetStandard.NetCore.SystemManagers.Tests {
+namespace NetXP.NetStandard.NetCore.UnitTest.SystemManagers.Tests {
     [TestClass ()]
     public class ServiceManager_Tests {
         private di.IContainer container;

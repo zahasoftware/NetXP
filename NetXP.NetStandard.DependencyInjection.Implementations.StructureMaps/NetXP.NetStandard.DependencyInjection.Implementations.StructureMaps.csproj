@@ -5,8 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Network\" />
-    <Folder Include="SOAP\" />
+    <PackageReference Include="structuremap" Version="4.6.1" />
   </ItemGroup>
 
   <ItemGroup>

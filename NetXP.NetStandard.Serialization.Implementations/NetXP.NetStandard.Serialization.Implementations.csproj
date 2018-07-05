@@ -5,11 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Network\" />
-    <Folder Include="SOAP\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\NetXP.NetStandard\NetXP.NetStandard.csproj" />
   </ItemGroup>
 

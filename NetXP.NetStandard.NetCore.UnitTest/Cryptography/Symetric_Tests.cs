@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetXP.NetStandard.NetFramework.Cryptography;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +12,7 @@ using StructureMap;
 using di = NetXP.NetStandard.DependencyInjection;
 using NetXP.NetStandard.NetCore;
 
-namespace NetXP.NetStandard.NetFramework.Cryptography.Tests
+namespace NetXP.NetStandard.NetCore.UnitTest.Cryptography.Tests
 {
     [TestClass()]
     public class Symetric_Tests

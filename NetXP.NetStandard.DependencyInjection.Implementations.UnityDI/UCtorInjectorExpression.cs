@@ -1,11 +1,10 @@
-﻿using StructureMap;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace NetXP.NetStandard.DependencyInjection.Implementations.DIUnity
 {
-    public class UCtorInjectorExpression : ICtorInjectorExpression
+    public class UCtorInjectorExpression 
     {
         private List<UCtorInjector> ctorInjectors = new List<UCtorInjector>();
         internal List<UCtorInjector> CtorInjectors { get => ctorInjectors; set => ctorInjectors = value; }

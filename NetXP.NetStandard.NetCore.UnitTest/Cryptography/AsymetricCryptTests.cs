@@ -9,7 +9,7 @@ using NetXP.NetStandard.NetCore;
 using StructureMap;
 
 /// NOTE: Rebuild project if fail
-namespace NetXP.NetStandard.NetFramework.Cryptography.Tests
+namespace NetXP.NetStandard.NetCore.Cryptography.Tests
 {
 
     [TestClass()]

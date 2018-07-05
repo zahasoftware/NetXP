@@ -1,19 +1,13 @@
 ﻿using Microsoft.Extensions.Options;
 using NetXP.NetStandard.Auditory;
 using NetXP.NetStandard.Compression;
-using NetXP.NetStandard.Configuration;
 using NetXP.NetStandard.Cryptography;
-using NetXP.NetStandard.Cryptography.Implementations;
 using NetXP.NetStandard.DependencyInjection;
 using NetXP.NetStandard.Factories;
 using NetXP.NetStandard.Network.TCP;
-using NetXP.NetStandard.Network.TCP.Implementations;
 using NetXP.NetStandard.Serialization;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
 {

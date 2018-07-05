@@ -3,14 +3,13 @@ using NetXP.NetStandard.Factories;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Unity;
 
 namespace NetXP.NetStandard.Cryptography.Implementations
 {
-    class CryptographyCompositionRoot
+    public static class CryptographyCompositionRoot
     {
 
-        public void RegisterCryptography(IRegister uc)
+        public static void RegisterCryptography(this IRegister uc)
         {
             uc.Register<INameResolverFactory<IAsymetricCrypt>, AsymetricFactory>(DILifeTime.Singleton);
             uc.Register<IHash, HashMD5>(HashType.MD5.ToString(), DILifeTime.Trasient);

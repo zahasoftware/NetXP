@@ -22,7 +22,7 @@ namespace NetXP.NetStandard.Network
 {
     public static class NetworkCompositionRoot
     {
-        public static void RegisterNetXPStandard(this IRegister uc, IContainer container, string appSettingFile = null)
+        public static void RegisterNetwork(this IRegister uc, IContainer container, string appSettingFile = null)
         {
             Type serializerType = typeof(ISerializer);
             Type hashType = typeof(IHash);

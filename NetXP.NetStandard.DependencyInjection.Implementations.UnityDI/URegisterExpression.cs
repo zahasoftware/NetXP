@@ -50,13 +50,13 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.DIUnity
             switch (lifeTime)
             {
                 case DILifeTime.Singleton:
-                    this.container.RegisterType<TInterface, TImplement>(new Unity.Lifetime.ContainerControlledLifetimeManager());
+                    this.container.RegisterType<TInterface, TImplement>(name, new ContainerControlledLifetimeManager());
                     break;
                 case DILifeTime.Trasient:
-                    this.container.RegisterType<TInterface, TImplement>(new Unity.Lifetime.PerResolveLifetimeManager());
+                    this.container.RegisterType<TInterface, TImplement>(name, new PerResolveLifetimeManager());
                     break;
                 case DILifeTime.Scoped:
-                    this.container.RegisterType<TInterface, TImplement>(new Unity.Lifetime.PerThreadLifetimeManager());
+                    this.container.RegisterType<TInterface, TImplement>(name, new PerThreadLifetimeManager());
                     break;
             }
         }

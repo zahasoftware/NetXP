@@ -19,7 +19,8 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.DIUnity
 
         public void Configure(Action<IRegister> expression)
         {
-            expression(new URegisterExpression( container));
+            var c = new URegisterExpression(container);
+            expression(c);
         }
     }
 }
