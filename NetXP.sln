@@ -29,11 +29,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetXP.NetStandard.Auditory.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetXP.NetStandard.Cryptography.Implementations", "NetXP.NetStandard.Cryptography.Implementations\NetXP.NetStandard.Cryptography.Implementations.csproj", "{E072F5D9-FF36-4F9F-97D2-EBB7B9A97E9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps", "NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps\NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps.csproj", "{D1234BAA-9C41-4A87-BCEE-D5143AB35643}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps", "NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps\NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps.csproj", "{D1234BAA-9C41-4A87-BCEE-D5143AB35643}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetXP.NetStandard.DependencyInjection.Implementations.UnityDI", "NetXP.NetStandard.DependencyInjection.Implementations.UnityDI\NetXP.NetStandard.DependencyInjection.Implementations.UnityDI.csproj", "{E5DF6A16-F8E0-437E-A493-653A79DA2342}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetXP.NetStandard.DependencyInjection.Implementations.UnityDI", "NetXP.NetStandard.DependencyInjection.Implementations.UnityDI\NetXP.NetStandard.DependencyInjection.Implementations.UnityDI.csproj", "{E5DF6A16-F8E0-437E-A493-653A79DA2342}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetXP.NetStandard.Serialization.Implementations", "NetXP.NetStandard.Serialization.Implementations\NetXP.NetStandard.Serialization.Implementations.csproj", "{681CEA0F-F2C8-4533-A4CC-EB7B37F6228B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetXP.NetStandard.Serialization.Implementations", "NetXP.NetStandard.Serialization.Implementations\NetXP.NetStandard.Serialization.Implementations.csproj", "{681CEA0F-F2C8-4533-A4CC-EB7B37F6228B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetXP.NetStandard.Network.Services.Implementations", "NetXP.NetStandard.Network.Services.Implementations\NetXP.NetStandard.Network.Services.Implementations.csproj", "{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -519,6 +521,42 @@ Global
 		{681CEA0F-F2C8-4533-A4CC-EB7B37F6228B}.Trace|Any CPU.Build.0 = Debug|Any CPU
 		{681CEA0F-F2C8-4533-A4CC-EB7B37F6228B}.Trace|x64.ActiveCfg = Debug|Any CPU
 		{681CEA0F-F2C8-4533-A4CC-EB7B37F6228B}.Trace|x64.Build.0 = Debug|Any CPU
+		{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}.Debug_Debice|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}.Debug_Debice|Any CPU.Build.0 = Debug|Any CPU
+		{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}.Debug_Debice|x64.ActiveCfg = Debug|Any CPU
+		{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}.Debug_Debice|x64.Build.0 = Debug|Any CPU
+		{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}.Debug_Device|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}.Debug_Device|Any CPU.Build.0 = Debug|Any CPU
+		{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}.Debug_Device|x64.ActiveCfg = Debug|Any CPU
+		{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}.Debug_Device|x64.Build.0 = Debug|Any CPU
+		{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}.Debug_Manager|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}.Debug_Manager|Any CPU.Build.0 = Debug|Any CPU
+		{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}.Debug_Manager|x64.ActiveCfg = Debug|Any CPU
+		{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}.Debug_Manager|x64.Build.0 = Debug|Any CPU
+		{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}.Debug|x64.Build.0 = Debug|Any CPU
+		{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}.Device_Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}.Device_Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}.Device_Debug|x64.ActiveCfg = Debug|Any CPU
+		{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}.Device_Debug|x64.Build.0 = Debug|Any CPU
+		{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}.MGR-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}.MGR-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}.MGR-Debug|x64.ActiveCfg = Debug|Any CPU
+		{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}.MGR-Debug|x64.Build.0 = Debug|Any CPU
+		{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}.Release|x64.ActiveCfg = Release|Any CPU
+		{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}.Release|x64.Build.0 = Release|Any CPU
+		{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}.ReleaseWithDebug|Any CPU.ActiveCfg = Release|Any CPU
+		{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}.ReleaseWithDebug|Any CPU.Build.0 = Release|Any CPU
+		{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}.ReleaseWithDebug|x64.ActiveCfg = Release|Any CPU
+		{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}.ReleaseWithDebug|x64.Build.0 = Release|Any CPU
+		{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}.Trace|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}.Trace|Any CPU.Build.0 = Debug|Any CPU
+		{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}.Trace|x64.ActiveCfg = Debug|Any CPU
+		{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}.Trace|x64.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -537,6 +575,7 @@ Global
 		{D1234BAA-9C41-4A87-BCEE-D5143AB35643} = {2D14C38B-EB5B-45CA-B699-6C03C6D145A4}
 		{E5DF6A16-F8E0-437E-A493-653A79DA2342} = {2D14C38B-EB5B-45CA-B699-6C03C6D145A4}
 		{681CEA0F-F2C8-4533-A4CC-EB7B37F6228B} = {2D14C38B-EB5B-45CA-B699-6C03C6D145A4}
+		{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90} = {2D14C38B-EB5B-45CA-B699-6C03C6D145A4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {095346F3-8C18-40E7-9AE0-F8351701C4DA}

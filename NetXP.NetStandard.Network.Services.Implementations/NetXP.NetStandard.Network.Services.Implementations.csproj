@@ -5,11 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Network\" />
+    <PackageReference Include="SoapHttpClient" Version="2.1.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NetXP.NetStandard\NetXP.NetStandard.csproj" />
+    <ProjectReference Include="..\NetXP.NetStandard.Networks\NetXP.NetStandard.Network.csproj" />
   </ItemGroup>
 
 </Project>

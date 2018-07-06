@@ -17,7 +17,7 @@ namespace NetXP.NetStandard.Serialization
         /// <typeparam name="T">Generic clase type</typeparam>
         /// <param name="bytesToDeserialize">Array of bytes to deserialize</param>
         /// <returns>Generic class.</returns>
-        T Deserialize<T>(byte[] bytesToDeserialize) where T : class, new();
+        T Deserialize<T>(byte[] bytesToDeserialize) where T : class;
 
         /// <summary>
         /// Serialize T object to byte array.
