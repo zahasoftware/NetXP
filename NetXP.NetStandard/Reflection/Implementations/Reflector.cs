@@ -26,7 +26,7 @@ namespace NetXP.NetStandard.Reflection.Implementations
 
             //Serialicing Parameter
             ParameterInfo[] aParametersInfo = methodInfo.GetParameters();
-            if (aParametersInfo.Count() != @params.Length) throw new ReflectorException("Method doesn't have all the parameters.");
+            if (aParametersInfo.Count() != (@params?.Length ?? 0)) throw new ReflectorException("Method doesn't have all the parameters.");
 
             object oReturn = methodInfo.Invoke(oInterfaceResolved, @params);
             return oReturn;
@@ -114,7 +114,7 @@ namespace NetXP.NetStandard.Reflection.Implementations
             return interfaceType.GetTypeInfo().GetMethod(method);
         }
 
-        private void ResolveInterfaceAndMethod(Type namespaceType, string @interface, string method, out object interfaceResolved, out MethodInfo outMethod)
+        public void ResolveInterfaceAndMethod(Type namespaceType, string @interface, string method, out object interfaceResolved, out MethodInfo outMethod)
         {
             if (namespaceType == null) { throw new ArgumentNullException("Namespace Type null"); }
             if (@interface == null) { throw new ArgumentNullException("Interface null"); }
@@ -133,6 +133,9 @@ namespace NetXP.NetStandard.Reflection.Implementations
             outMethod = tpeInterface.GetTypeInfo().GetMethod(method);
         }
 
-
+        public object InvokeMethod(string @interface, string method, object[] @params)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

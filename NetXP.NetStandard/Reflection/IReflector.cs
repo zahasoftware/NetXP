@@ -10,11 +10,10 @@ namespace NetXP.NetStandard.Reflection
     public interface IReflector
     {
         //IList<Type> aNameSpaces { get; }
-        object InvokeMethod(Type tpeNamespace, string sInterface, string sMethod, object[] aParams);
+        object InvokeMethod(Type tpeNamespace, string sInterface, string sMethod, params object[] aParams);
         MethodInfo ReflectMethod(Type tpeNamespace, string sInterface, string sMethod);
         object InvokeMethodWithJSONParameters(Type tpeNamespace, string sInterface, string sMethod, string[] aParams);
         Type GetType(Type tpeNamespace, string sType);
         bool TryGetType(Type tpeNamespace, string sType, out Type tpeInterface);
-
     }
 }
