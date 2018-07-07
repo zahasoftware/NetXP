@@ -2,9 +2,9 @@
 using NetXP.NetStandard.Cryptography.Implementations;
 using NetXP.NetStandard.DependencyInjection;
 using NetXP.NetStandard.NetFramework.Cryptography.Implementations;
-using NetXP.NetStandard.Network;
 using NetXP.NetStandard.Serialization.Implementations;
 using SmartSecurity.NetStandard.NetFramework.SystemInformation.Implementations;
+using NetXP.NetStandard.Network;
 
 namespace NetXP.NetStandard.NetFramework
 {

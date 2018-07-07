@@ -1,5 +1,4 @@
 ﻿using NetXP.NetStandard.Cryptography.Implementations;
-using NetXP.NetStandard.Network.Services.Implementations;
 using NetXP.NetStandard.DependencyInjection;
 using NetXP.NetStandard.Network;
 using NetXP.NetStandard.Serialization.Implementations;
@@ -7,6 +6,7 @@ using NetXP.NetStandard.Auditory.Implementations;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using NetXP.NetStandard.Network.Services.Implementations;
 
 namespace NetXP.NetStandard.NetCore
 {
@@ -19,7 +19,7 @@ namespace NetXP.NetStandard.NetCore
             cfg.RegisterCryptography();
             cfg.RegisterNetwork(container, appSettingFile);
             cfg.RegisterAuditory();
-            cfg.RegisterNetworkServices();
+            NetworkServicesCompositionRoot.RegisterNetworkServices(cfg);
 
             //Cryptography
             cfg.Register<NetStandard.Cryptography.ISymetricCrypt, NetStandard.Cryptography.Implementations.SymetricAes>();
