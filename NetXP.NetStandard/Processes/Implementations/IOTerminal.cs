@@ -29,7 +29,7 @@ namespace NetXP.NetStandard.Processes.Implementations
             psi.UseShellExecute = false;
             psi.CreateNoWindow = true;
             psi.Arguments = processInput.Arguments;
-            //TryToGetLastDirectory(dtoshell);
+            //TryToGetLastDirectory(ShellDTO);
 
             psi.RedirectStandardOutput = true;
             psi.RedirectStandardInput = true;

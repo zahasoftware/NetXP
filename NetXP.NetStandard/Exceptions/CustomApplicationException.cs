@@ -8,9 +8,16 @@ namespace NetXP.NetStandard.Exceptions
 {
     public class CustomApplicationException : Exception
     {
+        public string Label { get; set; } = string.Empty;
+
         public CustomApplicationException(string msg) : base(msg)
         {
 
+        }
+
+        public CustomApplicationException(string label, string msg) : base(msg)
+        {
+            this.Label = label;
         }
     }
 }

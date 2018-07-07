@@ -10,7 +10,7 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol
     {
         BadProtocol = 1,
         NoData = 2,
-        InvalidUser = 3,
+        InvalidUser = 3,//Implementation error, 
         RemoteConfigException = 4,
         FormatException = 5,
         GenericException = 6,
