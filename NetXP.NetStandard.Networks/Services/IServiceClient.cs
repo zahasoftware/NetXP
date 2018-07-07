@@ -13,5 +13,12 @@ namespace NetXP.NetStandard.Network.Services
             string methodNamespace = null,
             params MethodParam[] methodParams
             ) where T : class;
+
+        Task Request(
+           Uri endPoint,
+           string methodName,
+           string methodNamespace = null,
+           params MethodParam[] methodParams
+           );
     }
 }

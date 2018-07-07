@@ -14,5 +14,10 @@ namespace NetXP.NetStandard.Network.Services.Implementations
         {
             throw new NotImplementedException();
         }
+
+        public Task Request(Uri endPoint, string methodName, string methodNamespace = null, params MethodParam[] methodParams)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

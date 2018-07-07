@@ -21,13 +21,19 @@ using NetXP.NetStandard.Network.Services;
 using System.Runtime.Serialization;
 using System.Collections.ObjectModel;
 
-namespace NetXP.NetStandard.NetCore.UnitTest.Network.Proxy
+namespace NetXP.NetStandard.NetCore.UnitTest.Network.Services
 {
+
+    /// <summary>
+    /// Download asmx service from here:
+    /// https://developer.xamarin.com/samples/xamarin-forms/WebServices/TodoASMX/
+    /// How to resolve problem "Target “build” does not exist in the project for Visual Studio" here:
+    /// https://stackoverflow.com/a/2421944
+    /// </summary>
     [TestClass()]
-    public class ServiceClient_Tests
+    public class SoapServiceClient_Tests
     {
         private di.IContainer container;
-
         public ISymetricCrypt ISymetric { get; private set; }
 
         [TestInitialize]
@@ -41,15 +47,8 @@ namespace NetXP.NetStandard.NetCore.UnitTest.Network.Proxy
             });
 
         }
-
-        /// <summary>
-        /// Download asmx service from here:
-        /// https://developer.xamarin.com/samples/xamarin-forms/WebServices/TodoASMX/
-        /// How to resolve problem "Target “build” does not exist in the project for Visual Studio" here:
-        /// https://stackoverflow.com/a/2421944
-        /// </summary>
         [TestMethod]
-        public void NCNF_ServiceClient_ASMX()
+        public void NCNF_ServiceClient_ASMX_GetTodoItems()
         {
             var factory = container.Resolve<IServiceClientFactory>();
 
@@ -61,23 +60,57 @@ namespace NetXP.NetStandard.NetCore.UnitTest.Network.Proxy
                 "http://www.xamarin.com/webservices/"
                 ).Result;
 
+            Assert.AreNotEqual(null, response);
+            Assert.AreNotEqual(null, response.TodoItems);
             var count = response.TodoItems.Count;
-
-            //Assert.AreNotEqual(0, count);
-
+            Assert.AreNotEqual(0, count);
+            Assert.AreNotEqual(null, response.TodoItems.First().Name);
         }
 
+        /// <summary>
+        /// Create todo item DTO is ;        
+        /// <CreateTodoItem xmlns = "http://www.xamarin.com/webservices/" >
+        //  <item>
+        //    <ID> string </ID>
+        //    <Name> string </Name>
+        //    <Notes> string </Notes>
+        //    <Done> boolean</Done>
+        //  </item>
+        //</CreateTodoItem>
+        /// </summary>
+        [TestMethod]
+        public void NCNF_ServiceClient_ASMX_InsertItem()
+        {
+            var factory = container.Resolve<IServiceClientFactory>();
+            var client = factory.Create(ServiceClientType.SoapV11);
+
+            client.Request(
+               new Uri("http://localhost:49178/TodoService.asmx"),
+               "CreateTodoItem",
+               "http://www.xamarin.com/webservices/",
+               new MethodParam
+               {
+                   Name = "item",
+                   Value = new TodoItem()
+                   {
+                       Done = true,
+                       Name = $"New Name",
+                       ID = $"{DateTime.Now:ddMMyyyy HHmmssfff}",
+                       Notes = "Notes"
+                   }
+               }
+            ).Wait();
+        }
+
+        /// <summary>
+        /// If the class there is the same namespace the Name is not necesary.
+        /// </summary>
         [DataContract(Name = "GetTodoItemsResponse", Namespace = "http://www.xamarin.com/webservices/")]
         public class GetTodoItemsResponse
         {
             [DataMember(Name = "GetTodoItemsResult")]
-            public GetTodoItemsResult TodoItems { get; set; }
+            public List<TodoItem> TodoItems { get; set; }
         }
-
-        [CollectionDataContract(Name = "GetTodoItemsResult", ItemName = "TodoItem", Namespace = "http://www.xamarin.com/webservices/")]
-        public class GetTodoItemsResult : List<TodoItem>
-        { }
-
 
         [DataContract(Name = "TodoItem", Namespace = "http://www.xamarin.com/webservices/")]
         public class TodoItem
@@ -91,8 +124,6 @@ namespace NetXP.NetStandard.NetCore.UnitTest.Network.Proxy
             [DataMember(Name = "Done")]
             public bool Done { get; set; }
         }
-
-
 
 
 

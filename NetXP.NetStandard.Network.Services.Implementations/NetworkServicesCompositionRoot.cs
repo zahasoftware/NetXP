@@ -9,8 +9,8 @@ namespace NetXP.NetStandard.Network.Services.Implementations
     {
         public static void RegisterNetworkServices(this IRegister r)
         {
-            r.Register<IServiceClient, SoapClient_1>(ServiceClientType.SoapV11.ToString());
-            r.Register<IServiceClient, SoapClient_1>(ServiceClientType.SoapV12.ToString());
+            r.Register<IServiceClient, SoapServiceClientV11>(ServiceClientType.SoapV11.ToString());
+            r.Register<IServiceClient, SoapServiceClientV11>(ServiceClientType.SoapV12.ToString());
             r.Register<IServiceClient, RestClient>(ServiceClientType.Rest.ToString());
 
             r.Register<IServiceClientFactory, ServiceClientFactory>();
