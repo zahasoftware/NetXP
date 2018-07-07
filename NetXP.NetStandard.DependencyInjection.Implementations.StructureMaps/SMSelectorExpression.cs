@@ -9,8 +9,8 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps
     {
         private SmartInstance<TImpl, TInter> use;
         private CreatePluginFamilyExpression<TInter> @for;
-        private Action<LifeTime, LambdaInstance<TImpl, TInter>> setLifeTime;
-        private LifeTime lifetime;
+        private Action<DILifeTime, LambdaInstance<TImpl, TInter>> setLifeTime;
+        private DILifeTime lifetime;
 
         public string instanceName { get; private set; }
 
@@ -44,8 +44,8 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps
             CreatePluginFamilyExpression<TInter> @for,
             SmartInstance<TImpl, TInter> use,
             string instanceName,
-            LifeTime lifetime,
-            Action<LifeTime, LambdaInstance<TImpl, TInter>> setLifeTime)
+            DILifeTime lifetime,
+            Action<DILifeTime, LambdaInstance<TImpl, TInter>> setLifeTime)
         {
             this.@for = @for;
             this.use = use;

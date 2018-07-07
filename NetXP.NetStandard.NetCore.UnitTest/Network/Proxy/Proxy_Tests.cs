@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetXP.NetStandard.NetFramework.Cryptography;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +18,7 @@ using System.Net;
 using NetXP.NetStandard.Configuration.Implementations;
 using Microsoft.Extensions.Options;
 
-namespace NetXP.NetStandard.NetCore.Cryptography.Tests
+namespace NetXP.NetStandard.NetCore.UnitTest.Network.Proxy
 {
     [TestClass()]
     public class Proxy_Tests
@@ -68,7 +67,7 @@ namespace NetXP.NetStandard.NetCore.Cryptography.Tests
             ///Trying connection without configuration (ProxyOptions = null)
             container.Configuration.Configure((IRegister cnf) =>
             {
-                cnf.RegisterInstance<IOptions<ProxyOptions>>(new OptionsInstance<ProxyOptions>(null), LifeTime.Singleton);
+                cnf.RegisterInstance<IOptions<ProxyOptions>>(new OptionsInstance<ProxyOptions>(null), DILifeTime.Singleton);
             });
 
             var clientConnectorFactory = container.Resolve<IClientConnectorFactory>("proxy");///Proxy Factory

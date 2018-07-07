@@ -1,6 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetXP.NetStandard.DependencyInjection;
 using NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps;
+using NetXP.NetStandard.NetCore;
 using NetXP.NetStandard.Processes;
 using NetXP.NetStandard.Processes.Implementations;
 using StructureMap;
@@ -8,7 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NetXP.NetStandard.NetCore.UnitTest.Processes.Implementations
+namespace NetXP.NetStandard.NetCoreUnitTest.Processes.Implementations
 {
     [TestClass]
     public class IOTerminalTests

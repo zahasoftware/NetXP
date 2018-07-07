@@ -1,6 +1,6 @@
 ﻿namespace NetXP.NetStandard.DependencyInjection
 {
-    public enum LifeTime
+    public enum DILifeTime
     {
         Singleton,//Only One Instance
         Scoped,//Request life time

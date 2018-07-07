@@ -10,7 +10,7 @@ namespace NetXP.NetStandard.Serialization.Implementations
 {
     public class Serialize2Xml : ISerializer
     {
-        public T Deserialize<T>(byte[] bytesToDeserialize) where T : class, new()
+        public T Deserialize<T>(byte[] bytesToDeserialize) where T : class
         {
             if (bytesToDeserialize == null) return null;
 

@@ -11,6 +11,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
+using Unity;
+using NetXP.NetStandard.DependencyInjection.Implementations.DIUnity;
+using NetXP.NetStandard.Serialization.Implementations;
 
 /// NOTE: Rebuild project if fail
 namespace NetXP.NetStandard.NetFramework.Cryptography.Tests
@@ -24,14 +27,15 @@ namespace NetXP.NetStandard.NetFramework.Cryptography.Tests
         [TestInitialize]
         public void Init()
         {
-            var smContainer = new StructureMap.Container();
-            container = new SMContainer(smContainer);
+            var smContainer = new UnityContainer();
+            container = new UContainer(smContainer);
 
             container.Configuration.Configure(smre =>
             {
-                CompositionRoot.AddNetXPNetFrameworkRegisters(smre, container);
-                smre.RegisterInstance<IContainer>(container, LifeTime.Trasient);
+                //CompositionRoot.AddNetXPNetFrameworkRegisters(smre, container);
+                smre.RegisterInstance<IContainer>(container, DILifeTime.Singleton);
                 smre.Register<IAsymetricCrypt, Implementations.AsymetricCryptWithRSACng>();
+                smre.RegisterSerialization();
             });
 
         }

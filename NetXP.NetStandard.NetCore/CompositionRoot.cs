@@ -1,4 +1,9 @@
-﻿using NetXP.NetStandard.DependencyInjection;
+﻿using NetXP.NetStandard.Cryptography.Implementations;
+using NetXP.NetStandard.Network.Services.Implementations;
+using NetXP.NetStandard.DependencyInjection;
+using NetXP.NetStandard.Network;
+using NetXP.NetStandard.Serialization.Implementations;
+using NetXP.NetStandard.Auditory.Implementations;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,7 +14,12 @@ namespace NetXP.NetStandard.NetCore
     {
         public static void AddNetXPNetCoreRegisters(this IRegister cfg, IContainer container, string appSettingFile = null)
         {
-            NetXP.NetStandard.CompositionRoot.RegisterNetXPStandard(cfg, container, appSettingFile);
+            cfg.RegisterNetXPStandard(container, appSettingFile);
+            cfg.RegisterSerialization();
+            cfg.RegisterCryptography();
+            cfg.RegisterNetwork(container, appSettingFile);
+            cfg.RegisterAuditory();
+            cfg.RegisterNetworkServices();
 
             //Cryptography
             cfg.Register<NetStandard.Cryptography.ISymetricCrypt, NetStandard.Cryptography.Implementations.SymetricAes>();

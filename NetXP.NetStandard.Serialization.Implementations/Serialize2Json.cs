@@ -13,7 +13,7 @@ namespace NetXP.NetStandard.Serialization.Implementations
 {
     public class Serialize2Json : ISerializer
     {
-        public T Deserialize<T>(byte[] bytesToDeserialize) where T : class, new()
+        public T Deserialize<T>(byte[] bytesToDeserialize) where T : class
         {
             if (bytesToDeserialize == null) return null;//return;
             using (MemoryStream ms = new MemoryStream(bytesToDeserialize))
