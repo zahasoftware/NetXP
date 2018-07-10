@@ -5,5 +5,6 @@
         SoapV11,
         SoapV12,
         Rest,
+        Default
     }
 }
