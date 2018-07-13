@@ -6,5 +6,6 @@ namespace NetXP.NetStandard.MVVM
 {
     public interface IView
     {
+        object DataContext { get; set; }
     }
 }

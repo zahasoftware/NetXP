@@ -2,10 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>á</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Network\" />
+    <Compile Remove="Network\**" />
+    <EmbeddedResource Remove="Network\**" />
+    <None Remove="Network\**" />
   </ItemGroup>
 
   <ItemGroup>
