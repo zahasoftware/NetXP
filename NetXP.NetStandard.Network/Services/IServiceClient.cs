@@ -9,16 +9,18 @@ namespace NetXP.NetStandard.Network.Services
     {
         Task<T> Request<T>(
             Uri endPoint,
-            string methodName,
-            string methodNamespace = null,
-            params MethodParam[] methodParams
+            string method,
+            string @namespace = null,
+            string action = null,
+            params MethodParam[] @params
             ) where T : class;
 
         Task Request(
            Uri endPoint,
-           string methodName,
-           string methodNamespace = null,
-           params MethodParam[] methodParams
+            string method,
+            string @namespace = null,
+            string action = null,
+            params MethodParam[] @params
            );
     }
 }
