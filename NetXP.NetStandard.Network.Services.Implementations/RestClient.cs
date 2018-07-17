@@ -10,12 +10,12 @@ namespace NetXP.NetStandard.Network.Services.Implementations
             throw new NotImplementedException();
         }
 
-        public Task<T> Request<T>(Uri endPoint, string methodName, string methodNamespace = null, params MethodParam[] methodParams) where T : class
+        public Task<T> Request<T>(Uri endPoint, string method, string @namespace = null, string action = null, params MethodParam[] @params) where T : class
         {
             throw new NotImplementedException();
         }
 
-        public Task Request(Uri endPoint, string methodName, string methodNamespace = null, params MethodParam[] methodParams)
+        public Task Request(Uri endPoint, string method, string @namespace = null, string action = null, params MethodParam[] @params)
         {
             throw new NotImplementedException();
         }
