@@ -2,10 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Configurations>Debug;Release;Debug_Manager;Debug_2</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="structuremap" Version="4.6.1" />
+    <PackageReference Include="structuremap" Version="4.7.0" />
   </ItemGroup>
 
   <ItemGroup>

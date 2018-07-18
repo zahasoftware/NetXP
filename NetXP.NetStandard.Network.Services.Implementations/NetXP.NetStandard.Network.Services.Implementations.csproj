@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Configurations>Debug;Release;Debug_1;Debug_2</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
@@ -9,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NetXP.NetStandard.Networks\NetXP.NetStandard.Network.csproj" />
+    <ProjectReference Include="..\NetXP.NetStandard.Network\NetXP.NetStandard.Network.csproj" />
   </ItemGroup>
 
 </Project>

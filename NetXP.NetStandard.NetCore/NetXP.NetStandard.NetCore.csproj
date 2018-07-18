@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <Configurations>Debug;Release;Debug_Manager</Configurations>
+    <Configurations>Debug;Release;Debug_Manager;Debug_1;Debug_2</Configurations>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Manager|AnyCPU'">
@@ -18,7 +18,6 @@
     <ProjectReference Include="..\NetXP.Netstandard.Auditory.Implementations\NetXP.NetStandard.Auditory.Implementations.csproj" />
     <ProjectReference Include="..\NetXP.NetStandard.Cryptography.Implementations\NetXP.NetStandard.Cryptography.Implementations.csproj" />
     <ProjectReference Include="..\NetXP.NetStandard.Network.Services.Implementations\NetXP.NetStandard.Network.Services.Implementations.csproj" />
-    <ProjectReference Include="..\NetXP.NetStandard.Networks\NetXP.NetStandard.Network.csproj" />
     <ProjectReference Include="..\NetXP.NetStandard.Serialization.Implementations\NetXP.NetStandard.Serialization.Implementations.csproj" />
     <ProjectReference Include="..\NetXP.NetStandard\NetXP.NetStandard.csproj" />
   </ItemGroup>
