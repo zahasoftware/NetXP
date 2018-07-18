@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NetXP.NetStandard.Exceptions
 {
-    public class CustomApplicationException : Exception
+    public class CustomApplicationException : NetXPApplicationException
     {
         public string Label { get; set; } = string.Empty;
 

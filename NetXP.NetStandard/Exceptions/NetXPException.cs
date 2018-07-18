@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NetXP.NetStandard.Exceptions
 {
-    public class NetXPApplicationException : Exception
+    public class NetXPApplicationException : ApplicationException
     {
         public NetXPApplicationException(string msg) : base(msg)
         {

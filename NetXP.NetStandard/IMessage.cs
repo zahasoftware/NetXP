@@ -12,6 +12,6 @@ namespace NetXP.NetStandard
         void Error(string message);
         void Info(string message);
         void Fatal(string message);
-        bool Confirm(string message);
+        Task<bool> Confirm(string message);
     }
 }

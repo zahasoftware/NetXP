@@ -2,7 +2,10 @@
 using SoapHttpClient;
 using SoapHttpClient.Enums;
 using System;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
@@ -14,20 +17,21 @@ namespace NetXP.NetStandard.Network.Services.Implementations
         public static string InstanceNamespace = "";
         private readonly ISerializer xmlSerializer;
 
-        public SoapServiceClientV11(ISerializerFactory serializerFactory)
+        public SoapServiceClientV11(ISerializerFactory serializerFactory)//, HttpClient customHttpClient = null)
         {
             this.xmlSerializer = serializerFactory.Resolve(SerializerType.Xml);
         }
 
-        public async Task Request(Uri endPoint, string methodName, string methodNamespace = null, params MethodParam[] methodParams)
+        public async Task Request(Uri endPoint, string methodName, string methodNamespace = null, string action = null, params MethodParam[] methodParams)
         {
-            await this.Request<VoidDTO>(endPoint, methodName, methodNamespace, methodParams);
+            await this.Request<VoidDTO>(endPoint, methodName, methodNamespace, action, methodParams);
         }
 
         public async Task<T> Request<T>(
             Uri endPoint,
             string methodName,
             string methodNamespace = null,
+            string action = null,
             params MethodParam[] methodParams
             ) where T : class
         {
@@ -47,30 +51,32 @@ namespace NetXP.NetStandard.Network.Services.Implementations
                 var valueParam = methodParam.Value;
                 var valueParamType = valueParam.GetType();
 
-                if (valueParamType.IsClass)
+                if (valueParamType.IsClass && valueParamType != typeof(String))
                 {
                     foreach (var prop in valueParamType.GetProperties())
                     {
                         var xprop = xdoc.CreateElement(prop.Name);
                         xparam.AppendChild(xprop);
-                        if (prop.PropertyType.IsClass && !(prop.GetValue(valueParam) is String))
+                        var propValue = prop.GetValue(valueParam);
+
+                        if (prop.PropertyType.IsClass && !(propValue is String))
                         {
                             ///TODO: Do recursive
                         }
-                        else if (prop.PropertyType.IsPrimitive || (prop.GetValue(valueParam) is String))
+                        else if (prop.PropertyType.IsPrimitive || (propValue is String))
                         {
-                            if (prop.GetValue(valueParam) is bool)
+                            if (propValue is bool)
                             {
-                                xprop.InnerText = Convert.ToBoolean(prop.GetValue(valueParam)) == true ? "1" : "0";
+                                xprop.InnerText = Convert.ToBoolean(propValue) == true ? "1" : "0";
                             }
                             else
                             {
-                                xprop.InnerText = prop.GetValue(valueParam).ToString();
+                                xprop.InnerText = propValue.ToString();
                             }
                         }
                     }
                 }
-                else if (valueParamType.IsPrimitive)
+                else if (valueParamType.IsPrimitive || (valueParam is String))
                 {
                     xparam.InnerText = valueParam.ToString();
                 }
@@ -79,15 +85,23 @@ namespace NetXP.NetStandard.Network.Services.Implementations
             var body = XElement.Parse(root.OuterXml);
             var bodies = new XElement[] { body };
 
+            var httpClientHandler = new HttpClientHandler();
+
+            var httpClient = new HttpClient();
+            if (!string.IsNullOrEmpty(action))
+            {
+                httpClient.DefaultRequestHeaders.Add("SOAPAction", $"\"{action}\"");
+            }
+
             string serializedResponse = null;
-            using (var soapClient = new SoapClient())
+            using (var soapClient = new SoapClient(() => httpClient))
             {
                 var result =
                   await soapClient.PostAsync(
                           endpoint: endPoint,
                           soapVersion: SoapVersion.Soap11,
-                          bodies: bodies);
-
+                          bodies: bodies
+                  );
 
                 var serializedResponseEnvelop = await result.Content.ReadAsStringAsync();
 

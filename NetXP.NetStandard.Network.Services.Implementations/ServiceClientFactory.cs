@@ -25,7 +25,7 @@ namespace NetXP.NetStandard.Network.Services.Implementations
                 case ServiceClientType.Rest:
                     return container.Resolve<IServiceClient>(ServiceClientType.Rest.ToString());
                 default:
-                    return null;
+                    return container.Resolve<IServiceClient>();
             }
         }
     }

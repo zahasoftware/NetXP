@@ -12,6 +12,7 @@ namespace NetXP.NetStandard.Network.Services.Implementations
             r.Register<IServiceClient, SoapServiceClientV11>(ServiceClientType.SoapV11.ToString());
             r.Register<IServiceClient, SoapServiceClientV11>(ServiceClientType.SoapV12.ToString());
             r.Register<IServiceClient, RestClient>(ServiceClientType.Rest.ToString());
+            r.Register<IServiceClient, SoapServiceClientV11>();
 
             r.Register<IServiceClientFactory, ServiceClientFactory>();
         }
