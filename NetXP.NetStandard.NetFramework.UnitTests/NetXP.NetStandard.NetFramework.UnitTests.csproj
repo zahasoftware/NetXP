@@ -251,8 +251,8 @@
       <Project>{08f5ec47-5ca1-459e-81f7-98ecea8353a1}</Project>
       <Name>NetXP.NetStandard.NetFramework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NetXP.NetStandard.Networks\NetXP.NetStandard.Network.csproj">
-      <Project>{65fdc768-8e60-4ef7-95e2-b800eac7ab02}</Project>
+    <ProjectReference Include="..\NetXP.NetStandard.Network\NetXP.NetStandard.Network.csproj">
+      <Project>{C10D2FFC-3046-4C77-9256-A2DEF26F5685}</Project>
       <Name>NetXP.NetStandard.Network</Name>
     </ProjectReference>
     <ProjectReference Include="..\NetXP.NetStandard.Serialization.Implementations\NetXP.NetStandard.Serialization.Implementations.csproj">
