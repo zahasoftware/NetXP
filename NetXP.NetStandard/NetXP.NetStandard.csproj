@@ -2,12 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Configurations>Debug;Release;Debug_Manager;Debug_Device</Configurations>
+    <Configurations>Debug;Release;Debug_Device;Debug_Manager;Debug_1</Configurations>
     <Configurations>Debug;Release;Debug_Device;Debug_Manager</Configurations>
   </PropertyGroup>
   
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Device|AnyCPU'" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Manager|AnyCPU'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_1|AnyCPU'" />
 
   <ItemGroup>
     <Compile Remove="Exceptions\enm\**" />

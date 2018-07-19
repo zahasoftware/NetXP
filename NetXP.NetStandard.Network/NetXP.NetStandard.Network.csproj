@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyName>á</AssemblyName>
+    <Configurations>Debug;Release;Debug_Manager;Debug_1;Debug_2</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
