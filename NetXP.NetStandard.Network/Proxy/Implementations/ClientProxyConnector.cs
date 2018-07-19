@@ -86,7 +86,7 @@ namespace NetXP.NetStandard.Network.Proxy.Implementations
                 var bufferAsString = Encoding.ASCII.GetString(buffer);
                 bufferAsString = bufferAsString.Replace('\0', ' ').Trim();
 
-                if (!Regex.IsMatch(bufferAsString, @"^HTTP.+200\s+Connection\s+established$"))
+                if (!Regex.IsMatch(bufferAsString, @"^HTTP.+200\s+Connection\s+established.*", RegexOptions.Multiline))
                 {
                     throw new ProxyConnectionException($"Connection Failed:{bufferAsString}");
                 }
