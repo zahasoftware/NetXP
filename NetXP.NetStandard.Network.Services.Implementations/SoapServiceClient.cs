@@ -118,7 +118,7 @@ namespace NetXP.NetStandard.Network.Services.Implementations
             {
                 try
                 {
-                    serializedResponse += "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
+                    serializedResponse = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" + serializedResponse;
                     var serializedResponseInBytes = Encoding.UTF8.GetBytes(serializedResponse);
                     var deserializedResponse = xmlSerializerWithXmlSerializer.Deserialize<T>(serializedResponseInBytes);
                     return deserializedResponse;
