@@ -36,17 +36,17 @@ namespace NetXP.NetStandard.SystemManagers.Implementations
                     "multi-user.target" : serviceCreateOptions.WantedBy;
 
                 //https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/sect-managing_services_with_systemd-unit_files
-                var serviceFile = $"[Unit]{Environment.NewLine}" ;
-                serviceFile +=     $"Description=\"{description}\"{Environment.NewLine}" ;
+                var serviceFile = $"[Unit]{Environment.NewLine}";
+                serviceFile += $"Description=\"{description}\"{Environment.NewLine}";
                 //serviceFile += //$"After=\"{after}\"{Environment.NewLine}" +
-                serviceFile += $"[Service]{Environment.NewLine}" ;
-                serviceFile += $"ExecStart={binPath}{Environment.NewLine}" ;
+                serviceFile += $"[Service]{Environment.NewLine}";
+                serviceFile += $"ExecStart={binPath}{Environment.NewLine}";
 
                 if (!string.IsNullOrEmpty(serviceCreateOptions?.WorkingDirectory))
                 {
                     serviceFile += $"WorkingDirectory={serviceCreateOptions?.WorkingDirectory}{Environment.NewLine}";
                 }
-                serviceFile += $"[Install]{Environment.NewLine}" ;
+                serviceFile += $"[Install]{Environment.NewLine}";
                 serviceFile += $"WantedBy={wantedBy}{Environment.NewLine}";
 
                 var outputFilePath = $"/etc/systemd/system/{serviceName}{(serviceName.Contains(".service") ? "" : ".service")}";
@@ -89,13 +89,13 @@ namespace NetXP.NetStandard.SystemManagers.Implementations
                 Command = $"systemctl disable \"{serviceName}\""
             });
 
-            if (output.ExitCode != 0)
+            var outputFilePath = $"/etc/systemd/system/{serviceName}{(serviceName.Contains(".service") ? "" : ".service")}";
+            File.Delete(outputFilePath);
+
+            if (output.ExitCode != 0 && output.ExitCode != 1)
             {
                 throw new SystemManagerException(string.Join(Environment.NewLine, output.StandardError));
             }
-
-            var outputFilePath = $"/etc/systemd/system/{serviceName}{(serviceName.Contains(".service") ? "" : ".service")}";
-            File.Delete(outputFilePath);
         }
 
 
@@ -112,8 +112,6 @@ namespace NetXP.NetStandard.SystemManagers.Implementations
                 throw new SystemManagerException(string.Join(Environment.NewLine, output.StandardError));
             }
         }
-
-
 
         public void Start(string serviceName)
         {
@@ -164,7 +162,6 @@ namespace NetXP.NetStandard.SystemManagers.Implementations
             {
                 this.Stop(serviceName);
             }
-
             this.Delete(serviceName);
         }
     }

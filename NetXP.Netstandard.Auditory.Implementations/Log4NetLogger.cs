@@ -7,12 +7,22 @@ using System.Threading.Tasks;
 using log4net;
 using System.Diagnostics;
 using NetXP.NetStandard.Auditory;
+using System.Xml;
+using System.Reflection;
 
-[assembly: log4net.Config.XmlConfigurator(ConfigFile = "log4net.config", Watch = true)]
 namespace NetXP.NetStandard.Auditory.Implementations
 {
     public class Log4NetLogger : ILogger
     {
+        public Log4NetLogger()
+        {
+            XmlDocument log4netConfig = new XmlDocument();
+            log4netConfig.Load(File.OpenRead("log4net.config"));
+
+            var repo = log4net.LogManager.CreateRepository(Assembly.GetEntryAssembly(), typeof(log4net.Repository.Hierarchy.Hierarchy));
+
+            log4net.Config.XmlConfigurator.Configure(repo, log4netConfig["log4net"]);
+        }
         protected static ILog log = LogManager.GetLogger(typeof(ILogger));
 
         public virtual void Debug(string msg,
@@ -23,6 +33,7 @@ namespace NetXP.NetStandard.Auditory.Implementations
             ReloadConfig();
             string @class = Path.GetFileNameWithoutExtension(sourceFilePath);
             log.Debug($"<{sourceLineNumber}:{@class}.{memberName}>: {msg}");
+            var basedir = Directory.GetCurrentDirectory();
         }
 
         private static void ReloadConfig()
