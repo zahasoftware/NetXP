@@ -15,11 +15,13 @@ namespace NetXP.NetStandard.Network.Services.Implementations
     public class SoapServiceClientV11 : IServiceClient
     {
         public static string InstanceNamespace = "";
-        private readonly ISerializer xmlSerializer;
+        private readonly ISerializer xmlSerializerWithDataContractSerializer;
+        private readonly ISerializer xmlSerializerWithXmlSerializer;
 
         public SoapServiceClientV11(ISerializerFactory serializerFactory)//, HttpClient customHttpClient = null)
         {
-            this.xmlSerializer = serializerFactory.Resolve(SerializerType.Xml);
+            this.xmlSerializerWithDataContractSerializer = serializerFactory.Resolve(SerializerType.Xml);
+            this.xmlSerializerWithXmlSerializer = serializerFactory.Resolve(SerializerType.XmlSerializer);
         }
 
         public async Task Request(Uri endPoint, string methodName, string methodNamespace = null, string action = null, params MethodParam[] methodParams)
@@ -114,9 +116,19 @@ namespace NetXP.NetStandard.Network.Services.Implementations
 
             if (typeof(T) != typeof(VoidDTO))
             {
-                var serializedResponseInBytes = Encoding.UTF8.GetBytes(serializedResponse);
-                var deserializedResponse = xmlSerializer.Deserialize<T>(serializedResponseInBytes);
-                return deserializedResponse;
+                try
+                {
+                    serializedResponse = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" + serializedResponse;
+                    var serializedResponseInBytes = Encoding.UTF8.GetBytes(serializedResponse);
+                    var deserializedResponse = xmlSerializerWithXmlSerializer.Deserialize<T>(serializedResponseInBytes);
+                    return deserializedResponse;
+                }
+                catch (Exception ex)
+                {
+                    var serializedResponseInBytes = Encoding.UTF8.GetBytes(serializedResponse);
+                    var deserializedResponse = xmlSerializerWithDataContractSerializer.Deserialize<T>(serializedResponseInBytes);
+                    return deserializedResponse;
+                }
             }
             else
             {

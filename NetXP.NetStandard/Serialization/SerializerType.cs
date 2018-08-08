@@ -8,6 +8,8 @@ namespace NetXP.NetStandard.Serialization
 {
     public enum SerializerType
     {
-        Xml, Json
+        Xml, //DataContractSerializer
+        Json,//DataContractJsonSerializer
+        XmlSerializer,//XmlSerializer
     }
 }
