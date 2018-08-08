@@ -19,7 +19,7 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
         public SLPClientConnector(
               INameResolverFactory<IAsymetricCrypt> asymetricCryptFactory,
               ISymetricCrypt symetric,
-              ISerializer serializeT,
+              ISerializerFactory serializeT,
               ILogger logger,
               IHash hash,
               IPersistentPrivateKeyProvider persistentPrivateKeyProvider,
@@ -37,7 +37,7 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
             this.textPlainTCPChannel = clientConnector;
 
             this.symetric = symetric;
-            this.serializeT = serializeT;
+            this.serializeT = serializeT.Resolve(SerializerType.Json);
             this.logger = logger;
             this.hash = hash;
             this.IPersistentPrivateKeyProvider = persistentPrivateKeyProvider;
