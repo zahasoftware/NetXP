@@ -107,6 +107,11 @@ namespace NetXP.NetStandard.Network.Services.Implementations
 
                 var serializedResponseEnvelop = await result.Content.ReadAsStringAsync();
 
+                if (result.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    throw new HttpRequestException($"SoapService, StatusCode: {(int)result.StatusCode} ({result.StatusCode})");
+                }
+
                 //Get Body Content 
                 serializedResponse =
                     XElement.Parse(

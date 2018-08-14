@@ -25,6 +25,9 @@ namespace NetXP.Netstandard.MVVM.XamarinForms
             await navigation.PushAsync((Page)view);
         }
 
-
+        public void RemovePage(IView view)
+        {
+            navigation.RemovePage((Page)view);
+        }
     }
 }

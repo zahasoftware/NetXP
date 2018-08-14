@@ -9,5 +9,7 @@ namespace NetXP.NetStandard.MVVM
     {
         Task PushAsync(IView view);
         Task<IView> PopAsync(IView view);
+        void RemovePage(IView view);
+
     }
 }
