@@ -27,7 +27,7 @@ namespace NetXP.NetStandard.Serialization.Implementations
                 case SerializerType.Json:
                     return this.uc.Resolve<ISerializer>(SerializerType.Json.ToString());///DataContractJsonSerializer
                 default:
-                    return this.uc.Resolve<ISerializer>(SerializerType.Xml.ToString());
+                    return this.uc.Resolve<ISerializer>(SerializerType.Json.ToString());
             }
         }
     }

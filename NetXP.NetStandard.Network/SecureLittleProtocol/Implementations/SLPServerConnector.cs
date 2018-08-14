@@ -37,7 +37,7 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
         public SLPServerConnector(
             IClientConnectorFactoryProducer clientConnectorFactoryProducer,
             INameResolverFactory<IAsymetricCrypt> asymetricCryptFactory,
-            ISerializer serializer,
+            ISerializerFactory serializer,
             IServerConnectorFactory serverFactory,
             ILogger ILogger,
             IHash IHash
@@ -45,7 +45,7 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
         {
             this.clientConnectorFactoryProducer = clientConnectorFactoryProducer;
             this.asymetricCryptFactory = asymetricCryptFactory;
-            this.serialize = serializer;
+            this.serialize = serializer.Resolve(SerializerType.Json);
             this.tcpServer = serverFactory.Create(ConnectorFactory.TransmissionControlProtocol); //Plain Text
             this.logger = ILogger;
             this.hash = IHash;

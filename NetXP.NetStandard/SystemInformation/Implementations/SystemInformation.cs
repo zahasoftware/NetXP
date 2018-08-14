@@ -97,13 +97,13 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
             foreach (var o in storageInfoes)
             {
                 bool @continue = true;
-                while(@continue)
-                try
-                {
-                    if (!Enum.TryParse(o.DriveType.ToString(), out NetStandard.SystemInformation.DriveType driveType))
+                while (@continue)
+                    try
                     {
-                        driveType = DriveType.Unknown;
-                    }
+                        if (!Enum.TryParse(o.DriveType.ToString(), out NetStandard.SystemInformation.DriveType driveType))
+                        {
+                            driveType = DriveType.Unknown;
+                        }
 
                         var storageInfo = new StorageInfo();
                         storageInfo.VolumeLabel = o.VolumeLabel;

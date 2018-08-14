@@ -33,7 +33,7 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
                 return new SLPClientConnector(
                     container.Resolve<INameResolverFactory<IAsymetricCrypt>>(),
                     container.Resolve<ISymetricCrypt>(),
-                    container.Resolve<ISerializer>(),
+                    container.Resolve<ISerializerFactory>(),
                     container.Resolve<ILogger>(),
                     container.Resolve<IHash>(),
                     container.Resolve<IPersistentPrivateKeyProvider>(),
@@ -48,7 +48,7 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
                 return new SLPClientConnector(
                     container.Resolve<INameResolverFactory<IAsymetricCrypt>>(),
                     container.Resolve<ISymetricCrypt>(),
-                    container.Resolve<ISerializer>(),
+                    container.Resolve<ISerializerFactory>(),
                     container.Resolve<ILogger>(),
                     container.Resolve<IHash>(),
                     container.Resolve<IPersistentPrivateKeyProvider>(),
