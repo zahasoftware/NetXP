@@ -80,7 +80,8 @@ namespace NetXP.NetStandard.Network.Services.Implementations
                 }
                 else if (valueParamType.IsPrimitive || (valueParam is String))
                 {
-                    xparam.InnerText = valueParam.ToString();
+                    xparam.InnerText = valueParamType == typeof(System.Boolean)
+                        ? valueParam.ToString().ToLower() : valueParam.ToString();
                 }
             }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
 
-namespace NetXP.NetStandard.MVVM
+namespace NetXP.NetStandard.MVVM.Implementations
 {
 
     /// <summary>
@@ -27,7 +27,7 @@ namespace NetXP.NetStandard.MVVM
         /// <param name="execute">The execute.</param>
         /// <param name="canExecute">The can execute.</param>
         /// <exception cref="System.ArgumentNullException">execute</exception>
-        public DelegateCommand(Action execute, Func<bool> canExecute)
+        public DelegateCommand(Action execute, Func<bool> canExecute) 
         {
             _execute = execute ?? throw new ArgumentNullException("execute");
 

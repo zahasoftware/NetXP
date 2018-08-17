@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace NetXP.NetStandard.MVVM
+namespace NetXP.NetStandard.MVVM.Implementations
 {
     public class NotifyPropertyChangedImplementationBase : INotifyPropertyChanged
     {
