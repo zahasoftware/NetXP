@@ -12,9 +12,8 @@ namespace NetXP.Netstandard.MVVM.XamarinForms
     {
         public static void RegisterXamarinFormsMVVM(this IRegister r)
         {
-            r.Register<IViewNavigator, ViewNavigator>();
-            r.Register<ICommand, DelegateCommand>();
-            r.Register<NetStandard.MVVM.IMessagingCenter, NetStandard.MVVM.XamarinForms.MessagingCenter>();
+            r.Register<IViewNavigator, ViewNavigator>(DILifeTime.Singleton);
+            r.Register<NetStandard.MVVM.IMessagingCenter, NetStandard.MVVM.XamarinForms.MessagingCenter>(DILifeTime.Singleton);
         }
     }
 }

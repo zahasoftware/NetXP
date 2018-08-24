@@ -19,22 +19,22 @@ namespace NetXP.NetStandard.MVVM.XamarinForms
 
         public void Subscribe<TSender, TArgs>(object subscriber, string message, Action<TSender, TArgs> callback, TSender source = null) where TSender : class
         {
-            Xamarin.Forms.MessagingCenter.Subscribe<TSender, TArgs>(subscriber, message, callback, source);
+            Xamarin.Forms.MessagingCenter.Subscribe<TSender, TArgs>(this, message, callback, source);
         }
 
         public void Subscribe<TSender>(object subscriber, string message, Action<TSender> callback, TSender source = null) where TSender : class
         {
-            Xamarin.Forms.MessagingCenter.Subscribe<TSender>(subscriber, message, callback, source);
+            Xamarin.Forms.MessagingCenter.Subscribe<TSender>(this, message, callback, source);
         }
 
         public void Unsubscribe<TSender, TArgs>(object subscriber, string message) where TSender : class
         {
-            Xamarin.Forms.MessagingCenter.Unsubscribe<TSender, TArgs>(subscriber, message);
+            Xamarin.Forms.MessagingCenter.Unsubscribe<TSender, TArgs>(this, message);
         }
 
         public void Unsubscribe<TSender>(object subscriber, string message) where TSender : class
         {
-            Xamarin.Forms.MessagingCenter.Unsubscribe<TSender>(subscriber, message);
+            Xamarin.Forms.MessagingCenter.Unsubscribe<TSender>(this, message);
         }
     }
 }

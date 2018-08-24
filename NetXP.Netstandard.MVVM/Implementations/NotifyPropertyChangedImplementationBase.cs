@@ -21,6 +21,7 @@ namespace NetXP.NetStandard.MVVM.Implementations
             }
             return propertyChanged;
         }
+
         //The C#6 version of the common implementation
         protected void OnPropertyChanged([CallerMemberName]string name = null)
         {
