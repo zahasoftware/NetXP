@@ -80,7 +80,8 @@ namespace NetXP.NetStandard.Network.Services.Implementations
                 }
                 else if (valueParamType.IsPrimitive || (valueParam is String))
                 {
-                    xparam.InnerText = valueParam.ToString();
+                    xparam.InnerText = valueParamType == typeof(System.Boolean)
+                        ? valueParam.ToString().ToLower() : valueParam.ToString();
                 }
             }
 
@@ -107,6 +108,11 @@ namespace NetXP.NetStandard.Network.Services.Implementations
 
                 var serializedResponseEnvelop = await result.Content.ReadAsStringAsync();
 
+                if (result.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    throw new HttpRequestException($"SoapService, StatusCode: {(int)result.StatusCode} ({result.StatusCode})");
+                }
+
                 //Get Body Content 
                 serializedResponse =
                     XElement.Parse(
@@ -118,7 +124,7 @@ namespace NetXP.NetStandard.Network.Services.Implementations
             {
                 try
                 {
-                    serializedResponse += "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
+                    serializedResponse = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" + serializedResponse;
                     var serializedResponseInBytes = Encoding.UTF8.GetBytes(serializedResponse);
                     var deserializedResponse = xmlSerializerWithXmlSerializer.Deserialize<T>(serializedResponseInBytes);
                     return deserializedResponse;

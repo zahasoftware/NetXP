@@ -9,5 +9,11 @@ namespace NetXP.NetStandard.MVVM
     {
         Task PushAsync(IView view);
         Task<IView> PopAsync(IView view);
+        void RemovePage(IView view);
+        Task PushModal(IView view);
+        Task<IView> PopModal(IView view);
+
+        List<IView> Views { get; }
+        List<IView> Modals { get; }
     }
 }

@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace NetXP.NetStandard.MVVM
+namespace NetXP.NetStandard.MVVM.Implementations
 {
     public class NotifyPropertyChangedImplementationBase : INotifyPropertyChanged
     {
@@ -21,6 +21,7 @@ namespace NetXP.NetStandard.MVVM
             }
             return propertyChanged;
         }
+
         //The C#6 version of the common implementation
         protected void OnPropertyChanged([CallerMemberName]string name = null)
         {
