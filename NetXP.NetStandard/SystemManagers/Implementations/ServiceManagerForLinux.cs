@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using NetXP.NetStandard.Processes;
+﻿using NetXP.NetStandard.Processes;
 using NetXP.NetStandard.SystemInformation;
+using System;
+using System.IO;
 
 namespace NetXP.NetStandard.SystemManagers.Implementations
 {
@@ -34,6 +32,8 @@ namespace NetXP.NetStandard.SystemManagers.Implementations
                     "network.target" : serviceCreateOptions.After;
                 var wantedBy = string.IsNullOrEmpty(serviceCreateOptions?.WantedBy?.Trim()) ?
                     "multi-user.target" : serviceCreateOptions.WantedBy;
+                var restartSeconds = serviceCreateOptions == null ? 5 : serviceCreateOptions.RestartSeconds;
+                var restart = serviceCreateOptions?.Restart == null ? RestartConstants.Always : serviceCreateOptions.Restart;
 
                 //https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/sect-managing_services_with_systemd-unit_files
                 var serviceFile = $"[Unit]{Environment.NewLine}";
@@ -46,6 +46,8 @@ namespace NetXP.NetStandard.SystemManagers.Implementations
                 {
                     serviceFile += $"WorkingDirectory={serviceCreateOptions?.WorkingDirectory}{Environment.NewLine}";
                 }
+                serviceFile += $"Restart={restart.ToString()}{Environment.NewLine}";
+                serviceFile += $"RestartSec={restartSeconds}{Environment.NewLine}";
                 serviceFile += $"[Install]{Environment.NewLine}";
                 serviceFile += $"WantedBy={wantedBy}{Environment.NewLine}";
 
@@ -58,8 +60,8 @@ namespace NetXP.NetStandard.SystemManagers.Implementations
                     w.Flush();
                 }
 
-                this.Enable(serviceName);
-                this.ReloadDaemon();
+                Enable(serviceName);
+                ReloadDaemon();
             }
             catch (IOException ioe)
             {
@@ -69,7 +71,7 @@ namespace NetXP.NetStandard.SystemManagers.Implementations
 
         private void ReloadDaemon()
         {
-            var output = this.terminal.Execute(new ProcessInput
+            var output = terminal.Execute(new ProcessInput
             {
                 ShellName = "/bin/bash",
                 Command = $"systemctl daemon-reload"
@@ -83,7 +85,7 @@ namespace NetXP.NetStandard.SystemManagers.Implementations
 
         public void Delete(string serviceName)
         {
-            var output = this.terminal.Execute(new ProcessInput
+            var output = terminal.Execute(new ProcessInput
             {
                 ShellName = "/bin/bash",
                 Command = $"systemctl disable \"{serviceName}\""
@@ -101,7 +103,7 @@ namespace NetXP.NetStandard.SystemManagers.Implementations
 
         public void Enable(string serviceName)
         {
-            var output = this.terminal.Execute(new ProcessInput
+            var output = terminal.Execute(new ProcessInput
             {
                 ShellName = "/bin/bash",
                 Command = $"systemctl enable \"{serviceName}\""
@@ -115,7 +117,7 @@ namespace NetXP.NetStandard.SystemManagers.Implementations
 
         public void Start(string serviceName)
         {
-            var output = this.terminal.Execute(new ProcessInput
+            var output = terminal.Execute(new ProcessInput
             {
                 ShellName = "/bin/bash",
                 Command = $"systemctl start \"{serviceName}\""
@@ -126,7 +128,7 @@ namespace NetXP.NetStandard.SystemManagers.Implementations
                 throw new SystemManagerException(string.Join(Environment.NewLine, output.StandardError));
             }
 
-            var serviceInformation = this.serviceInformer.GetService(serviceName);
+            var serviceInformation = serviceInformer.GetService(serviceName);
             if (serviceInformation.State == ServiceState.Failed)
             {
                 throw new SystemManagerException("Service failed, See service state from systemctl for more information");
@@ -135,10 +137,10 @@ namespace NetXP.NetStandard.SystemManagers.Implementations
 
         public void Stop(string serviceName)
         {
-            var serviceInformation = this.serviceInformer.GetService(serviceName);
+            var serviceInformation = serviceInformer.GetService(serviceName);
             if (serviceInformation.State == ServiceState.Running)
             {
-                var output = this.terminal.Execute(new ProcessInput
+                var output = terminal.Execute(new ProcessInput
                 {
                     ShellName = "/bin/bash",
                     Command = $"systemctl stop \"{serviceName}\""
@@ -157,12 +159,12 @@ namespace NetXP.NetStandard.SystemManagers.Implementations
 
         public void Uninstall(string serviceName)
         {
-            var serviceInformation = this.serviceInformer.GetService(serviceName);
+            var serviceInformation = serviceInformer.GetService(serviceName);
             if (serviceInformation.State == ServiceState.Running)
             {
-                this.Stop(serviceName);
+                Stop(serviceName);
             }
-            this.Delete(serviceName);
+            Delete(serviceName);
         }
     }
 }
