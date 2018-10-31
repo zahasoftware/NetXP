@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <Configurations>Debug;Release;Debug_Manager;Debug_1;Debug_2</Configurations>
+    <Configurations>Debug;Release;Debug_Manager;Debug_1;Debug_2;Staging</Configurations>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Manager|AnyCPU'">

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Configurations>Debug;Release;Debug_Device;Debug_Manager;Debug_1</Configurations>
+    <Configurations>Debug;Release;Debug_Device;Debug_Manager;Staging</Configurations>
     <Configurations>Debug;Release;Debug_Device;Debug_Manager</Configurations>
   </PropertyGroup>
   

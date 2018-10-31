@@ -41,7 +41,11 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol
 
         IClientConnector ClientTCP { get; set; }
 
-        bool bKeepAlive { get; set; }
+        /// <summary>
+        /// Used to prevent close connection
+        /// It doesn't do anything with internal implementation of this class, is just used for external codes.
+        /// </summary>
+        bool KeepAlive { get; set; }
 
         void SendException(NetXP.NetStandard.Network.LittleJsonProtocol.LJPException ex);
     }

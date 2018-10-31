@@ -15,6 +15,9 @@ namespace NetXP.NetStandard.SystemManagers
 
         public string After { get; set; }
         public string WantedBy { get; set; }
-        public string WorkingDirectory {get;set;}
+        public string WorkingDirectory { get; set; }
+        public string Restart { get; set; } = RestartConstants.Always;
+        public int RestartSeconds { get; set; } = 5;
+
     }
 }

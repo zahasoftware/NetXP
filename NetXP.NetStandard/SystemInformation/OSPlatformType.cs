@@ -5,6 +5,6 @@
         Linux,
         Windows,
         OSX,
-        Unknown
+        Unknown,
     }
-}
+}   

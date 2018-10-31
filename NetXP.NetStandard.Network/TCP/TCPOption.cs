@@ -4,7 +4,7 @@
     {
         public TCPOption()
         {
-            ReceiveTimeOut = 1000 * 10;
+            ReceiveTimeOut = 1000 * 30;
         }
 
         public int ReceiveTimeOut { get; set; }

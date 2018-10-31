@@ -178,9 +178,9 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
             Array.Clear(aLittleBuffer, 0, aLittleBuffer.Length);
             var iReceivedBytes = this.textPlainTCPChannel.Receive(aLittleBuffer, 0, HEADER_TYPE_3_SIZE);
 
-            if (iReceivedBytes == 0)
+            if (iReceivedBytes <= 0)
             {
-                throw new SLPException($"Not data received, Error code:{iReceivedBytes}");
+                throw new SLPException($"Not data received, Error code: {iReceivedBytes}.", SLPException.SLPExceptionType.NoDataTimeOut);
             }
 
             byte yMajor = aLittleBuffer[HEADER_MAJOR_OFFSET];//Extract Major
@@ -188,7 +188,7 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
 
             if (yMajor != 1 || yMinor != 0)
             {
-                throw new SLPException("Receive:Invalid versión or data.");
+                throw new SLPException("Receive:Invalid versión or data.", SLPException.SLPExceptionType.BadProtocol);
             }
             else
             {
@@ -197,7 +197,7 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
 
                 if (!(new List<byte>() { 1, 2, 3 }.Contains(yType)))
                 {
-                    throw new SLPException("Receive:Invalid type.");
+                    throw new SLPException("Receive:Invalid type.", SLPException.SLPExceptionType.BadProtocol);
                 }
 
                 if (yType == TYPE_FIRST_HANDSHAKE)//(Used In Connection And Accept as part of protocol SLJP)
@@ -268,7 +268,7 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
         {
             if (iReceivedBytes > this.sljpOptions.MaxOfBytesToReceive)
             {
-                throw new LJPException($"Max size to receive when trying \"{v}\"", LJPExceptionType.MaxSizeToReceive);
+                throw new SLPException($"Max size to receive when trying \"{v}\"", SLPException.SLPExceptionType.MaxSizeToReceive);
             }
         }
 
@@ -291,7 +291,7 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
                 var ppk = this.IPersistentPrivateKeyProvider.Read(this.remotePublicKey);
                 if (ppk == null)
                 {
-                    throw new SLPException("Secure protocol, ppk not founded, probably delete of ppk.");//TODO: From configuration.
+                    throw new SLPException("Secure protocol, ppk not found,  ppk file could have been deleted.", SLPException.SLPExceptionType.PPKNotFound);//TODO: From configuration.
                 }
 
                 PublicKey PubKey = new PublicKey { yExponent = ppk.PrivateKey.yExponent, yModulus = ppk.PrivateKey.yModulus };
