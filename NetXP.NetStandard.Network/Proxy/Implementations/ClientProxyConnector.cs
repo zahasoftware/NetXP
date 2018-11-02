@@ -88,7 +88,7 @@ namespace NetXP.NetStandard.Network.Proxy.Implementations
 
                 if (!Regex.IsMatch(bufferAsString, @"^HTTP.+200\s+Connection\s+established.*", RegexOptions.Multiline))
                 {
-                    throw new ProxyConnectionException($"Connection Failed:{bufferAsString}");
+                    throw new ProxyConnectionException($"Connection Failed: {bufferAsString}");
                 }
             }
             else///Direct connection (PROXY NOT FOUND)
