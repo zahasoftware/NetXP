@@ -2,10 +2,9 @@
 using SoapHttpClient;
 using SoapHttpClient.Enums;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
+using System.Runtime.Serialization;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
@@ -45,15 +44,19 @@ namespace NetXP.NetStandard.Network.Services.Implementations
             rootXmlnsAttribute.Value = methodNamespace ?? "";
             root.Attributes.Append(rootXmlnsAttribute);
 
+            var rootXsiAttribute = xdoc.CreateAttribute("xmlns:xsi");
+            rootXsiAttribute.Value = "http://www.w3.org/2001/XMLSchema-instance";
+            root.Attributes.Append(rootXsiAttribute);
+
             foreach (var methodParam in methodParams)
             {
                 var xparam = xdoc.CreateElement(methodParam.Name);
                 root.AppendChild(xparam);
 
                 var valueParam = methodParam.Value;
-                var valueParamType = valueParam.GetType();
+                var valueParamType = valueParam?.GetType();
 
-                if (valueParamType.IsClass && valueParamType != typeof(String))
+                if ((valueParamType?.IsClass ?? false) && valueParamType != typeof(string))///Create a class structure
                 {
                     foreach (var prop in valueParamType.GetProperties())
                     {
@@ -61,26 +64,27 @@ namespace NetXP.NetStandard.Network.Services.Implementations
                         xparam.AppendChild(xprop);
                         var propValue = prop.GetValue(valueParam);
 
-                        if (prop.PropertyType.IsClass && !(propValue is String))
+                        if (prop.PropertyType.IsClass && !(propValue is string))
                         {
                             ///TODO: Do recursive
                         }
-                        else if (prop.PropertyType.IsPrimitive || (propValue is String))
+                        else if (prop.PropertyType.IsPrimitive || (propValue is string))
                         {
-                            if (propValue is bool)
-                            {
-                                xprop.InnerText = Convert.ToBoolean(propValue) == true ? "1" : "0";
-                            }
-                            else
-                            {
-                                xprop.InnerText = propValue.ToString();
-                            }
+                            xprop.InnerText = (propValue is bool) ? propValue.ToString().ToLower()
+                                            : xprop.InnerText = propValue.ToString();
                         }
                     }
                 }
-                else if (valueParamType.IsPrimitive || (valueParam is String))
+                else if (valueParamType == null)
                 {
-                    xparam.InnerText = valueParamType == typeof(System.Boolean)
+                    xparam.InnerText = "";
+                    XmlAttribute nullAttribute = xdoc.CreateAttribute("xsi", "nil", "http://www.w3.org/2001/XMLSchema-instance");
+                    nullAttribute.Value = "true";
+                    xparam.Attributes.Append(nullAttribute);
+                }
+                else if (valueParamType.IsPrimitive || (valueParam is string))
+                {
+                    xparam.InnerText = valueParamType == typeof(bool)
                         ? valueParam.ToString().ToLower() : valueParam.ToString();
                 }
             }
@@ -114,10 +118,7 @@ namespace NetXP.NetStandard.Network.Services.Implementations
                 }
 
                 //Get Body Content 
-                serializedResponse =
-                    XElement.Parse(
-                            XElement.Parse(serializedResponseEnvelop).FirstNode.ToString()
-                        ).FirstNode.ToString();
+                serializedResponse = XElement.Parse(XElement.Parse(serializedResponseEnvelop).FirstNode.ToString()).FirstNode.ToString();
             }
 
             if (typeof(T) != typeof(VoidDTO))
@@ -129,11 +130,21 @@ namespace NetXP.NetStandard.Network.Services.Implementations
                     var deserializedResponse = xmlSerializerWithXmlSerializer.Deserialize<T>(serializedResponseInBytes);
                     return deserializedResponse;
                 }
-                catch (Exception ex)
+                catch (Exception exXMLSerializer)
                 {
-                    var serializedResponseInBytes = Encoding.UTF8.GetBytes(serializedResponse);
-                    var deserializedResponse = xmlSerializerWithDataContractSerializer.Deserialize<T>(serializedResponseInBytes);
-                    return deserializedResponse;
+                    try
+                    {
+                        var serializedResponseInBytes = Encoding.UTF8.GetBytes(serializedResponse);
+                        var deserializedResponse = xmlSerializerWithDataContractSerializer.Deserialize<T>(serializedResponseInBytes);
+                        return deserializedResponse;
+                    }
+                    catch (Exception exDataContractSeralizer)
+                    {
+                        var ex = new SerializationException($"Error in SoapServiceClient, cannot deserializa with XMLSerializer " +
+                            $"and DataContract, XMLSerializer message: {exXMLSerializer.Message}, DataContractSerializer message: " +
+                            $"{exDataContractSeralizer.Message}]");
+                        throw ex;
+                    }
                 }
             }
             else
