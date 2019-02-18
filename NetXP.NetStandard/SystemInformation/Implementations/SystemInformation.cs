@@ -1,13 +1,10 @@
-﻿using NetXP.NetStandard.SystemInformation;
+﻿using NetXP.NetStandard.Processes;
 using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Runtime.InteropServices;
-using NetXP.NetStandard.Processes;
+using System.Threading.Tasks;
 
 namespace NetXP.NetStandard.SystemInformation.Implementations
 {
@@ -58,10 +55,9 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
             if (GetOSInfo().Platform == SystemInformation.OSPlatformType.Windows)
             {
                 // Act
-                result = this.ioTerminal.Execute(new ProcessInput
+                result = ioTerminal.Execute(new ProcessInput
                 {
                     ShellName = "cmd",
-                    MaxOfSecondToWaitCommand = 5,
                     Arguments = "/c wmic baseboard get serialnumber"
                 });
                 result.StandardOutput =
@@ -72,11 +68,10 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
             else if (GetOSInfo().Platform == SystemInformation.OSPlatformType.Linux)
             {
                 // Act
-                result = this.ioTerminal.Execute(new ProcessInput
+                result = ioTerminal.Execute(new ProcessInput
                 {
-                    Command = "cat /sys/devices/virtual/dmi/id/board_serial",
+                    Command = "cat /proc/cpuinfo | grep Serial | awk ' {print $3}'",
                     ShellName = "/bin/bash",
-                    MaxOfSecondToWaitCommand = 5,
                     Arguments = ""
                 });
                 result.StandardOutput =

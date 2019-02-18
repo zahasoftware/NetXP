@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetXP.NetStandard
 {
@@ -17,6 +13,48 @@ namespace NetXP.NetStandard
 
             byte decre = 4;
             for (int c = 0; c < 4; c++)
+            {
+                outputBytes[c + index] = (byte)(input >> (8 * --decre));
+            }
+        }
+
+        public static void UInt16ToByte(byte[] outputBytes, int index, ushort input)
+        {
+            if (BitConverter.IsLittleEndian)
+            {
+                BitHelper.ReverseBytes(input);
+            }
+
+            byte decre = 2;
+            for (int c = 0; c < 2; c++)
+            {
+                outputBytes[c + index] = (byte)(input >> (8 * --decre));
+            }
+        }
+
+        public static void UInt32ToByte(byte[] outputBytes, int index, uint input)
+        {
+            if (BitConverter.IsLittleEndian)
+            {
+                BitHelper.ReverseBytes(input);
+            }
+
+            byte decre = 4;
+            for (int c = 0; c < 4; c++)
+            {
+                outputBytes[c + index] = (byte)(input >> (8 * --decre));
+            }
+        }
+
+        public static void UInt64ToByte(byte[] outputBytes, int index, ulong input)
+        {
+            if (BitConverter.IsLittleEndian)
+            {
+                BitHelper.ReverseBytes(input);
+            }
+
+            byte decre = 8;
+            for (int c = 0; c < 8; c++)
             {
                 outputBytes[c + index] = (byte)(input >> (8 * --decre));
             }
