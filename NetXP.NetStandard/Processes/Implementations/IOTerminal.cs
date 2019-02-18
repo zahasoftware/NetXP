@@ -2,9 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace NetXP.NetStandard.Processes.Implementations
 {
@@ -37,47 +35,53 @@ namespace NetXP.NetStandard.Processes.Implementations
 
             var output = new ProcessOutput();
 
+            List<string> soutput = new List<string>();
+            List<string> serror = new List<string>();
+
             using (var pro = Process.Start(psi))
             {
-                using (var i = pro.StandardInput)
+                using (AutoResetEvent outputWaitHandle = new AutoResetEvent(false))
+                using (AutoResetEvent errorWaitHandle = new AutoResetEvent(false))
                 {
-                    i.WriteLine(processInput.Command);///Changing to current directory before execute any command.
-                }
-
-                using (var e = pro.StandardError)
-                using (var r = pro.StandardOutput)
-                {
-                    Func<Task<string>> funcStandardOutput = async () =>
+                    pro.OutputDataReceived += (sender, e) =>
                     {
-                        var task = r.ReadToEndAsync();
-                        if (await Task.WhenAny(task, Task.Delay(this.ioTerminalOptions.WaitTimeOut)) != task) throw new TimeoutException("Standard Output Timeout");
-                        return task.Result;
+                        if (e.Data == null)
+                        {
+                            outputWaitHandle.Set();
+                        }
+                        else
+                        {
+                            soutput.Add(e.Data?.Trim());
+                        }
                     };
-                    var standarOutput = funcStandardOutput();
-
-                    Func<Task<string>> funcErrorOutput = async () =>
+                    pro.ErrorDataReceived += (sender, e) =>
                     {
-                        var task = e.ReadToEndAsync();
-                        if (await Task.WhenAny(task, Task.Delay(this.ioTerminalOptions.WaitTimeOut)) != task) throw new TimeoutException("Standard Error Timeout");
-                        return task.Result;
+                        if (e.Data == null)
+                        {
+                            errorWaitHandle.Set();
+                        }
+                        else
+                        {
+                            serror.Add(e.Data?.Trim());
+                        }
                     };
-                    var errorOutput = funcErrorOutput();
 
-                    if (!pro.WaitForExit(this.ioTerminalOptions.WaitTimeOut)) throw new TimeoutException("Shell wait exit");
+                    using (var i = pro.StandardInput)
+                    {
+                        i.WriteLine(processInput.Command);///Executing command
+                    }
+
+                    pro.BeginOutputReadLine();
+                    pro.BeginErrorReadLine();
+
+                    if (pro.WaitForExit(this.ioTerminalOptions.WaitTimeOut))
+                    {
+                        output.StandardOutput = soutput.ToArray();
+                        output.StandardError = serror.ToArray();
+                    }
                     else
                     {
-                        output.StandardOutput = Regex.Split(standarOutput.Result, System.Environment.NewLine);
-                        output.StandardError = Regex.Split(errorOutput.Result, System.Environment.NewLine);
-
-                        for (int i = 0; i < (output.StandardOutput?.Length ?? 0); i++)
-                        {
-                            output.StandardOutput[i] = output.StandardOutput[i]?.Trim();
-                        }
-
-                        for (int i = 0; i < (output.StandardError?.Length ?? 0); i++)
-                        {
-                            output.StandardError[i] = output.StandardError[i]?.Trim();
-                        }
+                        throw new TimeoutException("Shell wait exit");
                     }
 
                     output.ExitCode = pro.ExitCode;

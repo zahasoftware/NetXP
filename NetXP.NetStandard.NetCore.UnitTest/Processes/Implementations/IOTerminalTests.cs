@@ -3,10 +3,8 @@ using NetXP.NetStandard.DependencyInjection;
 using NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps;
 using NetXP.NetStandard.NetCore;
 using NetXP.NetStandard.Processes;
-using NetXP.NetStandard.Processes.Implementations;
 using StructureMap;
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using System.Linq;
 
 namespace NetXP.NetStandard.NetCoreUnitTest.Processes.Implementations
@@ -68,6 +66,7 @@ namespace NetXP.NetStandard.NetCoreUnitTest.Processes.Implementations
                 // Assert
             }
 
+            Console.WriteLine(string.Join(",", result.StandardOutput));
             Assert.AreNotEqual(result.StandardOutput, 0);
         }
 
