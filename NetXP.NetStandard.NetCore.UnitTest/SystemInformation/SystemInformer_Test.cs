@@ -6,6 +6,8 @@ using StructureMap;
 using di = NetXP.NetStandard.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using NetXP.NetStandard.SystemInformation;
+using System.Net.NetworkInformation;
+using System.Linq;
 
 namespace NetXP.NetStandard.NetCore.SystemInformation.Tests
 {
@@ -46,10 +48,17 @@ namespace NetXP.NetStandard.NetCore.SystemInformation.Tests
         }
 
         [TestMethod]
-        public void NS_GetServices()
+        public void NS_GetOSInfo()
         {
             var systemInformer = container.Resolve<ISystemInformation>();
             var osInfo = systemInformer.GetOSInfo();
+        }
+
+      [TestMethod]
+        public void NS_GetServices()
+        {
+            NetworkInterface[] nics = NetworkInterface.GetAllNetworkInterfaces();
+            var firstMacAddres = nics.FirstOrDefault().GetPhysicalAddress().ToString();
         }
 
 

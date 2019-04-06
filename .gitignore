@@ -244,3 +244,4 @@ ModelManifest.xml
 # Custom
 unversionSettings.json
 unversionSettings.config
+NetXP.NetStandard.NetCore.UnitTest/.vscode/launch.json
