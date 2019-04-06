@@ -49,7 +49,6 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
         {
             string mbInfo = String.Empty;
 
-            // Arrange
             ProcessOutput result = null;
 
             if (GetOSInfo().Platform == SystemInformation.OSPlatformType.Windows)
@@ -65,7 +64,9 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
                     .Where(o => o?.Trim()?.Equals("") != true).ToArray();
                 // Assert
             }
-            else if (GetOSInfo().Platform == SystemInformation.OSPlatformType.Linux)
+            //Raspberry
+            else if (GetOSInfo().Platform == SystemInformation.OSPlatformType.Linux
+                  && GetOSInfo().Architecture == Architecture.Arm || GetOSInfo().Architecture == Architecture.Arm64)
             {
                 // Act
                 result = ioTerminal.Execute(new ProcessInput
@@ -74,6 +75,22 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
                     ShellName = "/bin/bash",
                     Arguments = ""
                 });
+                result.StandardOutput =
+                    result.StandardOutput
+                    .Where(o => o?.Trim()?.Equals("") != true).ToArray();
+                // Assert
+            }
+            //Linux (Fedora Tested)
+            else if (GetOSInfo().Platform == SystemInformation.OSPlatformType.Linux)
+            {
+                // Act
+                result = ioTerminal.Execute(new ProcessInput
+                {
+                    Command = "cat /sys/devices/virtual/dmi/id/board_serial",
+                    ShellName = "/bin/bash",
+                    Arguments = ""
+                });
+
                 result.StandardOutput =
                     result.StandardOutput
                     .Where(o => o?.Trim()?.Equals("") != true).ToArray();

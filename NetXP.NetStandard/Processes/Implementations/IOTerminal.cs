@@ -22,24 +22,22 @@ namespace NetXP.NetStandard.Processes.Implementations
 
         public ProcessOutput Execute(ProcessInput processInput)
         {
-            var psi = new ProcessStartInfo();
-            psi.FileName = processInput.ShellName;
-            psi.UseShellExecute = false;
-            psi.CreateNoWindow = true;
-            psi.Arguments = processInput.Arguments;
-            //TryToGetLastDirectory(ShellDTO);
-
-            psi.RedirectStandardOutput = true;
-            psi.RedirectStandardInput = true;
-            psi.RedirectStandardError = true;
-
-            var output = new ProcessOutput();
-
-            List<string> soutput = new List<string>();
-            List<string> serror = new List<string>();
-
-            using (var pro = Process.Start(psi))
+            //var psi = new ProcessStartInfo();
+            using (var pro = new Process())
             {
+                pro.StartInfo.FileName = processInput.ShellName;
+                pro.StartInfo.UseShellExecute = false;
+                pro.StartInfo.CreateNoWindow = true;
+                pro.StartInfo.Arguments = processInput.Arguments;
+                pro.StartInfo.RedirectStandardOutput = true;
+                pro.StartInfo.RedirectStandardInput = true;
+                pro.StartInfo.RedirectStandardError = true;
+
+                var output = new ProcessOutput();
+
+                List<string> soutput = new List<string>();
+                List<string> serror = new List<string>();
+
                 using (AutoResetEvent outputWaitHandle = new AutoResetEvent(false))
                 using (AutoResetEvent errorWaitHandle = new AutoResetEvent(false))
                 {
@@ -66,28 +64,40 @@ namespace NetXP.NetStandard.Processes.Implementations
                         }
                     };
 
-                    using (var i = pro.StandardInput)
+                    try
                     {
-                        i.WriteLine(processInput.Command);///Executing command
+                        pro.Start();
+
+                        using (var i = pro.StandardInput)
+                        {
+                            i.WriteLine(processInput.Command);///Executing command
+                        }
+
+                        pro.BeginOutputReadLine();
+                        pro.BeginErrorReadLine();
+
+                        if (pro.WaitForExit(ioTerminalOptions.WaitTimeOut))
+                        {
+                            output.StandardOutput = soutput.ToArray();
+                            output.StandardError = serror.ToArray();
+                        }
+                        else
+                        {
+                            pro.Kill();
+                            throw new TimeoutException("Shell wait exit");
+                        }
+
+                        output.ExitCode = pro.ExitCode;
                     }
-
-                    pro.BeginOutputReadLine();
-                    pro.BeginErrorReadLine();
-
-                    if (pro.WaitForExit(this.ioTerminalOptions.WaitTimeOut))
+                    finally
                     {
-                        output.StandardOutput = soutput.ToArray();
-                        output.StandardError = serror.ToArray();
+                        outputWaitHandle.WaitOne(ioTerminalOptions.WaitTimeOut);
+                        errorWaitHandle.WaitOne(ioTerminalOptions.WaitTimeOut);
                     }
-                    else
-                    {
-                        throw new TimeoutException("Shell wait exit");
-                    }
-
-                    output.ExitCode = pro.ExitCode;
                 }
+                return output;
             }
-            return output;
         }
+
     }
 }

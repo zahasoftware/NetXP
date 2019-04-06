@@ -1,4 +1,6 @@
-﻿namespace NetXP.NetStandard.Processes
+﻿using System.Collections.Generic;
+
+namespace NetXP.NetStandard.Processes
 {
     public class ProcessOutput
     {

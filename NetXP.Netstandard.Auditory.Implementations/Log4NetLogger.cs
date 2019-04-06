@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using log4net;
+using System;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using log4net;
-using System.Diagnostics;
-using NetXP.NetStandard.Auditory;
-using System.Xml;
 using System.Reflection;
+using System.Xml;
 
 namespace NetXP.NetStandard.Auditory.Implementations
 {
@@ -30,10 +24,12 @@ namespace NetXP.NetStandard.Auditory.Implementations
                                 [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",
                                 [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
         {
+#if DEBUG
             ReloadConfig();
             string @class = Path.GetFileNameWithoutExtension(sourceFilePath);
-            log.Debug($"<{sourceLineNumber}:{@class}.{memberName}>: {msg}");
+            log.Debug($"{msg} (<{sourceLineNumber}:{@class}.{memberName}>)");
             var basedir = Directory.GetCurrentDirectory();
+#endif
         }
 
         private static void ReloadConfig()
@@ -68,8 +64,8 @@ namespace NetXP.NetStandard.Auditory.Implementations
         {
             if (tie != null)
             {
-                this.Error(tie.ToString());
-                this.Error(tie.InnerException);
+                Error(tie.ToString());
+                Error(tie.InnerException);
             }
         }
     }

@@ -41,7 +41,6 @@ namespace NetXP.NetStandard.NetCoreUnitTest.Processes.Implementations
                 {
                     Command = "Get-WmiObject Win32_BaseBoard | Format-Wide -Property SerialNumber",
                     ShellName = "powershell",
-                    MaxOfSecondToWaitCommand = 5,
                     Arguments = "-OutputFormat Text -InputFormat Text -File -"
                 });
                 result.StandardOutput =
@@ -57,7 +56,6 @@ namespace NetXP.NetStandard.NetCoreUnitTest.Processes.Implementations
                 {
                     Command = "/sys/devices/virtual/dmi/id/board_serial",
                     ShellName = "/bin/bash",
-                    MaxOfSecondToWaitCommand = 5,
                     Arguments = ""
                 });
                 result.StandardOutput =

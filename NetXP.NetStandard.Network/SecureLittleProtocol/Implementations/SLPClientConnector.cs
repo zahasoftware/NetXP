@@ -132,8 +132,8 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
             var bytesToSend = bytesHeader.Concat(symetricKeyEncrypted).Concat(bodyEncrypted).ToArray();
 
 #if DEBUG
-            var publicKeyHash = hash.Generate(new ByteArray(publicKeySerialized));
-            logger.Debug($"Sending PK (FromServer={isFromServer},Founded={isPpkFound}) \"{BitConverter.ToString(publicKeyHash)}\"");
+            //var publicKeyHash = hash.Generate(new ByteArray(publicKeySerialized));
+            //logger.Debug($"Sending PK (FromServer={isFromServer},Founded={isPpkFound}) \"{BitConverter.ToString(publicKeyHash)}\"");
 #endif
             textPlainTCPChannel.Send(bytesToSend, 0, bytesToSend.Length);
         }
@@ -242,15 +242,15 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
 
             #region For Debuging
 #if DEBUG
-            byte[] header = new byte[4 + 4 + 4];
-            header[HEADER_TYPE_OFFSET] = TYPE_MESSAGE;
-            ByteHelper.UIntToByte(header, HEADER_TYPE_3_SYMKEY_LENGTH_OFFSET, (uint)iSymetricLength);
-            ByteHelper.UIntToByte(header, HEADER_TYPE_3_BODY_LENGTH_OFFSET, (uint)iBodyLength);
-            var aReceivedHash = hash.Generate(new ByteArray(header.Concat(aLittleBuffer.Take(iSymetricLength).ToArray()).Concat(aDinamicBuffer).ToArray()));
-            this.logger.Debug($"Receiving Message Hash \"{BitConverter.ToString(aReceivedHash)}\", BodyLenth={iBodyLength}");
+            //byte[] header = new byte[4 + 4 + 4];
+            //header[HEADER_TYPE_OFFSET] = TYPE_MESSAGE;
+            //ByteHelper.UIntToByte(header, HEADER_TYPE_3_SYMKEY_LENGTH_OFFSET, (uint)iSymetricLength);
+            //ByteHelper.UIntToByte(header, HEADER_TYPE_3_BODY_LENGTH_OFFSET, (uint)iBodyLength);
+            //var aReceivedHash = hash.Generate(new ByteArray(header.Concat(aLittleBuffer.Take(iSymetricLength).ToArray()).Concat(aDinamicBuffer).ToArray()));
+            //this.logger.Debug($"Receiving Message Hash \"{BitConverter.ToString(aReceivedHash)}\", BodyLenth={iBodyLength}");
 
-            var aPUBKEYToDecrypt = this.hash.Generate(new ByteArray(this.serializeT.Serialize(asymetricCrypt.GetPublicKey())));
-            this.logger.Debug($"PUBKEY to decrypt the message {BitConverter.ToString(aPUBKEYToDecrypt)}");
+            //var aPUBKEYToDecrypt = this.hash.Generate(new ByteArray(this.serializeT.Serialize(asymetricCrypt.GetPublicKey())));
+            //this.logger.Debug($"PUBKEY to decrypt the message {BitConverter.ToString(aPUBKEYToDecrypt)}");
 #endif
             #endregion
 
@@ -310,8 +310,8 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
                 this.asymetricForDecrypt.GenerateKeys();
                 this.thisPrivateKey = this.asymetricForDecrypt.GetPrivateKey();
 #if DEBUG
-                var aPUBKEYToDecrypt = this.hash.Generate(new ByteArray(this.serializeT.Serialize(this.asymetricForDecrypt.GetPublicKey())));
-                this.logger.Debug($"Saving a New PrivateKey, PUBKEY (HASH) is = {BitConverter.ToString(aPUBKEYToDecrypt)}");
+                //var aPUBKEYToDecrypt = this.hash.Generate(new ByteArray(this.serializeT.Serialize(this.asymetricForDecrypt.GetPublicKey())));
+                //this.logger.Debug($"Saving a New PrivateKey, PUBKEY (HASH) is = {BitConverter.ToString(aPUBKEYToDecrypt)}");
 #endif
                 var ppk = new PersistentPrivateKey
                 {
@@ -356,7 +356,7 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
             var aToSend = aHeader.Concat(aSymetricKeyEncrypted).Concat(aBodyEncrypted).ToArray();
 
             var aToSendHash = hash.Generate(new ByteArray(aToSend));
-            logger.Debug($"Sending Secure Message {BitConverter.ToString(aToSendHash)}, Length:({aBodyEncrypted?.Length})");
+            //logger.Debug($"Sending Secure Message {BitConverter.ToString(aToSendHash)}, Length:({aBodyEncrypted?.Length})");
             return this.textPlainTCPChannel.Send(aToSend, iOffset, aToSend.Length);
         }
 
