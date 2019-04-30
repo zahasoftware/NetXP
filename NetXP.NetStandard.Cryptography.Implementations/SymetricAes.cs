@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
+﻿using System.IO;
 using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using NetXP.NetStandard.Cryptography;
 
 namespace NetXP.NetStandard.Cryptography.Implementations
 {
@@ -16,7 +9,7 @@ namespace NetXP.NetStandard.Cryptography.Implementations
 
         public SymetricAes()
         {
-            this.Mode = CipherMode.ECB;
+            Mode = CipherMode.ECB;
         }
 
 
@@ -31,7 +24,7 @@ namespace NetXP.NetStandard.Cryptography.Implementations
             SymmetricAlgorithm algorithm = Aes.Create();
             algorithm.Key = SymetricKey.Key;
             algorithm.IV = SymetricKey.Salt;
-            algorithm.Mode = this.Mode;
+            algorithm.Mode = Mode;
             //algorithm.Padding = PaddingMode.PKCS7;
 
             ICryptoTransform transform = algorithm.CreateEncryptor(SymetricKey.Key, SymetricKey.Salt);
@@ -41,6 +34,7 @@ namespace NetXP.NetStandard.Cryptography.Implementations
                 using (CryptoStream stream = new CryptoStream(buffer, transform, CryptoStreamMode.Write))
                 {
                     stream.Write(aNoEncryptedMessage, 0, aNoEncryptedMessage.Length);
+                    stream.FlushFinalBlock();//Error:https://stackoverflow.com/a/40564155
                 }
                 return buffer.ToArray();
             }
@@ -54,7 +48,7 @@ namespace NetXP.NetStandard.Cryptography.Implementations
             algorithm.Key = SymetricKey.Key;
             algorithm.IV = SymetricKey.Salt;
 
-            algorithm.Mode = this.Mode;
+            algorithm.Mode = Mode;
             //algorithm.Padding = PaddingMode.PKCS7;
 
             ICryptoTransform transform = algorithm.CreateDecryptor(SymetricKey.Key, SymetricKey.Salt);
