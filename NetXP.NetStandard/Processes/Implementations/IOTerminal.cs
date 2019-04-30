@@ -2,9 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace NetXP.NetStandard.Processes.Implementations
 {
@@ -24,66 +22,82 @@ namespace NetXP.NetStandard.Processes.Implementations
 
         public ProcessOutput Execute(ProcessInput processInput)
         {
-            var psi = new ProcessStartInfo();
-            psi.FileName = processInput.ShellName;
-            psi.UseShellExecute = false;
-            psi.CreateNoWindow = true;
-            psi.Arguments = processInput.Arguments;
-            //TryToGetLastDirectory(ShellDTO);
-
-            psi.RedirectStandardOutput = true;
-            psi.RedirectStandardInput = true;
-            psi.RedirectStandardError = true;
-
-            var output = new ProcessOutput();
-
-            using (var pro = Process.Start(psi))
+            //var psi = new ProcessStartInfo();
+            using (var pro = new Process())
             {
-                using (var i = pro.StandardInput)
+                pro.StartInfo.FileName = processInput.ShellName;
+                pro.StartInfo.UseShellExecute = false;
+                pro.StartInfo.CreateNoWindow = true;
+                pro.StartInfo.Arguments = processInput.Arguments;
+                pro.StartInfo.RedirectStandardOutput = true;
+                pro.StartInfo.RedirectStandardInput = true;
+                pro.StartInfo.RedirectStandardError = true;
+
+                var output = new ProcessOutput();
+
+                List<string> soutput = new List<string>();
+                List<string> serror = new List<string>();
+
+                using (AutoResetEvent outputWaitHandle = new AutoResetEvent(false))
+                using (AutoResetEvent errorWaitHandle = new AutoResetEvent(false))
                 {
-                    i.WriteLine(processInput.Command);///Changing to current directory before execute any command.
-                }
-
-                using (var e = pro.StandardError)
-                using (var r = pro.StandardOutput)
-                {
-                    Func<Task<string>> funcStandardOutput = async () =>
+                    pro.OutputDataReceived += (sender, e) =>
                     {
-                        var task = r.ReadToEndAsync();
-                        if (await Task.WhenAny(task, Task.Delay(this.ioTerminalOptions.WaitTimeOut)) != task) throw new TimeoutException("Standard Output Timeout");
-                        return task.Result;
-                    };
-                    var standarOutput = funcStandardOutput();
-
-                    Func<Task<string>> funcErrorOutput = async () =>
-                    {
-                        var task = e.ReadToEndAsync();
-                        if (await Task.WhenAny(task, Task.Delay(this.ioTerminalOptions.WaitTimeOut)) != task) throw new TimeoutException("Standard Error Timeout");
-                        return task.Result;
-                    };
-                    var errorOutput = funcErrorOutput();
-
-                    if (!pro.WaitForExit(this.ioTerminalOptions.WaitTimeOut)) throw new TimeoutException("Shell wait exit");
-                    else
-                    {
-                        output.StandardOutput = Regex.Split(standarOutput.Result, System.Environment.NewLine);
-                        output.StandardError = Regex.Split(errorOutput.Result, System.Environment.NewLine);
-
-                        for (int i = 0; i < (output.StandardOutput?.Length ?? 0); i++)
+                        if (e.Data == null)
                         {
-                            output.StandardOutput[i] = output.StandardOutput[i]?.Trim();
+                            outputWaitHandle.Set();
+                        }
+                        else
+                        {
+                            soutput.Add(e.Data?.Trim());
+                        }
+                    };
+                    pro.ErrorDataReceived += (sender, e) =>
+                    {
+                        if (e.Data == null)
+                        {
+                            errorWaitHandle.Set();
+                        }
+                        else
+                        {
+                            serror.Add(e.Data?.Trim());
+                        }
+                    };
+
+                    try
+                    {
+                        pro.Start();
+
+                        using (var i = pro.StandardInput)
+                        {
+                            i.WriteLine(processInput.Command);///Executing command
                         }
 
-                        for (int i = 0; i < (output.StandardError?.Length ?? 0); i++)
+                        pro.BeginOutputReadLine();
+                        pro.BeginErrorReadLine();
+
+                        if (pro.WaitForExit(ioTerminalOptions.WaitTimeOut))
                         {
-                            output.StandardError[i] = output.StandardError[i]?.Trim();
+                            output.StandardOutput = soutput.ToArray();
+                            output.StandardError = serror.ToArray();
                         }
+                        else
+                        {
+                            pro.Kill();
+                            throw new TimeoutException("Shell wait exit");
+                        }
+
+                        output.ExitCode = pro.ExitCode;
                     }
-
-                    output.ExitCode = pro.ExitCode;
+                    finally
+                    {
+                        outputWaitHandle.WaitOne(ioTerminalOptions.WaitTimeOut);
+                        errorWaitHandle.WaitOne(ioTerminalOptions.WaitTimeOut);
+                    }
                 }
+                return output;
             }
-            return output;
         }
+
     }
 }

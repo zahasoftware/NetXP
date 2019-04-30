@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -89,11 +90,7 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
                         }
                         Type tpeParameterFE = methodParameters[i].ParameterType;
                         sObject = ljpCallMessageDTO.Parameters[i];
-                        DataContractJsonSerializer jsonSerializerParameter = new DataContractJsonSerializer(tpeParameterFE);
-                        oSW.Write(sObject);
-                        oSW.Flush();
-                        oMS.Position = 0;
-                        var oParameter = jsonSerializerParameter.ReadObject(oMS);
+                        var oParameter = JsonConvert.DeserializeObject(sObject, tpeParameterFE);
                         oLJPCallResponse.Parameters.Add(oParameter);
                     }
                 }

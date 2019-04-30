@@ -90,7 +90,6 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
             {
                 Command = $"systemctl list-units --type=service '{serviceName}'",
                 ShellName = "/bin/bash",
-                MaxOfSecondToWaitCommand = 5,
                 Arguments = ""
             });
 
@@ -172,7 +171,6 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
                 {
                     Command = "systemctl list-units --type=service | grep ''",
                     ShellName = "/bin/bash",
-                    MaxOfSecondToWaitCommand = 7,
                     Arguments = ""
                 });
 

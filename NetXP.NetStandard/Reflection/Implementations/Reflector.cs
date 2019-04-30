@@ -1,13 +1,9 @@
-﻿using System;
+﻿using NetXP.NetStandard.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Runtime;
-using NetXP.NetStandard.DependencyInjection;
-using NetXP.NetStandard.Exceptions;
 
 namespace NetXP.NetStandard.Reflection.Implementations
 {
@@ -34,7 +30,7 @@ namespace NetXP.NetStandard.Reflection.Implementations
 
         public object InvokeMethodWithJSONParameters(Type namespaceType, string @interface, string method, string[] @params)
         {
-            this.ResolveInterfaceAndMethod(namespaceType, @interface, method, out object oInterfaceResolved, out MethodInfo methodInfo);
+            ResolveInterfaceAndMethod(namespaceType, @interface, method, out object oInterfaceResolved, out MethodInfo methodInfo);
 
             var aParameterInfo = methodInfo.GetParameters();
 
@@ -63,9 +59,21 @@ namespace NetXP.NetStandard.Reflection.Implementations
 
         public Type GetType(Type referenceType, string typeToFound)
         {
+            var isArray = typeToFound.Contains("[");
+
+            if (isArray)
+            {
+                typeToFound = typeToFound.Replace("[", "").Replace("]", "");
+            }
+
             //Resolving Interface
             Type typeToTryResolve = null;
             typeToTryResolve = referenceType.GetTypeInfo().Assembly.GetTypes().SingleOrDefault(o => o.Name.Equals(typeToFound));
+
+            if (isArray)
+            {
+                typeToTryResolve = Type.GetType($"{typeToTryResolve.FullName}[], {typeToTryResolve.Assembly.FullName}");
+            }
 
             if (typeToTryResolve == null)
             {
@@ -86,7 +94,7 @@ namespace NetXP.NetStandard.Reflection.Implementations
                 }
                 else
                 {
-                    interfaceType = this.GetType(namespaceType, type);
+                    interfaceType = GetType(namespaceType, type);
                 }
                 return interfaceType != null;
 

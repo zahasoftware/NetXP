@@ -71,7 +71,7 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
                     + "\n"
                     + $"{sJsonFinal}";
 
-                logger.Debug($"SendCall To [{ClientTCP.RemoteEndPoint?.ToString() ?? "null"}] => CommmandId = {sendCallParameter?.Id ?? -1},Msg = {sJsonFinal}");
+                //logger.Debug($"SendCall To [{ClientTCP.RemoteEndPoint?.ToString() ?? "null"}] => CommmandId = {sendCallParameter?.Id ?? -1},Msg = {sJsonFinal}");
 
                 var aMessage = Encoding.UTF8.GetBytes(message);
 
@@ -104,7 +104,7 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
                 , sJson
             );
 
-            logger.Debug($"SendReponse [Lenght={iLength}]-[{ClientTCP.RemoteEndPoint.ToString()}] {sJson}");
+            //logger.Debug($"SendReponse [Lenght={iLength}]-[{ClientTCP.RemoteEndPoint.ToString()}] {sJson}");
             var aMessage = Encoding.UTF8.GetBytes(message);
 
 

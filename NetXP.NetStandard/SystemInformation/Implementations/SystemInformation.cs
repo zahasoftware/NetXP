@@ -1,13 +1,10 @@
-﻿using NetXP.NetStandard.SystemInformation;
+﻿using NetXP.NetStandard.Processes;
 using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Runtime.InteropServices;
-using NetXP.NetStandard.Processes;
+using System.Threading.Tasks;
 
 namespace NetXP.NetStandard.SystemInformation.Implementations
 {
@@ -52,16 +49,14 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
         {
             string mbInfo = String.Empty;
 
-            // Arrange
             ProcessOutput result = null;
 
             if (GetOSInfo().Platform == SystemInformation.OSPlatformType.Windows)
             {
                 // Act
-                result = this.ioTerminal.Execute(new ProcessInput
+                result = ioTerminal.Execute(new ProcessInput
                 {
                     ShellName = "cmd",
-                    MaxOfSecondToWaitCommand = 5,
                     Arguments = "/c wmic baseboard get serialnumber"
                 });
                 result.StandardOutput =
@@ -69,16 +64,33 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
                     .Where(o => o?.Trim()?.Equals("") != true).ToArray();
                 // Assert
             }
+            //Raspberry
+            else if (GetOSInfo().Platform == SystemInformation.OSPlatformType.Linux
+                  && GetOSInfo().Architecture == Architecture.Arm || GetOSInfo().Architecture == Architecture.Arm64)
+            {
+                // Act
+                result = ioTerminal.Execute(new ProcessInput
+                {
+                    Command = "cat /proc/cpuinfo | grep Serial | awk ' {print $3}'",
+                    ShellName = "/bin/bash",
+                    Arguments = ""
+                });
+                result.StandardOutput =
+                    result.StandardOutput
+                    .Where(o => o?.Trim()?.Equals("") != true).ToArray();
+                // Assert
+            }
+            //Linux (Fedora Tested)
             else if (GetOSInfo().Platform == SystemInformation.OSPlatformType.Linux)
             {
                 // Act
-                result = this.ioTerminal.Execute(new ProcessInput
+                result = ioTerminal.Execute(new ProcessInput
                 {
                     Command = "cat /sys/devices/virtual/dmi/id/board_serial",
                     ShellName = "/bin/bash",
-                    MaxOfSecondToWaitCommand = 5,
                     Arguments = ""
                 });
+
                 result.StandardOutput =
                     result.StandardOutput
                     .Where(o => o?.Trim()?.Equals("") != true).ToArray();

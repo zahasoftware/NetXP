@@ -3,10 +3,8 @@ using NetXP.NetStandard.DependencyInjection;
 using NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps;
 using NetXP.NetStandard.NetCore;
 using NetXP.NetStandard.Processes;
-using NetXP.NetStandard.Processes.Implementations;
 using StructureMap;
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using System.Linq;
 
 namespace NetXP.NetStandard.NetCoreUnitTest.Processes.Implementations
@@ -43,7 +41,6 @@ namespace NetXP.NetStandard.NetCoreUnitTest.Processes.Implementations
                 {
                     Command = "Get-WmiObject Win32_BaseBoard | Format-Wide -Property SerialNumber",
                     ShellName = "powershell",
-                    MaxOfSecondToWaitCommand = 5,
                     Arguments = "-OutputFormat Text -InputFormat Text -File -"
                 });
                 result.StandardOutput =
@@ -59,7 +56,6 @@ namespace NetXP.NetStandard.NetCoreUnitTest.Processes.Implementations
                 {
                     Command = "/sys/devices/virtual/dmi/id/board_serial",
                     ShellName = "/bin/bash",
-                    MaxOfSecondToWaitCommand = 5,
                     Arguments = ""
                 });
                 result.StandardOutput =
@@ -68,6 +64,7 @@ namespace NetXP.NetStandard.NetCoreUnitTest.Processes.Implementations
                 // Assert
             }
 
+            Console.WriteLine(string.Join(",", result.StandardOutput));
             Assert.AreNotEqual(result.StandardOutput, 0);
         }
 

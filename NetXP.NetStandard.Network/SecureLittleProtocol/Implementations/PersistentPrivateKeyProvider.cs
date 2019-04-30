@@ -131,7 +131,7 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
         public PersistentPrivateKey Read(string server, int port)
         {
 #if DEBUG
-            this.logger.Debug($"Read PPK With Server{server},Port={port}");
+            //this.logger.Debug($"Read PPK With Server{server},Port={port}");
 #endif
             if (string.IsNullOrEmpty(server) || port == 0)
             {
@@ -153,8 +153,8 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
                 return null;
             }
 #if DEBUG
-            var ppkHash = hash.Generate(new ByteArray(serializer.Serialize(publicKey)));
-            this.logger.Debug($"Read PPK With RPK=\"{BitConverter.ToString(ppkHash)}\"");
+            //var ppkHash = hash.Generate(new ByteArray(serializer.Serialize(publicKey)));
+            //this.logger.Debug($"Read PPK With RPK=\"{BitConverter.ToString(ppkHash)}\"");
 #endif
 
             var ppk = this.LoadAllFilesOfDirectory().FirstOrDefault(o => o.PublicKeyRemote != null
@@ -198,11 +198,11 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
             }
 
 #if DEBUG
-            byte[] ppkSerialized = null;
-            ppkSerialized = this.serializer.Serialize(persistentPrivateKey);
-            var aPPKHash = hash.Generate(new ByteArray(ppkSerialized));
-            var aPKHash = hash.Generate(new ByteArray(serializer.Serialize(persistentPrivateKey.PublicKeyRemote)));
-            logger.Debug($"Saving PPK Hash:\"{BitConverter.ToString(aPPKHash)}\", PPK.PK:\"{BitConverter.ToString(aPKHash)}\"");
+            //byte[] ppkSerialized = null;
+            //ppkSerialized = this.serializer.Serialize(persistentPrivateKey);
+            //var aPPKHash = hash.Generate(new ByteArray(ppkSerialized));
+            //var aPKHash = hash.Generate(new ByteArray(serializer.Serialize(persistentPrivateKey.PublicKeyRemote)));
+            //logger.Debug($"Saving PPK Hash:\"{BitConverter.ToString(aPPKHash)}\", PPK.PK:\"{BitConverter.ToString(aPKHash)}\"");
 #endif
         }
 

@@ -17,9 +17,6 @@
         /// </summary>
         public string Command { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public int MaxOfSecondToWaitCommand { get; set; }
+ 
     }
 }

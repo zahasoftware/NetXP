@@ -1,13 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetXP.NetStandard
 {
     public class BitHelper
     {
+        //http://stackoverflow.com/questions/18145667/how-can-i-reverse-the-byte-order-of-an-int
+        /// <summary> * * 
+        /// >> 8*3	    >> 8	  << 8	  << 8*3	
+        /// ----------------------------------------
+        ///    1	      2	        3	      4	    
+        /// 
+        // -----------------------------------------
+        ///    4	      3	        2	      1	    
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static uint ReverseBytes(ushort value)
+        {
+            return (value & 0x00FFU) << 8  // One Byte to Left
+                 | (value & 0xFF00U) >> 8; // ... 
+        }
+
         //http://stackoverflow.com/questions/18145667/how-can-i-reverse-the-byte-order-of-an-int
         /// <summary> * * 
         /// >> 8*3	    >> 8	  << 8	  << 8*3	
@@ -69,6 +83,15 @@ namespace NetXP.NetStandard
                 Array.Reverse(int64, 0, sizeof(long));
 
             return BitConverter.ToInt32(int64, 0);
+        }
+
+        public static short ToInt16(byte[] bytes, int index)
+        {
+            var value = bytes.Skip(index).Take(sizeof(short)).ToArray();
+            if (BitConverter.IsLittleEndian)
+                Array.Reverse(value, 0, sizeof(short));
+
+            return BitConverter.ToInt16(value, 0);
         }
     }
 }
