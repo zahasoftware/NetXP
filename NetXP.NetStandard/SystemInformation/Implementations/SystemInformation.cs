@@ -146,7 +146,7 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
                             continue;
                         }
                     }
-                    catch (Exception ex)
+                    catch (Exception )
                     {
 
                     }

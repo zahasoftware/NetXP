@@ -51,6 +51,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug_2|AnyCPU'">
     <OutputPath>bin\Debug_2\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Staging|AnyCPU'">
+    <OutputPath>bin\Staging\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -67,7 +70,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CompositionRoot.cs" />
-    <Compile Include="Cryptographic\Implementations\AsymetricCryptWithOpenSSL.cs" />
     <Compile Include="Cryptographic\Implementations\AsymetricCryptWithRSACng.cs" />
     <Compile Include="Cryptographic\Implementations\Symetric.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -75,10 +77,6 @@
     <Compile Include="SystemInformation\Implementations\ServiceInformerWindowsOnly.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\openssl-net\ManagedOpenSsl\ManagedOpenSsl.csproj">
-      <Project>{73dcc218-655b-485f-8eac-0ce5f2f7343d}</Project>
-      <Name>ManagedOpenSsl</Name>
-    </ProjectReference>
     <ProjectReference Include="..\NetXP.Netstandard.Auditory.Implementations\NetXP.NetStandard.Auditory.Implementations.csproj">
       <Project>{011d1b5f-7d8e-451b-9cea-a36f59e38a41}</Project>
       <Name>NetXP.NetStandard.Auditory.Implementations</Name>

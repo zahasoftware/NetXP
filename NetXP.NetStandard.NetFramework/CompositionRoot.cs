@@ -20,7 +20,7 @@ namespace NetXP.NetStandard.NetFramework
 
             //Cryptography
             cfg.Register<NetStandard.Cryptography.ISymetricCrypt, Symetric>();
-            cfg.Register<NetStandard.Cryptography.IAsymetricCrypt, AsymetricCryptWithOpenSSL>();
+            cfg.Register<NetStandard.Cryptography.IAsymetricCrypt, AsymetricCryptWithRSACng>();
 
             //SystemInfo
             cfg.Register<NetStandard.SystemInformation.ISystemInformation, SystemInformation.Implementations.SysInfo>();

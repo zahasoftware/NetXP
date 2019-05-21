@@ -3,12 +3,9 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Configurations>Debug;Release;Debug_Device;Debug_Manager;Staging</Configurations>
-    <Configurations>Debug;Release;Debug_Device;Debug_Manager</Configurations>
     <PackageTags>NetStandard Serialization System Cryptography Processes Auditory</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
-  
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_1|AnyCPU'" />
 
   <ItemGroup>
     <Compile Remove="Exceptions\enm\**" />
