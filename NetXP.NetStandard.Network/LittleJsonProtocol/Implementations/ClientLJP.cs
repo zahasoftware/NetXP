@@ -31,7 +31,7 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
             /// .... etc...
         };
 
-        private byte[] aReceiveBuffer = new byte[5012];
+        private byte[] aReceiveBuffer = new byte[1024 * 1024];
         private byte[] nullByteInArray = new byte[] { 0 };
         private readonly IFactoryClientLJP factoryClientLJP;
 
@@ -393,6 +393,8 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
 
                     int indexOfEnd = ByteHelper.IndexOf(aReceiveBuffer, 0, nullByteInArray);
                     indexOfEnd = indexOfEnd == -1 ? aReceiveBuffer.Length : indexOfEnd;
+
+                    indexOfEnd = Math.Min(oLJPResponse.iLength - receivedToNow, indexOfEnd);
 
                     Buffer.BlockCopy(aReceiveBuffer, 0, dinamycBufferToAllMessage, receivedToNow, indexOfEnd);
 

@@ -360,9 +360,9 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
             return this.textPlainTCPChannel.Send(aToSend, iOffset, aToSend.Length);
         }
 
-        const short LITTLE_BUFFER_SIZE = 1024;
-        const short MIDLE_BUFFER_SIZE = 1024 * 2;
-        const short BIG_BUFFER_SIZE = 1024 * 4;
+        const int LITTLE_BUFFER_SIZE = 1024 * 1024;
+        const int MIDLE_BUFFER_SIZE = 1024 * 1024 * 2;
+        const int BIG_BUFFER_SIZE = 1024 * 1024 * 4;
 
         public const byte HEADER_TYPE_1_SIZE = 4 + 4;
         public const byte HEADER_TYPE_2_SIZE = 4 + 4;
