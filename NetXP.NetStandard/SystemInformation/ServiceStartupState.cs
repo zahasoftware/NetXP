@@ -9,6 +9,8 @@ namespace NetXP.NetStandard.SystemInformation
         ///Service is disabled, so it cannot be start on system startup
         Disabled,
         ///Service cannot start because exits an error.
-        Failed
+        Failed,
+        ///Service is Actvating
+        Activating
     }
 }

@@ -218,6 +218,10 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
                 {
                     return ServiceStartupState.Failed;
                 }
+                else if (startupState.ToLower().Contains("activating"))
+                {
+                    return ServiceStartupState.Activating;
+                }
                 else
                 {
                     throw new SystemInformationException($"ServiceStartupState \"{startupState}\" not recognized in linux system for service \"{serviceName}\".");
