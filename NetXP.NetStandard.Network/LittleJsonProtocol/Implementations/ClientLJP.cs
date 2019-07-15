@@ -425,7 +425,7 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
                 {
                     var oLJPException = oObject as LJPExceptionDTO;
                     var nLJPEExceptionType = (LJPExceptionType)oLJPException.IClientLJPExceptionType;
-                    throw new LJPException(oLJPException.Message) { nLJPExceptionType = nLJPEExceptionType };
+                    throw new LJPException(oLJPException.Message, nLJPEExceptionType, oLJPException.Code);
                 }
                 //else
                 //{
@@ -466,7 +466,8 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
             LJPExceptionDTO exc = new LJPExceptionDTO
             {
                 IClientLJPExceptionType = (int)ex.nLJPExceptionType,
-                Message = ex.Message
+                Message = ex.Message,
+                Code = ex.Code
             };
             SendResponse(exc);
         }

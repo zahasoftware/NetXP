@@ -24,5 +24,7 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol
         public int IClientLJPExceptionType { get; set; }
         [DataMember]
         public string Message { get; set; }
+        [DataMember]
+        public int Code { get; set; }
     }
 }

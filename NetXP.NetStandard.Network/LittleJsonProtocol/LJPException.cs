@@ -24,12 +24,13 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol
 
         }
 
-        public LJPException(string sMsg, LJPExceptionType nLJPExceptionType):base(sMsg)
+        public LJPException(string sMsg, LJPExceptionType nLJPExceptionType, int code = 0) : base(sMsg)
         {
             this.nLJPExceptionType = nLJPExceptionType;
+            this.Code = code;
         }
 
         public LJPExceptionType nLJPExceptionType { get; set; }
-
+        public int Code { get; }
     }
 }
