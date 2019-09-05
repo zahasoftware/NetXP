@@ -5,6 +5,15 @@
     <Configurations>Debug;Release;Debug_Device;Debug_Manager;Staging</Configurations>
     <PackageTags>NetStandard Serialization System Cryptography Processes Auditory</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.16.0</Version>
+    <Description>Cross Framework For NetCore, NetFramework and Xamarin Projects.</Description>
+    <PackageReleaseNotes>N/D</PackageReleaseNotes>
+    <Copyright>Copyright © 2019</Copyright>
+    <PackageProjectUrl>https://github.com/juandrn/NetXP</PackageProjectUrl>
+    <PackageIconUrl>https://github.com/juandrn/NetXP</PackageIconUrl>
+    <RepositoryUrl>https://github.com/juandrn/NetXP</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>

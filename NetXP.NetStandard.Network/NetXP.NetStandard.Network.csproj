@@ -3,6 +3,16 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Configurations>Debug;Release;Debug_Manager;Debug_1;Debug_2;Staging</Configurations>
+    <PackageProjectUrl>https://github.com/juandrn/NetXP</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/juandrn/NetXP</RepositoryUrl>
+    <RepositoryType>https://github.com/juandrn/NetXP</RepositoryType>
+    <PackageIconUrl>https://github.com/juandrn/NetXP</PackageIconUrl>
+    <PackageTags>Network LJP SLP TCP Server Socket SOAP</PackageTags>
+    <PackageReleaseNotes>N/D</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Copyright>Copyright © 2019</Copyright>
+    <Description>Implementations and Interfaces To Connect to some protocols like TCP, LJP, SLP, SMTP, SOAP (Interface Only).</Description>
+    <Version>1.16.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

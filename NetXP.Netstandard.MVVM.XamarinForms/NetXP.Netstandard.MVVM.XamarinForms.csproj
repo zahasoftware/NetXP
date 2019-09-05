@@ -5,6 +5,16 @@
     <RootNamespace>NetXP.NetStandard.MVVM.XamarinForms</RootNamespace>
     <AssemblyName>NetXP.NetStandard.MVVM.XamarinForms</AssemblyName>
     <Configurations>Debug;Release;Staging</Configurations>
+    <Version>1.16.0</Version>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReleaseNotes>N/D</PackageReleaseNotes>
+    <Description>Converters</Description>
+    <PackageIconUrl>https://github.com/juandrn/NetXP</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/juandrn/NetXP</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/juandrn/NetXP</RepositoryUrl>
+    <RepositoryType>https://github.com/juandrn/NetXP</RepositoryType>
+    <PackageTags>Converters Xamarin.Forms</PackageTags>
+    <Copyright>Copyright © 2019</Copyright>
   </PropertyGroup>
 
   <ItemGroup>

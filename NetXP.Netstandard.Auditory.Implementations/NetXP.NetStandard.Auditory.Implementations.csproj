@@ -3,6 +3,16 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Configurations>Debug;Release;Debug_Manager;Debug_2;Staging</Configurations>
+    <PackageProjectUrl>https://github.com/juandrn/NetXP</PackageProjectUrl>
+    <PackageIconUrl>https://github.com/juandrn/NetXP</PackageIconUrl>
+    <RepositoryUrl>https://github.com/juandrn/NetXP</RepositoryUrl>
+    <PackageTags>Auditory Log4Net</PackageTags>
+    <PackageReleaseNotes>N/D</PackageReleaseNotes>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Description>Auditory Implementtions Based On Log4Net</Description>
+    <Copyright>Copyright © 2019</Copyright>
+    <Version>1.16.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

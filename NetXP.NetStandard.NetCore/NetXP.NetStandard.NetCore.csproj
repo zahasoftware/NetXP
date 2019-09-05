@@ -12,7 +12,22 @@
   <PropertyGroup>
   <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+  <Version>1.16.0</Version>
+  <Description>CompositionRoot To Registar All NetCore Framework</Description>
+  <Copyright>Copyright © 2019</Copyright>
+  <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  <PackageProjectUrl>https://github.com/juandrn/NetXP</PackageProjectUrl>
+  <PackageIconUrl>https://github.com/juandrn/NetXP</PackageIconUrl>
+  <RepositoryUrl>https://github.com/juandrn/NetXP</RepositoryUrl>
+  <RepositoryType>https://github.com/juandrn/NetXP</RepositoryType>
+  <PackageReleaseNotes>N/D</PackageReleaseNotes>
 </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="SystemInformation\**" />
+    <EmbeddedResource Remove="SystemInformation\**" />
+    <None Remove="SystemInformation\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\NetXP.Netstandard.Auditory.Implementations\NetXP.NetStandard.Auditory.Implementations.csproj" />
@@ -20,10 +35,6 @@
     <ProjectReference Include="..\NetXP.NetStandard.Network.Services.Implementations\NetXP.NetStandard.Network.Services.Implementations.csproj" />
     <ProjectReference Include="..\NetXP.NetStandard.Serialization.Implementations\NetXP.NetStandard.Serialization.Implementations.csproj" />
     <ProjectReference Include="..\NetXP.NetStandard\NetXP.NetStandard.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="SystemInformation\Implementations\" />
   </ItemGroup>
 
 </Project>

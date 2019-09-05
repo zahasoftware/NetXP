@@ -3,6 +3,16 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Configurations>Debug;Release;Staging</Configurations>
+    <PackageProjectUrl>https://github.com/juandrn/NetXP</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/juandrn/NetXP</RepositoryUrl>
+    <PackageIconUrl>https://github.com/juandrn/NetXP</PackageIconUrl>
+    <RepositoryType>https://github.com/juandrn/NetXP</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Copyright>Copyright © 2019</Copyright>
+    <Description>MVVM Helpers</Description>
+    <PackageReleaseNotes>N/D</PackageReleaseNotes>
+    <PackageTags>MVVM Command</PackageTags>
+    <Version>1.16.0</Version>
   </PropertyGroup>
 
 </Project>
