@@ -2,17 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Configurations>Debug;Release;Debug_Device;Debug_Manager;Staging;Testing</Configurations>
+    <Configurations>Debug;Release;Debug_Device;Debug_Manager;Staging</Configurations>
     <PackageTags>NetStandard Serialization System Cryptography Processes Auditory</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <RepositoryUrl>https://github.com/juandrn/NetXP</RepositoryUrl>
-    <Copyright>Copyright 2019</Copyright>
-    <Authors>Juan Duran</Authors>
-    <Company>NetXP</Company>
-    <Product>NetXP</Product>
-    <Description>Cross Platform Framework For Net Core, Net Framework, Xamarin</Description>
-    <Version>1.17.0</Version>
+    <Version>1.16.0</Version>
+    <Description>Cross Framework For NetCore, NetFramework and Xamarin Projects.</Description>
+    <PackageReleaseNotes>N/D</PackageReleaseNotes>
+    <Copyright>Copyright © 2019</Copyright>
     <PackageProjectUrl>https://github.com/juandrn/NetXP</PackageProjectUrl>
+    <PackageIconUrl>https://github.com/juandrn/NetXP</PackageIconUrl>
+    <RepositoryUrl>https://github.com/juandrn/NetXP</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
