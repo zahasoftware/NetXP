@@ -3,6 +3,17 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Configurations>Debug;Release;Debug_1;Debug_2;Staging;Testing</Configurations>
+    <Configurations>Debug;Release;Debug_1;Debug_2;Staging</Configurations>
+    <Version>1.16.0</Version>
+    <Description>Soap Implementations Of NetXP.NetStandard.Network Interfaces.</Description>
+    <Copyright>Copyright © 2019</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/juandrn/NetXP</PackageProjectUrl>
+    <PackageIconUrl>https://github.com/juandrn/NetXP</PackageIconUrl>
+    <RepositoryUrl>https://github.com/juandrn/NetXP</RepositoryUrl>
+    <RepositoryType>https://github.com/juandrn/NetXP</RepositoryType>
+    <PackageTags>SOAP</PackageTags>
+    <PackageReleaseNotes>N/D</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
