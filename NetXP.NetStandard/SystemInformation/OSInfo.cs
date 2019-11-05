@@ -13,5 +13,6 @@ namespace NetXP.NetStandard.SystemInformation
         public string FrameworkDescription { get; set; }
         public OperatingSystem Version { get; set; }
         public OSPlatformType Platform { get; set; }
+        public string Name { get; internal set; }
     }
 }

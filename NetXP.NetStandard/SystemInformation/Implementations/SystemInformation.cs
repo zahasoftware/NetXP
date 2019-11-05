@@ -29,21 +29,47 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
                            RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? OSPlatformType.Windows :
                            RuntimeInformation.IsOSPlatform(OSPlatform.OSX) ? OSPlatformType.OSX :
                            OSPlatformType.Unknown,
+                Name = this.OSPrettyName() ?? RuntimeInformation.OSDescription,
             };
             return osInfo;
         }
 
-        //public IDictionary<string, string> GetProcessorInfo()
-        //{
-        //    //var aProcessInfo = ManagementClassToDictionary("Win32_Processor");
-        //    ////var aOSInfo = this.GetOSInfo();
+        private string OSPrettyName()
+        {
+            string mbInfo = String.Empty;
 
-        //    ////var aUnique = from a in aProcessInfo
-        //    ////              where !aOSInfo.Any(o => o.Key == a.Key && o.Key == a.Key)
-        //    ////              select a;
+            ProcessOutput result = null;
 
-        //    //return aProcessInfo;
-        //}
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                return null; 
+            }
+            //Raspberry
+            else if ((RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+                  && RuntimeInformation.OSArchitecture == Architecture.Arm || RuntimeInformation.OSArchitecture == Architecture.Arm64)
+                || //Linux (Fedora Tested, Debian)
+                   (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)))
+            {
+                // Act
+                result = ioTerminal.Execute(new ProcessInput
+                {
+                    Command = @"cat /etc/os-release | grep PRETTY_NAME | cut -d ""="" -f2 | tail -c +2 | head -c -2",
+                    ShellName = "/bin/bash",
+                    Arguments = ""
+                });
+
+                result.StandardOutput =
+                    result.StandardOutput
+                    .Where(o => o?.Trim()?.Equals("") != true).ToArray();
+                // Assert
+            }
+
+            return string.Join(",", result.StandardOutput);
+
+        }
+
+
+
 
         public string MotherBoardSerialNumber()
         {
