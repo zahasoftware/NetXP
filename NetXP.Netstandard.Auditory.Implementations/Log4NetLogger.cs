@@ -24,12 +24,12 @@ namespace NetXP.NetStandard.Auditory.Implementations
                                 [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",
                                 [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
         {
-#if DEBUG
+//#if DEBUG
             ReloadConfig();
             string @class = Path.GetFileNameWithoutExtension(sourceFilePath);
             log.Debug($"{msg} (<{sourceLineNumber}:{@class}.{memberName}>)");
             var basedir = Directory.GetCurrentDirectory();
-#endif
+//#endif
         }
 
         private static void ReloadConfig()
