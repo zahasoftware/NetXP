@@ -71,7 +71,7 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
                     + "\n"
                     + $"{sJsonFinal}";
 
-                //logger.Debug($"SendCall To [{ClientTCP.RemoteEndPoint?.ToString() ?? "null"}] => CommmandId = {sendCallParameter?.Id ?? -1},Msg = {sJsonFinal}");
+                logger.Debug($"SendCall From [{ClientTCP.LocalEndPoint?.ToString() ?? ""}] To [{ClientTCP.RemoteEndPoint?.ToString() ?? ""}], Msg = {sJsonFinal.Replace("\n", "[nl]")}");
 
                 var aMessage = Encoding.UTF8.GetBytes(message);
 
@@ -104,7 +104,7 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
                 , sJson
             );
 
-            //logger.Debug($"SendReponse [Lenght={iLength}]-[{ClientTCP.RemoteEndPoint.ToString()}] {sJson}");
+            logger.Debug($"SendReponse [Lenght={iLength}] From [{ClientTCP.LocalEndPoint?.ToString() ?? ""}] - To [{ClientTCP.RemoteEndPoint?.ToString() ?? ""}] {sJson.Replace("\n", "[nl]")}");
             var aMessage = Encoding.UTF8.GetBytes(message);
 
 
@@ -406,6 +406,8 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
                 }
 
                 var sObject = Encoding.UTF8.GetString(dinamycBufferToAllMessage);
+
+                logger.Debug($"Received Message: [{sObject.Replace("\n", "[nl]")}]");
 
                 object oObject = null;
                 using (MemoryStream oMS = new MemoryStream())
