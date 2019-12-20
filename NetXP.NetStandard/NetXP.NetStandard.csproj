@@ -5,7 +5,7 @@
     <Configurations>Debug;Release;Debug_Device;Debug_Manager;Staging</Configurations>
     <PackageTags>NetStandard Serialization System Cryptography Processes Auditory</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.17.0</Version>
+    <Version>1.18.0</Version>
     <Description>Cross Framework For NetCore, NetFramework and Xamarin Projects.</Description>
     <PackageReleaseNotes>N/D</PackageReleaseNotes>
     <Copyright>Copyright © 2019</Copyright>
@@ -26,14 +26,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="2.2.4" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="2.2.0" />
     <PackageReference Include="System.IO" Version="4.3.0" />
     <PackageReference Include="System.Linq.Expressions" Version="4.3.0" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
     <PackageReference Include="System.Net.Security" Version="4.3.2" />
-    <PackageReference Include="System.ServiceProcess.ServiceController" Version="4.5.0" />
+    <PackageReference Include="System.ServiceProcess.ServiceController" Version="4.7.0" />
   </ItemGroup>
 
     

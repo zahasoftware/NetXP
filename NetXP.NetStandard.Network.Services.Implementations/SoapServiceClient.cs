@@ -94,14 +94,15 @@ namespace NetXP.NetStandard.Network.Services.Implementations
 
             var httpClientHandler = new HttpClientHandler();
 
-            var httpClient = new HttpClient();
+            //TODO: Need to change header to send SOAPAction with Soapclient in version 3.0.0 of SoapHttpClient nuget
+            HttpClient httpClient = new HttpClient();
             if (!string.IsNullOrEmpty(action))
             {
                 httpClient.DefaultRequestHeaders.Add("SOAPAction", $"\"{action}\"");
             }
 
             string serializedResponse = null;
-            using (var soapClient = new SoapClient(() => httpClient))
+            var soapClient = new SoapHttpClient.SoapClient();
             {
                 var result =
                   await soapClient.PostAsync(

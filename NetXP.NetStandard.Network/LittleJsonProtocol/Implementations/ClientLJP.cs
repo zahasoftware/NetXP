@@ -71,7 +71,9 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
                     + "\n"
                     + $"{sJsonFinal}";
 
+#if DEBUG
                 logger.Debug($"SendCall From [{ClientTCP.LocalEndPoint?.ToString() ?? ""}] To [{ClientTCP.RemoteEndPoint?.ToString() ?? ""}], Msg = {sJsonFinal.Replace("\n", "[nl]")}");
+#endif
 
                 var aMessage = Encoding.UTF8.GetBytes(message);
 
@@ -104,7 +106,9 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
                 , sJson
             );
 
+#if DEBUG
             logger.Debug($"SendReponse [Lenght={iLength}] From [{ClientTCP.LocalEndPoint?.ToString() ?? ""}] - To [{ClientTCP.RemoteEndPoint?.ToString() ?? ""}] {sJson.Replace("\n", "[nl]")}");
+#endif
             var aMessage = Encoding.UTF8.GetBytes(message);
 
 

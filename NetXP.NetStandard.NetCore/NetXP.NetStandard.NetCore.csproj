@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <Configurations>Debug;Release;Debug_Manager;Debug_1;Debug_2;Staging;Testing</Configurations>
   </PropertyGroup>
 
@@ -12,7 +12,7 @@
   <PropertyGroup>
   <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
-  <Version>1.16.0</Version>
+  <Version>1.18.0</Version>
   <Description>CompositionRoot To Registar All NetCore Framework</Description>
   <Copyright>Copyright © 2019</Copyright>
   <PackageLicenseExpression>MIT</PackageLicenseExpression>
