@@ -142,7 +142,9 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
                 var headerUTF8Splited = headerUTF8.Split('\n');
 
                 //string message = Encoding.UTF8.GetString(this.aReceiveBuffer);
+#if DEBUG
                 logger.Debug($"Header=[{string.Join(", ", headerUTF8Splited) }]");
+#endif
 
                 var lengthLine = headerUTF8Splited.SingleOrDefault(o => o.Contains("Length="));
                 var commandIdLine = headerUTF8Splited.SingleOrDefault(o => o.Contains("Id="));
@@ -179,9 +181,9 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
                 var rawMethod = methodLine.Split(new char[] { '=' }, 2)[1];
                 var rawVersion = versionLine.Split(new char[] { '=' }, 2)[1];
 
-                #endregion
+#endregion
 
-                #region Converting header types to layer types
+#region Converting header types to layer types
                 long commandId = 0;
                 if (!long.TryParse(rawCommandId, out commandId))
                     oLJPCallResponse.Id = null;
@@ -227,9 +229,9 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
                 }
                 oLJPCallResponse.Interface = serviceInterface;
 
-                #endregion
+#endregion
 
-                #region Receiving the json object string part
+#region Receiving the json object string part
                 int indexOfEndOfBody = ByteHelper.IndexOf(aReceiveBuffer, indexOfHeaderAndBodySeparator + 2, new byte[] { Convert.ToByte('\0') });
                 indexOfEndOfBody = indexOfEndOfBody == -1 ? aReceiveBuffer.Length : indexOfEndOfBody;
 
@@ -258,14 +260,16 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
                     Buffer.BlockCopy(aReceiveBuffer, 0, dinamycBufferToAllMessage, receivedToNow, indexOfEnd);
                     receivedToNow += indexOfEnd;
 
+#if DEBUG
                     logger.Debug($"[ReceivePart={receivedMessageInASCII.Length}] [{receivedToNow}/{oLJPCallResponse.iLength}]");
+#endif
 
                     if (indexOfEnd == 0 || indexOfEnd == -1)
                         break;
                 }
 
                 var sObject = Encoding.UTF8.GetString(dinamycBufferToAllMessage);
-                #endregion
+#endregion
 
                 //Converting message 
                 var messageExtractor = factoryClientLJP.CreateMessageFactory(oLJPCallResponse.Version);
@@ -320,7 +324,7 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
                     throw new LJPException("Bad Little Json Protocol, Expected Response Object") { nLJPExceptionType = LJPExceptionType.BadProtocol };
                 }
 
-                #region Extracting Header Of SendResponse Message
+#region Extracting Header Of SendResponse Message
 
                 var headerBytes = new byte[indexOfHeaderAndBodySeparator];
                 Array.Copy(aReceiveBuffer, headerBytes, indexOfHeaderAndBodySeparator);
@@ -338,7 +342,7 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
                 var lengthAndValueInString = headerUTF8Splited.Single(o => o.Contains("Length="));
                 var typeAndValueInString = headerUTF8Splited.Single(o => o.Contains("Type="));
 
-                #endregion
+#endregion
 
                 var lengthInString = lengthAndValueInString.Split(new char[] { '=' }, 2)[1];
                 var typeInString = typeAndValueInString.Split(new char[] { '=' }, 2)[1];
@@ -411,7 +415,9 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
 
                 var sObject = Encoding.UTF8.GetString(dinamycBufferToAllMessage);
 
+#if DEBUG
                 logger.Debug($"Received Message: [{sObject.Replace("\n", "[nl]")}]");
+#endif
 
                 object oObject = null;
                 using (MemoryStream oMS = new MemoryStream())
