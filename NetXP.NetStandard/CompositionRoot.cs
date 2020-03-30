@@ -46,9 +46,6 @@ namespace NetXP.NetStandard
             //DI 
             uc.RegisterInstance(container, DILifeTime.Singleton);
 
-
-
-
             //cnf
             uc.Register<IConfigFactory, ConfigFactory>();
 
@@ -76,7 +73,7 @@ namespace NetXP.NetStandard
             uc.RegisterInstance<ICustomDateTime>(customDateTime, DILifeTime.Singleton);
             uc.Register<IServiceInformer, ServiceInformer>(DILifeTime.Singleton);
 
-            ///System Managers
+            //System Managers
             uc.Register<IServiceManager, ServiceManagerForWindows>(OSPlatformType.Windows.ToString(), DILifeTime.Singleton);
             uc.Register<IServiceManager, ServiceManagerForLinux>(OSPlatformType.Linux.ToString(), DILifeTime.Singleton);
             uc.Register<IServiceManager, ServiceManager>(DILifeTime.Singleton);

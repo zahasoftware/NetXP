@@ -336,7 +336,9 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
                     throw new LJPException("Bad Little Json Protocol, Expected Response Object") { nLJPExceptionType = LJPExceptionType.BadProtocol };
                 }
 
+#if DEBUG
                 logger.Debug($"Header=[{string.Join(", ", headerUTF8Splited) }]");
+#endif
 
                 //Receive Total of json object
                 var lengthAndValueInString = headerUTF8Splited.Single(o => o.Contains("Length="));

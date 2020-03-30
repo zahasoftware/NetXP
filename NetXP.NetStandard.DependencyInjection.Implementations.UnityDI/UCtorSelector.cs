@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NetXP.NetStandard.DependencyInjection.Implementations.DIUnity
+namespace NetXP.NetStandard.DependencyInjection.Implementations.UnityDI
 {
     public class UCtorSelector
     {

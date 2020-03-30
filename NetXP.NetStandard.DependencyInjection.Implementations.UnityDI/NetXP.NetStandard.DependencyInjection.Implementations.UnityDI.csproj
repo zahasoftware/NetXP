@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Configurations>Debug;Release;Staging</Configurations>
+    <Configurations>Debug;Release;Staging;Testing</Configurations>
     <PackageProjectUrl>https://github.com/juandrn/NetXP</PackageProjectUrl>
     <PackageIconUrl>https://github.com/juandrn/NetXP</PackageIconUrl>
     <RepositoryUrl>https://github.com/juandrn/NetXP</RepositoryUrl>
@@ -16,7 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Unity" Version="5.8.11" />
+    <PackageReference Include="Unity" Version="5.11.3" />
   </ItemGroup>
 
   <ItemGroup>

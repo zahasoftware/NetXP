@@ -23,7 +23,8 @@ namespace NetXP.NetStandard.NetFramework
             cfg.Register<NetStandard.Cryptography.IAsymetricCrypt, AsymetricCryptWithRSACng>();
 
             //SystemInfo
-            cfg.Register<NetStandard.SystemInformation.ISystemInformation, SystemInformation.Implementations.SysInfo>();
+            cfg.Register<NetStandard.SystemInformation.ISystemInformation, NetStandard.SystemInformation.Implementations.SysInfo>();
+
             cfg.Register<NetStandard.SystemInformation.IServiceInformer, ServiceInformerWindowsOnly>();
 
 

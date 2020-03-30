@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Unity;
 
-namespace NetXP.NetStandard.DependencyInjection.Implementations.DIUnity
+namespace NetXP.NetStandard.DependencyInjection.Implementations.UnityDI
 {
     public class UConfiguration : IConfiguration
     {
