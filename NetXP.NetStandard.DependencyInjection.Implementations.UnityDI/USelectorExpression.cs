@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace NetXP.NetStandard.DependencyInjection.Implementations.DIUnity
+namespace NetXP.NetStandard.DependencyInjection.Implementations.UnityDI
 {
     public class UCtorSelectorExpression<TImpl, TInter> : ICtorSelectorExpression<TImpl, TInter> where TImpl : TInter
     {

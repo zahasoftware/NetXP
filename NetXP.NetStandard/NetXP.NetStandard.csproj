@@ -2,10 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Configurations>Debug;Release;Debug_Device;Debug_Manager;Staging</Configurations>
+    <Configurations>Debug;Release;Debug_Device;Debug_Manager;Staging;Testing</Configurations>
     <PackageTags>NetStandard Serialization System Cryptography Processes Auditory</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.18.0</Version>
+    <Version>1.19.0</Version>
     <Description>Cross Framework For NetCore, NetFramework and Xamarin Projects.</Description>
     <PackageReleaseNotes>N/D</PackageReleaseNotes>
     <Copyright>Copyright © 2019</Copyright>

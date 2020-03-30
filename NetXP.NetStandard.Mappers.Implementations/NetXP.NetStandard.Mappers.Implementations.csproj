@@ -12,13 +12,13 @@
     <PackageTags>AutoMapper</PackageTags>
     <PackageReleaseNotes>N/D
 </PackageReleaseNotes>
-    <Version>1.16.0</Version>
+    <Version>1.19.0</Version>
     <Description>AutoMapper implementation of IMapper</Description>
     <Configurations>Debug;Release;Debug_1;Debug_2;Staging;Testing</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="8.1.0" />
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>

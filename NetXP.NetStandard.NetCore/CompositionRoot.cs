@@ -15,11 +15,12 @@ namespace NetXP.NetStandard.NetCore
         public static void AddNetXPNetCoreRegisters(this IRegister cfg, IContainer container, string appSettingFile = null)
         {
             cfg.RegisterNetXPStandard(container, appSettingFile);
+
             cfg.RegisterSerialization();
             cfg.RegisterCryptography();
             cfg.RegisterNetwork(container, appSettingFile);
             cfg.RegisterAuditory();
-            NetworkServicesCompositionRoot.RegisterNetworkServices(cfg);
+            cfg.RegisterNetworkServices();
 
             //Cryptography
             cfg.Register<NetStandard.Cryptography.ISymetricCrypt, NetStandard.Cryptography.Implementations.SymetricAes>();

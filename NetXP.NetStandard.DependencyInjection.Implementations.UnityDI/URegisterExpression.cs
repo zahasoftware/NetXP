@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Unity;
 using Unity.Lifetime;
 
-namespace NetXP.NetStandard.DependencyInjection.Implementations.DIUnity
+namespace NetXP.NetStandard.DependencyInjection.Implementations.UnityDI
 {
     public class URegisterExpression : IRegister
     {
@@ -106,7 +106,7 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.DIUnity
                     this.container.RegisterInstance(instance, new PerResolveLifetimeManager());
                     break;
                 case DILifeTime.Scoped:
-                    this.container.RegisterInstance(instance, new PerThreadLifetimeManager());
+                    this.container.RegisterInstance(instance, new PerResolveLifetimeManager());
                     break;
             }
         }
@@ -122,7 +122,7 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.DIUnity
                     this.container.RegisterInstance(name, instance, new PerResolveLifetimeManager());
                     break;
                 case DILifeTime.Scoped:
-                    this.container.RegisterInstance(name, instance, new PerThreadLifetimeManager());
+                    this.container.RegisterInstance(name, instance, new PerResolveLifetimeManager());
                     break;
             }
         }

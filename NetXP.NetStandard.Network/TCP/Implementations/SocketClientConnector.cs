@@ -66,14 +66,14 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
             }
         }
 
-        public int Receive(byte[] aInputBuffer, int iOffset, int iLength)
+        public int Receive(byte[] inputBuffer, int offset, int length)
         {
-            return this.oSocket.Receive(aInputBuffer, iOffset, iLength, System.Net.Sockets.SocketFlags.None);
+            return this.oSocket.Receive(inputBuffer, offset, length, System.Net.Sockets.SocketFlags.None);
         }
 
-        public int Send(byte[] aOutputBuffer, int iOffset, int iLength)
+        public int Send(byte[] outputBuffer, int offset, int length)
         {
-            return this.oSocket.Send(aOutputBuffer, iOffset, iLength, System.Net.Sockets.SocketFlags.None);
+            return this.oSocket.Send(outputBuffer, offset, length, System.Net.Sockets.SocketFlags.None);
         }
 
         public System.Net.Sockets.Socket oSocket

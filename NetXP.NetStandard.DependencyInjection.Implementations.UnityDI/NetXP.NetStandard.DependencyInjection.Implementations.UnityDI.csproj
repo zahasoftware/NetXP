@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Configurations>Debug;Release;Staging</Configurations>
+    <Configurations>Debug;Release;Staging;Testing</Configurations>
     <PackageProjectUrl>https://github.com/juandrn/NetXP</PackageProjectUrl>
     <PackageIconUrl>https://github.com/juandrn/NetXP</PackageIconUrl>
     <RepositoryUrl>https://github.com/juandrn/NetXP</RepositoryUrl>
@@ -10,13 +10,13 @@
     <PackageReleaseNotes>N/D</PackageReleaseNotes>
     <Copyright>MIT</Copyright>
     <Description>Unity Of DI</Description>
-    <Version>1.16.0</Version>
+    <Version>1.19.0</Version>
     <PackageLicenseExpression>Copyright © 2019</PackageLicenseExpression>
     <PackageTags>Unity DI</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Unity" Version="5.8.11" />
+    <PackageReference Include="Unity" Version="5.11.3" />
   </ItemGroup>
 
   <ItemGroup>

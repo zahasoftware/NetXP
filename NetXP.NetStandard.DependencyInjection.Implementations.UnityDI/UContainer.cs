@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using Unity;
 
-namespace NetXP.NetStandard.DependencyInjection.Implementations.DIUnity
+namespace NetXP.NetStandard.DependencyInjection.Implementations.UnityDI
 {
     public class UContainer : IContainer
     {
-        private readonly UnityContainer container;
+        private readonly IUnityContainer container;
 
-        public UContainer(UnityContainer container)
+        public UContainer(IUnityContainer container)
         {
             this.container = container;
         }
@@ -25,7 +25,7 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.DIUnity
 
         public void Dispose()
         {
-            this.container.Dispose();
+            //this.container.Dispose();
         }
 
         public TInterface Resolve<TInterface>()
