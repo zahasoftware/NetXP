@@ -12,7 +12,7 @@
     <PackageTags>AutoMapper</PackageTags>
     <PackageReleaseNotes>N/D
 </PackageReleaseNotes>
-    <Version>1.16.0</Version>
+    <Version>1.19.0</Version>
     <Description>AutoMapper implementation of IMapper</Description>
     <Configurations>Debug;Release;Debug_1;Debug_2;Staging;Testing</Configurations>
   </PropertyGroup>

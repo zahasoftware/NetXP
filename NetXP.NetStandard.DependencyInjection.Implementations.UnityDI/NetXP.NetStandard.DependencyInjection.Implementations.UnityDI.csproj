@@ -10,7 +10,7 @@
     <PackageReleaseNotes>N/D</PackageReleaseNotes>
     <Copyright>MIT</Copyright>
     <Description>Unity Of DI</Description>
-    <Version>1.16.0</Version>
+    <Version>1.19.0</Version>
     <PackageLicenseExpression>Copyright © 2019</PackageLicenseExpression>
     <PackageTags>Unity DI</PackageTags>
   </PropertyGroup>
