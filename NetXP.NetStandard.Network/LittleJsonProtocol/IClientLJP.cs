@@ -10,7 +10,7 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol
 {
     public interface IClientLJP : IDisposable
     {
-        LJPResponse<T> ReceiveResponse<T>(bool bThrowExceptionWithNoData = true) where T : class;//Client Common
+        LJPResponse<T> ReceiveResponse<T>(bool throwExceptionWithNoData = true) where T : class;//Client Common
 
         /// <summary>
         /// Receive a response from server or client.
@@ -33,9 +33,10 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol
         /// <returns>LJPCall that contain Interface, Method and parameters.</returns>
         LJPCallReceived ReceiveCall(params string[] servicesLayers);//Server 
 
-        void SendResponse(object oObject);//Server
+        void SendResponse(object o);//Server
 
-        void Connect(IPAddress oIPAddress, int iPort);
+        void Connect(IPAddress address, int port);
+        void Connect(string domain, int port);
 
         void Disconnect(bool dispose = true);
 

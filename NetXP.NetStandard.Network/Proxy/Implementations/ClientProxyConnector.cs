@@ -46,7 +46,7 @@ namespace NetXP.NetStandard.Network.Proxy.Implementations
                     var requestedUri = new Uri($"http://{ipAddress.ToString()}");
                     var proxyUri = proxyRequest.GetProxy(requestedUri);
 
-                    if (proxyUri == requestedUri)
+                    if (proxyUri == null || proxyUri == requestedUri)
                     {
                         throw new ProxyNotFoundException();
                     }

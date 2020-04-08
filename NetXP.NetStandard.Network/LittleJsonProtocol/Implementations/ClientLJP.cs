@@ -5,10 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
 {
@@ -181,9 +183,9 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
                 var rawMethod = methodLine.Split(new char[] { '=' }, 2)[1];
                 var rawVersion = versionLine.Split(new char[] { '=' }, 2)[1];
 
-#endregion
+                #endregion
 
-#region Converting header types to layer types
+                #region Converting header types to layer types
                 long commandId = 0;
                 if (!long.TryParse(rawCommandId, out commandId))
                     oLJPCallResponse.Id = null;
@@ -229,9 +231,9 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
                 }
                 oLJPCallResponse.Interface = serviceInterface;
 
-#endregion
+                #endregion
 
-#region Receiving the json object string part
+                #region Receiving the json object string part
                 int indexOfEndOfBody = ByteHelper.IndexOf(aReceiveBuffer, indexOfHeaderAndBodySeparator + 2, new byte[] { Convert.ToByte('\0') });
                 indexOfEndOfBody = indexOfEndOfBody == -1 ? aReceiveBuffer.Length : indexOfEndOfBody;
 
@@ -269,7 +271,7 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
                 }
 
                 var sObject = Encoding.UTF8.GetString(dinamycBufferToAllMessage);
-#endregion
+                #endregion
 
                 //Converting message 
                 var messageExtractor = factoryClientLJP.CreateMessageFactory(oLJPCallResponse.Version);
@@ -324,7 +326,7 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
                     throw new LJPException("Bad Little Json Protocol, Expected Response Object") { nLJPExceptionType = LJPExceptionType.BadProtocol };
                 }
 
-#region Extracting Header Of SendResponse Message
+                #region Extracting Header Of SendResponse Message
 
                 var headerBytes = new byte[indexOfHeaderAndBodySeparator];
                 Array.Copy(aReceiveBuffer, headerBytes, indexOfHeaderAndBodySeparator);
@@ -344,7 +346,7 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
                 var lengthAndValueInString = headerUTF8Splited.Single(o => o.Contains("Length="));
                 var typeAndValueInString = headerUTF8Splited.Single(o => o.Contains("Type="));
 
-#endregion
+                #endregion
 
                 var lengthInString = lengthAndValueInString.Split(new char[] { '=' }, 2)[1];
                 var typeInString = typeAndValueInString.Split(new char[] { '=' }, 2)[1];
@@ -458,11 +460,20 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
         {
             return aPrimitiveTypes.FirstOrDefault(o => o == Type.GetType($"System.{v}"));
         }
-
-        public void Connect(System.Net.IPAddress oIPAddress, int iPort)
+        public void Connect(string domain, int port)
         {
+            var ips = Dns.GetHostAddresses(domain);
+            var ip = ips.First();
+
             ClientTCP = factoryClientTCP.Create();
-            ClientTCP.Connect(oIPAddress, iPort);
+            ClientTCP.Connect(ip, port);
+        }
+
+        public void Connect(System.Net.IPAddress ip, int port)
+        {
+
+            ClientTCP = factoryClientTCP.Create();
+            ClientTCP.Connect(ip, port);
         }
         public void Disconnect(bool dispose = true)
         {
