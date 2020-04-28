@@ -12,7 +12,7 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Description>Auditory Implementtions Based On Log4Net</Description>
     <Copyright>Copyright © 2019</Copyright>
-    <Version>1.16.0</Version>
+    <Version>1.20.0</Version>
     <Configurations>Debug;Release;Debug_Manager;Debug_2;Staging;Testing</Configurations>
   </PropertyGroup>
 

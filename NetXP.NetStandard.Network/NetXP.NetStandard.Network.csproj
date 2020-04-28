@@ -13,7 +13,7 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Copyright>Copyright © 2019</Copyright>
     <Description>Implementations and Interfaces To Connect to some protocols like TCP, LJP, SLP, SMTP, SOAP (Interface Only).</Description>
-    <Version>1.19.0</Version>
+    <Version>1.20.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_2|AnyCPU'">

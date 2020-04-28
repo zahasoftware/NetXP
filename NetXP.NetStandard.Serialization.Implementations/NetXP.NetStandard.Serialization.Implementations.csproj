@@ -12,7 +12,7 @@
     <PackageReleaseNotes>N/D</PackageReleaseNotes>
     <Description>Serialization for Json and Xml Implementations</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>1.16.0</Version>
+    <Version>1.20.0</Version>
     <Copyright>Copyright © 2019</Copyright>
   </PropertyGroup>
 
