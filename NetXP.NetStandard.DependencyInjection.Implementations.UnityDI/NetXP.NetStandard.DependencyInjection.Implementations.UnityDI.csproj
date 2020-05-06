@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <Configurations>Debug;Release;Staging;Testing</Configurations>
+    <Configurations>Debug;Release;Staging;Testing;Debug_Manager</Configurations>
     <PackageProjectUrl>https://github.com/juandrn/NetXP</PackageProjectUrl>
     <PackageIconUrl>https://github.com/juandrn/NetXP</PackageIconUrl>
     <RepositoryUrl>https://github.com/juandrn/NetXP</RepositoryUrl>

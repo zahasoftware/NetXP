@@ -47,6 +47,7 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
                     try
                     {
                         this.oSocket.Shutdown(SocketShutdown.Both);
+                        this.oSocket.Disconnect(false);
                     }
                     finally
                     {

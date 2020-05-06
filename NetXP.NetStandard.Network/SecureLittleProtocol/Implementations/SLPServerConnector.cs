@@ -63,8 +63,16 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
                                                 .CreateClient(ConnectorFactory.SecureLitleProtocol)
                                                 .Create(socket);
 
-            //Receive PublicKey And Send Their PublicKey
-            secureClient.Receive(aLittleBuffer, 0, aLittleBuffer.Length);
+            try
+            {
+                //Receive PublicKey And Send Their PublicKey
+                secureClient.Receive(aLittleBuffer, 0, aLittleBuffer.Length);
+            }
+            catch (NetXP.NetStandard.Network.LittleJsonProtocol.SLPException)
+            {
+                secureClient?.Disconnect();
+                throw;
+            }
 
             return secureClient;
         }

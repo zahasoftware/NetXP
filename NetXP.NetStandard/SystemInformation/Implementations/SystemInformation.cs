@@ -42,13 +42,13 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                return null; 
+                return null;
             }
             //Raspberry
             else if ((RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
                   && RuntimeInformation.OSArchitecture == Architecture.Arm || RuntimeInformation.OSArchitecture == Architecture.Arm64)
                 || //Linux (Fedora Tested, Debian)
-                   (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)))
+                   (RuntimeInformation.IsOSPlatform(OSPlatform.Linux)))
             {
                 // Act
                 result = ioTerminal.Execute(new ProcessInput
@@ -172,7 +172,7 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
                             continue;
                         }
                     }
-                    catch (Exception )
+                    catch (Exception)
                     {
 
                     }

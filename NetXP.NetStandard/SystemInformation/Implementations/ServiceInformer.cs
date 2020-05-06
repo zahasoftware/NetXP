@@ -29,7 +29,12 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
             //Window 
             if (osInfo.Platform == OSPlatformType.Windows)
             {
-                throw new PlatformNotSupportedException("Cannot get all state of service with Net Core, Please use NetFramework implementation for windows system.");
+                var service = new ServiceController(serviceName);
+
+                if (ExistsService(service))
+                {
+                    si = GetService(service);
+                }
             }
             else if (osInfo.Platform == OSPlatformType.Linux)
             {
@@ -37,7 +42,7 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
                 if (si == null)
                 {
                     si = GetServiceWithListUnitsFile(serviceName);
-                    if (si!=null)
+                    if (si != null)
                     {
                         si.Description = "Not available";
                         si.State = GetServiceState(serviceName);
@@ -45,6 +50,19 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
                 }
             }
             return si;
+        }
+
+        private bool ExistsService(ServiceController service)
+        {
+            try
+            {
+                _ = service.Status;
+                return true;
+            }
+            catch (InvalidOperationException)
+            {
+                return false;
+            }
         }
 
         private ServiceState GetServiceState(string serviceName)
@@ -162,8 +180,13 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
             //Window 
             if (osInfo.Platform == OSPlatformType.Windows)
             {
-                throw new PlatformNotSupportedException("Cannot get all state of service with Net Core, Please use NetFramework implementation for windows system.");
+                var services = ServiceController.GetServices();
 
+                foreach (var service in services)
+                {
+                    ServiceInformation serviceInformation = GetService(service);
+                    servicesInformations.Add(serviceInformation);
+                }
             }
             else if (osInfo.Platform == OSPlatformType.Linux)
             {
@@ -199,6 +222,30 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
             }
 
             return servicesInformations.Count > 0 ? servicesInformations : null;
+        }
+
+        private static ServiceInformation GetService(ServiceController service)
+        {
+            ServiceStartMode startType = ServiceStartMode.Disabled;
+            try
+            {
+                startType = service.StartType;
+            }
+            catch (Exception)
+            {
+                startType = ServiceStartMode.Disabled;
+            }
+
+            var serviceInformation = new ServiceInformation()
+            {
+                Description = service.DisplayName,
+                ServiceName = service.ServiceName,
+                StartupState = startType == ServiceStartMode.Automatic || startType == ServiceStartMode.Boot ? ServiceStartupState.Active
+                        /*else if*/: startType == ServiceStartMode.Disabled || startType == ServiceStartMode.Manual || startType == ServiceStartMode.System ? ServiceStartupState.Disabled
+                        /*else*/ : throw new SystemInformationException("Cannot Determine Service Startup State"),
+                State = service.Status == ServiceControllerStatus.Running ? ServiceState.Running : service.Status == ServiceControllerStatus.Stopped ? ServiceState.Stopped : ServiceState.Unknown,
+            };
+            return serviceInformation;
         }
 
         private ServiceStartupState GetServiceStartupState(OSPlatformType osPlatform, string startupState, string serviceName)
