@@ -113,7 +113,6 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
 #endif
             var aMessage = Encoding.UTF8.GetBytes(message);
 
-
             ClientTCP.Send(aMessage, 0, aMessage.Length);
         }
 

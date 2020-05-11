@@ -11,6 +11,10 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps
         {
             this.container = container;
         }
+        public SMContainer()
+        {
+            this.container = new StructureMap.Container();
+        }
 
         public string Name { get; set; }
 

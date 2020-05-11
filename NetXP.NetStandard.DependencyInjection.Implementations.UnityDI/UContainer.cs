@@ -8,6 +8,7 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.UnityDI
     {
         private readonly IUnityContainer container;
 
+
         public UContainer(IUnityContainer container)
         {
             this.container = container;
@@ -23,9 +24,14 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.UnityDI
             }
         }
 
+        public bool DisableDispose { get; set; }
+
         public void Dispose()
         {
-            //this.container.Dispose();
+            if (!DisableDispose)
+            {
+                this.container.Dispose();
+            }
         }
 
         public TInterface Resolve<TInterface>()

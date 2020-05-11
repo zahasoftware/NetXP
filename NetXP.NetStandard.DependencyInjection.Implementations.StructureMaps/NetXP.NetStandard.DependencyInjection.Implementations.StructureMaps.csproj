@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NetXP.NetStandard\NetXP.NetStandard.csproj" />
+    <ProjectReference Include="..\NetXP.NetStandard.DependencyInjection\NetXP.NetStandard.DependencyInjection.csproj" />
   </ItemGroup>
 
 </Project>

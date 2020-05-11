@@ -17,5 +17,10 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol
     {
         public Type Interface { get; internal set; }
         public MethodInfo Method { get; internal set; }
+
+        public override string ToString()
+        {
+            return $"{Interface?.Name}.{Method?.Name} {{{string.Join("||", this.Parameters)}}} ";
+        }
     }
 }
