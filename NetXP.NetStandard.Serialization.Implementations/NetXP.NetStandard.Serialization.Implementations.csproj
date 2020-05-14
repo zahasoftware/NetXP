@@ -5,16 +5,24 @@
     <Configurations>Debug;Release;Debug_1;Debug_2;Staging;Debug_Manager</Configurations>
     <Configurations>Debug;Release;Debug_1;Debug_2;Staging</Configurations>
     <PackageProjectUrl>https://github.com/juandrn/NetXP</PackageProjectUrl>
-    <PackageIconUrl>https://github.com/juandrn/NetXP</PackageIconUrl>
+    <PackageIcon>icon.png</PackageIcon>
     <RepositoryUrl>https://github.com/juandrn/NetXP</RepositoryUrl>
     <RepositoryType>https://github.com/juandrn/NetXP</RepositoryType>
     <PackageTags>Serialization Json Xml</PackageTags>
     <PackageReleaseNotes>N/D</PackageReleaseNotes>
     <Description>Serialization for Json and Xml Implementations</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>1.20.0</Version>
-    <Copyright>Copyright © 2019</Copyright>
+    <Version>1.20.1</Version>
+    <Copyright>Copyright © 2020</Copyright>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="icon.png" Pack="true" PackagePath="" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\NetXP.NetStandard\NetXP.NetStandard.csproj" />

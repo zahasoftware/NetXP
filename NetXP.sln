@@ -47,7 +47,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetXP.Netstandard.MVVM.Xama
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetXP.NetStandard.Network", "NetXP.NetStandard.Network\NetXP.NetStandard.Network.csproj", "{C10D2FFC-3046-4C77-9256-A2DEF26F5685}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetXP.NetStandard.DependencyInjection", "NetXP.NetStandard.DependencyInjection\NetXP.NetStandard.DependencyInjection.csproj", "{15538C25-2748-47F0-9CBC-E595C1D26A9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetXP.NetStandard.DependencyInjection", "NetXP.NetStandard.DependencyInjection\NetXP.NetStandard.DependencyInjection.csproj", "{15538C25-2748-47F0-9CBC-E595C1D26A9A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".solution", ".solution", "{D54ED0C6-035E-4257-BB35-AFDE0D0162B3}"
+	ProjectSection(SolutionItems) = preProject
+		icon.ico = icon.ico
+		icon.png = icon.png
+		pack.bat = pack.bat
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

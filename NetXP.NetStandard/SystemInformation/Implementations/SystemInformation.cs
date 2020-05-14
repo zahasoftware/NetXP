@@ -11,6 +11,7 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
     public class SysInfo : ISystemInformation, IStorageInfo
     {
         private readonly IIOTerminal ioTerminal;
+        private string motherBoardSerialNumber;
 
         public SysInfo(IIOTerminal ioTerminal)
         {
@@ -73,6 +74,11 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
 
         public string MotherBoardSerialNumber()
         {
+            if (!string.IsNullOrEmpty(this.motherBoardSerialNumber))
+            {
+                return this.motherBoardSerialNumber;
+            }
+
             string mbInfo = String.Empty;
 
             ProcessOutput result = null;
@@ -123,8 +129,14 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
                 // Assert
             }
 
-            return string.Join(",", result.StandardOutput);
+            var serial = string.Join("", result.StandardOutput);
 
+            if (!string.IsNullOrEmpty(serial?.Trim()))
+            {
+                this.motherBoardSerialNumber = serial;
+            }
+
+            return serial;
         }
 
         public ICollection<StorageInfo> GetStorageInfo()

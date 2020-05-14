@@ -12,12 +12,12 @@
   <PropertyGroup>
   <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
-  <Version>1.20.0</Version>
+  <Version>1.20.1</Version>
   <Description>CompositionRoot To Registar All NetCore Framework</Description>
-  <Copyright>Copyright © 2019</Copyright>
+  <Copyright>Copyright © 2020</Copyright>
   <PackageLicenseExpression>MIT</PackageLicenseExpression>
   <PackageProjectUrl>https://github.com/juandrn/NetXP</PackageProjectUrl>
-  <PackageIconUrl>https://github.com/juandrn/NetXP</PackageIconUrl>
+  <PackageIcon>icon.png</PackageIcon>
   <RepositoryUrl>https://github.com/juandrn/NetXP</RepositoryUrl>
   <RepositoryType>https://github.com/juandrn/NetXP</RepositoryType>
   <PackageReleaseNotes>N/D</PackageReleaseNotes>
@@ -27,6 +27,14 @@
     <Compile Remove="SystemInformation\**" />
     <EmbeddedResource Remove="SystemInformation\**" />
     <None Remove="SystemInformation\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="icon.png" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <ItemGroup>
