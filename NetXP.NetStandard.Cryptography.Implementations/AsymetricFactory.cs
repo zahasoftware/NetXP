@@ -11,7 +11,7 @@ namespace NetXP.NetStandard.Cryptography.Implementations
             this.uc = uc;
         }
 
-        private IContainer uc;
+        private readonly IContainer uc;
 
         public IAsymetricCrypt Resolve(string name = "")
         {

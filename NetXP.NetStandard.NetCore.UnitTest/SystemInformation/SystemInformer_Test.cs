@@ -28,7 +28,7 @@ namespace NetXP.NetStandard.NetCore.SystemInformation.Tests
             container = new SMContainer(smapContainer);
             container.Configuration.Configure((IRegister cnf) =>
             {
-                cnf.AddNetXPNetCoreRegisters(container);
+                cnf.RegisterAllNetXP(container);
             });
 
             // Make a file with name unversionSettings.json with the follow data:

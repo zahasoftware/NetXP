@@ -18,42 +18,42 @@ namespace NetXP.NetStandard.Cryptography.Implementations
         //      AesManaged
         //		TripleDESCryptoServiceProvider
         //		RijndaelManaged
-        public byte[] Encrypt(byte[] aNoEncryptedMessage, SymetricKey SymetricKey)
+        public byte[] Encrypt(byte[] noEncryptedMessage, SymetricKey symetricKey)
         {
 
             SymmetricAlgorithm algorithm = Aes.Create();
-            algorithm.Key = SymetricKey.Key;
-            algorithm.IV = SymetricKey.Salt;
+            algorithm.Key = symetricKey.Key;
+            algorithm.IV = symetricKey.Salt;
             algorithm.Mode = Mode;
             //algorithm.Padding = PaddingMode.PKCS7;
 
-            ICryptoTransform transform = algorithm.CreateEncryptor(SymetricKey.Key, SymetricKey.Salt);
+            ICryptoTransform transform = algorithm.CreateEncryptor(symetricKey.Key, symetricKey.Salt);
 
             using (MemoryStream buffer = new MemoryStream())
             {
                 using (CryptoStream stream = new CryptoStream(buffer, transform, CryptoStreamMode.Write))
                 {
-                    stream.Write(aNoEncryptedMessage, 0, aNoEncryptedMessage.Length);
+                    stream.Write(noEncryptedMessage, 0, noEncryptedMessage.Length);
                     stream.FlushFinalBlock();//Error:https://stackoverflow.com/a/40564155
                 }
                 return buffer.ToArray();
             }
         }
 
-        public byte[] Decrypt(byte[] aEncryptedMessage, SymetricKey SymetricKey)
+        public byte[] Decrypt(byte[] encryptedMessage, SymetricKey symetricKey)
         {
-            DeriveBytes rgb = new Rfc2898DeriveBytes(SymetricKey.Key, SymetricKey.Salt, SymetricKey.Iteration);
+            DeriveBytes rgb = new Rfc2898DeriveBytes(symetricKey.Key, symetricKey.Salt, symetricKey.Iteration);
 
             SymmetricAlgorithm algorithm = Aes.Create();
-            algorithm.Key = SymetricKey.Key;
-            algorithm.IV = SymetricKey.Salt;
+            algorithm.Key = symetricKey.Key;
+            algorithm.IV = symetricKey.Salt;
 
             algorithm.Mode = Mode;
             //algorithm.Padding = PaddingMode.PKCS7;
 
-            ICryptoTransform transform = algorithm.CreateDecryptor(SymetricKey.Key, SymetricKey.Salt);
+            ICryptoTransform transform = algorithm.CreateDecryptor(symetricKey.Key, symetricKey.Salt);
 
-            using (MemoryStream buffer = new MemoryStream(aEncryptedMessage))
+            using (MemoryStream buffer = new MemoryStream(encryptedMessage))
             using (CryptoStream stream = new CryptoStream(buffer, transform, CryptoStreamMode.Read))
             using (MemoryStream mo = new MemoryStream())
             {

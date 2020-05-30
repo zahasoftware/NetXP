@@ -25,7 +25,7 @@ namespace NetXP.NetStandard.NetCore.Cryptography.Tests
             container = new SMContainer(smapContainer);
             container.Configuration.Configure((IRegister cnf) =>
            {
-               cnf.AddNetXPNetCoreRegisters(container);
+               cnf.RegisterAllNetXP(container);
            });
         }
 

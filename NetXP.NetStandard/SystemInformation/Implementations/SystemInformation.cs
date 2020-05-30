@@ -12,6 +12,7 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
     {
         private readonly IIOTerminal ioTerminal;
         private string motherBoardSerialNumber;
+        private string _OSPrettyName;
 
         public SysInfo(IIOTerminal ioTerminal)
         {
@@ -37,7 +38,13 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
 
         private string OSPrettyName()
         {
-            string mbInfo = String.Empty;
+
+            if (!string.IsNullOrEmpty(_OSPrettyName?.Trim()))
+            {
+                return _OSPrettyName;
+            }
+
+            string mbInfo = string.Empty;
 
             ProcessOutput result = null;
 
@@ -45,11 +52,8 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
             {
                 return null;
             }
-            //Raspberry
-            else if ((RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
-                  && RuntimeInformation.OSArchitecture == Architecture.Arm || RuntimeInformation.OSArchitecture == Architecture.Arm64)
-                || //Linux (Fedora Tested, Debian)
-                   (RuntimeInformation.IsOSPlatform(OSPlatform.Linux)))
+            //Raspberry, Linux (Fedora Tested, Debian)
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
                 // Act
                 result = ioTerminal.Execute(new ProcessInput
@@ -59,13 +63,20 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
                     Arguments = ""
                 });
 
-                result.StandardOutput =
-                    result.StandardOutput
-                    .Where(o => o?.Trim()?.Equals("") != true).ToArray();
+                result.StandardOutput = result.StandardOutput.Where(o => o?.Trim()?.Equals("") != true).ToArray();
                 // Assert
             }
 
-            return string.Join(",", result.StandardOutput);
+            string osPretyName = string.Join("", result?.StandardOutput)?.Trim();
+            if (!string.IsNullOrEmpty(osPretyName))
+            {
+                this._OSPrettyName = osPretyName;
+                return osPretyName;
+            }
+            else
+            {
+                return null;
+            }
 
         }
 
