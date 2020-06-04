@@ -6,24 +6,24 @@ For more information about Net Standard visit: [Net Standard](https://docs.micro
 ### Source Or Nugets
 Download source code or download from nuget.
 
-- NetXP.NetStandard														Main Reference (Contains all interfaces and some implementations)
-- NetXP.NetStandard.CompositionRoot										Initialize implementations of Auditory, Cryptogrqaphy, Network.Services, Serialization).
-
-- NetXP.NetStandard.DependencyInjection									Interface to work with dependency injection.
-- NetXP.NetStandard.DependencyInjection.Implementations.StructureMap	Implement depency injection interface to work with StructureMap. 
-
-- NetXP.NetStandard.Network												Network utils (Email, LJP Protocol, SLP Protocol, TCP, SOAP [Services Client]
-- NetXP.NetStandard.Network.Services.Implementations					Implementations of NetXP.NetStandard.Network.Services [SOAP].
+| Package          | Comment
+|------------------|----------------------------------------------------------------------------------------|
+|NetXP.NetStandard | Main Reference (Contains all interfaces and some implementations)
+|NetXP.NetStandard.CompositionRoot | Initialize implementations of Auditory, Cryptogrqaphy, Network.Services, Serialization).
+|NetXP.NetStandard.DependencyInjection				|					Interface to work with dependency injection.
+|NetXP.NetStandard.DependencyInjection.Implementations.StructureMap	| Implement depency injection interface to work with StructureMap. 
+|NetXP.NetStandard.Network							|					Network utils (Email, LJP Protocol, SLP Protocol, TCP, SOAP [Services Client]
+|NetXP.NetStandard.Network.Services.Implementations|					Implementations of NetXP.NetStandard.Network.Services [SOAP].
 
 
 ### Initialization in ASP.Net Core (Just for Cryptography Example) 
-- Download Nuget Package NetXP.NetStandard.Cryptography.Implementations
-- Download Nuget Package NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps
+Download Nuget Package NetXP.NetStandard.Cryptography.Implementations
+Download Nuget Package NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps
 
 ```csharp
 
 public IServiceProvider ConfigureServices(IServiceCollection services)
-
+{
 	var container = new Container(); //Structure Map Container
 	var customContainer = new SMContainer(container); //NetXP Container
 	
