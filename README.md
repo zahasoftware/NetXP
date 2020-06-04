@@ -17,8 +17,9 @@ Download source code or download from nuget.
 
 
 ### Initialization in ASP.Net Core (Just for Cryptography Example) 
-Download Nuget Package NetXP.NetStandard.Cryptography.Implementations
-Download Nuget Package NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps
+Download Nuget Packages:
+- NetXP.NetStandard.Cryptography.Implementations 
+- NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps
 
 ```csharp
 
