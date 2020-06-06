@@ -16,7 +16,7 @@ namespace NetXP.NetStandard.Processes.Implementations
 
             if (this.ioTerminalOptions.WaitTimeOut == 0)
             {
-                this.ioTerminalOptions.WaitTimeOut = 7000;
+                this.ioTerminalOptions.WaitTimeOut = 30000;
             }
         }
 

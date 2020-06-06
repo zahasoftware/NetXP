@@ -15,6 +15,8 @@ namespace NetXP.NetStandard.Cryptography.Implementations
             uc.Register<IHash, HashMD5>(HashType.MD5.ToString(), DILifeTime.Trasient);
             uc.Register<IHash, HashSHA256>(DILifeTime.Trasient);
             uc.Register<IHashFactory, HashFactory>(DILifeTime.Singleton);
+            uc.Register<ISymetricCrypt, SymetricAes>();
+            uc.Register<IAsymetricCrypt, AsymetricCryptWithMSRSA>();
         }
     }
 }

@@ -9,6 +9,14 @@ REM git -C NetXP pull origin master
 REM git -C NetXP merge --no-ff --no-commit origin/devel 
 REM git -C NetXP push origin master
 
+cd NetXP.NetStandard.DependencyInjection
+if exist Output del /Q /F /S Output
+dotnet build -c Release -o Output
+%pack%
+cd Output
+c:\bin\nuget push *.nupkg %source%
+
+cd ..\..\
 
 cd NetXP.NetStandard 
 if exist Output del /Q /F /S Output
