@@ -24,7 +24,7 @@ namespace NetXP.NetStandard.SystemManagers.Implementations
             this.serviceInformer = serviceInformer;
         }
 
-        public void Create(string serviceName, string binPath, ServiceCreateOptions serviceCreateOptions)
+        public void Create(string serviceName, string binPath, ServiceCreateOptions serviceCreateOptions = null)
         {
             string createServiceString = $"/c sc create \"{serviceName}\" binPath= \"{binPath}\" ";
 
@@ -33,16 +33,8 @@ namespace NetXP.NetStandard.SystemManagers.Implementations
                 createServiceString = $"{createServiceString} DisplayName= \"{serviceCreateOptions.DisplayName}\"";
             }
 
-            if (serviceCreateOptions != null)
-            {
-                var serviceMode = serviceCreateOptions.ServiceStartupState == ServiceStartupState.Active ? "delayed-auto" :
-                    serviceCreateOptions.ServiceStartupState == ServiceStartupState.Disabled ? "demand" : "delayed-auto";
-                createServiceString = $"{createServiceString} start= \"{serviceMode}\"";
-            }
-            else
-            {
-                createServiceString = $"{createServiceString} start= delayed-auto";
-            }
+            var serviceMode = "delayed-auto";
+            createServiceString = $"{createServiceString} start= \"{serviceMode}\"";
 
             var output = this.terminal.Execute(new ProcessInput
             {
@@ -53,6 +45,27 @@ namespace NetXP.NetStandard.SystemManagers.Implementations
             if (output.ExitCode != 0)
             {
                 throw new SystemManagerException(string.Join(Environment.NewLine, output.StandardOutput));
+            }
+
+            if (serviceCreateOptions?.Restart == true)
+            {
+                var restartTimeout = "";
+
+                for (int i = 0; i < 3; i++)
+                    restartTimeout += $"restart/{serviceCreateOptions.RestartSeconds * 1000}";
+
+                string serviceRestart = $"/c sc failure \"{serviceName}\" reset= 60 actions= \"{restartTimeout}\" ";
+
+                output = this.terminal.Execute(new ProcessInput
+                {
+                    ShellName = "cmd",
+                    Arguments = createServiceString
+                });
+
+                if (output.ExitCode != 0)
+                {
+                    throw new SystemManagerException(string.Join(Environment.NewLine, output.StandardOutput));
+                }
             }
 
         }

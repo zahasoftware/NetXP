@@ -22,23 +22,18 @@ namespace NetXP.NetStandard.SystemManagers.Implementations
             this.serviceInformer = serviceInformer;
         }
 
-        public void Create(string serviceName, string binPath, ServiceCreateOptions serviceCreateOptions)
+        public void Create(string serviceName, string binPath, ServiceCreateOptions serviceCreateOptions = null)
         {
             try
             {
-                var description = string.IsNullOrEmpty(serviceCreateOptions?.Description?.Trim()) ?
-                    serviceName : serviceCreateOptions.Description;
-                var after = string.IsNullOrEmpty(serviceCreateOptions?.After?.Trim()) ?
-                    "network.target" : serviceCreateOptions.After;
-                var wantedBy = string.IsNullOrEmpty(serviceCreateOptions?.WantedBy?.Trim()) ?
-                    "multi-user.target" : serviceCreateOptions.WantedBy;
+                var description = string.IsNullOrEmpty(serviceCreateOptions?.Description?.Trim()) ? serviceName : serviceCreateOptions.Description;
+                var wantedBy = "multi-user.target";
                 var restartSeconds = serviceCreateOptions == null ? 5 : serviceCreateOptions.RestartSeconds;
-                var restart = serviceCreateOptions?.Restart == null ? RestartConstants.Always : serviceCreateOptions.Restart;
+                var restart = RestartConstants.Always;
 
                 //https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/sect-managing_services_with_systemd-unit_files
                 var serviceFile = $"[Unit]{Environment.NewLine}";
                 serviceFile += $"Description=\"{description}\"{Environment.NewLine}";
-                //serviceFile += //$"After=\"{after}\"{Environment.NewLine}" +
                 serviceFile += $"[Service]{Environment.NewLine}";
                 serviceFile += $"ExecStart={binPath}{Environment.NewLine}";
 
@@ -46,8 +41,13 @@ namespace NetXP.NetStandard.SystemManagers.Implementations
                 {
                     serviceFile += $"WorkingDirectory={serviceCreateOptions?.WorkingDirectory}{Environment.NewLine}";
                 }
-                serviceFile += $"Restart={restart.ToString()}{Environment.NewLine}";
-                serviceFile += $"RestartSec={restartSeconds}{Environment.NewLine}";
+
+                if (serviceCreateOptions.Restart)
+                {
+                    serviceFile += $"Restart={restart}{Environment.NewLine}";
+                    serviceFile += $"RestartSec={restartSeconds}{Environment.NewLine}";
+                }
+
                 serviceFile += $"[Install]{Environment.NewLine}";
                 serviceFile += $"WantedBy={wantedBy}{Environment.NewLine}";
 

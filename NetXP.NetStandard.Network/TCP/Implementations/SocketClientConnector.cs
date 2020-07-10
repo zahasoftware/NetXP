@@ -5,7 +5,7 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
 {
     public class SocketClientConnector : IClientConnector
     {
-        private System.Net.Sockets.Socket _oSocket;
+        private System.Net.Sockets.Socket socket;
         private readonly TCPOption tcpOptions;
 
         public SocketClientConnector()
@@ -19,8 +19,8 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
             {
                 this.tcpOptions = new TCPOption();
             }
-            this.oSocket = socket;
-            this.oSocket.ReceiveTimeout = tcpOptions.ReceiveTimeOut;
+            this.Socket = socket;
+            this.Socket.ReceiveTimeout = tcpOptions.ReceiveTimeOut;
         }
 
         public SocketClientConnector(TCPOption tcpOptions, Socket socket) : this(socket)
@@ -28,26 +28,26 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
             this.tcpOptions = tcpOptions;
         }
 
-        public void Connect(System.Net.IPAddress oIPAddress, int port)
+        public void Connect(System.Net.IPAddress ipAddress, int port)
         {
-            this.oSocket = new System.Net.Sockets.Socket(
-                  oIPAddress.AddressFamily
+            this.Socket = new System.Net.Sockets.Socket(
+                  ipAddress.AddressFamily
                 , System.Net.Sockets.SocketType.Stream
                 , System.Net.Sockets.ProtocolType.Tcp);
-            this.oSocket.ReceiveTimeout = this.tcpOptions.ReceiveTimeOut;
-            this.oSocket.Connect(oIPAddress, port);
+            this.Socket.ReceiveTimeout = this.tcpOptions.ReceiveTimeOut;
+            this.Socket.Connect(ipAddress, port);
         }
 
         public void Disconnect(bool dispose = true)
         {
             if (!this.Disposed)
             {
-                if (this.oSocket.Connected)
+                if (this.Socket.Connected)
                 {
                     try
                     {
-                        this.oSocket.Shutdown(SocketShutdown.Both);
-                        this.oSocket.Disconnect(false);
+                        this.Socket.Shutdown(SocketShutdown.Both);
+                        this.Socket.Disconnect(false);
                     }
                     finally
                     {
@@ -55,7 +55,7 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
                         {
                             if (dispose)
                             {
-                                this.oSocket.Dispose();
+                                this.Socket.Dispose();
                                 this.Disposed = true;
                             }
                         }
@@ -69,26 +69,26 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
 
         public int Receive(byte[] inputBuffer, int offset, int length)
         {
-            return this.oSocket.Receive(inputBuffer, offset, length, System.Net.Sockets.SocketFlags.None);
+            return this.Socket.Receive(inputBuffer, offset, length, System.Net.Sockets.SocketFlags.None);
         }
 
         public int Send(byte[] outputBuffer, int offset, int length)
         {
-            return this.oSocket.Send(outputBuffer, offset, length, System.Net.Sockets.SocketFlags.None);
+            return this.Socket.Send(outputBuffer, offset, length, System.Net.Sockets.SocketFlags.None);
         }
 
-        public System.Net.Sockets.Socket oSocket
+        public System.Net.Sockets.Socket Socket
         {
             get
             {
-                return this._oSocket;
+                return this.socket;
             }
             set
             {
                 if (value == null)
                     throw new CustomApplicationException("IClientTCP Socket can't be null");
                 else
-                    this._oSocket = value;
+                    this.socket = value;
             }
         }
 
@@ -96,7 +96,7 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
         {
             get
             {
-                return !this.Disposed && this.oSocket.Connected;
+                return !this.Disposed && this.Socket.Connected;
             }
         }
 
@@ -104,7 +104,7 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
         {
             get
             {
-                return this.Disposed ? $"[{nameof(this.Disposed)}]" : this.oSocket?.RemoteEndPoint?.ToString();
+                return this.Disposed ? $"[{nameof(this.Disposed)}]" : this.Socket?.RemoteEndPoint?.ToString();
             }
         }
 
@@ -112,7 +112,7 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
         {
             get
             {
-                return this.Disposed ? $"[{nameof(this.Disposed)}]" : this.oSocket?.LocalEndPoint?.ToString();
+                return this.Disposed ? $"[{nameof(this.Disposed)}]" : this.Socket?.LocalEndPoint?.ToString();
             }
         }
 
