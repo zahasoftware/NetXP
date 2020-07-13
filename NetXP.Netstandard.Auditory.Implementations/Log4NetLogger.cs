@@ -48,8 +48,12 @@ namespace NetXP.NetStandard.Auditory.Implementations
 
         public virtual void Error(string msg, Exception ex)
         {
-            ReloadConfig();
-            log.Error(msg, ex);
+            if (ex != null)
+            {
+                ReloadConfig();
+                log.Error(msg, ex);
+                log.Error(msg, ex.InnerException);
+            }
         }
 
         public virtual void Warn(string msg)
@@ -62,7 +66,8 @@ namespace NetXP.NetStandard.Auditory.Implementations
         {
             if (tie != null)
             {
-                Error(tie.ToString());
+                ReloadConfig();
+                Error(tie.Message, tie);
                 Error(tie.InnerException);
             }
         }
