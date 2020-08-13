@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Lamar" Version="4.3.1" />
+    <PackageReference Include="Lamar.Microsoft.DependencyInjection" Version="4.3.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NetXP.NetStandard.DependencyInjection\NetXP.NetStandard.DependencyInjection.csproj" />
+  </ItemGroup>
+
+</Project>

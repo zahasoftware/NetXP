@@ -17,6 +17,7 @@ namespace NetXP.NetStandard.Auditory.Implementations
 
             log4net.Config.XmlConfigurator.Configure(repo, log4netConfig["log4net"]);
         }
+
         protected static ILog log = LogManager.GetLogger(typeof(ILogger));
 
         public virtual void Debug(string msg,

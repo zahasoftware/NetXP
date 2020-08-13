@@ -3,7 +3,9 @@ using System.Collections.Generic;
 
 namespace NetXP.NetStandard.DependencyInjection.Implementations.UnityDI
 {
-    public class UCtorSelectorExpression<TImpl, TInter> : ICtorSelectorExpression<TImpl, TInter> where TImpl : TInter
+    public class UCtorSelectorExpression<TImpl, TInter> : ICtorSelectorExpression<TImpl, TInter>
+        where TInter : class
+        where TImpl : class, TInter
     {
         //private SmartInstance<TImpl, TInter> use;
         //private CreatePluginFamilyExpression<TInter> @for;
@@ -39,11 +41,11 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.UnityDI
         }
 
         internal void Register()
-            //CreatePluginFamilyExpression<TInter> @for,
-            //SmartInstance<TImpl, TInter> use,
-            //string instanceName,
-            //DILifeTime lifetime,
-            ////Action<DILifeTime, LambdaInstance<TImpl, TInter>> setLifeTime)
+        //CreatePluginFamilyExpression<TInter> @for,
+        //SmartInstance<TImpl, TInter> use,
+        //string instanceName,
+        //DILifeTime lifetime,
+        ////Action<DILifeTime, LambdaInstance<TImpl, TInter>> setLifeTime)
         {
             //this.@for = @for;
             //this.use = use;

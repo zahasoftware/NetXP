@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NetXP.NetStandard.Exceptions
 {
-    public class CustomApplicationException : NetXPApplicationException
+    public class CustomApplicationException : ApplicationException
     {
         public string Label { get; set; } = string.Empty;
 
@@ -14,6 +14,15 @@ namespace NetXP.NetStandard.Exceptions
         {
 
         }
+        public CustomApplicationException(string msg, Exception innerException) : base(msg, innerException)
+        {
+        }
+
+        public CustomApplicationException(string label, string msg, Exception innerException) : base(msg, innerException)
+        {
+            this.Label = label;
+        }
+
 
         public CustomApplicationException(string label, string msg) : base(msg)
         {

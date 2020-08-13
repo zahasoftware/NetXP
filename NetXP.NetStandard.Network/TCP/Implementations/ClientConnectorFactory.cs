@@ -21,11 +21,15 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
         {
             if (aParams.Length != 0)
             {
-                var trySocket = aParams.SingleOrDefault(o => o is Socket);
-                var socket = trySocket as Socket;
-
-                if (socket == null)
+                Socket socket;
+                try
+                {
+                    socket = aParams.SingleOrDefault(o => o is Socket) as Socket;
+                }
+                catch
+                {
                     throw new ArgumentException("Only one socket is supported in constructor parameter.");
+                }
 
                 return new SocketClientConnector(socket);
             }

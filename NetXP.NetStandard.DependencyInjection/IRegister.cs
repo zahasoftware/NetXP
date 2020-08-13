@@ -4,20 +4,29 @@ namespace NetXP.NetStandard.DependencyInjection
 {
     public interface IRegister
     {
-        void Register<TInterface, TImplement>() where TImplement : TInterface;
-        void Register<TInterface, TImplement>(DILifeTime lifeTime) where TImplement : TInterface;
+        void Register<TInterface, TImplement>()
+            where TInterface : class
+            where TImplement : class, TInterface;
+        void Register<TInterface, TImplement>(DILifeTime lifeTime)
+            where TInterface : class
+            where TImplement : class, TInterface;
 
-        void Register<TInterface, TImplement>(string name) where TImplement : TInterface;
-        void Register<TInterface, TImplement>(string name, DILifeTime lifeTime) where TImplement : TInterface;
+        void Register<TInterface, TImplement>(string name)
+            where TInterface : class
+            where TImplement : class, TInterface;
+        void Register<TInterface, TImplement>(string name, DILifeTime lifeTime)
+            where TInterface : class
+            where TImplement : class, TInterface;
 
-        void RegisterInstance<TInterface>(TInterface instance, DILifeTime lifeTime);
-        void RegisterInstance<TInterface>(string name, TInterface instance, DILifeTime lifeTime);
+        void RegisterInstance<TInterface>(TInterface instance, DILifeTime lifeTime) where TInterface : class;
 
         void Register<TInterface, TImplement>(DILifeTime lifeTime,
                                               Action<ICtorSelectorExpression<TImplement, TInterface>> ctorInjectorExpression)
-                                              where TImplement : TInterface;
+            where TInterface : class
+            where TImplement : class, TInterface;
         void Register<TInterface, TImplement>(string name, DILifeTime lifeTime,
                                               Action<ICtorSelectorExpression<TImplement, TInterface>> ctorInjectorExpression)
-                                              where TImplement : TInterface;
+            where TInterface : class
+            where TImplement : class, TInterface;
     }
 }

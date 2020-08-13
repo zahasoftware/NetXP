@@ -1,27 +1,26 @@
-﻿using System;
+﻿using Lamar.IoC.Instances;
+using System;
 using System.Collections.Generic;
-using StructureMap.Pipeline;
-using StructureMap.Configuration.DSL.Expressions;
+using static Lamar.ServiceRegistry;
 
-namespace NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps
+namespace NetXP.NetStandard.DependencyInjection.Implementations.LamarDI
 {
-    public class SMCtorSelectorExpression<TImpl, TInter> : ICtorSelectorExpression<TImpl, TInter>
+    public class LamarSelectorExpression<TImpl, TInter> : ICtorSelectorExpression<TImpl, TInter>
         where TInter : class
         where TImpl : class, TInter
     {
-        private SmartInstance<TImpl, TInter> use;
-        private CreatePluginFamilyExpression<TInter> @for;
-        private Action<DILifeTime, LambdaInstance<TImpl, TInter>> setLifeTime;
+        private InstanceExpression<TInter> @for;
+        private ConstructorInstance<TImpl> use;
+        private Action<DILifeTime, ConstructorInstance<TImpl>> setLifeTime;
         private DILifeTime lifetime;
 
         public string instanceName { get; private set; }
 
         public void Empty()
         {
-            var use = @for.Use(() => Activator.CreateInstance<TImpl>());
             if (instanceName != null)
             {
-                use.Named(instanceName);
+                use.Name = instanceName;
             }
 
             this.setLifeTime(this.lifetime, use);
@@ -43,11 +42,11 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps
         }
 
         internal void Register(
-            CreatePluginFamilyExpression<TInter> @for,
-            SmartInstance<TImpl, TInter> use,
+            InstanceExpression<TInter> @for,
+            ConstructorInstance<TImpl> use,
             string instanceName,
             DILifeTime lifetime,
-            Action<DILifeTime, LambdaInstance<TImpl, TInter>> setLifeTime)
+            Action<DILifeTime, ConstructorInstance<TImpl>> setLifeTime)
         {
             this.@for = @for;
             this.use = use;

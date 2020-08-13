@@ -77,7 +77,7 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
             return this.Socket.Send(outputBuffer, offset, length, System.Net.Sockets.SocketFlags.None);
         }
 
-        public System.Net.Sockets.Socket Socket
+        public Socket Socket
         {
             get
             {

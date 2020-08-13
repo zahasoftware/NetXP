@@ -57,7 +57,7 @@ namespace NetXP.NetStandard
 
             //Process
             var ioTerminalOptions = new IOTerminalOptions();
-            config?.GetSection("IOTerminal")?.Bind(ioTerminalOptions);
+            config?.GetSection("NetXP:IOTerminal")?.Bind(ioTerminalOptions);
             uc.RegisterInstance<IOptions<IOTerminalOptions>>(new OptionsInstance<IOTerminalOptions>(ioTerminalOptions), DILifeTime.Singleton);
             uc.Register<NetStandard.Processes.IIOTerminal, IOTerminal>();
 

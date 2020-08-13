@@ -249,7 +249,6 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
 
                 Buffer.BlockCopy(firstExtractOfBody, 0, dinamycBufferToAllMessage, 0, receivedToNow);
                 //Whether there is more fragment of the object
-                string receivedMessageInASCII = "";
                 while (receivedToNow < oLJPCallResponse.iLength)
                 {
                     Array.Clear(aReceiveBuffer, 0, aReceiveBuffer.Length);
@@ -260,10 +259,6 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
 
                     Buffer.BlockCopy(aReceiveBuffer, 0, dinamycBufferToAllMessage, receivedToNow, indexOfEnd);
                     receivedToNow += indexOfEnd;
-
-#if DEBUG
-                    logger.Debug($"[ReceivePart={receivedMessageInASCII.Length}] [{receivedToNow}/{oLJPCallResponse.iLength}]");
-#endif
 
                     if (indexOfEnd == 0 || indexOfEnd == -1)
                         break;
