@@ -24,7 +24,7 @@ namespace NetXP.NetStandard
 {
     public static class CompositionRoot
     {
-        public static void RegisterNetXPStandard(this IRegister uc, IContainer container, string appSettingFile = null)
+        public static void RegisterNetXPStandard(this IRegister uc, string appSettingFile = null)
         {
             Type serializerType = typeof(ISerializer);
             Type hashType = typeof(IHash);
@@ -43,8 +43,6 @@ namespace NetXP.NetStandard
             }
 
 
-            //DI 
-            uc.RegisterInstance(container, DILifeTime.Singleton);
 
             //cnf
             uc.Register<IConfigFactory, ConfigFactory>();

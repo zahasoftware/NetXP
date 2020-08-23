@@ -9,7 +9,6 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.LamarDI
     {
         private readonly ServiceRegistry register;
 
-        [SetterProperty]
         public IServiceProvider ServiceProvider { get; set; }
 
         public LamarContainer(ServiceRegistry register, IServiceProvider serviceProvider)

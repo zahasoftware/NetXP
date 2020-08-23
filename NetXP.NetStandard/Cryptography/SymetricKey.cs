@@ -88,10 +88,24 @@ namespace NetXP.NetStandard.Cryptography
                 {
                     salt = value;
                 }
+
+                using var md5 = System.Security.Cryptography.MD5.Create();
+                var bytes = key.Concat(salt).ToArray();
+                this.hash = BitConverter.ToString(md5.ComputeHash(bytes, 0, bytes.Length)).Replace("-", "");
+
+            }
+        }
+
+        public string Hash
+        {
+            get
+            {
+                return hash;
             }
         }
 
         [DataMember(Name = "i")]
         public int Iteration;
+        private string hash;
     }
 }
