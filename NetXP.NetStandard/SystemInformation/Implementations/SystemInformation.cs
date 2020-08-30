@@ -29,9 +29,8 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
                 Version = System.Environment.OSVersion,
                 Platform = RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? OSPlatformType.Linux :
                            RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? OSPlatformType.Windows :
-                           RuntimeInformation.IsOSPlatform(OSPlatform.OSX) ? OSPlatformType.OSX :
-                           OSPlatformType.Unknown,
-                Name = this.OSPrettyName() ?? RuntimeInformation.OSDescription,
+                           RuntimeInformation.IsOSPlatform(OSPlatform.OSX) ? OSPlatformType.OSX : OSPlatformType.Unknown,
+                Name = this.OSPrettyName(),
             };
             return osInfo;
         }
@@ -50,7 +49,7 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                return null;
+                return RuntimeInformation.OSDescription;
             }
             //Raspberry, Linux (Fedora Tested, Debian)
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))

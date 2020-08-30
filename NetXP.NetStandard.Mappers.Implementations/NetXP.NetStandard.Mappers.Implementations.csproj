@@ -17,6 +17,10 @@
     <Configurations>Debug;Release;Debug_1;Debug_2;Staging;Testing</Configurations>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_2|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="icon.png" />
   </ItemGroup>

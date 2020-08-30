@@ -32,7 +32,7 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
         public async Task<IClientLJP> Accept()
         {
             IClientLJP clientJLP = this.factoryClientLJP.Create();
-            clientJLP.ClientTCP = await this.oIServerTCP.Accept();
+            clientJLP.ClientConnector = await this.oIServerTCP.Accept();
             return clientJLP;
         }
     }

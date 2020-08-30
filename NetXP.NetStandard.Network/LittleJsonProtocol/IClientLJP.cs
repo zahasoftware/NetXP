@@ -38,9 +38,9 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol
         void Connect(IPAddress address, int port);
         void Connect(string domain, int port);
 
-        void Disconnect(bool dispose = true);
+        void Disconnect(bool dispose = false);
 
-        IClientConnector ClientTCP { get; set; }
+        IClientConnector ClientConnector { get; set; }
 
         /// <summary>
         /// Used to prevent close connection
