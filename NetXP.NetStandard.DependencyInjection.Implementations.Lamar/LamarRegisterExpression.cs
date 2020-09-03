@@ -1,23 +1,21 @@
-﻿using NetXP.NetStandard.DependencyInjection;
-using StructureMap;
-using StructureMap.Pipeline;
+﻿using Lamar;
+using Lamar.IoC.Instances;
+using NetXP.NetStandard.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps
+namespace NetXP.NetStandard.DependencyInjection.Implementations.LamarDI
 {
-    public class SMRegisterExpression : IRegister
+    public class LamarRegisterExpression : IRegister
     {
-        private ConfigurationExpression configuration;
-        private readonly Container container;
+        private ServiceRegistry configuration;
 
-        public SMRegisterExpression(ConfigurationExpression configuration, Container container)
+        public LamarRegisterExpression(ServiceRegistry configuration)
         {
             this.configuration = configuration;
-            this.container = container;
         }
 
         public void Register<TInterface, TImplement>()
@@ -27,7 +25,7 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps
             this.configuration.For<TInterface>().Use<TImplement>();
         }
 
-        public void Register<TInterface, TImplement>(DILifeTime lifeTime) 
+        public void Register<TInterface, TImplement>(DILifeTime lifeTime)
             where TInterface : class
             where TImplement : class, TInterface
         {
@@ -58,7 +56,7 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps
             var @for = this.configuration.For<TInterface>();
             var use = @for.Use<TImplement>();
 
-            var ctorSelectorExpression = new SMCtorSelectorExpression<TImplement, TInterface>();
+            var ctorSelectorExpression = new LamarSelectorExpression<TImplement, TInterface>();
             ctorSelectorExpression.Register(@for, use, null, lifeTime, SetLifeTime);//Use, lifeTime, setLifeTime and Name only used for Empty constructors
             ctorInjectorExpression(ctorSelectorExpression);
 
@@ -71,38 +69,35 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps
             where TInterface : class
             where TImplement : class, TInterface
         {
-            var register = this.configuration.For<TInterface>();
-            var use = register.Use<TImplement>();
-            use.Named(name);
+            var @for = this.configuration.For<TInterface>();
+            var use = @for.Use<TImplement>();
 
-            var ctorSelectorExpression = new SMCtorSelectorExpression<TImplement, TInterface>();
-            ctorSelectorExpression.Register(register, use, name, lifeTime, SetLifeTime);//Use, lifeTime, setLifeTime and Name only used for Empty constructors
+            var ctorSelectorExpression = new LamarSelectorExpression<TImplement, TInterface>();
+            ctorSelectorExpression.Register(@for, use, name, lifeTime, SetLifeTime);//Use, lifeTime, setLifeTime and Name only used for Empty constructors
             ctorInjectorExpression(ctorSelectorExpression);
-
-            register.Use(() => Activator.CreateInstance<TImplement>());
 
             SetLifeTime(lifeTime, use);
         }
 
-        public void RegisterInstance<TInterface>(TInterface instance, DILifeTime lifeTime)
+        public void RegisterInstance<TInterface>(TInterface instance, DILifeTime lifeTime) 
             where TInterface : class
         {
-            var register = this.configuration.For<TInterface>().Use(o => instance);
+            var register = this.configuration.For<TInterface>().Use(instance);
             SetLifeTime(lifeTime, register);
         }
 
         public void RegisterInstance<TInterface>(string name, TInterface instance, DILifeTime lifeTime)
+            where TInterface : class
         {
-            var register = this.configuration.For<TInterface>().Use(o => instance).Named(name);
+            var register = this.configuration.For<TInterface>().Use(instance).Named(name);
             SetLifeTime(lifeTime, register);
         }
 
-        private static void SetLifeTime<TInterface, TImplement>(DILifeTime lifeTime, StructureMap.Pipeline.SmartInstance<TImplement, TInterface> register) 
-            where TImplement :  TInterface
+        private static void SetLifeTime<TInterface>(DILifeTime lifeTime, ConstructorInstance<TInterface> register)
         {
             if (lifeTime == DILifeTime.Scoped)
             {
-                register.Transient();
+                register.Scoped();
             }
             else if (lifeTime == DILifeTime.Singleton)
             {
@@ -110,16 +105,15 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps
             }
             else if (lifeTime == DILifeTime.Trasient)
             {
-                register.AlwaysUnique();
+                register.Transient();
             }
         }
 
-        private static void SetLifeTime<TInterface, TImplement>(DILifeTime lifeTime, StructureMap.Pipeline.LambdaInstance<TImplement, TInterface> register)
-            where TImplement :  TInterface
+        private static void SetLifeTime(DILifeTime lifeTime, ObjectInstance register)
         {
             if (lifeTime == DILifeTime.Scoped)
             {
-                register.Transient();
+                register.Scoped();
             }
             else if (lifeTime == DILifeTime.Singleton)
             {
@@ -127,7 +121,7 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps
             }
             else if (lifeTime == DILifeTime.Trasient)
             {
-                register.AlwaysUnique();
+                register.Transient();
             }
         }
     }

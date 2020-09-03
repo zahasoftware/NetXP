@@ -97,9 +97,13 @@ namespace NetXP.NetStandard.Network.Proxy.Implementations
             }
         }
 
-        public void Disconnect(bool dispose = true)
+        public void Disconnect(bool dispose = false)
         {
             this.clientConnector.Disconnect();
+            if (dispose)
+            {
+                this.Dispose();
+            }
         }
 
         public int Receive(byte[] inputBuffer, int offset, int length)
@@ -110,6 +114,13 @@ namespace NetXP.NetStandard.Network.Proxy.Implementations
         public int Send(byte[] outputBuffer, int offset, int length)
         {
             return this.clientConnector.Send(outputBuffer, offset, length);
+        }
+
+        public void Dispose()
+        {
+            this.buffer = null;
+            this.Disconnect();
+            this.clientConnector.Dispose();
         }
     }
 }

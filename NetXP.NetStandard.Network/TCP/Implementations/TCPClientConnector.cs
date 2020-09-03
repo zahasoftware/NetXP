@@ -18,6 +18,7 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
         public TCPClientConnector()
         {
             this.tcpOptions = new TCPOption();
+            this.tcpClient = new TcpClient();
         }
 
         public TCPClientConnector(Socket socket)
@@ -40,13 +41,12 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
 
         public void Connect(System.Net.IPAddress oIPAddress, int iPort)
         {
-            this.tcpClient = new TcpClient(oIPAddress.AddressFamily);
             tcpClient.ConnectAsync(oIPAddress, iPort).RunSynchronously();
             this.stream = this.tcpClient.GetStream();
             stream.ReadTimeout = this.tcpOptions.ReceiveTimeOut;
         }
 
-        public void Disconnect(bool dispose = true)
+        public void Disconnect(bool dispose = false)
         {
             if (!this.Disposed && tcpClient.Connected)
             {
@@ -60,7 +60,7 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
                     {
                         if (dispose)
                         {
-                            this.tcpClient.Dispose();
+                            this.Dispose();
                             this.Disposed = true;
                         }
                     }
@@ -82,6 +82,11 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
             return iLength;
         }
 
+        public void Dispose()
+        {
+            this.tcpClient?.Dispose();
+            this.Disconnect();
+        }
 
         public bool IsConnected
         {

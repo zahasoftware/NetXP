@@ -38,7 +38,7 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
             this.Socket.Connect(ipAddress, port);
         }
 
-        public void Disconnect(bool dispose = true)
+        public void Disconnect(bool dispose = false)
         {
             if (!this.Disposed)
             {
@@ -47,7 +47,7 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
                     try
                     {
                         this.Socket.Shutdown(SocketShutdown.Both);
-                        this.Socket.Disconnect(false);
+                        this.Socket.Disconnect(!dispose);
                     }
                     finally
                     {
@@ -77,7 +77,12 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
             return this.Socket.Send(outputBuffer, offset, length, System.Net.Sockets.SocketFlags.None);
         }
 
-        public System.Net.Sockets.Socket Socket
+        public void Dispose()
+        {
+            this.socket?.Dispose();
+        }
+
+        public Socket Socket
         {
             get
             {

@@ -18,12 +18,16 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.UnityDI
             this.container = container;
         }
 
-        public void Register<TInterface, TImplement>() where TImplement : TInterface
+        public void Register<TInterface, TImplement>()
+            where TInterface : class
+            where TImplement : class, TInterface
         {
             this.container.RegisterType<TInterface, TImplement>();
         }
 
-        public void Register<TInterface, TImplement>(DILifeTime lifeTime) where TImplement : TInterface
+        public void Register<TInterface, TImplement>(DILifeTime lifeTime)
+            where TInterface : class
+            where TImplement : class, TInterface
         {
             switch (lifeTime)
             {
@@ -39,12 +43,16 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.UnityDI
             }
         }
 
-        public void Register<TInterface, TImplement>(string name) where TImplement : TInterface
+        public void Register<TInterface, TImplement>(string name)
+            where TInterface : class
+            where TImplement : class, TInterface
         {
             this.container.RegisterType<TInterface, TImplement>(name);
         }
 
-        public void Register<TInterface, TImplement>(string name, DILifeTime lifeTime) where TImplement : TInterface
+        public void Register<TInterface, TImplement>(string name, DILifeTime lifeTime)
+            where TInterface : class
+            where TImplement : class, TInterface
         {
             this.container.RegisterType<TInterface, TImplement>(name);
             switch (lifeTime)
@@ -65,7 +73,8 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.UnityDI
 
         public void Register<TInterface, TImplement>(DILifeTime lifeTime,
                                                      Action<ICtorSelectorExpression<TImplement, TInterface>> ctorInjectorExpression)
-                                                     where TImplement : TInterface
+            where TInterface : class
+            where TImplement : class, TInterface
         {
             //this.container.RegisterType<TInterface>();
 
@@ -80,7 +89,8 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.UnityDI
         public void Register<TInterface, TImplement>(string name,
                                                      DILifeTime lifeTime,
                                                      Action<ICtorSelectorExpression<TImplement, TInterface>> ctorInjectorExpression)
-                                                     where TImplement : TInterface
+            where TInterface : class
+            where TImplement : class, TInterface
         {
             //    var register = this.configuration.For<TInterface>();
             //    var use = register.Use<TImplement>();
@@ -96,6 +106,7 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.UnityDI
         }
 
         public void RegisterInstance<TInterface>(TInterface instance, DILifeTime lifeTime)
+            where TInterface : class
         {
             switch (lifeTime)
             {

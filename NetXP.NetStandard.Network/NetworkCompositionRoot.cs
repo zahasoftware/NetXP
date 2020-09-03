@@ -22,7 +22,7 @@ namespace NetXP.NetStandard.Network
 {
     public static class NetworkCompositionRoot
     {
-        public static void RegisterNetwork(this IRegister uc, IContainer container, string appSettingFile = null)
+        public static void RegisterNetwork(this IRegister uc, string appSettingFile = null)
         {
             Type serializerType = typeof(ISerializer);
             Type hashType = typeof(IHash);
@@ -56,7 +56,13 @@ namespace NetXP.NetStandard.Network
             uc.Register<IClientConnector, ClientProxyConnector>("proxy", DILifeTime.Trasient);
 
             //SLP
-            uc.Register<System.Net.Sockets.Socket, System.Net.Sockets.Socket>(DILifeTime.Trasient, ctor => ctor.Empty());
+            uc.Register<System.Net.Sockets.Socket, System.Net.Sockets.Socket>(DILifeTime.Trasient, ctor =>
+            {
+                ctor.InjectInstance(System.Net.Sockets.AddressFamily.InterNetwork);
+                ctor.InjectInstance(System.Net.Sockets.SocketType.Stream);
+                ctor.InjectInstance(System.Net.Sockets.ProtocolType.Tcp);
+            });
+
             //uc.Register<IClientConnector, SocketClientConnector>("normal-socket",
             //                         LifeTime.Trasient, (ctor) => ctor.WithParameter<System.Net.Sockets.Socket>());
             //uc.Register<IClientConnector, SLPClientConnector>(LifeTime.Trasient);

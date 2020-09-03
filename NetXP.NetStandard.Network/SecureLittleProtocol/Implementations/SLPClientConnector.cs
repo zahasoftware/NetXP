@@ -54,9 +54,9 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
         private byte[] headerType2Buffer = new byte[HEADER_TYPE_2_SIZE];
         private byte[] headerType1Buffer = new byte[HEADER_TYPE_1_SIZE];
 
-        private byte[] aLittleBuffer = new byte[LITTLE_BUFFER_SIZE];
-        private byte[] aMidleBuffer = new byte[MIDLE_BUFFER_SIZE];
-        private byte[] aBigBuffer = new byte[BIG_BUFFER_SIZE];
+        private byte[] littleBuffer = new byte[LITTLE_BUFFER_SIZE];
+        private byte[] midleBuffer = new byte[MIDLE_BUFFER_SIZE];
+        private byte[] bigBuffer = new byte[BIG_BUFFER_SIZE];
 
         private byte[] aDecryptedMessage;
         private int iReceiveRemaining;
@@ -87,7 +87,7 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
             SendPublicKey(publicKeyToSend, IsKeyFound, false);
 
             //Should receive the public key 
-            this.Receive(aLittleBuffer, 0, aLittleBuffer.Length);
+            this.Receive(littleBuffer, 0, littleBuffer.Length);
 
             //if (ppk == null)//No save yet
             {
@@ -138,9 +138,13 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
             textPlainTCPChannel.Send(bytesToSend, 0, bytesToSend.Length);
         }
 
-        public void Disconnect(bool dispose = true)
+        public void Disconnect(bool dispose = false)
         {
             this.textPlainTCPChannel.Disconnect(dispose);
+            if (dispose)
+            {
+                this.Dispose();
+            }
         }
 
         private void ReceiveAll(byte[] aMessage, int iLength)
@@ -175,16 +179,16 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
             }
 
             //Receiving header and part of encrypted message
-            Array.Clear(aLittleBuffer, 0, aLittleBuffer.Length);
-            var iReceivedBytes = this.textPlainTCPChannel.Receive(aLittleBuffer, 0, HEADER_TYPE_3_SIZE);
+            Array.Clear(littleBuffer, 0, littleBuffer.Length);
+            var iReceivedBytes = this.textPlainTCPChannel.Receive(littleBuffer, 0, HEADER_TYPE_3_SIZE);
 
             if (iReceivedBytes <= 0)
             {
                 throw new SLPException($"Not data received, Error code: {iReceivedBytes}.", SLPException.SLPExceptionType.NoDataTimeOut);
             }
 
-            byte yMajor = aLittleBuffer[HEADER_MAJOR_OFFSET];//Extract Major
-            byte yMinor = aLittleBuffer[HEADER_MINOR_OFFSET];//Extract Minor
+            byte yMajor = littleBuffer[HEADER_MAJOR_OFFSET];//Extract Major
+            byte yMinor = littleBuffer[HEADER_MINOR_OFFSET];//Extract Minor
 
             if (yMajor != 1 || yMinor != 0)
             {
@@ -192,8 +196,8 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
             }
             else
             {
-                byte flags = aLittleBuffer[HEADER_FLAGS_OFFSET];//Extract Options
-                byte yType = aLittleBuffer[HEADER_TYPE_OFFSET];//Extract Type
+                byte flags = littleBuffer[HEADER_FLAGS_OFFSET];//Extract Options
+                byte yType = littleBuffer[HEADER_TYPE_OFFSET];//Extract Type
 
                 if (!(new List<byte>() { 1, 2, 3 }.Contains(yType)))
                 {
@@ -227,14 +231,14 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
         private void ReceivingEncryptedMessage(IAsymetricCrypt asymetricCrypt)
         {
             //Receiving the rest of header.
-            int iSymetricLength = BitHelper.ToInt32(aLittleBuffer, HEADER_TYPE_3_SYMKEY_LENGTH_OFFSET);//Length of message
-            int iBodyLength = BitHelper.ToInt32(aLittleBuffer, HEADER_TYPE_3_BODY_LENGTH_OFFSET);
+            int iSymetricLength = BitHelper.ToInt32(littleBuffer, HEADER_TYPE_3_SYMKEY_LENGTH_OFFSET);//Length of message
+            int iBodyLength = BitHelper.ToInt32(littleBuffer, HEADER_TYPE_3_BODY_LENGTH_OFFSET);
 
             ValidatingMaxOfSizeToReceive(iSymetricLength, "Symetric Key Length");
             ValidatingMaxOfSizeToReceive(iBodyLength, "Body Length");
 
             //Saving encrypted symetric key in little buffer.
-            this.ReceiveAll(aLittleBuffer, iSymetricLength);
+            this.ReceiveAll(littleBuffer, iSymetricLength);
 
             //Saving encrypted body in dynamic buffer.
             var aDinamicBuffer = new byte[iBodyLength];//Ugly new if is big data 
@@ -255,7 +259,7 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
             #endregion
 
             //SymetricKey Decrypting and deserialization 
-            byte[] aSymetricKey = asymetricCrypt.Decrypt(aLittleBuffer.Take(iSymetricLength).ToArray());
+            byte[] aSymetricKey = asymetricCrypt.Decrypt(littleBuffer.Take(iSymetricLength).ToArray());
             SymetricKey symetricKey = this.serializeT.Deserialize<SymetricKey>(aSymetricKey);
 
             //Decrypting and Decrompres and deserialization of Body with symetric key
@@ -358,6 +362,18 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
             var aToSendHash = hash.Generate(new ByteArray(aToSend));
             //logger.Debug($"Sending Secure Message {BitConverter.ToString(aToSendHash)}, Length:({aBodyEncrypted?.Length})");
             return this.textPlainTCPChannel.Send(aToSend, iOffset, aToSend.Length);
+        }
+
+        public void Dispose()
+        {
+            this.bigBuffer = null;
+            this.littleBuffer = null;
+            this.midleBuffer = null;
+            this.headerType1Buffer = null;
+            this.headerType2Buffer = null;
+            this.headerType3Buffer = null;
+            this.Disconnect();
+            this.textPlainTCPChannel.Dispose();
         }
 
         const int LITTLE_BUFFER_SIZE = 1024 * 1024;

@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace NetXP.NetStandard.Network.TCP
 {
-    public interface IClientConnector
+    public interface IClientConnector: IDisposable
     {
         int Receive(byte[] inputBuffer, int offset, int length);
         int Send(byte[] outputBuffer, int offset, int length);
         void Connect(IPAddress ipAddress, int port);
-        void Disconnect(bool dispose = true);
+        void Disconnect(bool dispose = false);
         bool IsConnected { get; }
         string RemoteEndPoint { get; }
         string LocalEndPoint { get; }

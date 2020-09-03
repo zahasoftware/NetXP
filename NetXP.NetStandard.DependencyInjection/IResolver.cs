@@ -7,9 +7,6 @@ namespace NetXP.NetStandard.DependencyInjection
     {
         TInterface Resolve<TInterface>();
         TInterface Resolve<TInterface>(string name);
-        TInterface Resolve<TInterface>(Action<ICtorInjectorExpression> ctorInjectorExpression);
-        TInterface Resolve<TInterface>(string name, Action<ICtorInjectorExpression> ctorInjectorExpression);
-
         IEnumerable<TInterface> ResolveAll<TInterface>();
         object Resolve(Type interfaceType);
     }

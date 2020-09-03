@@ -24,7 +24,7 @@ namespace NetXP.NetStandard
 {
     public static class CompositionRoot
     {
-        public static void RegisterNetXPStandard(this IRegister uc, IContainer container, string appSettingFile = null)
+        public static void RegisterNetXPStandard(this IRegister uc, string appSettingFile = null)
         {
             Type serializerType = typeof(ISerializer);
             Type hashType = typeof(IHash);
@@ -43,8 +43,6 @@ namespace NetXP.NetStandard
             }
 
 
-            //DI 
-            uc.RegisterInstance(container, DILifeTime.Singleton);
 
             //cnf
             uc.Register<IConfigFactory, ConfigFactory>();
@@ -57,7 +55,7 @@ namespace NetXP.NetStandard
 
             //Process
             var ioTerminalOptions = new IOTerminalOptions();
-            config?.GetSection("IOTerminal")?.Bind(ioTerminalOptions);
+            config?.GetSection("NetXP:IOTerminal")?.Bind(ioTerminalOptions);
             uc.RegisterInstance<IOptions<IOTerminalOptions>>(new OptionsInstance<IOTerminalOptions>(ioTerminalOptions), DILifeTime.Singleton);
             uc.Register<NetStandard.Processes.IIOTerminal, IOTerminal>();
 
