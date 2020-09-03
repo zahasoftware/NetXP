@@ -14,7 +14,7 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.LamarDI
         public LamarContainer(ServiceRegistry register, IServiceProvider serviceProvider)
         {
             this.register = register;
-            this.ServiceProvider = serviceProvider?.CreateScope()?.ServiceProvider;
+            this.ServiceProvider = serviceProvider;
         }
 
         public string Name { get; set; }

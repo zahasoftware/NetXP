@@ -60,7 +60,7 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
                     {
                         if (dispose)
                         {
-                            this.tcpClient.Dispose();
+                            this.Dispose();
                             this.Disposed = true;
                         }
                     }
@@ -84,7 +84,8 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            this.tcpClient?.Dispose();
+            this.Disconnect();
         }
 
         public bool IsConnected

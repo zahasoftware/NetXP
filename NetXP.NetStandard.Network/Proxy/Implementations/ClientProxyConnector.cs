@@ -100,6 +100,10 @@ namespace NetXP.NetStandard.Network.Proxy.Implementations
         public void Disconnect(bool dispose = false)
         {
             this.clientConnector.Disconnect();
+            if (dispose)
+            {
+                this.Dispose();
+            }
         }
 
         public int Receive(byte[] inputBuffer, int offset, int length)
@@ -114,7 +118,9 @@ namespace NetXP.NetStandard.Network.Proxy.Implementations
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            this.buffer = null;
+            this.Disconnect();
+            this.clientConnector.Dispose();
         }
     }
 }

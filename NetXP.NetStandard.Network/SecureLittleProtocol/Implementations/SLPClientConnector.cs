@@ -141,6 +141,10 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
         public void Disconnect(bool dispose = false)
         {
             this.textPlainTCPChannel.Disconnect(dispose);
+            if (dispose)
+            {
+                this.Dispose();
+            }
         }
 
         private void ReceiveAll(byte[] aMessage, int iLength)
@@ -365,6 +369,11 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
             this.bigBuffer = null;
             this.littleBuffer = null;
             this.midleBuffer = null;
+            this.headerType1Buffer = null;
+            this.headerType2Buffer = null;
+            this.headerType3Buffer = null;
+            this.Disconnect();
+            this.textPlainTCPChannel.Dispose();
         }
 
         const int LITTLE_BUFFER_SIZE = 1024 * 1024;

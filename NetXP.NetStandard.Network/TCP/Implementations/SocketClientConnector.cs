@@ -47,7 +47,7 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
                     try
                     {
                         this.Socket.Shutdown(SocketShutdown.Both);
-                        this.Socket.Disconnect(false);
+                        this.Socket.Disconnect(!dispose);
                     }
                     finally
                     {
@@ -79,7 +79,7 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
 
         public void Dispose()
         {
-            throw new System.NotImplementedException();
+            this.socket?.Dispose();
         }
 
         public Socket Socket

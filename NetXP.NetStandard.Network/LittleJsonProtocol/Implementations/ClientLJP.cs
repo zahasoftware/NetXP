@@ -468,11 +468,18 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
         public void Disconnect(bool dispose = false)
         {
             ClientConnector?.Disconnect(dispose);
+            if (dispose)
+            {
+                this.Dispose();
+                this.ClientConnector.Dispose();
+            }
         }
 
         public void Dispose()
         {
+            this.receiveBuffer = null;
             Disconnect();
+            this.ClientConnector?.Dispose();
         }
 
         public void SendException(NetXP.NetStandard.Network.LittleJsonProtocol.LJPException ex)
