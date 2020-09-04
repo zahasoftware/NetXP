@@ -100,7 +100,14 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
         {
             get
             {
-                return this.Disposed ? $"[{nameof(this.Disposed)}]" : this.tcpClient.Client.RemoteEndPoint.ToString();
+                try
+                {
+                    return this.Disposed ? $"[{nameof(this.Disposed)}]" : this.tcpClient.Client.RemoteEndPoint.ToString();
+                }
+                catch (Exception e)
+                {
+                    return $"[{e.Message}]";
+                }
             }
         }
 
@@ -108,7 +115,14 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
         {
             get
             {
-                return this.Disposed ? $"[{nameof(this.Disposed)}]" : this.tcpClient.Client.LocalEndPoint.ToString();
+                try
+                {
+                    return this.Disposed ? $"[{nameof(this.Disposed)}]" : this.tcpClient.Client.LocalEndPoint.ToString();
+                }
+                catch (Exception e)
+                {
+                    return $"[{e.Message}]";
+                }
             }
         }
 

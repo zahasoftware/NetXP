@@ -1,4 +1,5 @@
 ﻿using NetXP.NetStandard.Exceptions;
+using System;
 using System.Net.Sockets;
 
 namespace NetXP.NetStandard.Network.TCP.Implementations
@@ -47,7 +48,7 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
                     try
                     {
                         this.Socket.Shutdown(SocketShutdown.Both);
-                        this.Socket.Disconnect(!dispose);
+                        this.Socket.Disconnect(false);
                     }
                     finally
                     {
@@ -109,7 +110,15 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
         {
             get
             {
-                return this.Disposed ? $"[{nameof(this.Disposed)}]" : this.Socket?.RemoteEndPoint?.ToString();
+                try
+                {
+                    return this.Disposed ? $"[{nameof(this.Disposed)}]" : this.Socket?.RemoteEndPoint?.ToString();
+                }
+                catch (Exception e)
+                {
+                    return $"[{e.Message}]";
+                }
+
             }
         }
 
@@ -117,7 +126,14 @@ namespace NetXP.NetStandard.Network.TCP.Implementations
         {
             get
             {
-                return this.Disposed ? $"[{nameof(this.Disposed)}]" : this.Socket?.LocalEndPoint?.ToString();
+                try
+                {
+                    return this.Disposed ? $"[{nameof(this.Disposed)}]" : this.Socket?.LocalEndPoint?.ToString();
+                }
+                catch (Exception e)
+                {
+                    return $"[{e.Message}]";
+                }
             }
         }
 
