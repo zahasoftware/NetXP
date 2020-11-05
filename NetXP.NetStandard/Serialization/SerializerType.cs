@@ -11,5 +11,6 @@ namespace NetXP.NetStandard.Serialization
         Xml, //DataContractSerializer
         Json,//DataContractJsonSerializer
         XmlSerializer,//XmlSerializer
+        JsonConvert,//JsonConverter
     }
 }
