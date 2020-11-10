@@ -105,6 +105,12 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.UnityDI
             //    SetLifeTime(lifeTime, use);
         }
 
+        public void RegisterInstance<TInterface>(TInterface instance)
+          where TInterface : class
+        {
+            this.container.RegisterInstance(instance);
+        }
+
         public void RegisterInstance<TInterface>(TInterface instance, DILifeTime lifeTime)
             where TInterface : class
         {

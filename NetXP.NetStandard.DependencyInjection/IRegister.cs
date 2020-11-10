@@ -18,6 +18,7 @@ namespace NetXP.NetStandard.DependencyInjection
             where TInterface : class
             where TImplement : class, TInterface;
 
+        void RegisterInstance<TInterface>(TInterface instance) where TInterface : class;
         void RegisterInstance<TInterface>(TInterface instance, DILifeTime lifeTime) where TInterface : class;
 
         void Register<TInterface, TImplement>(DILifeTime lifeTime,

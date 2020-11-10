@@ -12,8 +12,7 @@ namespace NetXP.NetStandard.Processes.Implementations
 
         public IOTerminal(IOptions<IOTerminalOptions> ioTerminalOptions)
         {
-            this.ioTerminalOptions = ioTerminalOptions.Value;
-
+            this.ioTerminalOptions = ioTerminalOptions?.Value;
             if (this.ioTerminalOptions.WaitTimeOut == 0)
             {
                 this.ioTerminalOptions.WaitTimeOut = 30000;

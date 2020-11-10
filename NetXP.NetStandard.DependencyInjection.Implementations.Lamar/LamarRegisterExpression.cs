@@ -78,6 +78,11 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.LamarDI
 
             SetLifeTime(lifeTime, use);
         }
+        public void RegisterInstance<TInterface>(TInterface instance)
+            where TInterface : class
+        {
+            var register = this.configuration.For<TInterface>().Use(instance);
+        }
 
         public void RegisterInstance<TInterface>(TInterface instance, DILifeTime lifeTime) 
             where TInterface : class

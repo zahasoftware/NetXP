@@ -24,25 +24,11 @@ namespace NetXP.NetStandard
 {
     public static class CompositionRoot
     {
-        public static void RegisterNetXPStandard(this IRegister uc, string appSettingFile = null)
+        public static void RegisterNetXPStandard(this IRegister uc)
         {
             Type serializerType = typeof(ISerializer);
             Type hashType = typeof(IHash);
             Type loggerType = typeof(ILogger);
-
-            IConfigurationRoot config = null;
-            if (
-                   File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json"))
-                || (!string.IsNullOrEmpty(appSettingFile?.Trim()) && File.Exists(Path.Combine(Directory.GetCurrentDirectory(), appSettingFile)))
-            )
-            {
-                config = new ConfigurationBuilder()
-                                    .SetBasePath(Directory.GetCurrentDirectory())
-                                    .AddJsonFile(appSettingFile ?? "appsettings.json")
-                                    .Build();
-            }
-
-
 
             //cnf
             uc.Register<IConfigFactory, ConfigFactory>();
@@ -54,9 +40,6 @@ namespace NetXP.NetStandard
             #region Processes
 
             //Process
-            var ioTerminalOptions = new IOTerminalOptions();
-            config?.GetSection("NetXP:IOTerminal")?.Bind(ioTerminalOptions);
-            uc.RegisterInstance<IOptions<IOTerminalOptions>>(new OptionsInstance<IOTerminalOptions>(ioTerminalOptions), DILifeTime.Singleton);
             uc.Register<NetStandard.Processes.IIOTerminal, IOTerminal>();
 
             #endregion

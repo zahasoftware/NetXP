@@ -11,13 +11,13 @@ namespace NetXP.NetStandard.DependencyInjection
 {
     public static class CompositionRoot
     {
-        public static void RegisterAllNetXP(this IRegister cfg, string appSettingFile = null)
+        public static void RegisterAllNetXP(this IRegister cfg)
         {
-            cfg.RegisterNetXPStandard(appSettingFile);
+            cfg.RegisterNetXPStandard();
 
             cfg.RegisterSerialization();
             cfg.RegisterCryptography();
-            cfg.RegisterNetwork(appSettingFile);
+            cfg.RegisterNetwork();
             cfg.RegisterAuditory();
             cfg.RegisterNetworkServices();
 

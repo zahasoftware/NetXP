@@ -18,17 +18,7 @@ namespace NetXP.NetStandard.Serialization.Implementations
 
         public ISerializer Resolve(SerializerType serializeType = SerializerType.Json)
         {
-            switch (serializeType)
-            {
-                case SerializerType.XmlSerializer:
-                    return this.uc.Resolve<ISerializer>(SerializerType.XmlSerializer.ToString());///XmlSerializer
-                case SerializerType.Xml:
-                    return this.uc.Resolve<ISerializer>(SerializerType.Xml.ToString());///DataContractSerializer
-                case SerializerType.Json:
-                    return this.uc.Resolve<ISerializer>(SerializerType.Json.ToString());///DataContractJsonSerializer
-                default:
-                    return this.uc.Resolve<ISerializer>(SerializerType.Json.ToString());
-            }
+            return this.uc.Resolve<ISerializer>(serializeType.ToString());///XmlSerializer
         }
     }
 }
