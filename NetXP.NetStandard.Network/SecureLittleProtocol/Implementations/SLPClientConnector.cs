@@ -295,7 +295,7 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
                 var ppk = this.IPersistentPrivateKeyProvider.Read(this.remotePublicKey);
                 if (ppk == null)
                 {
-                    throw new SLPException("Secure protocol, ppk not found,  ppk file could have been deleted.", SLPException.SLPExceptionType.PPKNotFound);
+                    throw new SLPException($"[{this.textPlainTCPChannel?.RemoteEndPoint?.ToString()}] Secure protocol, ppk not found,  ppk file could have been deleted.", SLPException.SLPExceptionType.PPKNotFound);
                 }
 
                 PublicKey PubKey = new PublicKey { yExponent = ppk.PrivateKey.yExponent, yModulus = ppk.PrivateKey.yModulus };

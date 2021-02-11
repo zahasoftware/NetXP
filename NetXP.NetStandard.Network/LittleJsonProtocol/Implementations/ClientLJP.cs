@@ -47,6 +47,8 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
             this.reflector = reflector;
             this.factoryClientLJP = factoryClientLJP;
             this.ClientConnector = factoryConnectorFactory.Create();
+
+            ServicePointManager.DnsRefreshTimeout = 60 * 1000 * 60 * 24;
         }
 
         public void SendCall(LJPCall sendCallParameter)
