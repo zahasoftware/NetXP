@@ -29,7 +29,7 @@ namespace NetXP.NetStandard.NetCore.UnitTest.Cryptography.Tests
             c = new SMContainer(smapContainer);
             c.Configuration.Configure((IRegister cnf) =>
             {
-                cnf.RegisterAllNetXP(c);
+                cnf.RegisterAllNetXP();
             });
 
             this.ISymetric = this.c.Resolve<ISymetricCrypt>();

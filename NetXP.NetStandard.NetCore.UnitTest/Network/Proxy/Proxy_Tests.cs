@@ -34,7 +34,7 @@ namespace NetXP.NetStandard.NetCore.UnitTest.Network.Proxy
             container = new SMContainer(smapContainer);
             container.Configuration.Configure((IRegister cnf) =>
             {
-                cnf.RegisterAllNetXP(container);
+                cnf.RegisterAllNetXP();
             });
 
         }
