@@ -10,6 +10,6 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol
     public class LJPResponse : LJPHeader
     {
         public Type tpeObject;
-        public object oObject;
+        public dynamic oObject;
     }
 }

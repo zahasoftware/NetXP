@@ -2,7 +2,9 @@
 {
     public class ClientLJPOptions
     {
-        public int MaxSizeOfSendMessage { get; set; }
-        public int MaxSizeToReceive { get; set; }
+        /// <summary>
+        /// Expressed in seconds
+        /// </summary>
+        public int ExpirationDNSCache { get; set; } = 60 * 5;//5 Min
     }
 }

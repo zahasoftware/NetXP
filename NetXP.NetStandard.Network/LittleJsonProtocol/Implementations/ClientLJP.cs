@@ -1,4 +1,5 @@
-﻿using NetXP.NetStandard.Auditory;
+﻿using Microsoft.Extensions.Options;
+using NetXP.NetStandard.Auditory;
 using NetXP.NetStandard.Network.TCP;
 using NetXP.NetStandard.Reflection;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
@@ -18,21 +20,19 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
     {
         private readonly IReflector reflector;
         private readonly ILogger logger;
-        private List<Type> aPrimitiveTypes = new List<Type>{
+        private readonly List<Type> aPrimitiveTypes = new List<Type>{
             typeof(string)
-            , typeof(int)
-            , typeof(int?)
-            , typeof(float)
-            , typeof(float?)
-            , typeof(long)
-            , typeof(long?)
-            , typeof(double)
-            , typeof(double?)
+            , typeof(int)   , typeof(int?)
+            , typeof(float) , typeof(float?)
+            , typeof(long)  , typeof(long?)
+            , typeof(double), typeof(double?)
+            , typeof(bool)  , typeof(bool?)
             /// .... etc...
         };
 
         private byte[] receiveBuffer = new byte[1024 * 1024];
-        private byte[] nullByteInArray = new byte[] { 0 };
+        private readonly byte[] nullByteInArray = new byte[] { 0 };
+        private readonly IDictionary<string, LJPDNSCache> ipsCachedDictionary = new Dictionary<string, LJPDNSCache>();
         private readonly IFactoryClientLJP factoryClientLJP;
 
         public ClientLJP
@@ -41,6 +41,7 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
             , IReflector reflector
             , ILogger logger
             , IFactoryClientLJP factoryClientLJP
+            , IOptions<ClientLJPOptions> options
             )
         {
             this.logger = logger;
@@ -48,7 +49,7 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
             this.factoryClientLJP = factoryClientLJP;
             this.ClientConnector = factoryConnectorFactory.Create();
 
-            ServicePointManager.DnsRefreshTimeout = 60 * 1000 * 60 * 24;
+            this.options = options.Value;
         }
 
         public void SendCall(LJPCall sendCallParameter)
@@ -285,11 +286,13 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public LJPResponse<T> ReceiveResponse<T>(bool bThrowExceptionWithNotData = true) where T : class
+        public LJPResponse<T> ReceiveResponse<T>(bool bThrowExceptionWithNotData = true)
         {
             var oLJPResponse = ReceiveResponse(new List<Type> { typeof(T) }, bThrowExceptionWithNotData);
-            var oTLJPResponse = new LJPResponse<T>();
-            oTLJPResponse.oObject = oLJPResponse.oObject as T;
+            var oTLJPResponse = new LJPResponse<T>
+            {
+                oObject = oLJPResponse.oObject
+            };
             return oTLJPResponse;
         }
 
@@ -349,7 +352,11 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
                 try
                 {
                     Type tpePrimitive = TryToResolvePrimitivesType(typeInString);
-                    if (tpePrimitive == null)
+                    if (nameof(LJPExceptionDTO).Equals(typeInString, StringComparison.OrdinalIgnoreCase))
+                    {
+                        oLJPResponse.tpeObject = reflector.GetType(typeof(LJPExceptionDTO), typeInString);
+                    }
+                    else if (tpePrimitive == null)
                     {
                         Type tpetryGetType = null;
                         foreach (var tpeNamespaceFE in tpeNamespace)
@@ -368,12 +375,13 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
                         oLJPResponse.tpeObject = tpePrimitive;
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    oLJPResponse.tpeObject = reflector.GetType(typeof(LJPExceptionDTO), typeInString);
+                    logger.Error(ex.ToString());
+                    throw new LJPException($"Error: trying to get type \"{typeInString}\" in namespace \"{tpeNamespace}\".");
                 }
+
                 //Receive the json object part
-                //string sObject = string.Join("\n", aMessage.Skip(3));
                 int indexOfEndOfBody = ByteHelper.IndexOf(aReceiveBuffer, indexOfHeaderAndBodySeparator + 2, new byte[] { Convert.ToByte('\0') });
                 indexOfEndOfBody = indexOfEndOfBody == -1 ? aReceiveBuffer.Length : indexOfEndOfBody;
 
@@ -417,7 +425,7 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
                 logger.Debug($"Received Message: [{sObject.Replace("\n", "[nl]")}]");
 #endif
 
-                object oObject = null;
+                dynamic oObject = null;
                 using (MemoryStream oMS = new MemoryStream())
                 {
                     using (StreamWriter oSW = new StreamWriter(oMS))
@@ -437,10 +445,10 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
                     var nLJPEExceptionType = (LJPExceptionType)oLJPException.IClientLJPExceptionType;
                     throw new LJPException(oLJPException.Message, nLJPEExceptionType, oLJPException.Code);
                 }
-                //else
-                //{
-                //    oLJPResponse.oObject = null;
-                //}
+                else if (oObject is LJPExceptionDTO && !bThrowExceptionWithNotData)
+                {
+                    oLJPResponse.oObject = null;
+                }
 
                 return oLJPResponse;
             }
@@ -456,10 +464,33 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
         }
         public void Connect(string domain, int port)
         {
-            var ips = Dns.GetHostAddresses(domain);
-            var ip = ips.First();
+            if (!ipsCachedDictionary.ContainsKey(domain) || ipsCachedDictionary[domain].Expire < DateTime.UtcNow)
+            {
+                var ips = Dns.GetHostAddresses(domain);
+                var ipsCached = new LJPDNSCache
+                {
+                    Ips = ips,
+                    Expire = DateTime.UtcNow.AddSeconds(this.options.ExpirationDNSCache),
+                    Length = ips.Length,
+                    Current = 0
+                };
+                this.ipsCachedDictionary[domain] = ipsCached;
+            }
 
-            ClientConnector.Connect(ip, port);
+            var currentIp = this.ipsCachedDictionary[domain].Current;
+
+            var ip = this.ipsCachedDictionary[domain].Ips[currentIp];
+
+            try
+            {
+                ClientConnector.Connect(ip, port);
+            }
+            catch (SocketException)
+            {
+                var ipCached = this.ipsCachedDictionary[domain];
+                ipCached.Current = ipCached.Current < ipCached.Length ? ++ipCached.Current : 0;
+                throw;
+            }
         }
 
         public void Connect(System.Net.IPAddress ip, int port)
@@ -507,6 +538,7 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
 
         public IClientConnector ClientConnector { get; set; }
 
+        private ClientLJPOptions options;
 
         public bool KeepAlive
         {

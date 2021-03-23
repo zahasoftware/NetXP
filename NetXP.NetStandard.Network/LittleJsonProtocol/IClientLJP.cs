@@ -10,7 +10,7 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol
 {
     public interface IClientLJP : IDisposable
     {
-        LJPResponse<T> ReceiveResponse<T>(bool throwExceptionWithNoData = true) where T : class;//Client Common
+        LJPResponse<T> ReceiveResponse<T>(bool throwExceptionWithNoData = true);  //Client Common
 
         /// <summary>
         /// Receive a response from server or client.
