@@ -37,7 +37,7 @@ namespace NetXP.NetStandard.NetCore.UnitTest.SystemManagers.Tests {
 
             container = new SMContainer (smapContainer);
             container.Configuration.Configure ((IRegister cnf) => {
-                cnf.RegisterAllNetXP (container);
+                cnf.RegisterAllNetXP ();
             });
 
             // Make a file with name unversionSettings.json with the follow data:
