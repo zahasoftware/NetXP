@@ -120,8 +120,7 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.UnityDI
                     this.container.RegisterInstance(instance, new ContainerControlledLifetimeManager());
                     break;
                 case DILifeTime.Trasient:
-                    this.container.RegisterInstance(instance, new PerResolveLifetimeManager());
-                    break;
+                    throw new InvalidOperationException("Instances registration doesn't work with trasient");
                 case DILifeTime.Scoped:
                     this.container.RegisterInstance(instance, new PerResolveLifetimeManager());
                     break;
