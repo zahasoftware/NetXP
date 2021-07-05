@@ -488,7 +488,7 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
             catch (SocketException)
             {
                 var ipCached = this.ipsCachedDictionary[domain];
-                ipCached.Current = ipCached.Current < ipCached.Length ? ++ipCached.Current : 0;
+                ipCached.Current = ipCached.Current < (ipCached.Ips.Length - 1) ? ++ipCached.Current : 0;
                 throw;
             }
         }
