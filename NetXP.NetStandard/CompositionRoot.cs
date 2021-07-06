@@ -59,6 +59,10 @@ namespace NetXP.NetStandard
             uc.Register<IServiceManager, ServiceManagerForLinux>(OSPlatformType.Linux.ToString(), DILifeTime.Singleton);
             uc.Register<IServiceManager, ServiceManager>(DILifeTime.Singleton);
             uc.Register<IServiceManagerFactory, ServiceManagerFactory>(DILifeTime.Singleton);
+
+            //Operative System
+            uc.Register<IOperativeSystem, OperativeSystem>(DILifeTime.Singleton);
+
         }
     }
 }
