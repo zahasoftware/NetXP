@@ -26,16 +26,11 @@ namespace NetXP.NetStandard
     {
         public static void RegisterNetXPStandard(this IRegister uc)
         {
-            Type serializerType = typeof(ISerializer);
-            Type hashType = typeof(IHash);
-            Type loggerType = typeof(ILogger);
-
             //cnf
             uc.Register<IConfigFactory, ConfigFactory>();
 
             //cmpr
             uc.Register<ICompression, DeflateCompress>(DILifeTime.Singleton);
-
 
             #region Processes
 

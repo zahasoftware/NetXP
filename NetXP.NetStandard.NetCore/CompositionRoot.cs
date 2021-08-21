@@ -2,12 +2,10 @@
 using NetXP.NetStandard.Network;
 using NetXP.NetStandard.Serialization.Implementations;
 using NetXP.NetStandard.Auditory.Implementations;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using NetXP.NetStandard.Network.Services.Implementations;
+using NetXP.NetStandard.DependencyInjection;
 
-namespace NetXP.NetStandard.DependencyInjection
+namespace NetXP.NetStandard.CompositionRoots
 {
     public static class CompositionRoot
     {

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <Configurations>Debug;Release;Staging</Configurations>
+    <Configurations>Debug;Release;Staging;Testing</Configurations>
     <PackageProjectUrl>https://github.com/juandrn/NetXP</PackageProjectUrl>
     <RepositoryUrl>https://github.com/juandrn/NetXP</RepositoryUrl>
     <PackageIcon>icon.png</PackageIcon>
@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="icon.png" Pack="true" PackagePath=""/>
+    <Content Include="icon.png" Pack="true" PackagePath="" />
   </ItemGroup>
 
 </Project>

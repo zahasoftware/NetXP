@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using NetXP.NetStandard.Network.Email;
 using NetXP.NetStandard.Processes;
 using NetXP.NetStandard.SystemManagers;
+using NetXP.NetStandard.CompositionRoots;
 
 namespace NetXP.NetStandard.NetCore.UnitTest.SystemManagers.Tests {
     [TestClass ()]
