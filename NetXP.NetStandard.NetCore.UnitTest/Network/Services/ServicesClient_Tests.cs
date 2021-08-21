@@ -20,6 +20,7 @@ using Microsoft.Extensions.Options;
 using NetXP.NetStandard.Network.Services;
 using System.Runtime.Serialization;
 using System.Collections.ObjectModel;
+using NetXP.NetStandard.CompositionRoots;
 
 namespace NetXP.NetStandard.NetCore.UnitTest.Network.Services
 {

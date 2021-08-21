@@ -17,6 +17,7 @@ using NetXP.NetStandard.Network.Proxy.Implementations;
 using System.Net;
 using NetXP.NetStandard.Configuration.Implementations;
 using Microsoft.Extensions.Options;
+using NetXP.NetStandard.CompositionRoots;
 
 namespace NetXP.NetStandard.NetCore.UnitTest.Network.Proxy
 {

@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetXP.NetStandard.CompositionRoots;
 using NetXP.NetStandard.DependencyInjection;
 using NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps;
 using NetXP.NetStandard.NetCore;

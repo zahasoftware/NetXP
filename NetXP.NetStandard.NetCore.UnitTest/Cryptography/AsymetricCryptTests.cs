@@ -7,6 +7,7 @@ using System;
 using System.Text;
 using NetXP.NetStandard.NetCore;
 using StructureMap;
+using NetXP.NetStandard.CompositionRoots;
 
 /// NOTE: Rebuild project if fail
 namespace NetXP.NetStandard.NetCore.Cryptography.Tests
