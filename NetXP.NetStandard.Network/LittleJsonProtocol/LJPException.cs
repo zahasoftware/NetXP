@@ -10,27 +10,27 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol
     {
         BadProtocol = 1,
         NoData = 2,
-        InvalidUser = 3,//Implementation error, 
-        RemoteConfigException = 4,
-        FormatException = 5,
-        GenericException = 6,
-        UnknownException = 7,
-        MaxSizeToReceive = 8
+        FormatException = 3,
+        GenericException = 4,
+        UnknownException = 5,
+        MaxSizeToReceive = 6
     }
+
     public class LJPException : Exception
     {
         public LJPException(string sMsg) : base(sMsg)
         {
-
         }
 
-        public LJPException(string sMsg, LJPExceptionType nLJPExceptionType, int code = 0) : base(sMsg)
+        public LJPException(string sMsg, LJPExceptionType ljpExceptionType, int code = 0, string data = "") : base(sMsg)
         {
-            this.nLJPExceptionType = nLJPExceptionType;
+            this.LJPExceptionType = ljpExceptionType;
             this.Code = code;
+            this.SerializedData = data;
         }
 
-        public LJPExceptionType nLJPExceptionType { get; set; }
+        public LJPExceptionType LJPExceptionType { get; set; }
         public int Code { get; }
+        public string SerializedData { get; set; }
     }
 }

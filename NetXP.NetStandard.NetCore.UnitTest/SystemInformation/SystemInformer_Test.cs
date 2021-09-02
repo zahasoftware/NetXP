@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using NetXP.NetStandard.SystemInformation;
 using System.Net.NetworkInformation;
 using System.Linq;
+using NetXP.NetStandard.CompositionRoots;
 
 namespace NetXP.NetStandard.NetCore.SystemInformation.Tests
 {
@@ -23,7 +24,7 @@ namespace NetXP.NetStandard.NetCore.SystemInformation.Tests
         [TestInitialize]
         public void Init()
         {
-            Container smapContainer = new Container();
+            Container smapContainer = new();
 
             container = new SMContainer(smapContainer);
             container.Configuration.Configure((IRegister cnf) =>
@@ -54,7 +55,7 @@ namespace NetXP.NetStandard.NetCore.SystemInformation.Tests
             var osInfo = systemInformer.GetOSInfo();
         }
 
-      [TestMethod]
+        [TestMethod]
         public void NS_GetServices()
         {
             NetworkInterface[] nics = NetworkInterface.GetAllNetworkInterfaces();

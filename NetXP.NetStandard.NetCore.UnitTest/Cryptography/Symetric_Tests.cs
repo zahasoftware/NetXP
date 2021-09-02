@@ -11,6 +11,7 @@ using NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps;
 using StructureMap;
 using di = NetXP.NetStandard.DependencyInjection;
 using NetXP.NetStandard.NetCore;
+using NetXP.NetStandard.CompositionRoots;
 
 namespace NetXP.NetStandard.NetCore.UnitTest.Cryptography.Tests
 {

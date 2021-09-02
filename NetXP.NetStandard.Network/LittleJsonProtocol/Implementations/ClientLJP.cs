@@ -2,6 +2,8 @@
 using NetXP.NetStandard.Auditory;
 using NetXP.NetStandard.Network.TCP;
 using NetXP.NetStandard.Reflection;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -61,21 +63,21 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
             else
             {
                 var messageExtractor = factoryClientLJP.CreateMessageFactory(sendCallParameter.Version);
-                string sJsonFinal = messageExtractor.Parse(sendCallParameter);
+                string jsonFinal = messageExtractor.Parse(sendCallParameter);
 
                 string message =
                       $"Version={sendCallParameter.Version}\n"
-                    + $"Length={Encoding.UTF8.GetBytes(sJsonFinal).Length}\n"
+                    + $"Length={Encoding.UTF8.GetBytes(jsonFinal).Length}\n"
                     + $"Id={sendCallParameter.Id}\n"
                     + $"KeepAlive={sendCallParameter.KeepAlive}\n"
                     + $"NeedResponse={sendCallParameter.NeedResponse}\n"
                     + $"Interface={sendCallParameter.InterfaceName}\n"
                     + $"Method={sendCallParameter.MethodName}\n"
                     + "\n"
-                    + $"{sJsonFinal}";
+                    + $"{jsonFinal}";
 
 #if DEBUG
-                logger.Debug($"SendCall From [{ClientConnector.LocalEndPoint?.ToString() ?? ""}] To [{ClientConnector.RemoteEndPoint?.ToString() ?? ""}], Msg = {sJsonFinal.Replace("\n", "[nl]")}");
+                logger.Debug($"SendCall From [{ClientConnector.LocalEndPoint?.ToString() ?? ""}] To [{ClientConnector.RemoteEndPoint?.ToString() ?? ""}], Msg = {jsonFinal.Replace("\n", "[nl]")}");
 #endif
 
                 var aMessage = Encoding.UTF8.GetBytes(message);
@@ -88,17 +90,19 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
         {
             if (oObject == null)
             {
-                oObject = new LJPExceptionDTO() { Message = "No data", IClientLJPExceptionType = 2 };
+                oObject = new LJPExceptionDTO() { Message = "No data", IClientLJPExceptionType = (int)LJPExceptionType.NoData };
             }
 
             var type = oObject.GetType();
-            DataContractJsonSerializer oJsonSerializer = new DataContractJsonSerializer(type);
-            MemoryStream oMS = new MemoryStream();
-            oJsonSerializer.WriteObject(oMS, oObject);//Deserialize the oObject into Memory Stream (oMS).
+            //DataContractJsonSerializer oJsonSerializer = new(type);
+            //MemoryStream oMS = new();
+            //oJsonSerializer.WriteObject(oMS, oObject);//Deserialize the oObject into Memory Stream (oMS).
+            //oMS.Position = 0;
+            //string sJson = new StreamReader(oMS).ReadToEnd();//Read object deserialized.
 
-            oMS.Position = 0;
-            string sJson = new StreamReader(oMS).ReadToEnd();//Read object deserialized.
-            int iLength = Encoding.UTF8.GetBytes(sJson).Length;
+            var json = JsonConvert.SerializeObject(oObject);
+
+            int iLength = Encoding.UTF8.GetBytes(json).Length;
 
             string message = string.Format(
                   "Length={0}\n"
@@ -106,11 +110,11 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
                 + "\n{2}"
                 , iLength
                 , !oObject.GetType().GetTypeInfo().IsGenericType ? oObject.GetType().Name : oObject.GetType().FullName
-                , sJson
+                , json
             );
 
 #if DEBUG
-            logger.Debug($"SendReponse [Lenght={iLength}] From [{ClientConnector.LocalEndPoint?.ToString() ?? ""}] - To [{ClientConnector.RemoteEndPoint?.ToString() ?? ""}] {sJson.Replace("\n", "[nl]")}");
+            logger.Debug($"SendReponse [Lenght={iLength}] From [{ClientConnector.LocalEndPoint?.ToString() ?? ""}] - To [{ClientConnector.RemoteEndPoint?.ToString() ?? ""}] {json.Replace("\n", "[nl]")}");
 #endif
             var aMessage = Encoding.UTF8.GetBytes(message);
 
@@ -133,7 +137,7 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
                                                         , new byte[] { Convert.ToByte('\n'), Convert.ToByte('\n') });
                 if (indexOfHeaderAndBodySeparator == -1)
                 {
-                    throw new LJPException("Bad little json protocol, header body separator not found.") { nLJPExceptionType = LJPExceptionType.BadProtocol };
+                    throw new LJPException("Bad little json protocol, header body separator not found.") { LJPExceptionType = LJPExceptionType.BadProtocol };
                 }
 
                 #region Parsing Raw Data Header Of SendCall Message
@@ -172,7 +176,7 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
                     || interfaceLine == null
                     || methodLine == null)
                 {
-                    throw new LJPException("Bad little json protocol header, all or some fields nulls.") { nLJPExceptionType = LJPExceptionType.BadProtocol };
+                    throw new LJPException("Bad little json protocol header, all or some fields nulls.") { LJPExceptionType = LJPExceptionType.BadProtocol };
                 }
 
                 var rawLength = lengthLine.Split(new char[] { '=' }, 2)[1];
@@ -320,7 +324,7 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
 
                 if (indexOfHeaderAndBodySeparator == -1)
                 {
-                    throw new LJPException("Bad Little Json Protocol, Expected Response Object") { nLJPExceptionType = LJPExceptionType.BadProtocol };
+                    throw new LJPException("Bad Little Json Protocol, Expected Response Object") { LJPExceptionType = LJPExceptionType.BadProtocol };
                 }
 
                 #region Extracting Header Of SendResponse Message
@@ -332,7 +336,7 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
 
                 if (headerUTF8Splited.Length < 2 || indexOfHeaderAndBodySeparator == -1)
                 {
-                    throw new LJPException("Bad Little Json Protocol, Expected Response Object") { nLJPExceptionType = LJPExceptionType.BadProtocol };
+                    throw new LJPException("Bad Little Json Protocol, Expected Response Object") { LJPExceptionType = LJPExceptionType.BadProtocol };
                 }
 
 #if DEBUG
@@ -426,24 +430,30 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
 #endif
 
                 dynamic oObject = null;
-                using (MemoryStream oMS = new MemoryStream())
-                {
-                    using (StreamWriter oSW = new StreamWriter(oMS))
-                    {
-                        DataContractJsonSerializer oJsonSerializer = new DataContractJsonSerializer(oLJPResponse.tpeObject);
-                        oSW.Write(sObject);
-                        oSW.Flush();
-                        oMS.Position = 0;
-                        oObject = oJsonSerializer.ReadObject(oMS);
-                        oLJPResponse.oObject = oObject;
-                    }
-                }
+                //using (MemoryStream oMS = new())
+                //{
+                //using StreamWriter oSW = new(oMS);
+                //DataContractJsonSerializer oJsonSerializer = new(oLJPResponse.tpeObject);
+                //oSW.Write(sObject);
+                //oSW.Flush();
+                //oMS.Position = 0;
+                //oObject = oJsonSerializer.ReadObject(oMS);
+                //oLJPResponse.oObject = oObject;
+                //}
+
+                oObject = JsonConvert.DeserializeObject(sObject, oLJPResponse.tpeObject);
+                oLJPResponse.oObject = oObject;
+
 
                 if (oObject is LJPExceptionDTO && bThrowExceptionWithNotData)
                 {
                     var oLJPException = oObject as LJPExceptionDTO;
                     var nLJPEExceptionType = (LJPExceptionType)oLJPException.IClientLJPExceptionType;
-                    throw new LJPException(oLJPException.Message, nLJPEExceptionType, oLJPException.Code);
+                    var exception = new LJPException(oLJPException.Message, nLJPEExceptionType, oLJPException.Code)
+                    {
+                        SerializedData = oLJPException.SerializedData
+                    };
+                    throw exception;
                 }
                 else if (oObject is LJPExceptionDTO && !bThrowExceptionWithNotData)
                 {
@@ -515,13 +525,14 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
             this.ClientConnector?.Dispose();
         }
 
-        public void SendException(NetXP.NetStandard.Network.LittleJsonProtocol.LJPException ex)
+        public void SendException(LJPException ex)
         {
-            LJPExceptionDTO exc = new LJPExceptionDTO
+            LJPExceptionDTO exc = new()
             {
-                IClientLJPExceptionType = (int)ex.nLJPExceptionType,
+                IClientLJPExceptionType = (int)ex.LJPExceptionType,
                 Message = ex.Message,
-                Code = ex.Code
+                Code = ex.Code,
+                SerializedData = ex.SerializedData
             };
             SendResponse(exc);
         }

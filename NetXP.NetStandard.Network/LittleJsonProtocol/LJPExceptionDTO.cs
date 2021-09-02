@@ -14,9 +14,9 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol
 
         public LJPExceptionDTO()
         { }
-        public LJPExceptionDTO(string v, LJPExceptionType genericException)
+        public LJPExceptionDTO(string message, LJPExceptionType genericException)
         {
-            this.Message = v;
+            this.Message = message;
             this.IClientLJPExceptionType = (int)genericException;
         }
 
@@ -26,5 +26,9 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol
         public string Message { get; set; }
         [DataMember]
         public int Code { get; set; }
+
+        [DataMember]
+        public string SerializedData { get; set; }
+
     }
 }

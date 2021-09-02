@@ -6,6 +6,7 @@ using StructureMap;
 using di = NetXP.NetStandard.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using NetXP.NetStandard.SystemInformation;
+using NetXP.NetStandard.CompositionRoots;
 
 namespace NetXP.NetStandard.NetCore.SystemInformation.Tests
 {

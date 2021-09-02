@@ -72,6 +72,7 @@ namespace NetXP.NetStandard.Network
 
             uc.Register<ILJPMessageFactory, MessageExtractor_v0_0>("0.0", DILifeTime.Singleton);
             uc.Register<ILJPMessageFactory, MessageExtractor_v1_0>("1.0", DILifeTime.Singleton);
+            uc.Register<ILJPMessageFactory, MessageExtractor_v2_0>("2.0", DILifeTime.Singleton);
 
             //MAIL 
             uc.Register<IMailSender, MailSender>();
