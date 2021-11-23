@@ -7,22 +7,10 @@ using System.Threading.Tasks;
 
 namespace NetXP.NetStandard.Cryptography.Implementations
 {
-    public class HashMD5 : IHash, IDisposable
+    public class HashMD5 : HashBase
     {
-        private readonly MD5 md5;
-        public HashMD5()
+        public HashMD5() : base(System.Security.Cryptography.MD5.Create())
         {
-            md5 = System.Security.Cryptography.MD5.Create();
-        }
-
-        public void Dispose()
-        {
-            md5.Dispose();
-        }
-
-        public byte[] Generate(ByteArray ByteArray)
-        {
-            return md5.ComputeHash(ByteArray.Bytes, ByteArray.Offset, ByteArray.Length);
         }
     }
 }

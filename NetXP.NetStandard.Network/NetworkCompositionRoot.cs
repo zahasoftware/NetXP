@@ -33,7 +33,6 @@ namespace NetXP.NetStandard.Network
             uc.Register<IClientConnectorFactory, ClientConnectorFactory>("normal", DILifeTime.Singleton);
             uc.Register<IClientConnector, SocketClientConnector>("normal", DILifeTime.Trasient, (ctor) => ctor.Empty());
 
-
             //Proxy 
             //Proxy Connector
             uc.Register<IClientConnectorFactory, ClientProxyConnectorFactory>("proxy", DILifeTime.Singleton);
@@ -49,17 +48,16 @@ namespace NetXP.NetStandard.Network
 
             uc.Register<IServerConnector, SLPServerConnector>(DILifeTime.Trasient);
             uc.Register<IClientConnectorFactory, SLPClientConnectorFactory>(DILifeTime.Singleton);
-            uc.Register<IPersistentPrivateKeyProvider, PersistentPrivateKeyProvider>(DILifeTime.Singleton,
-                                                                                    (ctor) =>
-                                                                                    {
+            uc.Register<IPersistentPrivateKeyProvider, PersistentPrivateKeyProvider>(DILifeTime.Singleton, 
+                                                                                    (ctor) => 
+                                                                                    { 
                                                                                         ctor.WithParameter<ISerializer>();
                                                                                         ctor.WithParameter<IHash>();
                                                                                         ctor.WithParameter<ILogger>();
                                                                                         ctor.WithParameter<ICustomDateTime>();
-                                                                                        ctor.WithParameter<IOptions<TCPOption>>();
+                                                                                        ctor.WithParameter<IOptions<PersistenPrivateKeyConfiguration>>();
                                                                                         ctor.InjectInstance(string.Empty);
-                                                                                    });
-
+                                                                                    }); 
 
             //SLP And TCP
             uc.Register<IClientConnectorFactoryProducer, ClientConnectorFactoryProducer>(DILifeTime.Singleton);

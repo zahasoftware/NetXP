@@ -188,10 +188,10 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
                 var rawVersion = versionLine.Split(new char[] { '=' }, 2)[1];
 
                 #endregion
-
+             
                 #region Converting header types to layer types
-                long commandId = 0;
-                if (!long.TryParse(rawCommandId, out commandId))
+
+                if (!long.TryParse(rawCommandId, out long commandId))
                     oLJPCallResponse.Id = null;
                 else
                     oLJPCallResponse.Id = commandId;
@@ -228,12 +228,7 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
                     }
                 }
 
-                //Convert to Interface type
-                if (serviceInterface == null)
-                {
-                    throw new LJPException($"Bad little json protocol, Interface or method not found in layers:\n\t{string.Join("\n\t", serviceInterface)}", LJPExceptionType.FormatException);
-                }
-                oLJPCallResponse.Interface = serviceInterface;
+                oLJPCallResponse.Interface = serviceInterface ?? throw new LJPException($"Bad little json protocol, Interface or method not found in layers:\n\t{string.Join("\n\t", serviceInterface)}", LJPExceptionType.FormatException);
 
                 #endregion
 

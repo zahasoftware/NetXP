@@ -12,8 +12,6 @@ namespace NetXP.NetStandard.Cryptography.Implementations
             Mode = CipherMode.ECB;
         }
 
-
-
         //T could be: 
         //      AesManaged
         //		TripleDESCryptoServiceProvider
@@ -29,9 +27,9 @@ namespace NetXP.NetStandard.Cryptography.Implementations
 
             ICryptoTransform transform = algorithm.CreateEncryptor(symetricKey.Key, symetricKey.Salt);
 
-            using (MemoryStream buffer = new MemoryStream())
+            using (MemoryStream buffer = new())
             {
-                using (CryptoStream stream = new CryptoStream(buffer, transform, CryptoStreamMode.Write))
+                using (CryptoStream stream = new(buffer, transform, CryptoStreamMode.Write))
                 {
                     stream.Write(noEncryptedMessage, 0, noEncryptedMessage.Length);
                     stream.FlushFinalBlock();//Error:https://stackoverflow.com/a/40564155
@@ -42,25 +40,19 @@ namespace NetXP.NetStandard.Cryptography.Implementations
 
         public byte[] Decrypt(byte[] encryptedMessage, SymetricKey symetricKey)
         {
-            DeriveBytes rgb = new Rfc2898DeriveBytes(symetricKey.Key, symetricKey.Salt, symetricKey.Iteration);
-
             SymmetricAlgorithm algorithm = Aes.Create();
             algorithm.Key = symetricKey.Key;
             algorithm.IV = symetricKey.Salt;
-
             algorithm.Mode = Mode;
-            //algorithm.Padding = PaddingMode.PKCS7;
 
             ICryptoTransform transform = algorithm.CreateDecryptor(symetricKey.Key, symetricKey.Salt);
 
-            using (MemoryStream buffer = new MemoryStream(encryptedMessage))
-            using (CryptoStream stream = new CryptoStream(buffer, transform, CryptoStreamMode.Read))
-            using (MemoryStream mo = new MemoryStream())
-            {
-                stream.CopyTo(mo);
-                mo.Position = 0;
-                return mo.ToArray();
-            }
+            using MemoryStream buffer = new(encryptedMessage);
+            using CryptoStream stream = new(buffer, transform, CryptoStreamMode.Read);
+            using MemoryStream mo = new();
+            stream.CopyTo(mo);
+            mo.Position = 0;
+            return mo.ToArray();
         }
 
         public SymetricKey Generate()

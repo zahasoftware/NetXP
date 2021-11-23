@@ -52,14 +52,17 @@ namespace NetXP.NetStandard.SystemManagers.Implementations
                 var restartTimeout = "";
 
                 for (int i = 0; i < 3; i++)
-                    restartTimeout += $"restart/{serviceCreateOptions.RestartSeconds * 1000}";
+                {
+                    restartTimeout += $"restart/{serviceCreateOptions.RestartSeconds * 1000}/";
+                }
+                restartTimeout = restartTimeout.Remove(restartTimeout.Length - 1, 1);
 
                 string serviceRestart = $"/c sc failure \"{serviceName}\" reset= 60 actions= \"{restartTimeout}\" ";
 
                 output = this.terminal.Execute(new ProcessInput
                 {
                     ShellName = "cmd",
-                    Arguments = createServiceString
+                    Arguments = serviceRestart
                 });
 
                 if (output.ExitCode != 0)
@@ -115,12 +118,11 @@ namespace NetXP.NetStandard.SystemManagers.Implementations
         public void Uninstall(string serviceName)
         {
             var serviceInformation = this.serviceInformer.GetService(serviceName);
+            this.Delete(serviceName);
             if (serviceInformation.State == ServiceState.Running)
             {
                 this.Stop(serviceName);
             }
-
-            this.Delete(serviceName);
         }
     }
 }

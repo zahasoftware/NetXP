@@ -10,8 +10,8 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.LamarDI
         where TImpl : class, TInter
     {
         private InstanceExpression<TInter> @for;
-        private ConstructorInstance<TImpl> use;
-        private Action<DILifeTime, ConstructorInstance<TImpl>> setLifeTime;
+        private ConstructorInstance<TImpl, TInter> use;
+        private Action<DILifeTime, ConstructorInstance<TImpl, TInter>> setLifeTime;
         private DILifeTime lifetime;
 
         public string instanceName { get; private set; }
@@ -43,10 +43,10 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.LamarDI
 
         internal void Register(
             InstanceExpression<TInter> @for,
-            ConstructorInstance<TImpl> use,
+            ConstructorInstance<TImpl, TInter> use,
             string instanceName,
             DILifeTime lifetime,
-            Action<DILifeTime, ConstructorInstance<TImpl>> setLifeTime)
+            Action<DILifeTime, ConstructorInstance<TImpl, TInter>> setLifeTime)
         {
             this.@for = @for;
             this.use = use;
