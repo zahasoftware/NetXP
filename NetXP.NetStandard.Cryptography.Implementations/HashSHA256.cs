@@ -7,22 +7,10 @@ using System.Threading.Tasks;
 
 namespace NetXP.NetStandard.Cryptography.Implementations
 {
-    public class HashSHA256 : IHash
+    public class HashSHA256 : HashBase
     {
-        private readonly SHA256 sha256;
-        public HashSHA256()
+        public HashSHA256():base(System.Security.Cryptography.SHA256.Create())
         {
-            sha256 = System.Security.Cryptography.SHA256.Create();
-        }
-
-        public void Dispose()
-        {
-            sha256.Dispose();
-        }
-
-        public byte[] Generate(ByteArray ByteArray)
-        {
-            return sha256.ComputeHash(ByteArray.Bytes, ByteArray.Offset, ByteArray.Length);
         }
     }
 }

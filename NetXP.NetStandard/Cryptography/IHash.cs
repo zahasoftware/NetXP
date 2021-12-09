@@ -9,5 +9,7 @@ namespace NetXP.NetStandard.Cryptography
     public interface IHash
     {
         byte[] Generate(ByteArray byteArray);
+        byte[] Generate(byte[] bytes);
+        string GenerateToString(byte[] serialized);
     }
 }

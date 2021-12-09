@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NetXP.NetStandard.DependencyInjection.Implementations.UnityDI
 {
-    public class UCtorInjectorExpression 
+    public class UCtorInjectorExpression : ICtorInjectorExpression
     {
         private List<UCtorInjector> ctorInjectors = new List<UCtorInjector>();
         internal List<UCtorInjector> CtorInjectors { get => ctorInjectors; set => ctorInjectors = value; }

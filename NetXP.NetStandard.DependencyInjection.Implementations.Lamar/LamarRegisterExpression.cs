@@ -84,7 +84,7 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.LamarDI
             var register = this.configuration.For<TInterface>().Use(instance);
         }
 
-        public void RegisterInstance<TInterface>(TInterface instance, DILifeTime lifeTime) 
+        public void RegisterInstance<TInterface>(TInterface instance, DILifeTime lifeTime)
             where TInterface : class
         {
             var register = this.configuration.For<TInterface>().Use(instance);
@@ -98,19 +98,19 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.LamarDI
             SetLifeTime(lifeTime, register);
         }
 
-        private static void SetLifeTime<TInterface>(DILifeTime lifeTime, ConstructorInstance<TInterface> register)
+        private static void SetLifeTime<TImplement, TInterface>(DILifeTime lifeTime, ConstructorInstance<TImplement, TInterface> register) where TImplement : class, TInterface
         {
             if (lifeTime == DILifeTime.Scoped)
             {
-                register.Scoped();
+                register.Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Scoped;
             }
             else if (lifeTime == DILifeTime.Singleton)
             {
-                register.Singleton();
+                register.Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton;
             }
             else if (lifeTime == DILifeTime.Trasient)
             {
-                register.Transient();
+                register.Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Transient;
             }
         }
 
