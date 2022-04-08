@@ -23,7 +23,7 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.UnityDI
             where TInterface : class
             where TImplement : class, TInterface
         {
-            this.container.RegisterType<TInterface, TImplement>();
+            this.container.RegisterType<TInterface, TImplement>(new Unity.Lifetime.ContainerControlledLifetimeManager());
         }
 
         public void Register<TInterface, TImplement>(DILifeTime lifeTime)
@@ -118,41 +118,15 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.UnityDI
         }
 
         public void RegisterInstance<TInterface>(TInterface instance)
-          where TInterface : class
-        {
-            this.container.RegisterInstance(instance);
-        }
-
-        public void RegisterInstance<TInterface>(TInterface instance, DILifeTime lifeTime)
             where TInterface : class
         {
-            switch (lifeTime)
-            {
-                case DILifeTime.Singleton:
-                    this.container.RegisterInstance(instance, new ContainerControlledLifetimeManager());
-                    break;
-                case DILifeTime.Trasient:
-                    throw new InvalidOperationException("Instances registration doesn't work with trasient");
-                case DILifeTime.Scoped:
-                    this.container.RegisterInstance(instance, new PerResolveLifetimeManager());
-                    break;
-            }
+            this.container.RegisterInstance(instance, new ContainerControlledLifetimeManager());
         }
 
-        public void RegisterInstance<TInterface>(string name, TInterface instance, DILifeTime lifeTime)
+        public void RegisterInstance<TInterface>(string name, TInterface instance)
+            where TInterface : class
         {
-            switch (lifeTime)
-            {
-                case DILifeTime.Singleton:
-                    this.container.RegisterInstance(name, instance, new ContainerControlledLifetimeManager());
-                    break;
-                case DILifeTime.Trasient:
-                    this.container.RegisterInstance(name, instance, new PerResolveLifetimeManager());
-                    break;
-                case DILifeTime.Scoped:
-                    this.container.RegisterInstance(name, instance, new PerResolveLifetimeManager());
-                    break;
-            }
+            this.container.RegisterInstance(name, instance, new ContainerControlledLifetimeManager());
         }
 
 
