@@ -27,7 +27,10 @@ namespace NetXP.NetStandard.NetCore.Cryptography.Tests
             container.Configuration.Configure((IRegister cnf) =>
            {
                cnf.RegisterAllNetXP();
+               cnf.RegisterInstance<NetXP.NetStandard.DependencyInjection.IContainer>(container);
            });
+
+
         }
 
         [TestMethod()]
