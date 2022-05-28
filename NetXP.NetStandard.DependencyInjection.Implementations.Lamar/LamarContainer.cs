@@ -8,13 +8,21 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.LamarDI
     public class LamarContainer : NetXP.NetStandard.DependencyInjection.IContainer
     {
         private readonly ServiceRegistry register;
+        private Container container;
 
-        public IServiceProvider ServiceProvider { get; set; }
+        private Container Container
+        {
+            get
+            {
+                if (this.container == null)
+                    this.container = new Container(register);
+                return this.container;
+            }
+        }
 
-        public LamarContainer(ServiceRegistry register, IServiceProvider serviceProvider)
+        public LamarContainer(ServiceRegistry register)
         {
             this.register = register;
-            this.ServiceProvider = serviceProvider;
         }
 
         public string Name { get; set; }
@@ -28,7 +36,9 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.LamarDI
         }
 
 
-        private Container container { get => this.ServiceProvider as Container; }
+
+
+
 
         public void Dispose()
         {
@@ -36,22 +46,22 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.LamarDI
 
         public TInterface Resolve<TInterface>()
         {
-            return this.container.GetService<TInterface>();
+            return this.Container.GetService<TInterface>();
         }
 
         public TInterface Resolve<TInterface>(string name)
         {
-            return this.container.GetInstance<TInterface>(name);
+            return this.Container.GetInstance<TInterface>(name);
         }
 
         public object Resolve(Type interfaceType)
         {
-            return this.container.GetInstance(interfaceType);
+            return this.Container.GetInstance(interfaceType);
         }
 
         public IEnumerable<TInterface> ResolveAll<TInterface>()
         {
-            return this.container.GetAllInstances<TInterface>();
+            return this.Container.GetAllInstances<TInterface>();
         }
     }
 }

@@ -22,7 +22,8 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.LamarDI
             where TInterface : class
             where TImplement : class, TInterface
         {
-            this.configuration.For<TInterface>().Use<TImplement>();
+            var register = this.configuration.For<TInterface>().Use<TImplement>();
+            SetLifeTime(DILifeTime.Singleton, register);
         }
 
         public void Register<TInterface, TImplement>(DILifeTime lifeTime)
@@ -81,21 +82,13 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.LamarDI
         public void RegisterInstance<TInterface>(TInterface instance)
             where TInterface : class
         {
-            var register = this.configuration.For<TInterface>().Use(instance);
+            this.configuration.For<TInterface>().Use(instance);
         }
 
-        public void RegisterInstance<TInterface>(TInterface instance, DILifeTime lifeTime)
+        public void RegisterInstance<TInterface>(string name, TInterface instance)
             where TInterface : class
         {
-            var register = this.configuration.For<TInterface>().Use(instance);
-            SetLifeTime(lifeTime, register);
-        }
-
-        public void RegisterInstance<TInterface>(string name, TInterface instance, DILifeTime lifeTime)
-            where TInterface : class
-        {
-            var register = this.configuration.For<TInterface>().Use(instance).Named(name);
-            SetLifeTime(lifeTime, register);
+            this.configuration.For<TInterface>().Use(instance).Named(name);
         }
 
         private static void SetLifeTime<TImplement, TInterface>(DILifeTime lifeTime, ConstructorInstance<TImplement, TInterface> register) where TImplement : class, TInterface

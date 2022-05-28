@@ -92,59 +92,69 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
             string mbInfo = String.Empty;
 
             ProcessOutput result = null;
+            string serial = "";
+            int attempts = 0;
 
-            if (GetOSInfo().Platform == SystemInformation.OSPlatformType.Windows)
+            do
             {
-                // Act
-                result = ioTerminal.Execute(new ProcessInput
+
+                if (GetOSInfo().Platform == SystemInformation.OSPlatformType.Windows)
                 {
-                    ShellName = "cmd",
-                    Arguments = "/c wmic baseboard get serialnumber"
-                });
-                result.StandardOutput =
-                    result.StandardOutput.Where(o => !string.IsNullOrEmpty(o?.Trim())).Skip(1).Take(1)
-                    .Where(o => o?.Trim()?.Equals("") != true).ToArray();
-                // Assert
-            }
-            //Raspberry
-            else if (GetOSInfo().Platform == SystemInformation.OSPlatformType.Linux
-                  && GetOSInfo().Architecture == Architecture.Arm || GetOSInfo().Architecture == Architecture.Arm64)
-            {
-                // Act
-                result = ioTerminal.Execute(new ProcessInput
+                    // Act
+                    result = ioTerminal.Execute(new ProcessInput
+                    {
+                        ShellName = "cmd",
+                        Arguments = "/c wmic baseboard get serialnumber"
+                    });
+                    result.StandardOutput =
+                        result.StandardOutput.Where(o => !string.IsNullOrEmpty(o?.Trim())).Skip(1).Take(1)
+                        .Where(o => o?.Trim()?.Equals("") != true).ToArray();
+                    // Assert
+                }
+                //Raspberry
+                else if (GetOSInfo().Platform == SystemInformation.OSPlatformType.Linux
+                      && GetOSInfo().Architecture == Architecture.Arm || GetOSInfo().Architecture == Architecture.Arm64)
                 {
-                    Command = "cat /proc/cpuinfo | grep Serial | awk ' {print $3}'",
-                    ShellName = "/bin/bash",
-                    Arguments = ""
-                });
-                result.StandardOutput =
-                    result.StandardOutput
-                    .Where(o => o?.Trim()?.Equals("") != true).ToArray();
-                // Assert
-            }
-            //Linux (Fedora Tested)
-            else if (GetOSInfo().Platform == SystemInformation.OSPlatformType.Linux)
-            {
-                // Act
-                result = ioTerminal.Execute(new ProcessInput
+                    // Act
+                    result = ioTerminal.Execute(new ProcessInput
+                    {
+                        Command = "cat /proc/cpuinfo | grep Serial | awk ' {print $3}'",
+                        ShellName = "/bin/bash",
+                        Arguments = ""
+                    });
+                    result.StandardOutput =
+                        result.StandardOutput
+                        .Where(o => o?.Trim()?.Equals("") != true).ToArray();
+                    // Assert
+                }
+                //Linux (Fedora Tested)
+                else if (GetOSInfo().Platform == SystemInformation.OSPlatformType.Linux)
                 {
-                    Command = "cat /sys/devices/virtual/dmi/id/board_serial",
-                    ShellName = "/bin/bash",
-                    Arguments = ""
-                });
+                    // Act
+                    result = ioTerminal.Execute(new ProcessInput
+                    {
+                        Command = "cat /sys/devices/virtual/dmi/id/board_serial",
+                        ShellName = "/bin/bash",
+                        Arguments = ""
+                    });
 
-                result.StandardOutput =
-                    result.StandardOutput
-                    .Where(o => o?.Trim()?.Equals("") != true).ToArray();
-                // Assert
-            }
+                    result.StandardOutput =
+                        result.StandardOutput
+                        .Where(o => o?.Trim()?.Equals("") != true).ToArray();
+                    // Assert
+                }
 
-            var serial = string.Join("", result.StandardOutput);
+                serial = string.Join("", result.StandardOutput);
 
-            if (!string.IsNullOrEmpty(serial?.Trim()))
-            {
-                this.motherBoardSerialNumber = serial;
-            }
+                if (!string.IsNullOrEmpty(serial?.Trim()))
+                {
+                    this.motherBoardSerialNumber = serial;
+                }
+                else
+                {
+                    Task.Delay(1000).Wait();
+                }
+            } while (string.IsNullOrEmpty(serial) && attempts++ <= 3);
 
             return serial;
         }

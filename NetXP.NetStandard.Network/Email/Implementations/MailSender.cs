@@ -32,7 +32,6 @@ namespace NetXP.NetStandard.Network.Email.Implementations
             System.Net.Mail.MailMessage mailMessage = new System.Net.Mail.MailMessage();
             mailMessage.IsBodyHtml = true;
             mailMessage.BodyEncoding = Encoding.UTF8;
-            //mailMessage.Body = message.Body;
             mailMessage.From = new System.Net.Mail.MailAddress(message.From.Address, message.From.Alias);
             mailMessage.Subject = message.Subject;
 

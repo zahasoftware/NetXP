@@ -24,10 +24,11 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps
             where TInterface : class
             where TImplement : class, TInterface
         {
-            this.configuration.For<TInterface>().Use<TImplement>();
+            var register = this.configuration.For<TInterface>().Use<TImplement>();
+            SetLifeTime(DILifeTime.Singleton, register);
         }
 
-        public void Register<TInterface, TImplement>(DILifeTime lifeTime) 
+        public void Register<TInterface, TImplement>(DILifeTime lifeTime)
             where TInterface : class
             where TImplement : class, TInterface
         {
@@ -90,21 +91,14 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps
             var register = this.configuration.For<TInterface>().Use(o => instance);
         }
 
-        public void RegisterInstance<TInterface>(TInterface instance, DILifeTime lifeTime)
+        public void RegisterInstance<TInterface>(string name, TInterface instance)
             where TInterface : class
         {
-            var register = this.configuration.For<TInterface>().Use(o => instance);
-            //SetLifeTime(lifeTime, register);
+            this.configuration.For<TInterface>().Use(o => instance).Named(name);
         }
 
-        public void RegisterInstance<TInterface>(string name, TInterface instance, DILifeTime lifeTime)
-        {
-            var register = this.configuration.For<TInterface>().Use(o => instance).Named(name);
-            //SetLifeTime(lifeTime, register);
-        }
-
-        private static void SetLifeTime<TInterface, TImplement>(DILifeTime lifeTime, StructureMap.Pipeline.SmartInstance<TImplement, TInterface> register) 
-            where TImplement :  TInterface
+        private static void SetLifeTime<TInterface, TImplement>(DILifeTime lifeTime, StructureMap.Pipeline.SmartInstance<TImplement, TInterface> register)
+            where TImplement : TInterface
         {
             if (lifeTime == DILifeTime.Scoped)
             {
@@ -121,7 +115,7 @@ namespace NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps
         }
 
         private static void SetLifeTime<TInterface, TImplement>(DILifeTime lifeTime, StructureMap.Pipeline.LambdaInstance<TImplement, TInterface> register)
-            where TImplement :  TInterface
+            where TImplement : TInterface
         {
             if (lifeTime == DILifeTime.Scoped)
             {

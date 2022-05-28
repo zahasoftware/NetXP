@@ -68,7 +68,7 @@ namespace NetXP.NetStandard.NetCore.UnitTest.Network.Proxy
             ///Trying connection without configuration (ProxyOptions = null)
             container.Configuration.Configure((IRegister cnf) =>
             {
-                cnf.RegisterInstance<IOptions<ProxyOptions>>(new OptionsInstance<ProxyOptions>(null), DILifeTime.Singleton);
+                cnf.RegisterInstance<IOptions<ProxyOptions>>(new OptionsInstance<ProxyOptions>(null));
             });
 
             var clientConnectorFactory = container.Resolve<IClientConnectorFactory>("proxy");///Proxy Factory

@@ -46,7 +46,7 @@ namespace NetXP.NetStandard
             //ISysInfo need to be implemented in their os system.
             uc.Register<NetStandard.SystemInformation.IStorageInfo, SystemInformation.Implementations.SysInfo>();
             var customDateTime = new CustomDateTime(0);
-            uc.RegisterInstance<ICustomDateTime>(customDateTime, DILifeTime.Singleton);
+            uc.RegisterInstance<ICustomDateTime>(customDateTime);
             uc.Register<IServiceInformer, ServiceInformer>(DILifeTime.Singleton);
 
             //System Managers
