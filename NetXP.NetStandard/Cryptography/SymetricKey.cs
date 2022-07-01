@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.Cryptography
+namespace NetXP.Cryptography
 {
     [DataContract]
     public class SymetricKey

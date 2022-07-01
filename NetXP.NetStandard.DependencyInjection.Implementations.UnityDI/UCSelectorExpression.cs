@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Unity;
 
-namespace NetXP.NetStandard.DependencyInjection.Implementations.UnityDI
+namespace NetXP.DependencyInjection.Implementations.UnityDI
 {
     public class UCtorSelectorExpression<TImpl, TInter> : ICtorSelectorExpression<TImpl, TInter>
         where TInter : class

@@ -1,11 +1,11 @@
-﻿using NetXP.NetStandard.DependencyInjection;
+﻿using NetXP.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.Cryptography.Implementations
+namespace NetXP.Cryptography.Implementations
 {
     public class HashFactory : IHashFactory
     {

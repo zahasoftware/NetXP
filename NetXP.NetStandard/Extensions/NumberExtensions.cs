@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.ext
+namespace NetXP.ext
 {
     public static class NumberExtensions
     {

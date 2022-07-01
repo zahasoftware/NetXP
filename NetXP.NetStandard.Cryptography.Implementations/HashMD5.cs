@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.Cryptography.Implementations
+namespace NetXP.Cryptography.Implementations
 {
     public class HashMD5 : HashBase
     {

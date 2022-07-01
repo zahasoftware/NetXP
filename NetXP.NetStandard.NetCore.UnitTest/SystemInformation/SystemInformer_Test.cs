@@ -1,16 +1,16 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetXP.NetStandard.DependencyInjection;
-using NetXP.NetStandard.Cryptography;
-using NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps;
+using NetXP.DependencyInjection;
+using NetXP.Cryptography;
+using NetXP.DependencyInjection.Implementations.StructureMaps;
 using StructureMap;
-using di = NetXP.NetStandard.DependencyInjection;
+using di = NetXP.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-using NetXP.NetStandard.SystemInformation;
+using NetXP.SystemInformation;
 using System.Net.NetworkInformation;
 using System.Linq;
-using NetXP.NetStandard.CompositionRoots;
+using NetXP.CompositionRoots;
 
-namespace NetXP.NetStandard.NetCore.SystemInformation.Tests
+namespace NetXP.SystemInformation.Tests
 {
     [TestClass()]
     public class SystemInformer_Tests

@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace NetXP.NetStandard.Serialization.Implementations
+namespace NetXP.Serialization.Implementations
 {
     public class JsonConverterSerializer : ISerializer
     {

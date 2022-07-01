@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <Configurations>Debug;Release;Debug_Manager;Debug_1;Debug_2;Staging;Testing</Configurations>
   </PropertyGroup>
 
@@ -38,11 +38,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NetXP.Netstandard.Auditory.Implementations\NetXP.NetStandard.Auditory.Implementations.csproj" />
-    <ProjectReference Include="..\NetXP.NetStandard.Cryptography.Implementations\NetXP.NetStandard.Cryptography.Implementations.csproj" />
-    <ProjectReference Include="..\NetXP.NetStandard.Network.Services.Implementations\NetXP.NetStandard.Network.Services.Implementations.csproj" />
-    <ProjectReference Include="..\NetXP.NetStandard.Serialization.Implementations\NetXP.NetStandard.Serialization.Implementations.csproj" />
-    <ProjectReference Include="..\NetXP.NetStandard\NetXP.NetStandard.csproj" />
+    <ProjectReference Include="..\NetXP.Auditory.Implementations\NetXP.Auditory.Implementations.csproj" />
+    <ProjectReference Include="..\NetXP.Cryptography.Implementations\NetXP.Cryptography.Implementations.csproj" />
+    <ProjectReference Include="..\NetXP.Network.Services.Implementations\NetXP.Network.Services.Implementations.csproj" />
+    <ProjectReference Include="..\NetXP.Serialization.Implementations\NetXP.Serialization.Implementations.csproj" />
+    <ProjectReference Include="..\NetXP.NetStandard\NetXP.csproj" />
   </ItemGroup>
 
 </Project>

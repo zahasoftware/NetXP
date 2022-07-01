@@ -1,4 +1,4 @@
-﻿using NetXP.NetStandard.DependencyInjection;
+﻿using NetXP.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using Unity;
 using Unity.Injection;
 using Unity.Lifetime;
 
-namespace NetXP.NetStandard.DependencyInjection.Implementations.UnityDI
+namespace NetXP.DependencyInjection.Implementations.UnityDI
 {
     public class URegisterExpression : IRegister
     {

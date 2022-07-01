@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.Installers
+namespace NetXP.Installers
 {
     public interface IStep
     {

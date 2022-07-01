@@ -1,6 +1,6 @@
-﻿using NetXP.NetStandard.SystemInformation;
+﻿using NetXP.SystemInformation;
 
-namespace NetXP.NetStandard.SystemManagers
+namespace NetXP.SystemManagers
 {
     public class ServiceCreateOptions
     {

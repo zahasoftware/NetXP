@@ -1,13 +1,13 @@
 ﻿using Lamar;
 using Lamar.IoC.Instances;
-using NetXP.NetStandard.DependencyInjection;
+using NetXP.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.DependencyInjection.Implementations.LamarDI
+namespace NetXP.DependencyInjection.Implementations.LamarDI
 {
     public class LamarRegisterExpression : IRegister
     {

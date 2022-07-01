@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.Processes.Implementations
+namespace NetXP.Processes.Implementations
 {
     public class IOTerminalCancelationToken : IIOTerminal
     {

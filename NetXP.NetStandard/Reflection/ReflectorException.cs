@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace NetXP.NetStandard.Reflection
+namespace NetXP.Reflection
 {
     [Serializable]
     internal class ReflectorException : Exception

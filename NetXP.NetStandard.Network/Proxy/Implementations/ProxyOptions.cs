@@ -1,4 +1,4 @@
-﻿namespace NetXP.NetStandard.Network.Proxy.Implementations
+﻿namespace NetXP.Network.Proxy.Implementations
 {
     public class ProxyOptions
     {

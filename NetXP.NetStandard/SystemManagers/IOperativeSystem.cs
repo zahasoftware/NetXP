@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.SystemManagers
+namespace NetXP.SystemManagers
 {
     public interface IOperativeSystem
     {

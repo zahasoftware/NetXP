@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NetXP.NetStandard.Exceptions
+namespace NetXP.Exceptions
 {
     public class SecurityException : Exception
     {

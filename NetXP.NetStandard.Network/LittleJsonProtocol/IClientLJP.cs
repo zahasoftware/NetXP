@@ -1,4 +1,4 @@
-﻿using NetXP.NetStandard.Network.TCP;
+﻿using NetXP.Network.TCP;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.Network.LittleJsonProtocol
+namespace NetXP.Network.LittleJsonProtocol
 {
     public interface IClientLJP : IDisposable
     {
@@ -48,6 +48,6 @@ namespace NetXP.NetStandard.Network.LittleJsonProtocol
         /// </summary>
         bool KeepAlive { get; set; }
 
-        void SendException(NetXP.NetStandard.Network.LittleJsonProtocol.LJPException ex);
+        void SendException(NetXP.Network.LittleJsonProtocol.LJPException ex);
     }
 }

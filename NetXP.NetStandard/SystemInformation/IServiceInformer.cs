@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NetXP.NetStandard.SystemInformation
+namespace NetXP.SystemInformation
 {
     public interface IServiceInformer
     {

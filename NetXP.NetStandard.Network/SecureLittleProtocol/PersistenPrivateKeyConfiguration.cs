@@ -1,4 +1,4 @@
-﻿namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementation
+﻿namespace NetXP.Network.SecureLittleProtocol.Implementation
 {
     public class PersistenPrivateKeyConfiguration
     {

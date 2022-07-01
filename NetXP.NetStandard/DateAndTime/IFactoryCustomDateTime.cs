@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.DateAndTime
+namespace NetXP.DateAndTime
 {
     public interface IFactoryCustomDateTime
     {

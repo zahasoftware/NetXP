@@ -1,4 +1,4 @@
-﻿using NetXP.NetStandard.Compression;
+﻿using NetXP.Compression;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.Compression.Implementations
+namespace NetXP.Compression.Implementations
 {
     public class DeflateCompress : ICompression
     {

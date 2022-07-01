@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
-using NetXP.NetStandard.Auditory;
-using NetXP.NetStandard.Network.TCP;
-using NetXP.NetStandard.Reflection;
+using NetXP.Auditory;
+using NetXP.Network.TCP;
+using NetXP.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
@@ -16,7 +16,7 @@ using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
+namespace NetXP.Network.LittleJsonProtocol.Implementations
 {
     public class ClientLJP : IClientLJP, IDisposable
     {

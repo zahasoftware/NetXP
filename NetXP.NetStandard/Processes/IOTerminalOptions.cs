@@ -1,4 +1,4 @@
-﻿namespace NetXP.NetStandard.Processes.Implementations
+﻿namespace NetXP.Processes.Implementations
 {
     public class IOTerminalOptions
     {

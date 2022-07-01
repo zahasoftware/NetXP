@@ -1,4 +1,4 @@
-﻿namespace NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps
+﻿namespace NetXP.DependencyInjection.Implementations.StructureMaps
 {
     internal class SMCtorInjector
     {

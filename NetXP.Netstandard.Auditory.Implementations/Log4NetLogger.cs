@@ -4,7 +4,7 @@ using System.IO;
 using System.Reflection;
 using System.Xml;
 
-namespace NetXP.NetStandard.Auditory.Implementations
+namespace NetXP.Auditory.Implementations
 {
     public class Log4NetLogger : ILogger
     {

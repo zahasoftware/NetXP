@@ -6,7 +6,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.Network.TCP
+namespace NetXP.Network.TCP
 {
     public interface IServerConnector
     {

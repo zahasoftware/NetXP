@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Text;
 
-namespace NetXP.NetStandard.Authorization
+namespace NetXP.Authorization
 {
     static class RootChecker
     {

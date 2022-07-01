@@ -1,4 +1,4 @@
-﻿namespace NetXP.NetStandard.DependencyInjection.Implementations.LamarDI
+﻿namespace NetXP.DependencyInjection.Implementations.LamarDI
 {
     internal class LamarCtorInjector
     {

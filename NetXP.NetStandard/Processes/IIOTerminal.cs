@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 
-namespace NetXP.NetStandard.Processes
+namespace NetXP.Processes
 {
     public interface IIOTerminal
     {

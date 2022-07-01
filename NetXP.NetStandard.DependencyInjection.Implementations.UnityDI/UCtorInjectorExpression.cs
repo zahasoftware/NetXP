@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NetXP.NetStandard.DependencyInjection.Implementations.UnityDI
+namespace NetXP.DependencyInjection.Implementations.UnityDI
 {
     public class UCtorInjectorExpression : ICtorInjectorExpression
     {

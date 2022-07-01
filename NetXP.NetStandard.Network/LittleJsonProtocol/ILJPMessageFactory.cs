@@ -1,4 +1,4 @@
-﻿namespace NetXP.NetStandard.Network.LittleJsonProtocol
+﻿namespace NetXP.Network.LittleJsonProtocol
 {
     public interface ILJPMessageFactory
     {

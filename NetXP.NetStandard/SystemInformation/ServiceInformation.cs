@@ -1,5 +1,5 @@
 ﻿
-namespace NetXP.NetStandard.SystemInformation
+namespace NetXP.SystemInformation
 {
     public class ServiceInformation
     {

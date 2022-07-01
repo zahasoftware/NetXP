@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NetXP.NetStandard.Cryptography;
+using NetXP.Cryptography;
 using System.IO;
-using NetXP.NetStandard.Serialization;
+using NetXP.Serialization;
 using System.Threading;
-using NetXP.NetStandard.DateAndTime;
+using NetXP.DateAndTime;
 using NetXP.NetStandard;
 using Microsoft.Extensions.Options;
-using NetXP.NetStandard.Network.SecureLittleProtocol.Implementation;
-using NetXP.NetStandard.Auditory;
+using NetXP.Network.SecureLittleProtocol.Implementation;
+using NetXP.Auditory;
 
-namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
+namespace NetXP.Network.SecureLittleProtocol.Implementations
 {
     public class PersistentPrivateKeyProvider : IPersistentPrivateKeyProvider
     {

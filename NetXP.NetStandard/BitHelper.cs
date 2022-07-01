@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace NetXP.NetStandard
+namespace NetXP
 {
     public class BitHelper
     {

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NetXP.NetStandard.Cryptography;
+using NetXP.Cryptography;
 using System.Security.Cryptography;
 
-namespace NetXP.NetStandard.Cryptography.Implementations
+namespace NetXP.Cryptography.Implementations
 {
 
     /// <summary>

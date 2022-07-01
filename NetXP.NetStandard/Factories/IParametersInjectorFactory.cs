@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.Factories
+namespace NetXP.Factories
 {
     public interface IParametersInjectorFactory<T> where T : class
     {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 
-namespace NetXP.NetStandard.Processes.Implementations
+namespace NetXP.Processes.Implementations
 {
     public class IOTerminal : IIOTerminal
     {

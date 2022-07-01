@@ -1,1 +1,0 @@
-﻿Implementations only  works with Xamarin.Forms

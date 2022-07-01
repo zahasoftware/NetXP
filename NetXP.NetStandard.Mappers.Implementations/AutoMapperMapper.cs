@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using AutoMapper;
 
-namespace NetXP.NetStandard.Mappers.Implementation
+namespace NetXP.Mappers.Implementation
 {
     public class AutoMapperMapper : IMapper
     {

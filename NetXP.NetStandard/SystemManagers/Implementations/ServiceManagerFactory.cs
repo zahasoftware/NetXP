@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using NetXP.NetStandard.DependencyInjection;
-using NetXP.NetStandard.SystemInformation;
+using NetXP.DependencyInjection;
+using NetXP.SystemInformation;
 
-namespace NetXP.NetStandard.SystemManagers.Implementations
+namespace NetXP.SystemManagers.Implementations
 {
     public class ServiceManagerFactory : IServiceManagerFactory
     {

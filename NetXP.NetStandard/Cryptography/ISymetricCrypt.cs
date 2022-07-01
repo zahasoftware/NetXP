@@ -1,4 +1,4 @@
-﻿namespace NetXP.NetStandard.Cryptography
+﻿namespace NetXP.Cryptography
 {
     public interface ISymetricCrypt
     {

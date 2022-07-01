@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps
+namespace NetXP.DependencyInjection.Implementations.StructureMaps
 {
     public class SMContainer : IContainer
     {

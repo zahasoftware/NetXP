@@ -1,18 +1,18 @@
-﻿using NetXP.NetStandard.Cryptography;
-using NetXP.NetStandard.Serialization;
+﻿using NetXP.Cryptography;
+using NetXP.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using NetXP.NetStandard.Network.LittleJsonProtocol;
-using NetXP.NetStandard.Compression;
-using NetXP.NetStandard.Network.TCP;
+using NetXP.Network.LittleJsonProtocol;
+using NetXP.Compression;
+using NetXP.Network.TCP;
 using NetXP.NetStandard;
 using Microsoft.Extensions.Options;
-using NetXP.NetStandard.Factories;
-using NetXP.NetStandard.Auditory;
+using NetXP.Factories;
+using NetXP.Auditory;
 
-namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
+namespace NetXP.Network.SecureLittleProtocol.Implementations
 {
     public class SLPClientConnector : IClientConnector
     {

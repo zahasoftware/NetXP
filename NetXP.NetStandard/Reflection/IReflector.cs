@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.Reflection
+namespace NetXP.Reflection
 {
     public interface IReflector
     {

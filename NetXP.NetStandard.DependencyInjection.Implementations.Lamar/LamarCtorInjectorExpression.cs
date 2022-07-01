@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NetXP.NetStandard.DependencyInjection.Implementations.LamarDI
+namespace NetXP.DependencyInjection.Implementations.LamarDI
 {
     public class LamarCtorInjectorExpression : ICtorInjectorExpression
     {

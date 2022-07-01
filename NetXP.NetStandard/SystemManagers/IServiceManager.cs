@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NetXP.NetStandard.SystemManagers
+namespace NetXP.SystemManagers
 {
     public interface IServiceManager
     {

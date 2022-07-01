@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NetXP.NetStandard.DependencyInjection
+namespace NetXP.DependencyInjection
 {
     public interface ICtorInjectorExpression
     {

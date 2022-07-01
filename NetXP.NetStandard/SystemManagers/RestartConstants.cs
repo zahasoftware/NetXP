@@ -1,4 +1,4 @@
-﻿namespace NetXP.NetStandard.SystemManagers
+﻿namespace NetXP.SystemManagers
 {
     public class RestartConstants
     {

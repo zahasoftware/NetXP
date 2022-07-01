@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace NetXP.NetStandard.Network.LittleJsonProtocol
+namespace NetXP.Network.LittleJsonProtocol
 {
     /// <summary>
     /// Sended object

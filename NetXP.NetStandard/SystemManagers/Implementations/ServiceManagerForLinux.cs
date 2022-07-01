@@ -1,9 +1,9 @@
-﻿using NetXP.NetStandard.Processes;
-using NetXP.NetStandard.SystemInformation;
+﻿using NetXP.Processes;
+using NetXP.SystemInformation;
 using System;
 using System.IO;
 
-namespace NetXP.NetStandard.SystemManagers.Implementations
+namespace NetXP.SystemManagers.Implementations
 {
     public class ServiceManagerForLinux : IServiceManager
     {

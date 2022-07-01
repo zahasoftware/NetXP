@@ -1,11 +1,11 @@
-﻿using NetXP.NetStandard.DependencyInjection;
+﻿using NetXP.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.Configuration.Implementations
+namespace NetXP.Configuration.Implementations
 {
     public class ConfigFactory : IConfigFactory
     {

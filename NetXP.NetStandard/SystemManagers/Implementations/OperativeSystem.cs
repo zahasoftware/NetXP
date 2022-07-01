@@ -1,13 +1,13 @@
-﻿using NetXP.NetStandard.Processes;
-using NetXP.NetStandard.SystemInformation;
-using NetXP.NetStandard.SystemInformation.Implementations;
+﻿using NetXP.Processes;
+using NetXP.SystemInformation;
+using NetXP.SystemInformation.Implementations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.SystemManagers.Implementations
+namespace NetXP.SystemManagers.Implementations
 {
     public class OperativeSystem : IOperativeSystem
     {

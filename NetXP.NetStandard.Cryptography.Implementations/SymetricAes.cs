@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Security.Cryptography;
 
-namespace NetXP.NetStandard.Cryptography.Implementations
+namespace NetXP.Cryptography.Implementations
 {
     public class SymetricAes : ISymetricCrypt
     {

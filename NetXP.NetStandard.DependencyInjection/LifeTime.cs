@@ -1,4 +1,4 @@
-﻿namespace NetXP.NetStandard.DependencyInjection
+﻿namespace NetXP.DependencyInjection
 {
     public enum DILifeTime
     {

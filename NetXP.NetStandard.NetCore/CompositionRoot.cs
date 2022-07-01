@@ -1,13 +1,13 @@
-﻿using NetXP.NetStandard.Cryptography.Implementations;
-using NetXP.NetStandard.Network;
-using NetXP.NetStandard.Serialization.Implementations;
-using NetXP.NetStandard.Auditory.Implementations;
-using NetXP.NetStandard.Network.Services.Implementations;
-using NetXP.NetStandard.DependencyInjection;
+﻿using NetXP.Cryptography.Implementations;
+using NetXP.Network;
+using NetXP.Serialization.Implementations;
+using NetXP.Auditory.Implementations;
+using NetXP.Network.Services.Implementations;
+using NetXP.DependencyInjection;
 using Microsoft.Extensions.Options;
-using NetXP.NetStandard.Network.SecureLittleProtocol.Implementation;
+using NetXP.Network.SecureLittleProtocol.Implementation;
 
-namespace NetXP.NetStandard.CompositionRoots
+namespace NetXP.CompositionRoots
 {
     public static class CompositionRoot
     {
@@ -16,7 +16,7 @@ namespace NetXP.NetStandard.CompositionRoots
             cfg.RegisterInstance(Options.Create(new PersistenPrivateKeyConfiguration()));
             cfg.RegisterInstance(Options.Create(new TCPOption()));
 
-            cfg.RegisterNetXPStandard();
+            cfg.RegisterNetXP();
 
             cfg.RegisterSerialization();
             cfg.RegisterCryptography();

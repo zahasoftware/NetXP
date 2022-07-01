@@ -1,8 +1,8 @@
 ﻿
-using NetXP.NetStandard.DependencyInjection;
-using NetXP.NetStandard.Factories;
+using NetXP.DependencyInjection;
+using NetXP.Factories;
 
-namespace NetXP.NetStandard.Cryptography.Implementations
+namespace NetXP.Cryptography.Implementations
 {
     public class AsymetricFactory : INameResolverFactory<IAsymetricCrypt>
     {

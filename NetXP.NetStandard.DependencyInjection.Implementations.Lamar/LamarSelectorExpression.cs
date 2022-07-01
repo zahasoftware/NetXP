@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using static Lamar.ServiceRegistry;
 
-namespace NetXP.NetStandard.DependencyInjection.Implementations.LamarDI
+namespace NetXP.DependencyInjection.Implementations.LamarDI
 {
     public class LamarSelectorExpression<TImpl, TInter> : ICtorSelectorExpression<TImpl, TInter>
         where TInter : class

@@ -1,24 +1,24 @@
 ﻿using System;
-using NetXP.NetStandard.Serialization;
-using NetXP.NetStandard.Cryptography;
-using NetXP.NetStandard.DateAndTime;
-using NetXP.NetStandard.DependencyInjection;
-using NetXP.NetStandard.Network.TCP;
-using NetXP.NetStandard.Network.TCP.Implementations;
-using NetXP.NetStandard.Network.SecureLittleProtocol.Implementations;
+using NetXP.Serialization;
+using NetXP.Cryptography;
+using NetXP.DateAndTime;
+using NetXP.DependencyInjection;
+using NetXP.Network.TCP;
+using NetXP.Network.TCP.Implementations;
+using NetXP.Network.SecureLittleProtocol.Implementations;
 using Microsoft.Extensions.Options;
-using NetXP.NetStandard.Network.LittleJsonProtocol;
-using NetXP.NetStandard.Network.LittleJsonProtocol.Implementations;
-using NetXP.NetStandard.Configuration.Implementations;
+using NetXP.Network.LittleJsonProtocol;
+using NetXP.Network.LittleJsonProtocol.Implementations;
+using NetXP.Configuration.Implementations;
 using Microsoft.Extensions.Configuration;
 using System.IO;
-using NetXP.NetStandard.Auditory;
-using NetXP.NetStandard.Network.SecureLittleProtocol.Implementation;
-using NetXP.NetStandard.Network.Email.Implementations;
-using NetXP.NetStandard.Network.Email;
-using NetXP.NetStandard.Network.Proxy.Implementations;
+using NetXP.Auditory;
+using NetXP.Network.SecureLittleProtocol.Implementation;
+using NetXP.Network.Email.Implementations;
+using NetXP.Network.Email;
+using NetXP.Network.Proxy.Implementations;
 
-namespace NetXP.NetStandard.Network
+namespace NetXP.Network
 {
     public static class NetworkCompositionRoot
     {

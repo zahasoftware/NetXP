@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using NetXP.NetStandard.Processes;
-using NetXP.NetStandard.SystemInformation;
+using NetXP.Processes;
+using NetXP.SystemInformation;
 
-namespace NetXP.NetStandard.SystemManagers.Implementations
+namespace NetXP.SystemManagers.Implementations
 {
     public class ServiceManagerForWindows : IServiceManager
     {

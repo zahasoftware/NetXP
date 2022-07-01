@@ -1,4 +1,4 @@
-﻿using NetXP.NetStandard.Network.Email;
+﻿using NetXP.Network.Email;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.Network.Email.Implementations
+namespace NetXP.Network.Email.Implementations
 {
     public class MailSender : IMailSender, IDisposable
     {
@@ -27,7 +27,7 @@ namespace NetXP.NetStandard.Network.Email.Implementations
             smtpClient.EnableSsl = true;
         }
 
-        public void Send(NetStandard.Network.Email.MailMessage message)
+        public void Send(Network.Email.MailMessage message)
         {
             System.Net.Mail.MailMessage mailMessage = new System.Net.Mail.MailMessage();
             mailMessage.IsBodyHtml = true;

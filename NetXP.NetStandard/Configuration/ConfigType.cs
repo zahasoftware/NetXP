@@ -1,4 +1,4 @@
-﻿namespace NetXP.NetStandard.Configuration
+﻿namespace NetXP.Configuration
 {
     public enum ConfigType
     {

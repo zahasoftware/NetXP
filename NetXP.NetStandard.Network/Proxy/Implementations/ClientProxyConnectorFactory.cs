@@ -1,13 +1,13 @@
 ﻿using Microsoft.Extensions.Options;
-using NetXP.NetStandard.Auditory;
-using NetXP.NetStandard.DependencyInjection;
-using NetXP.NetStandard.Network.TCP;
+using NetXP.Auditory;
+using NetXP.DependencyInjection;
+using NetXP.Network.TCP;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace NetXP.NetStandard.Network.Proxy.Implementations
+namespace NetXP.Network.Proxy.Implementations
 {
     public class ClientProxyConnectorFactory : IClientConnectorFactory
     {

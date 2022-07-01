@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace NetXP.NetStandard.SystemManagers
+namespace NetXP.SystemManagers
 {
     [Serializable]
     public class SystemManagerException : Exception

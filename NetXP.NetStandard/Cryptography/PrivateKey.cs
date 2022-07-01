@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.Cryptography
+namespace NetXP.Cryptography
 {
     /// <summary>
     /// Private Key Contain a public key

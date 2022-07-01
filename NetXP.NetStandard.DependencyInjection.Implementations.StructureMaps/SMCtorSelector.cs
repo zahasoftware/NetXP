@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps
+namespace NetXP.DependencyInjection.Implementations.StructureMaps
 {
     public class SMCtorSelector
     {

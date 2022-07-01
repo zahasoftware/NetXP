@@ -1,4 +1,4 @@
-﻿namespace NetXP.NetStandard.Network.Email
+﻿namespace NetXP.Network.Email
 {
     public class MailAddress
     {

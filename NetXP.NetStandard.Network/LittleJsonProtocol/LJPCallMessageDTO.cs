@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.Network.LittleJsonProtocol
+namespace NetXP.Network.LittleJsonProtocol
 {
     public class LJPCallMessageDTO
     {

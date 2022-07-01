@@ -1,11 +1,11 @@
-﻿using NetXP.NetStandard.DependencyInjection;
+﻿using NetXP.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 
-namespace NetXP.NetStandard.Reflection.Implementations
+namespace NetXP.Reflection.Implementations
 {
     public class Reflector : IReflector
     {

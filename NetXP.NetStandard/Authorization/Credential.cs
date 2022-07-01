@@ -1,4 +1,4 @@
-﻿namespace NetXP.NetStandard.Authorization
+﻿namespace NetXP.Authorization
 {
     public class Credential
     {

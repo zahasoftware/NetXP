@@ -1,4 +1,4 @@
-namespace NetXP.NetStandard.SystemInformation
+namespace NetXP.SystemInformation
 {
     ///Determine in which state of startup is the service
     public enum ServiceStartupState

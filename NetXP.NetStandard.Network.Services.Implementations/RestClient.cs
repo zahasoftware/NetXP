@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.Network.Services.Implementations
+namespace NetXP.Network.Services.Implementations
 {
     public class RestClient : IServiceClient
     {

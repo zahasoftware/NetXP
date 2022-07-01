@@ -1,9 +1,9 @@
-﻿using NetXP.NetStandard.DependencyInjection;
+﻿using NetXP.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace NetXP.NetStandard.Network.Services.Implementations
+namespace NetXP.Network.Services.Implementations
 {
     public class ServiceClientFactory : IServiceClientFactory
     {

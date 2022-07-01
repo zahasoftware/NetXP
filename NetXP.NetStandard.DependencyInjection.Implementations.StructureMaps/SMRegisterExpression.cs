@@ -1,4 +1,4 @@
-﻿using NetXP.NetStandard.DependencyInjection;
+﻿using NetXP.DependencyInjection;
 using StructureMap;
 using StructureMap.Pipeline;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps
+namespace NetXP.DependencyInjection.Implementations.StructureMaps
 {
     public class SMRegisterExpression : IRegister
     {

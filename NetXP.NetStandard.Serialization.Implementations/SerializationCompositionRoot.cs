@@ -1,9 +1,9 @@
-﻿using NetXP.NetStandard.DependencyInjection;
+﻿using NetXP.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace NetXP.NetStandard.Serialization.Implementations
+namespace NetXP.Serialization.Implementations
 {
     public static class SerializationCompositionRoot
     {

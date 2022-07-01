@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace NetXP.NetStandard.Network.Proxy.Implementations
+namespace NetXP.Network.Proxy.Implementations
 {
     [Serializable]
     internal class ProxyConnectionException : Exception

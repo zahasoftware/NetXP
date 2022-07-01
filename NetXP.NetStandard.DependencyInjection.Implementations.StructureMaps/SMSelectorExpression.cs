@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using StructureMap.Pipeline;
 using StructureMap.Configuration.DSL.Expressions;
 
-namespace NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps
+namespace NetXP.DependencyInjection.Implementations.StructureMaps
 {
     public class SMCtorSelectorExpression<TImpl, TInter> : ICtorSelectorExpression<TImpl, TInter>
         where TInter : class

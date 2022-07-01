@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
-namespace NetXP.NetStandard.Network.Email
+namespace NetXP.Network.Email
 {
     public class MailAddressCollection : ICollection<MailAddress>
     {

@@ -1,16 +1,15 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetXP.NetStandard.Cryptography;
-using NetXP.NetStandard.DependencyInjection;
-using NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps;
-using NetXP.NetStandard.Serialization;
+using NetXP.Cryptography;
+using NetXP.DependencyInjection;
+using NetXP.DependencyInjection.Implementations.StructureMaps;
+using NetXP.Serialization;
 using System;
 using System.Text;
-using NetXP.NetStandard.NetCore;
 using StructureMap;
-using NetXP.NetStandard.CompositionRoots;
+using NetXP.CompositionRoots;
 
 /// NOTE: Rebuild project if fail
-namespace NetXP.NetStandard.NetCore.Cryptography.Tests
+namespace NetXP.Cryptography.Tests
 {
 
     [TestClass()]
@@ -27,7 +26,7 @@ namespace NetXP.NetStandard.NetCore.Cryptography.Tests
             container.Configuration.Configure((IRegister cnf) =>
            {
                cnf.RegisterAllNetXP();
-               cnf.RegisterInstance<NetXP.NetStandard.DependencyInjection.IContainer>(container);
+               cnf.RegisterInstance<NetXP.DependencyInjection.IContainer>(container);
            });
 
 

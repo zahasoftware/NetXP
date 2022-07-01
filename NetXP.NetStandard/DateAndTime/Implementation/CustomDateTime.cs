@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.DateAndTime.Implementation
+namespace NetXP.DateAndTime.Implementation
 {
     public class CustomDateTime : ICustomDateTime
     {
@@ -31,13 +31,13 @@ namespace NetXP.NetStandard.DateAndTime.Implementation
         {
             get
             {
-                return DateTime.UtcNow;
+                return DateTime.UtcNow.SetKindUtc();
             }
         }
 
         public void SetUtcOffset(int minutes)
         {
-            this.minutes = minutes; 
+            this.minutes = minutes;
         }
     }
 }

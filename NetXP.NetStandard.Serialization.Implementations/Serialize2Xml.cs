@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.Serialization.Implementations
+namespace NetXP.Serialization.Implementations
 {
     public class Serialize2Xml : ISerializer
     {

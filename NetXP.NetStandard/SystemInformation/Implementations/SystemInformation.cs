@@ -1,4 +1,4 @@
-﻿using NetXP.NetStandard.Processes;
+﻿using NetXP.Processes;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.SystemInformation.Implementations
+namespace NetXP.SystemInformation.Implementations
 {
     public class SysInfo : ISystemInformation, IStorageInfo
     {
@@ -170,7 +170,7 @@ namespace NetXP.NetStandard.SystemInformation.Implementations
                 while (@continue)
                     try
                     {
-                        if (!Enum.TryParse(o.DriveType.ToString(), out NetStandard.SystemInformation.DriveType driveType))
+                        if (!Enum.TryParse(o.DriveType.ToString(), out SystemInformation.DriveType driveType))
                         {
                             driveType = DriveType.Unknown;
                         }

@@ -5,18 +5,18 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetXP.NetStandard.Cryptography;
-using NetXP.NetStandard.DependencyInjection;
-using NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps;
+using NetXP.Cryptography;
+using NetXP.DependencyInjection;
+using NetXP.DependencyInjection.Implementations.StructureMaps;
 using StructureMap;
-using di = NetXP.NetStandard.DependencyInjection;
+using di = NetXP.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-using NetXP.NetStandard.Network.Email;
-using NetXP.NetStandard.Processes;
-using NetXP.NetStandard.SystemManagers;
-using NetXP.NetStandard.CompositionRoots;
+using NetXP.Network.Email;
+using NetXP.Processes;
+using NetXP.SystemManagers;
+using NetXP.CompositionRoots;
 
-namespace NetXP.NetStandard.NetCore.UnitTest.SystemManagers.Tests {
+namespace NetXP.UnitTest.SystemManagers.Tests {
     [TestClass ()]
     public class ServiceManager_Tests {
         private di.IContainer container;

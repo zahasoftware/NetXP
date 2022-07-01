@@ -5,24 +5,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
-using NetXP.NetStandard.DependencyInjection;
-using NetXP.NetStandard.Cryptography;
-using NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps;
+using NetXP.DependencyInjection;
+using NetXP.Cryptography;
+using NetXP.DependencyInjection.Implementations.StructureMaps;
 using StructureMap;
-using di = NetXP.NetStandard.DependencyInjection;
+using di = NetXP.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-using NetXP.NetStandard.Network.Email;
-using NetXP.NetStandard.Network.TCP;
-using NetXP.NetStandard.Network.Proxy.Implementations;
+using NetXP.Network.Email;
+using NetXP.Network.TCP;
+using NetXP.Network.Proxy.Implementations;
 using System.Net;
-using NetXP.NetStandard.Configuration.Implementations;
+using NetXP.Configuration.Implementations;
 using Microsoft.Extensions.Options;
-using NetXP.NetStandard.Network.Services;
+using NetXP.Network.Services;
 using System.Runtime.Serialization;
 using System.Collections.ObjectModel;
-using NetXP.NetStandard.CompositionRoots;
+using NetXP.CompositionRoots;
 
-namespace NetXP.NetStandard.NetCore.UnitTest.Network.Services
+namespace NetXP.UnitTest.Network.Services
 {
 
     /// <summary>

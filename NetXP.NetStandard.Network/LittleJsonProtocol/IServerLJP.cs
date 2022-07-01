@@ -7,7 +7,7 @@ using NetXP.NetStandard;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.Network.LittleJsonProtocol
+namespace NetXP.Network.LittleJsonProtocol
 {
     public interface IServerLJP
     {

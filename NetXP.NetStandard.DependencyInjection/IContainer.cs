@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NetXP.NetStandard.DependencyInjection
+namespace NetXP.DependencyInjection
 {
     public interface IContainer : IResolver, IDisposable
     {

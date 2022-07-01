@@ -4,9 +4,9 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using NetXP.NetStandard.Network.LittleJsonProtocol;
+using NetXP.Network.LittleJsonProtocol;
 
-namespace NetXP.NetStandard.Network.LittleJsonProtocol
+namespace NetXP.Network.LittleJsonProtocol
 {
     [DataContract]
     public class LJPExceptionDTO

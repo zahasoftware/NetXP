@@ -9,7 +9,7 @@ REM git -C NetXP pull origin master
 REM git -C NetXP merge --no-ff --no-commit origin/devel 
 REM git -C NetXP push origin master
 
-cd NetXP.NetStandard.DependencyInjection
+cd NetXP.DependencyInjection
 if exist Output del /Q /F /S Output
 dotnet build -c Release -o Output
 %pack%
@@ -27,7 +27,7 @@ c:\bin\nuget push *.nupkg %source%
 
 cd ..\..\
 
-cd NetXP.Netstandard.Auditory.Implementations
+cd NetXP.Auditory.Implementations
 if exist Output del /Q /F /S Output
 dotnet build -c Release -o Output
 %pack%
@@ -35,7 +35,7 @@ cd Output
 c:\bin\nuget push *.nupkg %source%
 cd ..\..\
 
-cd NetXP.NetStandard.Cryptography.Implementations
+cd NetXP.Cryptography.Implementations
 if exist Output del /Q /F /S Output
 dotnet build -c Release -o Output
 %pack%
@@ -43,7 +43,7 @@ cd Output
 c:\bin\nuget push *.nupkg %source%
 cd ..\..
 
-cd NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps
+cd NetXP.DependencyInjection.Implementations.StructureMaps
 if exist Output del /Q /F /S Output
 dotnet build -c Release -o Output
 %pack%
@@ -51,7 +51,7 @@ cd Output
 c:\bin\nuget push *.nupkg %source%
 cd ..\..\
 
-cd NetXP.NetStandard.DependencyInjection.Implementations.UnityDI
+cd NetXP.DependencyInjection.Implementations.UnityDI
  if exist Output del /Q /F /S Output
 dotnet build -c Release -o Output
 %pack%
@@ -59,7 +59,7 @@ cd Output
 c:\bin\nuget push *.nupkg %source%
 cd ..\..\
 
-cd NetXP.NetStandard.Mappers.Implementations
+cd NetXP.Mappers.Implementations
  if exist Output del /Q /F /S Output
 dotnet build -c Release -o Output
 %pack%
@@ -67,7 +67,7 @@ cd Output
 c:\bin\nuget push *.nupkg %source%
 cd ..\..\
 
-cd NetXP.Netstandard.MVVM
+cd NetXP.MVVM
  if exist Output del /Q /F /S Output
 dotnet build -c Release -o Output
 %pack%
@@ -75,7 +75,7 @@ cd Output
 c:\bin\nuget push *.nupkg %source%
 cd ..\..\
 
-cd NetXP.Netstandard.MVVM.XamarinForms
+cd NetXP.MVVM.XamarinForms
  if exist Output del /Q /F /S Output
 dotnet build -c Release -o Output
 %pack%
@@ -83,7 +83,7 @@ cd Output
 c:\bin\nuget push *.nupkg %source%
 cd ..\..\
 
-cd NetXP.NetStandard.NetCore
+cd NetXP.NetCore
  if exist Output del /Q /F /S Output
 dotnet build -c Release -o Output
 %pack%
@@ -92,7 +92,7 @@ c:\bin\nuget push *.nupkg %source%
 cd ..\..\
 
 
-cd NetXP.NetStandard.Network
+cd NetXP.Network
  if exist Output del /Q /F /S Output
 dotnet build -c Release -o Output
 %pack%
@@ -100,7 +100,7 @@ cd Output
 c:\bin\nuget push *.nupkg %source%
 cd ..\..\
 
-cd NetXP.NetStandard.Network.Services.Implementations
+cd NetXP.Network.Services.Implementations
  if exist Output del /Q /F /S Output
 dotnet build -c Release -o Output
 %pack%
@@ -108,7 +108,7 @@ cd Output
 c:\bin\nuget push *.nupkg %source%
 cd ..\..\
 
-cd NetXP.NetStandard.Serialization.Implementations
+cd NetXP.Serialization.Implementations
  if exist Output del /Q /F /S Output
 dotnet build -c Release -o Output
 %pack%

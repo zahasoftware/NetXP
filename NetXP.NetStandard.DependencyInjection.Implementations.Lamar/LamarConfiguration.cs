@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.DependencyInjection.Implementations.LamarDI
+namespace NetXP.DependencyInjection.Implementations.LamarDI
 {
     public class LamarConfiguration : IConfiguration
     {

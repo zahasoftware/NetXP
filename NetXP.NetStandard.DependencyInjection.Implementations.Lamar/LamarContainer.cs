@@ -3,9 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 
-namespace NetXP.NetStandard.DependencyInjection.Implementations.LamarDI
+namespace NetXP.DependencyInjection.Implementations.LamarDI
 {
-    public class LamarContainer : NetXP.NetStandard.DependencyInjection.IContainer
+    public class LamarContainer : NetXP.DependencyInjection.IContainer
     {
         private readonly ServiceRegistry register;
         private Container container;

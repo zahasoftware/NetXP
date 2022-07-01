@@ -1,9 +1,9 @@
 ﻿using NetXP.NetStandard;
-using NetXP.NetStandard.Auditory;
-using NetXP.NetStandard.Cryptography;
-using NetXP.NetStandard.Factories;
-using NetXP.NetStandard.Network.TCP;
-using NetXP.NetStandard.Serialization;
+using NetXP.Auditory;
+using NetXP.Cryptography;
+using NetXP.Factories;
+using NetXP.Network.TCP;
+using NetXP.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +12,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
+namespace NetXP.Network.SecureLittleProtocol.Implementations
 {
     public class SLPServerConnector : IServerConnector
     {
@@ -68,7 +68,7 @@ namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
                 //Receive PublicKey And Send Their PublicKey
                 secureClient.Receive(aLittleBuffer, 0, aLittleBuffer.Length);
             }
-            catch (NetXP.NetStandard.Network.LittleJsonProtocol.SLPException)
+            catch (NetXP.Network.LittleJsonProtocol.SLPException)
             {
                 secureClient?.Disconnect();
                 throw;

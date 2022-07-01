@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.SystemInformation
+namespace NetXP.SystemInformation
 {
     public interface ISystemInformation
     {

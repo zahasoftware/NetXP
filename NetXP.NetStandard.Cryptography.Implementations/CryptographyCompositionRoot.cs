@@ -1,10 +1,10 @@
-﻿using NetXP.NetStandard.DependencyInjection;
-using NetXP.NetStandard.Factories;
+﻿using NetXP.DependencyInjection;
+using NetXP.Factories;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace NetXP.NetStandard.Cryptography.Implementations
+namespace NetXP.Cryptography.Implementations
 {
     public static class CryptographyCompositionRoot
     {

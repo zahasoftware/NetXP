@@ -1,4 +1,4 @@
-﻿namespace NetXP.NetStandard.Network
+﻿namespace NetXP.Network
 {
     public enum ConnectorFactory
     {

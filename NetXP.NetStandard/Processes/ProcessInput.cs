@@ -1,4 +1,4 @@
-﻿namespace NetXP.NetStandard.Processes
+﻿namespace NetXP.Processes
 {
     public class ProcessInput
     {

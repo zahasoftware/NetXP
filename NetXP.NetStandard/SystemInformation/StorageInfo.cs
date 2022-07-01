@@ -4,9 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NetXP.NetStandard.ext;
+using NetXP.ext;
 
-namespace NetXP.NetStandard.SystemInformation
+namespace NetXP.SystemInformation
 {
     public class StorageInfo
     {

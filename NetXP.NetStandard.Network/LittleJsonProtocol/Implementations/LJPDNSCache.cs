@@ -5,7 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.Network.LittleJsonProtocol.Implementations
+namespace NetXP.Network.LittleJsonProtocol.Implementations
 {
     internal class LJPDNSCache
     {

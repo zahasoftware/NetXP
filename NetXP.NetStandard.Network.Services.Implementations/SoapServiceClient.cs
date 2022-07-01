@@ -1,4 +1,4 @@
-﻿using NetXP.NetStandard.Serialization;
+﻿using NetXP.Serialization;
 using SoapHttpClient;
 using SoapHttpClient.Enums;
 using System;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace NetXP.NetStandard.Network.Services.Implementations
+namespace NetXP.Network.Services.Implementations
 {
     public class SoapServiceClientV11 : IServiceClient
     {

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
-using NetXP.NetStandard.SystemInformation.Implementations;
+using NetXP.SystemInformation.Implementations;
 
-namespace NetXP.NetStandard.SystemInformation
+namespace NetXP.SystemInformation
 {
     public class OSInfo
     {

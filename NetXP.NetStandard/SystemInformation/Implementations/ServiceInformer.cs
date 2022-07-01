@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceProcess;
 using System.Text;
-using NetXP.NetStandard.Exceptions;
-using NetXP.NetStandard.Processes;
+using NetXP.Exceptions;
+using NetXP.Processes;
 
-namespace NetXP.NetStandard.SystemInformation.Implementations
+namespace NetXP.SystemInformation.Implementations
 {
     public class ServiceInformer : IServiceInformer
     {

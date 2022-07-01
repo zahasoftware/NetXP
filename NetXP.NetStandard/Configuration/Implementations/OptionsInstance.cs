@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace NetXP.NetStandard.Configuration.Implementations
+namespace NetXP.Configuration.Implementations
 {
     public class OptionsInstance<T> : IOptions<T> where T : class, new()
     {

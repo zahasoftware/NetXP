@@ -5,15 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
-using NetXP.NetStandard.DependencyInjection;
-using NetXP.NetStandard.Cryptography;
-using NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps;
+using NetXP.DependencyInjection;
+using NetXP.Cryptography;
+using NetXP.DependencyInjection.Implementations.StructureMaps;
 using StructureMap;
-using di = NetXP.NetStandard.DependencyInjection;
-using NetXP.NetStandard.NetCore;
-using NetXP.NetStandard.CompositionRoots;
+using di = NetXP.DependencyInjection;
+using NetXP.CompositionRoots;
 
-namespace NetXP.NetStandard.NetCore.UnitTest.Cryptography.Tests
+namespace NetXP.UnitTest.Cryptography.Tests
 {
     [TestClass()]
     public class Symetric_Tests

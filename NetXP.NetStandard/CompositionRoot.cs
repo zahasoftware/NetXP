@@ -1,30 +1,30 @@
 ﻿using System;
-using NetXP.NetStandard.Serialization;
-using NetXP.NetStandard.Cryptography;
-using NetXP.NetStandard.DateAndTime;
-using NetXP.NetStandard.DependencyInjection;
-using NetXP.NetStandard.Compression.Implementations;
+using NetXP.Serialization;
+using NetXP.Cryptography;
+using NetXP.DateAndTime;
+using NetXP.DependencyInjection;
+using NetXP.Compression.Implementations;
 using Microsoft.Extensions.Options;
-using NetXP.NetStandard.Reflection;
-using NetXP.NetStandard.Reflection.Implementations;
-using NetXP.NetStandard.DateAndTime.Implementation;
-using NetXP.NetStandard.Compression;
-using NetXP.NetStandard.Configuration;
-using NetXP.NetStandard.Configuration.Implementations;
+using NetXP.Reflection;
+using NetXP.Reflection.Implementations;
+using NetXP.DateAndTime.Implementation;
+using NetXP.Compression;
+using NetXP.Configuration;
+using NetXP.Configuration.Implementations;
 using Microsoft.Extensions.Configuration;
 using System.IO;
-using NetXP.NetStandard.Auditory;
-using NetXP.NetStandard.Processes.Implementations;
-using NetXP.NetStandard.SystemInformation;
-using NetXP.NetStandard.SystemInformation.Implementations;
-using NetXP.NetStandard.SystemManagers;
-using NetXP.NetStandard.SystemManagers.Implementations;
+using NetXP.Auditory;
+using NetXP.Processes.Implementations;
+using NetXP.SystemInformation;
+using NetXP.SystemInformation.Implementations;
+using NetXP.SystemManagers;
+using NetXP.SystemManagers.Implementations;
 
-namespace NetXP.NetStandard
+namespace NetXP
 {
     public static class CompositionRoot
     {
-        public static void RegisterNetXPStandard(this IRegister uc)
+        public static void RegisterNetXP(this IRegister uc)
         {
             //cnf
             uc.Register<IConfigFactory, ConfigFactory>();
@@ -35,7 +35,7 @@ namespace NetXP.NetStandard
             #region Processes
 
             //Process
-            uc.Register<NetStandard.Processes.IIOTerminal, IOTerminal>();
+            uc.Register<Processes.IIOTerminal, IOTerminal>();
 
             #endregion
 
@@ -44,7 +44,7 @@ namespace NetXP.NetStandard
 
             //System Information
             //ISysInfo need to be implemented in their os system.
-            uc.Register<NetStandard.SystemInformation.IStorageInfo, SystemInformation.Implementations.SysInfo>();
+            uc.Register<SystemInformation.IStorageInfo, SystemInformation.Implementations.SysInfo>();
             var customDateTime = new CustomDateTime(0);
             uc.RegisterInstance<ICustomDateTime>(customDateTime);
             uc.Register<IServiceInformer, ServiceInformer>(DILifeTime.Singleton);

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NetXP.NetStandard
+namespace NetXP
 {
     public static class ByteHelper
     {

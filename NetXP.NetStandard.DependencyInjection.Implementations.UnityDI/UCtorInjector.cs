@@ -1,4 +1,4 @@
-﻿namespace NetXP.NetStandard.DependencyInjection.Implementations.UnityDI
+﻿namespace NetXP.DependencyInjection.Implementations.UnityDI
 {
     internal class UCtorInjector
     {

@@ -1,4 +1,4 @@
-﻿namespace NetXP.NetStandard.Network.TCP
+﻿namespace NetXP.Network.TCP
 {
     public interface IServerConnectorFactory
     {

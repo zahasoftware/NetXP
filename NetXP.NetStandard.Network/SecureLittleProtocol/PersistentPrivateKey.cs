@@ -1,7 +1,7 @@
-﻿using NetXP.NetStandard.Cryptography;
+﻿using NetXP.Cryptography;
 using System;
 
-namespace NetXP.NetStandard.Network
+namespace NetXP.Network
 {
     public class PersistentPrivateKey
     {

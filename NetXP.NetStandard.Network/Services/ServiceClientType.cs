@@ -1,4 +1,4 @@
-﻿namespace NetXP.NetStandard.Network.Services
+﻿namespace NetXP.Network.Services
 {
     public enum ServiceClientType
     {

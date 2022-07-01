@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetXP.NetStandard.Serialization
+namespace NetXP.Serialization
 {
     public enum SerializerType
     {

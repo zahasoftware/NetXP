@@ -1,7 +1,7 @@
-﻿using NetXP.NetStandard.Exceptions;
-using NetXP.NetStandard.Network.Email;
+﻿using NetXP.Exceptions;
+using NetXP.Network.Email;
 
-namespace NetXP.NetStandard.Network.Email
+namespace NetXP.Network.Email
 {
     public class MailMessage
     {

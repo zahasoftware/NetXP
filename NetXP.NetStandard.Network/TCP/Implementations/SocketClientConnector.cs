@@ -1,8 +1,8 @@
-﻿using NetXP.NetStandard.Exceptions;
+﻿using NetXP.Exceptions;
 using System;
 using System.Net.Sockets;
 
-namespace NetXP.NetStandard.Network.TCP.Implementations
+namespace NetXP.Network.TCP.Implementations
 {
     public class SocketClientConnector : IClientConnector
     {

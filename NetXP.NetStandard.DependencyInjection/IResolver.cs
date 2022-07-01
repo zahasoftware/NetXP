@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace NetXP.NetStandard.DependencyInjection
+namespace NetXP.DependencyInjection
 {
     public interface IResolver
     {

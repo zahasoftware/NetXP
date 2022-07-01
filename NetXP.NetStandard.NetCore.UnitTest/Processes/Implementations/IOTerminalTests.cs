@@ -1,14 +1,14 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetXP.NetStandard.CompositionRoots;
-using NetXP.NetStandard.DependencyInjection;
-using NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps;
-using NetXP.NetStandard.NetCore;
-using NetXP.NetStandard.Processes;
+using NetXP.CompositionRoots;
+using NetXP.DependencyInjection;
+using NetXP.DependencyInjection.Implementations.StructureMaps;
+using NetXP.NetCore;
+using NetXP.Processes;
 using StructureMap;
 using System;
 using System.Linq;
 
-namespace NetXP.NetStandard.NetCoreUnitTest.Processes.Implementations
+namespace NetXP.NetCoreUnitTest.Processes.Implementations
 {
     [TestClass]
     public class IOTerminalTests

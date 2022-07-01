@@ -1,4 +1,4 @@
-﻿using NetXP.NetStandard.DependencyInjection;
+﻿using NetXP.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Unity;
 
-namespace NetXP.NetStandard.DependencyInjection.Implementations.UnityDI
+namespace NetXP.DependencyInjection.Implementations.UnityDI
 {
     public class UConfiguration : IConfiguration
     {

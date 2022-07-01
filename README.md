@@ -9,17 +9,17 @@ Download source code or download from nuget.
 | Package          | Comment
 |------------------|----------------------------------------------------------------------------------------|
 |NetXP.NetStandard | Main Reference (Contains all interfaces and some implementations)
-|NetXP.NetStandard.CompositionRoot | Initialize implementations of Auditory, Cryptogrqaphy, Network.Services, Serialization).
-|NetXP.NetStandard.DependencyInjection				|					Interface to work with dependency injection.
-|NetXP.NetStandard.DependencyInjection.Implementations.StructureMap	| Implement depency injection interface to work with StructureMap. 
-|NetXP.NetStandard.Network							|					Network utils (Email, LJP Protocol, SLP Protocol, TCP, SOAP [Services Client]
-|NetXP.NetStandard.Network.Services.Implementations|					Implementations of NetXP.NetStandard.Network.Services [SOAP].
+|NetXP.CompositionRoot | Initialize implementations of Auditory, Cryptogrqaphy, Network.Services, Serialization).
+|NetXP.DependencyInjection				|					Interface to work with dependency injection.
+|NetXP.DependencyInjection.Implementations.StructureMap	| Implement depency injection interface to work with StructureMap. 
+|NetXP.Network							|					Network utils (Email, LJP Protocol, SLP Protocol, TCP, SOAP [Services Client]
+|NetXP.Network.Services.Implementations|					Implementations of NetXP.Network.Services [SOAP].
 
 
 ### Initialization in ASP.Net Core (Just for Cryptography Example) 
 Download Nuget Packages:
-- NetXP.NetStandard.Cryptography.Implementations 
-- NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps
+- NetXP.Cryptography.Implementations 
+- NetXP.DependencyInjection.Implementations.StructureMaps
 
 ```csharp
 

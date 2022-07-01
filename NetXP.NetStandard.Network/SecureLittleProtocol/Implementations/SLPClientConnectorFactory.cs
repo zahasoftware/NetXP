@@ -1,15 +1,15 @@
 ﻿using Microsoft.Extensions.Options;
-using NetXP.NetStandard.Auditory;
-using NetXP.NetStandard.Compression;
-using NetXP.NetStandard.Cryptography;
-using NetXP.NetStandard.DependencyInjection;
-using NetXP.NetStandard.Factories;
-using NetXP.NetStandard.Network.TCP;
-using NetXP.NetStandard.Serialization;
+using NetXP.Auditory;
+using NetXP.Compression;
+using NetXP.Cryptography;
+using NetXP.DependencyInjection;
+using NetXP.Factories;
+using NetXP.Network.TCP;
+using NetXP.Serialization;
 using System;
 using System.Linq;
 
-namespace NetXP.NetStandard.Network.SecureLittleProtocol.Implementations
+namespace NetXP.Network.SecureLittleProtocol.Implementations
 {
     public class SLPClientConnectorFactory : IClientConnectorFactory
     {

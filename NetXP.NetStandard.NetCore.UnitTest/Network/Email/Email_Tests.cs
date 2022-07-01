@@ -1,14 +1,14 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetXP.NetStandard.DependencyInjection;
-using NetXP.NetStandard.Cryptography;
-using NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps;
+using NetXP.DependencyInjection;
+using NetXP.Cryptography;
+using NetXP.DependencyInjection.Implementations.StructureMaps;
 using StructureMap;
-using di = NetXP.NetStandard.DependencyInjection;
+using di = NetXP.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-using NetXP.NetStandard.Network.Email;
-using NetXP.NetStandard.CompositionRoots;
+using NetXP.Network.Email;
+using NetXP.CompositionRoots;
 
-namespace NetXP.NetStandard.NetCore.UnitTest.Cryptography
+namespace NetXP.UnitTest.Cryptography
 {
     [TestClass()]
     public class Email_Tests
