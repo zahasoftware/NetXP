@@ -2,7 +2,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetXP.CompositionRoots;
 using NetXP.DependencyInjection;
 using NetXP.DependencyInjection.Implementations.StructureMaps;
-using NetXP.NetCore;
 using NetXP.Processes;
 using StructureMap;
 using System;
@@ -31,7 +30,7 @@ namespace NetXP.NetCoreUnitTest.Processes.Implementations
         public void NC_IOTerminal_Execute()
         {
             // Arrange
-            var systemInformation = container.Resolve<NetStandard.SystemInformation.ISystemInformation>();
+            var systemInformation = container.Resolve<SystemInformation.ISystemInformation>();
             ProcessOutput result = null;
 
             if (systemInformation.GetOSInfo().Platform == SystemInformation.OSPlatformType.Windows)

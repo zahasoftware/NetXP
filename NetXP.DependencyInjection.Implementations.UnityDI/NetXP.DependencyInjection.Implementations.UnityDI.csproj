@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Configurations>Debug;Release;Staging;Testing;Debug_Manager</Configurations>
+    <PackageProjectUrl>https://github.com/juandrn/NetXP</PackageProjectUrl>
+    <PackageIcon>icon.png</PackageIcon>
+    <RepositoryUrl>https://github.com/juandrn/NetXP</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReleaseNotes>N/D</PackageReleaseNotes>
+    <Copyright>MIT</Copyright>
+    <Description>Unity Of DI</Description>
+    <Version>1.20.1</Version>
+    <PackageLicenseExpression>Copyright © 2020</PackageLicenseExpression>
+    <PackageTags>Unity DI</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="icon.png" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Unity" Version="5.11.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NetXP\NetXP.csproj" />
+  </ItemGroup>
+
+</Project>

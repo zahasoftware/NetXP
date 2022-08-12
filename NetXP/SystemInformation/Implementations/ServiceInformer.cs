@@ -29,7 +29,9 @@ namespace NetXP.SystemInformation.Implementations
             //Window 
             if (osInfo.Platform == OSPlatformType.Windows)
             {
+#pragma warning disable CA1416 // Validate platform compatibility
                 var service = new ServiceController(serviceName);
+#pragma warning restore CA1416 // Validate platform compatibility
 
                 if (ExistsService(service))
                 {

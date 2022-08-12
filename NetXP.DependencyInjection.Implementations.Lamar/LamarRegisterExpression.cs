@@ -95,15 +95,15 @@ namespace NetXP.DependencyInjection.Implementations.LamarDI
         {
             if (lifeTime == DILifeTime.Scoped)
             {
-                register.Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Scoped;
+                register.Scoped();
             }
             else if (lifeTime == DILifeTime.Singleton)
             {
-                register.Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton;
+                register.Singleton();
             }
             else if (lifeTime == DILifeTime.Trasient)
             {
-                register.Lifetime = Microsoft.Extensions.DependencyInjection.ServiceLifetime.Transient;
+                register.Transient();
             }
         }
 

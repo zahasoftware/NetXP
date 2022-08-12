@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Configurations>Debug;Release;Debug_1;Debug_2;Staging;Debug_Manager</Configurations>
+    <Configurations>Debug;Release;Debug_1;Debug_2;Staging</Configurations>
+    <Version>1.20.1</Version>
+    <Description>Soap Implementations Of NetXP.NetStandard.Network Interfaces.</Description>
+    <Copyright>Copyright © 2020</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/juandrn/NetXP</PackageProjectUrl>
+    <PackageIcon>icon.png</PackageIcon>
+    <RepositoryUrl>https://github.com/juandrn/NetXP</RepositoryUrl>
+    <RepositoryType>https://github.com/juandrn/NetXP</RepositoryType>
+    <PackageTags>SOAP</PackageTags>
+    <PackageReleaseNotes>N/D</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="icon.png" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SoapHttpClient" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+        <ProjectReference Include="..\NetXP.Network\NetXP.Network.csproj" />
+  </ItemGroup>
+
+</Project>

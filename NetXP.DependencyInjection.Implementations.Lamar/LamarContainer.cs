@@ -35,11 +35,6 @@ namespace NetXP.DependencyInjection.Implementations.LamarDI
             }
         }
 
-
-
-
-
-
         public void Dispose()
         {
         }

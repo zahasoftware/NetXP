@@ -42,7 +42,7 @@
     <ProjectReference Include="..\NetXP.Cryptography.Implementations\NetXP.Cryptography.Implementations.csproj" />
     <ProjectReference Include="..\NetXP.Network.Services.Implementations\NetXP.Network.Services.Implementations.csproj" />
     <ProjectReference Include="..\NetXP.Serialization.Implementations\NetXP.Serialization.Implementations.csproj" />
-    <ProjectReference Include="..\NetXP.NetStandard\NetXP.csproj" />
+    <ProjectReference Include="..\NetXP\NetXP.csproj" />
   </ItemGroup>
 
 </Project>

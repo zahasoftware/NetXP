@@ -7,7 +7,7 @@ using System.Net;
 using NetXP.Network.LittleJsonProtocol;
 using NetXP.Compression;
 using NetXP.Network.TCP;
-using NetXP.NetStandard;
+using NetXP;
 using Microsoft.Extensions.Options;
 using NetXP.Factories;
 using NetXP.Auditory;

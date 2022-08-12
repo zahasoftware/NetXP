@@ -500,9 +500,9 @@ namespace NetXP.Network.LittleJsonProtocol.Implementations
 
         public void Connect(System.Net.IPAddress ip, int port)
         {
-
             ClientConnector.Connect(ip, port);
         }
+
         public void Disconnect(bool dispose = false)
         {
             ClientConnector?.Disconnect(dispose);

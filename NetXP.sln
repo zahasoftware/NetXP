@@ -3,31 +3,31 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetXP", "NetXP.NetStandard\NetXP.csproj", "{9B6BCC3A-AEE8-4D41-B69D-176510B97891}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetXP", "NetXP\NetXP.csproj", "{9B6BCC3A-AEE8-4D41-B69D-176510B97891}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetXP.UnitTest", "NetXP.NetStandard.NetCore.UnitTest\NetXP.UnitTest.csproj", "{BC15D15D-ADBC-4CBB-897A-A3E2863DE852}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetXP.UnitTest", "NetXP.NetCore.UnitTest\NetXP.UnitTest.csproj", "{BC15D15D-ADBC-4CBB-897A-A3E2863DE852}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetXP.Mappers.Implementations", "NetXP.NetStandard.Mappers.Implementations\NetXP.Mappers.Implementations.csproj", "{F9EBC92A-81A6-47D9-98CD-1EF7C5A5EA71}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetXP.Mappers.Implementations", "NetXP.Mappers.Implementations\NetXP.Mappers.Implementations.csproj", "{F9EBC92A-81A6-47D9-98CD-1EF7C5A5EA71}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetXP.Auditory.Implementations", "NetXP.Netstandard.Auditory.Implementations\NetXP.Auditory.Implementations.csproj", "{89B26DD1-40BF-4153-A3DF-F8FF5EAFDD5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetXP.Auditory.Implementations", "NetXP.Auditory.Implementations\NetXP.Auditory.Implementations.csproj", "{89B26DD1-40BF-4153-A3DF-F8FF5EAFDD5F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetXP.Cryptography.Implementations", "NetXP.NetStandard.Cryptography.Implementations\NetXP.Cryptography.Implementations.csproj", "{E072F5D9-FF36-4F9F-97D2-EBB7B9A97E9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetXP.Cryptography.Implementations", "NetXP.Cryptography.Implementations\NetXP.Cryptography.Implementations.csproj", "{E072F5D9-FF36-4F9F-97D2-EBB7B9A97E9C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetXP.DependencyInjection.Implementations.StructureMaps", "NetXP.NetStandard.DependencyInjection.Implementations.StructureMaps\NetXP.DependencyInjection.Implementations.StructureMaps.csproj", "{D1234BAA-9C41-4A87-BCEE-D5143AB35643}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetXP.DependencyInjection.Implementations.StructureMaps", "NetXP.DependencyInjection.Implementations.StructureMaps\NetXP.DependencyInjection.Implementations.StructureMaps.csproj", "{D1234BAA-9C41-4A87-BCEE-D5143AB35643}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetXP.DependencyInjection.Implementations.UnityDI", "NetXP.NetStandard.DependencyInjection.Implementations.UnityDI\NetXP.DependencyInjection.Implementations.UnityDI.csproj", "{E5DF6A16-F8E0-437E-A493-653A79DA2342}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetXP.DependencyInjection.Implementations.UnityDI", "NetXP.DependencyInjection.Implementations.UnityDI\NetXP.DependencyInjection.Implementations.UnityDI.csproj", "{E5DF6A16-F8E0-437E-A493-653A79DA2342}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetXP.Serialization.Implementations", "NetXP.NetStandard.Serialization.Implementations\NetXP.Serialization.Implementations.csproj", "{681CEA0F-F2C8-4533-A4CC-EB7B37F6228B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetXP.Serialization.Implementations", "NetXP.Serialization.Implementations\NetXP.Serialization.Implementations.csproj", "{681CEA0F-F2C8-4533-A4CC-EB7B37F6228B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetXP.Network.Services.Implementations", "NetXP.NetStandard.Network.Services.Implementations\NetXP.Network.Services.Implementations.csproj", "{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetXP.Network.Services.Implementations", "NetXP.Network.Services.Implementations\NetXP.Network.Services.Implementations.csproj", "{9A73B012-BBFF-47A5-A8DF-EC4E7198CD90}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Network", "Network", "{94913811-25C4-43A4-954A-374187E010B9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DependencyInjection", "DependencyInjection", "{9FABCF37-F7A1-47E8-95BA-339DF85B44EC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetXP.Network", "NetXP.NetStandard.Network\NetXP.Network.csproj", "{C10D2FFC-3046-4C77-9256-A2DEF26F5685}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetXP.Network", "NetXP.Network\NetXP.Network.csproj", "{C10D2FFC-3046-4C77-9256-A2DEF26F5685}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetXP.DependencyInjection", "NetXP.NetStandard.DependencyInjection\NetXP.DependencyInjection.csproj", "{15538C25-2748-47F0-9CBC-E595C1D26A9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetXP.DependencyInjection", "NetXP.DependencyInjection\NetXP.DependencyInjection.csproj", "{15538C25-2748-47F0-9CBC-E595C1D26A9A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".solution", ".solution", "{D54ED0C6-035E-4257-BB35-AFDE0D0162B3}"
 	ProjectSection(SolutionItems) = preProject
@@ -37,9 +37,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".solution", ".solution", "{
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetXP.DependencyInjection.Implementations.LamarDI", "NetXP.NetStandard.DependencyInjection.Implementations.Lamar\NetXP.DependencyInjection.Implementations.LamarDI.csproj", "{CAC7F5C6-F268-4B4F-9B93-3E9065199E8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetXP.DependencyInjection.Implementations.LamarDI", "NetXP.DependencyInjection.Implementations.Lamar\NetXP.DependencyInjection.Implementations.LamarDI.csproj", "{CAC7F5C6-F268-4B4F-9B93-3E9065199E8B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetXP.CompositionRoots", "NetXP.NetStandard.NetCore\NetXP.CompositionRoots.csproj", "{3FDA04E2-BA6D-4964-A697-47367BF2744D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetXP.CompositionRoots", "NetXP.CompositionRoots\NetXP.CompositionRoots.csproj", "{3FDA04E2-BA6D-4964-A697-47367BF2744D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

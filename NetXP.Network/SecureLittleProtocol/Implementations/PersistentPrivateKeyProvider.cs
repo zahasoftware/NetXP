@@ -8,7 +8,7 @@ using System.IO;
 using NetXP.Serialization;
 using System.Threading;
 using NetXP.DateAndTime;
-using NetXP.NetStandard;
+using NetXP;
 using Microsoft.Extensions.Options;
 using NetXP.Network.SecureLittleProtocol.Implementation;
 using NetXP.Auditory;
@@ -18,7 +18,7 @@ namespace NetXP.Network.SecureLittleProtocol.Implementations
     public class PersistentPrivateKeyProvider : IPersistentPrivateKeyProvider
     {
         public PersistentPrivateKeyProvider(
-            ISerializer serializer
+              ISerializer serializer
             , IHash hash
             , ILogger logger
             , ICustomDateTime customDateTime

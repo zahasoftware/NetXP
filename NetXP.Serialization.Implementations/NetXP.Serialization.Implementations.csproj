@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Configurations>Debug;Release;Debug_1;Debug_2;Staging;Debug_Manager</Configurations>
+    <Configurations>Debug;Release;Debug_1;Debug_2;Staging</Configurations>
+    <PackageProjectUrl>https://github.com/juandrn/NetXP</PackageProjectUrl>
+    <PackageIcon>icon.png</PackageIcon>
+    <RepositoryUrl>https://github.com/juandrn/NetXP</RepositoryUrl>
+    <RepositoryType>https://github.com/juandrn/NetXP</RepositoryType>
+    <PackageTags>Serialization Json Xml</PackageTags>
+    <PackageReleaseNotes>N/D</PackageReleaseNotes>
+    <Description>Serialization for Json and Xml Implementations</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Version>1.20.1</Version>
+    <Copyright>Copyright © 2020</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="icon.png" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NetXP\NetXP.csproj" />
+  </ItemGroup>
+
+</Project>

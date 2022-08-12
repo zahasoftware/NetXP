@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 
-using NetXP.NetStandard;
+using NetXP;
 using System.Net;
 using System.Threading.Tasks;
 
