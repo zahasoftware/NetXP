@@ -1,0 +1,44 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+jobs:
+ -  job: 'NetXP_DependencyInjection_Impelementations_LamarDI'
+    pool:
+      vmImage: ubuntu-latest
+
+    variables:
+    - name: env
+      ${{ if eq(variables['Build.SourceBranchName'], 'devel') }}:
+        value: beta
+
+    steps:
+
+    - task: NuGetCommand@2
+      inputs:
+        command: 'restore'
+        restoreSolution: '**/*.sln'
+        feedsToUse: 'select'
+        
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'build'
+        projects: 'NetXP.DependencyInjection.Implementations.LamarDI/NetXP.DependencyInjection.Implementations.LamarDI.csproj'
+        arguments: '-c Release'
+        
+    - task: NuGetCommand@2
+      inputs:
+        command: 'pack'
+        packagesToPack: '**/*.csproj'
+        versioningScheme: 'off'
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
+        
