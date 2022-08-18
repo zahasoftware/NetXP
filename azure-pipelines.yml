@@ -17,10 +17,6 @@ jobs:
         value: beta
 
     steps:
-    - task: NuGetToolInstaller@1
-      inputs:
-        versionSpec: '6.0.2'
-        checkLatest: true
 
     - task: DotNetCoreCLI@2
       inputs:
