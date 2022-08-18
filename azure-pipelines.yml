@@ -21,16 +21,22 @@ jobs:
       inputs:
         version: 6.x
     
+    - task: CmdLine@2
+      inputs:
+        script: |
+          cd
+          dir
+
     - task: DotNetCoreCLI@2
       inputs:
         command: 'restore'
-        projects: '$(System.DefaultWorkingDirectory)\NetXP.DependencyInjection.Implementations.Lamar\NetXP.DependencyInjection.Implementations.LamarDI.csproj'
+        projects: 'NetXP.DependencyInjection.Implementations.Lamar\NetXP.DependencyInjection.Implementations.LamarDI.csproj'
         
     - task: DotNetCoreCLI@2
       displayName: "dotnet build"
       inputs:
         command: 'build'
-        projects: '$(System.DefaultWorkingDirectory)\NetXP.DependencyInjection.Implementations.Lamar\NetXP.DependencyInjection.Implementations.LamarDI.csproj'
+        projects: 'NetXP.DependencyInjection.Implementations.Lamar\NetXP.DependencyInjection.Implementations.LamarDI.csproj'
         arguments: '-c Release'
         
     - task: NuGetCommand@2
