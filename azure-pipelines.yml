@@ -26,6 +26,8 @@ jobs:
         script: |
           cd
           dir
+          echo  '$(System.DefaultWorkingDirectory)'
+          
 
     - task: DotNetCoreCLI@2
       inputs:
