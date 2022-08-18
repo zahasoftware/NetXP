@@ -32,19 +32,19 @@ jobs:
     - task: DotNetCoreCLI@2
       inputs:
         command: 'restore'
-        projects: 'NetXP.DependencyInjection.Implementations.Lamar\NetXP.DependencyInjection.Implementations.LamarDI.csproj'
+        projects: '$(System.DefaultWorkingDirectory)/NetXP.DependencyInjection.Implementations.Lamar/NetXP.DependencyInjection.Implementations.LamarDI.csproj'
         
     - task: DotNetCoreCLI@2
       displayName: "dotnet build"
       inputs:
         command: 'build'
-        projects: 'NetXP.DependencyInjection.Implementations.Lamar\NetXP.DependencyInjection.Implementations.LamarDI.csproj'
+        projects: 'NetXP.DependencyInjection.Implementations.Lamar/NetXP.DependencyInjection.Implementations.LamarDI.csproj'
         arguments: '-c Release'
         
     - task: NuGetCommand@2
       inputs:
         command: 'pack'
-        packagesToPack: '$(System.DefaultWorkingDirectory)\NetXP.DependencyInjection.Implementations.Lamar\NetXP.DependencyInjection.Implementations.LamarDI.csproj'
+        packagesToPack: '$(System.DefaultWorkingDirectory)/NetXP.DependencyInjection.Implementations.Lamar/NetXP.DependencyInjection.Implementations.LamarDI.csproj'
         versioningScheme: 'off'
 
     - task: PublishBuildArtifacts@1
