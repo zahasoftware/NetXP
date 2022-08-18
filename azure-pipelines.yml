@@ -12,40 +12,35 @@ jobs:
       vmImage: ubuntu-latest
 
     variables:
-    - name: env
+    - name: Branch
+    - name: VersionSuffix
       ${{ if eq(variables['Build.SourceBranchName'], 'devel') }}:
         value: beta
+    
+    - name: Configuration
+      ${{ if eq(variables['Build.SourceBranchName'], 'devel') }}:
+        value: Debug
 
     steps:
-    - task: UseDotNet@2
-      inputs:
-        version: 6.x
-    
-    - task: CmdLine@2
-      inputs:
-        script: |
-          cd
-          dir
-          echo  '$(System.DefaultWorkingDirectory)'
-          
 
     - task: DotNetCoreCLI@2
       inputs:
         command: 'restore'
-        projects: '$(System.DefaultWorkingDirectory)/NetXP.DependencyInjection.Implementations.Lamar/NetXP.DependencyInjection.Implementations.LamarDI.csproj'
+        projects: 'NetXP.DependencyInjection.Implementations.Lamar/NetXP.DependencyInjection.Implementations.LamarDI.csproj'
         
     - task: DotNetCoreCLI@2
       displayName: "dotnet build"
       inputs:
         command: 'build'
         projects: 'NetXP.DependencyInjection.Implementations.Lamar/NetXP.DependencyInjection.Implementations.LamarDI.csproj'
-        arguments: '-c Release'
+        arguments: '-c $(Configuration)'
         
     - task: NuGetCommand@2
       inputs:
         command: 'pack'
-        packagesToPack: '$(System.DefaultWorkingDirectory)/NetXP.DependencyInjection.Implementations.Lamar/NetXP.DependencyInjection.Implementations.LamarDI.csproj'
+        packagesToPack: 'NetXP.DependencyInjection.Implementations.Lamar/NetXP.DependencyInjection.Implementations.LamarDI.csproj'
         versioningScheme: 'off'
+        arguments: VersionSuffix=$(VersionSuffix)
 
     - task: PublishBuildArtifacts@1
       inputs:
