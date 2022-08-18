@@ -22,11 +22,10 @@ jobs:
         versionSpec: '6.0.2'
         checkLatest: true
 
-    - task: NuGetCommand@2
+    - task: DotNetCoreCLI@2
       inputs:
         command: 'restore'
-        restoreSolution: '**/*.sln'
-        feedsToUse: 'select'
+        projects: 'NetXP.DependencyInjection.Implementations.LamarDI/NetXP.DependencyInjection.Implementations.LamarDI.csproj'
         
     - task: DotNetCoreCLI@2
       displayName: "dotnet build"
@@ -38,7 +37,7 @@ jobs:
     - task: NuGetCommand@2
       inputs:
         command: 'pack'
-        packagesToPack: '**/*.csproj'
+        packagesToPack: 'NetXP.DependencyInjection.Implementations.LamarDI/NetXP.DependencyInjection.Implementations.LamarDI.csproj'
         versioningScheme: 'off'
 
     - task: PublishBuildArtifacts@1
