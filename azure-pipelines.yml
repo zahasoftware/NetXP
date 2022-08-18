@@ -47,4 +47,45 @@ jobs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
         ArtifactName: 'drop'
         publishLocation: 'Container'
+
+ -  job: 'NetXP_DependencyInjection_Implementations_UnityDI'
+    pool:
+      vmImage: ubuntu-latest
+
+    variables:
+    - name: Branch
+    - name: VersionSuffix
+      ${{ if eq(variables['Build.SourceBranchName'], 'devel') }}:
+        value: beta
+    
+    - name: Configuration
+      ${{ if eq(variables['Build.SourceBranchName'], 'devel') }}:
+        value: Debug
+
+    steps:
+
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'restore'
+        projects: 'NetXP.DependencyInjection.Implementations.UnityDI/NetXP.DependencyInjection.Implementations.UnityDI.csproj'
+        
+    - task: DotNetCoreCLI@2
+      displayName: "dotnet build"
+      inputs:
+        command: 'build'
+        projects: 'NetXP.DependencyInjection.Implementations.UnityDI/NetXP.DependencyInjection.Implementations.UnityDI.csproj'
+        arguments: '-c $(Configuration)'
+        
+    - task: NuGetCommand@2
+      inputs:
+        command: 'pack'
+        packagesToPack: 'NetXP.DependencyInjection.Implementations.UnityDI/NetXP.DependencyInjection.Implementations.UnityDI.csproj'
+        versioningScheme: 'off'
+        arguments: VersionSuffix=$(VersionSuffix)
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
         
