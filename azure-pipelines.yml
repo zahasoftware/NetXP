@@ -23,8 +23,12 @@ jobs:
         command: 'restore'
         restoreSolution: '**/*.sln'
         feedsToUse: 'select'
+    - task: UseDotNet@2
+      inputs:
+        version: '6.0.x'
         
     - task: DotNetCoreCLI@2
+      displayName: "dotnet build"
       inputs:
         command: 'build'
         projects: 'NetXP.DependencyInjection.Implementations.LamarDI/NetXP.DependencyInjection.Implementations.LamarDI.csproj'
