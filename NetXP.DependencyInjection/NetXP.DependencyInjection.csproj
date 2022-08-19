@@ -7,7 +7,7 @@
     <RepositoryUrl>https://github.com/juandrn/NetXP</RepositoryUrl>
     <RepositoryType>https://github.com/juandrn/NetXP</RepositoryType>
     <PackageIcon>icon.png</PackageIcon>
-    <VersionPrefix>1.31.0</VersionPrefix>
+    <VersionPrefix>1.31.1</VersionPrefix>
   </PropertyGroup>
 
 
