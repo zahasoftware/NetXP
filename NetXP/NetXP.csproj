@@ -2,18 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <Configurations>Debug;Release;Debug_Device;Debug_Manager;Staging;Testing</Configurations>
+    <Configurations>Debug;Release;Staging;Testing</Configurations>
     <PackageTags>Serialization System Cryptography Processes Auditory</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.20.1</Version>
-    <Description>Cross Framework For NetCore, NetFramework and Xamarin Projects.</Description>
+    <Description>Cross Framework For Linux and Windows (Raspbian Too)</Description>
     <PackageReleaseNotes>N/D</PackageReleaseNotes>
-    <Copyright>Copyright © 2020</Copyright>
     <PackageProjectUrl>https://github.com/juandrn/NetXP</PackageProjectUrl>
     <PackageIcon>icon.png</PackageIcon>
     <RepositoryUrl>https://github.com/juandrn/NetXP</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <VersionPrefix>1.31.0</VersionPrefix>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,6 +30,13 @@
 
   <ItemGroup>
     <Content Include="icon.png" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

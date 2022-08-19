@@ -2,16 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <Configurations>Debug;Release;Debug_Manager;Debug_2;Staging</Configurations>
-    <Version>1.20.1</Version>
+    <Configurations>Debug;Release;Debug_Manager;Debug_2;Staging;Testing</Configurations>
     <Description>StrutureMap Of DI</Description>
-    <Copyright>Copyright © 2020</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/juandrn/NetXP</PackageProjectUrl>
-    <PackageIcon>icon.png</PackageIcon>
     <RepositoryUrl>https://github.com/juandrn/NetXP</RepositoryUrl>
     <RepositoryType>https://github.com/juandrn/NetXP</RepositoryType>
-    <Configurations>Debug;Release;Debug_Manager;Debug_2;Staging;Testing</Configurations>
+    <PackageIcon>icon.png</PackageIcon>
+    <VersionPrefix>1.31.0</VersionPrefix>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="icon.ico" />
     <Content Include="icon.png" Pack="true" PackagePath="" />
   </ItemGroup>
 

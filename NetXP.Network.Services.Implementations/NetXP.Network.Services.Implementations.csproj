@@ -2,26 +2,31 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <Configurations>Debug;Release;Debug_1;Debug_2;Staging;Debug_Manager</Configurations>
-    <Configurations>Debug;Release;Debug_1;Debug_2;Staging</Configurations>
-    <Version>1.20.1</Version>
+    <Configurations>Debug;Release;Staging;Testing</Configurations>
     <Description>Soap Implementations Of NetXP.NetStandard.Network Interfaces.</Description>
     <Copyright>Copyright © 2020</Copyright>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/juandrn/NetXP</PackageProjectUrl>
     <PackageIcon>icon.png</PackageIcon>
-    <RepositoryUrl>https://github.com/juandrn/NetXP</RepositoryUrl>
     <RepositoryType>https://github.com/juandrn/NetXP</RepositoryType>
     <PackageTags>SOAP</PackageTags>
     <PackageReleaseNotes>N/D</PackageReleaseNotes>
+    <PackageProjectUrl>https://github.com/juandrn/NetXP</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/juandrn/NetXP</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <VersionPrefix>1.31.0</VersionPrefix>
   </PropertyGroup>
-
   <ItemGroup>
     <None Remove="icon.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="icon.png" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

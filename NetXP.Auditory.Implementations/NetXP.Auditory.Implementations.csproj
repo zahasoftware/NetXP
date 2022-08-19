@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <Configurations>Debug;Release;Debug_Manager;Debug_2;Staging</Configurations>
+    <Configurations>Debug;Release;Staging;Testing</Configurations>
     <PackageProjectUrl>https://github.com/juandrn/NetXP</PackageProjectUrl>
     <PackageIcon>icon.png</PackageIcon>
     <RepositoryUrl>https://github.com/juandrn/NetXP</RepositoryUrl>
@@ -11,9 +11,7 @@
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Description>Auditory Implementtions Based On Log4Net</Description>
-    <Copyright>Copyright © 2020</Copyright>
-    <Version>1.20.1</Version>
-    <Configurations>Debug;Release;Debug_Manager;Debug_2;Staging;Testing</Configurations>
+    <VersionPrefix>1.31.0</VersionPrefix>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,6 +20,13 @@
 
   <ItemGroup>
     <Content Include="icon.png" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

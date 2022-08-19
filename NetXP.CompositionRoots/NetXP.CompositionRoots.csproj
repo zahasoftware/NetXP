@@ -2,26 +2,19 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <Configurations>Debug;Release;Debug_Manager;Debug_1;Debug_2;Staging;Testing</Configurations>
+    <Configurations>Debug;Release;Staging;Testing</Configurations>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+    <Description>CompositionRoot To Registar All NetCore Framework</Description>
+    <Copyright>Copyright © 2020</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/juandrn/NetXP</PackageProjectUrl>
+    <PackageIcon>icon.png</PackageIcon>
+    <RepositoryUrl>https://github.com/juandrn/NetXP</RepositoryUrl>
+    <RepositoryType>https://github.com/juandrn/NetXP</RepositoryType>
+    <PackageReleaseNotes>N/D</PackageReleaseNotes>
+    <VersionPrefix>1.31.0</VersionPrefix>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Manager|AnyCPU'">
-    <DefineConstants>DEBUG;TRACE;DEBUG_MANAGER;NETCOREAPP2_0</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup>
-  <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-  <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
-  <Version>1.20.1</Version>
-  <Description>CompositionRoot To Registar All NetCore Framework</Description>
-  <Copyright>Copyright © 2020</Copyright>
-  <PackageLicenseExpression>MIT</PackageLicenseExpression>
-  <PackageProjectUrl>https://github.com/juandrn/NetXP</PackageProjectUrl>
-  <PackageIcon>icon.png</PackageIcon>
-  <RepositoryUrl>https://github.com/juandrn/NetXP</RepositoryUrl>
-  <RepositoryType>https://github.com/juandrn/NetXP</RepositoryType>
-  <PackageReleaseNotes>N/D</PackageReleaseNotes>
-</PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="SystemInformation\**" />
@@ -35,6 +28,13 @@
 
   <ItemGroup>
     <Content Include="icon.png" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

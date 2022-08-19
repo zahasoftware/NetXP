@@ -6,20 +6,18 @@
 trigger:
 - master
 
+variables:
+- name: Branch
+- name: VersionSuffix
+  ${{ if eq(variables['Build.SourceBranchName'], 'devel') }}:
+    value: beta
+
+
 jobs:
+    #job: 'NetXP_DependencyInjection_Impelementations_LamarDI'
  -  job: 'NetXP_DependencyInjection_Impelementations_LamarDI'
     pool:
       vmImage: ubuntu-latest
-
-    variables:
-    - name: Branch
-    - name: VersionSuffix
-      ${{ if eq(variables['Build.SourceBranchName'], 'devel') }}:
-        value: beta
-    
-    - name: Configuration
-      ${{ if eq(variables['Build.SourceBranchName'], 'devel') }}:
-        value: Debug
 
     steps:
 
@@ -33,7 +31,7 @@ jobs:
       inputs:
         command: 'build'
         projects: 'NetXP.DependencyInjection.Implementations.Lamar/NetXP.DependencyInjection.Implementations.LamarDI.csproj'
-        arguments: '-c $(Configuration)'
+        #arguments: '-c $(Configuration)'
         
     - task: NuGetCommand@2
       inputs:
@@ -48,20 +46,11 @@ jobs:
         ArtifactName: 'drop'
         publishLocation: 'Container'
 
+    #job: 'NetXP_DependencyInjection_Implementations_UnityDI'
  -  job: 'NetXP_DependencyInjection_Implementations_UnityDI'
     pool:
       vmImage: ubuntu-latest
-
-    variables:
-    - name: Branch
-    - name: VersionSuffix
-      ${{ if eq(variables['Build.SourceBranchName'], 'devel') }}:
-        value: beta
     
-    - name: Configuration
-      ${{ if eq(variables['Build.SourceBranchName'], 'devel') }}:
-        value: Debug
-
     steps:
 
     - task: DotNetCoreCLI@2
@@ -74,7 +63,6 @@ jobs:
       inputs:
         command: 'build'
         projects: 'NetXP.DependencyInjection.Implementations.UnityDI/NetXP.DependencyInjection.Implementations.UnityDI.csproj'
-        arguments: '-c $(Configuration)'
         
     - task: NuGetCommand@2
       inputs:
@@ -89,3 +77,286 @@ jobs:
         ArtifactName: 'drop'
         publishLocation: 'Container'
         
+#- job: 'NetXP_DependencyInjection'
+- job: 'NetXP_DependencyInjection'
+    pool:
+      vmImage: ubuntu-latest
+    
+    steps:
+
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'restore'
+        projects: 'NetXP.DependencyInjection/NetXP.DependencyInjection.csproj'
+        
+    - task: DotNetCoreCLI@2
+      displayName: "dotnet build"
+      inputs:
+        command: 'build'
+        projects: 'NetXP.DependencyInjection/NetXP.DependencyInjection.csproj'
+        
+    - task: NuGetCommand@2
+      inputs:
+        command: 'pack'
+        packagesToPack: 'NetXP.DependencyInjection/NetXP.DependencyInjection.csproj'
+        versioningScheme: 'off'
+        arguments: VersionSuffix=$(VersionSuffix)
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
+        
+#- job: ''NetXP_Network_NetXP_Network.csproj'
+- job: 'NetXP_Network_NetXP_Network_csproj'
+    pool:
+      vmImage: ubuntu-latest
+    
+    steps:
+
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'restore'
+        projects: 'NetXP.Network\NetXP.Network.csproj'
+        
+    - task: DotNetCoreCLI@2
+      displayName: "dotnet build"
+      inputs:
+        command: 'build'
+        projects: 'NetXP.Network\NetXP.Network.csproj'
+        
+    - task: NuGetCommand@2
+      inputs:
+        command: 'pack'
+        packagesToPack: 'NetXP.Network\NetXP.Network.csproj'
+        versioningScheme: 'off'
+        arguments: VersionSuffix=$(VersionSuffix)
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
+        
+#- job: 'NetXP_Network_Services_Implementations'
+- job: 'NetXP_Network_Services_Implementations'
+    pool:
+      vmImage: ubuntu-latest
+    
+    steps:
+
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'restore'
+        projects: 'NetXP.Network.Services.Implementations\NetXP.Network.Services.Implementations.csproj'
+        
+    - task: DotNetCoreCLI@2
+      displayName: "dotnet build"
+      inputs:
+        command: 'build'
+        projects: 'NetXP.Network.Services.Implementations\NetXP.Network.Services.Implementations.csproj'
+        
+    - task: NuGetCommand@2
+      inputs:
+        command: 'pack'
+        packagesToPack: 'NetXP.Network.Services.Implementations\NetXP.Network.Services.Implementations.csproj'
+        versioningScheme: 'off'
+        arguments: VersionSuffix=$(VersionSuffix)
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
+                
+        
+#- job: 'NetXP'
+- job: 'NetXP'
+    pool:
+      vmImage: ubuntu-latest
+    
+    steps:
+
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'restore'
+        projects: 'NetXP\NetXP.csproj'
+        
+    - task: DotNetCoreCLI@2
+      displayName: "dotnet build"
+      inputs:
+        command: 'build'
+        projects: 'NetXP\NetXP.csproj'
+        
+    - task: NuGetCommand@2
+      inputs:
+        command: 'pack'
+        packagesToPack: 'NetXP\NetXP.csproj'
+        versioningScheme: 'off'
+        arguments: VersionSuffix=$(VersionSuffix)
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
+        
+ 
+#- job: 'NetXP_Auditory_Implementations'
+- job: 'NetXP_Auditory_Implementations'
+    pool:
+      vmImage: ubuntu-latest
+    
+    steps:
+
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'restore'
+        projects: 'NetXP.Auditory.Implementations\NetXP.Auditory.Implementations.csproj'
+        
+    - task: DotNetCoreCLI@2
+      displayName: "dotnet build"
+      inputs:
+        command: 'build'
+        projects: 'NetXP.Auditory.Implementations\NetXP.Auditory.Implementations.csproj'
+        
+    - task: NuGetCommand@2
+      inputs:
+        command: 'pack'
+        packagesToPack: 'NetXP.Auditory.Implementations\NetXP.Auditory.Implementations.csproj'
+        versioningScheme: 'off'
+        arguments: VersionSuffix=$(VersionSuffix)
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
+        
+#- job: 'NetXP_CompositionRoots'
+- job: 'NetXP_CompositionRoots'
+    pool:
+      vmImage: ubuntu-latest
+    
+    steps:
+
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'restore'
+        projects: 'NetXP.CompositionRoots\NetXP.CompositionRoots.csproj'
+        
+    - task: DotNetCoreCLI@2
+      displayName: "dotnet build"
+      inputs:
+        command: 'build'
+        projects: 'NetXP.CompositionRoots\NetXP.CompositionRoots.csproj'
+        
+    - task: NuGetCommand@2
+      inputs:
+        command: 'pack'
+        packagesToPack: 'NetXP.CompositionRoots\NetXP.CompositionRoots.csproj'
+        versioningScheme: 'off'
+        arguments: VersionSuffix=$(VersionSuffix)
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
+        
+
+#- job: 'NetXP_Cryptography_Implementations'
+- job: 'NetXP_Cryptography_Implementations'
+    pool:
+      vmImage: ubuntu-latest
+    
+    steps:
+
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'restore'
+        projects: 'NetXP.Cryptography.Implementations\NetXP.Cryptography.Implementations.csproj
+        
+    - task: DotNetCoreCLI@2
+      displayName: "dotnet build"
+      inputs:
+        command: 'build'
+        projects: 'NetXP.Cryptography.Implementations\NetXP.Cryptography.Implementations.csproj'
+        
+    - task: NuGetCommand@2
+      inputs:
+        command: 'pack'
+        packagesToPack: 'NetXP.Cryptography.Implementations\NetXP.Cryptography.Implementations.csproj'
+        versioningScheme: 'off'
+        arguments: VersionSuffix=$(VersionSuffix)
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
+        
+
+#- job: 'NetXP_Mappers_Implementations'
+- job: 'NetXP_Mappers_Implementations'
+    pool:
+      vmImage: ubuntu-latest
+    
+    steps:
+
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'restore'
+        projects: 'NetXP.Mappers.Implementations\NetXP.Mappers.Implementations.csproj'
+        
+    - task: DotNetCoreCLI@2
+      displayName: "dotnet build"
+      inputs:
+        command: 'build'
+        projects: 'NetXP.Mappers.Implementations\NetXP.Mappers.Implementations.csproj'
+        
+    - task: NuGetCommand@2
+      inputs:
+        command: 'pack'
+        packagesToPack: 'NetXP.Mappers.Implementations\NetXP.Mappers.Implementations.csproj'
+        versioningScheme: 'off'
+        arguments: VersionSuffix=$(VersionSuffix)
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
+        
+#- job: 'NetXP_Serialization_Implementations'
+- job: 'NetXP_Serialization_Implementations'
+    pool:
+      vmImage: ubuntu-latest
+    
+    steps:
+
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'restore'
+        projects: 'NetXP.Serialization.Implementations\NetXP.Serialization.Implementations.csproj'
+        
+    - task: DotNetCoreCLI@2
+      displayName: "dotnet build"
+      inputs:
+        command: 'build'
+        projects: 'NetXP.Serialization.Implementations\NetXP.Serialization.Implementations.csproj'
+        
+    - task: NuGetCommand@2
+      inputs:
+        command: 'pack'
+        packagesToPack: 'NetXP.Serialization.Implementations\NetXP.Serialization.Implementations.csproj'
+        versioningScheme: 'off'
+        arguments: VersionSuffix=$(VersionSuffix)
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
+ 

@@ -2,7 +2,21 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/juandrn/NetXP</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/juandrn/NetXP</RepositoryUrl>
+    <RepositoryType>https://github.com/juandrn/NetXP</RepositoryType>
+    <PackageIcon>icon.png</PackageIcon>
+    <VersionPrefix>1.31.0</VersionPrefix>
   </PropertyGroup>
+
+
+  <ItemGroup>
+    <None Include="..\icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Lamar" Version="8.0.1" />
