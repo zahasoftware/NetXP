@@ -12,7 +12,6 @@ variables:
   ${{ if eq(variables['Build.SourceBranchName'], 'devel') }}:
     value: beta
 
-
 jobs:
     #job: 'NetXP_DependencyInjection_Impelementations_LamarDI'
  -  job: 'NetXP_DependencyInjection_Impelementations_LamarDI'
@@ -77,8 +76,8 @@ jobs:
         ArtifactName: 'drop'
         publishLocation: 'Container'
         
-#- job: 'NetXP_DependencyInjection'
-- job: 'NetXP_DependencyInjection'
+   #- job: 'NetXP_DependencyInjection'
+  - job: 'NetXP_DependencyInjection'
     pool:
       vmImage: ubuntu-latest
     
@@ -109,7 +108,7 @@ jobs:
         publishLocation: 'Container'
         
 #- job: ''NetXP_Network_NetXP_Network.csproj'
-- job: 'NetXP_Network_NetXP_Network_csproj'
+  - job: 'NetXP_Network_NetXP_Network_csproj'
     pool:
       vmImage: ubuntu-latest
     
@@ -140,7 +139,7 @@ jobs:
         publishLocation: 'Container'
         
 #- job: 'NetXP_Network_Services_Implementations'
-- job: 'NetXP_Network_Services_Implementations'
+  - job: 'NetXP_Network_Services_Implementations'
     pool:
       vmImage: ubuntu-latest
     
@@ -172,7 +171,7 @@ jobs:
                 
         
 #- job: 'NetXP'
-- job: 'NetXP'
+  - job: 'NetXP'
     pool:
       vmImage: ubuntu-latest
     
@@ -204,7 +203,7 @@ jobs:
         
  
 #- job: 'NetXP_Auditory_Implementations'
-- job: 'NetXP_Auditory_Implementations'
+  - job: 'NetXP_Auditory_Implementations'
     pool:
       vmImage: ubuntu-latest
     
@@ -235,7 +234,7 @@ jobs:
         publishLocation: 'Container'
         
 #- job: 'NetXP_CompositionRoots'
-- job: 'NetXP_CompositionRoots'
+  - job: 'NetXP_CompositionRoots'
     pool:
       vmImage: ubuntu-latest
     
@@ -267,7 +266,7 @@ jobs:
         
 
 #- job: 'NetXP_Cryptography_Implementations'
-- job: 'NetXP_Cryptography_Implementations'
+  - job: 'NetXP_Cryptography_Implementations'
     pool:
       vmImage: ubuntu-latest
     
@@ -299,7 +298,7 @@ jobs:
         
 
 #- job: 'NetXP_Mappers_Implementations'
-- job: 'NetXP_Mappers_Implementations'
+  - job: 'NetXP_Mappers_Implementations'
     pool:
       vmImage: ubuntu-latest
     
@@ -330,7 +329,7 @@ jobs:
         publishLocation: 'Container'
         
 #- job: 'NetXP_Serialization_Implementations'
-- job: 'NetXP_Serialization_Implementations'
+  - job: 'NetXP_Serialization_Implementations'
     pool:
       vmImage: ubuntu-latest
     
