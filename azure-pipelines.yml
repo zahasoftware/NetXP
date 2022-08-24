@@ -172,10 +172,10 @@ jobs:
         
 #- job: 'NetXP'
  -  job: 'NetXP'
-    pool:
-      vmImage: ubuntu-latest
-    
-    steps:
+pool:
+  vmImage: ubuntu-latest
+
+steps:
 
     - task: DotNetCoreCLI@2
       inputs:
@@ -282,8 +282,8 @@ jobs:
         command: 'build'
         projects: 'NetXP.Cryptography.Implementations/NetXP.Cryptography.Implementations.csproj'
         
-    - task: NuGetCommand@2
-      inputs:
+- task: NuGetCommand@2
+  inputs:
         command: 'pack'
         packagesToPack: 'NetXP.Cryptography.Implementations/NetXP.Cryptography.Implementations.csproj'
         versioningScheme: 'off'
@@ -304,7 +304,7 @@ jobs:
 
     - task: DotNetCoreCLI@2
       inputs:
-        command: 'restore'
+    command: 'restore'
         projects: 'NetXP.Mappers.Implementations/NetXP.Mappers.Implementations.csproj'
         
     - task: DotNetCoreCLI@2
@@ -337,23 +337,23 @@ jobs:
       inputs:
         command: 'restore'
         projects: 'NetXP.Serialization.Implementations/NetXP.Serialization.Implementations.csproj'
-        
-    - task: DotNetCoreCLI@2
+    
+- task: DotNetCoreCLI@2
       displayName: "dotnet build"
-      inputs:
-        command: 'build'
+  inputs:
+    command: 'build'
         projects: 'NetXP.Serialization.Implementations/NetXP.Serialization.Implementations.csproj'
-        
-    - task: NuGetCommand@2
-      inputs:
-        command: 'pack'
+    
+- task: NuGetCommand@2
+  inputs:
+    command: 'pack'
         packagesToPack: 'NetXP.Serialization.Implementations/NetXP.Serialization.Implementations.csproj'
-        versioningScheme: 'off'
+    versioningScheme: 'off'
         arguments: VersionSuffix=$(VersionSuffix)
 
-    - task: PublishBuildArtifacts@1
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-        ArtifactName: 'drop'
-        publishLocation: 'Container'
- 
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
+    
