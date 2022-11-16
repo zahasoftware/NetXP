@@ -37,39 +37,39 @@ namespace NetXP.Network.Proxy.Implementations
 
         public void Connect(IPAddress ipAddress, int port)
         {
-            if (proxyOptions == null || string.IsNullOrEmpty(proxyOptions.Server?.Trim()))
+            if (proxyOptions != null && proxyOptions.Enabled)///Proxy found
             {
-                ///Trying to read proxy from WebRequest
-                try
+                if (string.IsNullOrEmpty(proxyOptions.Server?.Trim()))
                 {
-                    var proxyRequest = WebRequest.GetSystemWebProxy();
-                    var requestedUri = new Uri($"http://{ipAddress.ToString()}");
-                    var proxyUri = proxyRequest.GetProxy(requestedUri);
-
-                    if (proxyUri == null || proxyUri == requestedUri)
+                    ///Trying to read proxy from WebRequest
+                    try
                     {
-                        throw new ProxyNotFoundException();
+                        var proxyRequest = WebRequest.GetSystemWebProxy();
+                        var requestedUri = new Uri($"http://{ipAddress}");
+                        var proxyUri = proxyRequest.GetProxy(requestedUri);
+
+                        if (proxyUri == null || proxyUri == requestedUri)
+                        {
+                            throw new ProxyNotFoundException();
+                        }
+
+                        proxyOptions = new ProxyOptions
+                        {
+                            Port = proxyUri.Port,
+                            Server = Dns.GetHostAddresses(proxyUri.Host)[0].ToString()
+                        };
                     }
-
-                    proxyOptions = new ProxyOptions
+                    catch (ProxyNotFoundException)
                     {
-                        Port = proxyUri.Port,
-                        Server = Dns.GetHostAddresses(proxyUri.Host)[0].ToString()
-                    };
+                        proxyOptions = null;
+                    }
+                    catch (Exception ex)
+                    {
+                        this.logger.Error(ex);
+                        proxyOptions = null;
+                    }
                 }
-                catch (ProxyNotFoundException)
-                {
-                    proxyOptions = null;
-                }
-                catch (Exception ex)
-                {
-                    this.logger.Error(ex);
-                    proxyOptions = null;
-                }
-            }
 
-            if (proxyOptions != null)///Proxy found
-            {
                 /// Basic of Proxy Protocol
                 /// CONNECT: https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/CONNECT
                 clientConnector.Connect(IPAddress.Parse(proxyOptions.Server), proxyOptions.Port);

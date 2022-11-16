@@ -31,12 +31,13 @@ namespace NetXP.Network
             //TCP
             uc.Register<IServerConnector, ServerConnector>("normal", DILifeTime.Trasient);
             uc.Register<IClientConnectorFactory, ClientConnectorFactory>("normal", DILifeTime.Singleton);
-            uc.Register<IClientConnector, SocketClientConnector>("normal", DILifeTime.Trasient, (ctor) => ctor.Empty());
+            uc.Register<IClientConnector, SocketClientConnector>("normal", DILifeTime.Trasient);
 
             //Proxy 
             //Proxy Connector
             uc.Register<IClientConnectorFactory, ClientProxyConnectorFactory>("proxy", DILifeTime.Singleton);
             uc.Register<IClientConnector, ClientProxyConnector>("proxy", DILifeTime.Trasient);
+
 
             //SLP
             uc.Register<System.Net.Sockets.Socket, System.Net.Sockets.Socket>(DILifeTime.Trasient, ctor =>
