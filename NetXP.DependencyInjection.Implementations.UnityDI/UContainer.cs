@@ -25,6 +25,7 @@ namespace NetXP.DependencyInjection.Implementations.UnityDI
         }
 
         public bool DisableDispose { get; set; }
+        public IServiceProvider ServiceProvider { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public void Dispose()
         {

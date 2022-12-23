@@ -26,6 +26,8 @@ namespace NetXP.DependencyInjection.Implementations.StructureMaps
             }
         }
 
+        public IServiceProvider ServiceProvider { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
         public void Dispose()
         {
             this.container.Dispose();

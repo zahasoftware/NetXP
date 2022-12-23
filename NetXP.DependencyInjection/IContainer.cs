@@ -8,5 +8,6 @@ namespace NetXP.DependencyInjection
     {
         string Name { get; set; }
         IConfiguration Configuration { get; }
+        IServiceProvider ServiceProvider { get; set; }
     }
 }
