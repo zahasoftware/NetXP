@@ -8,22 +8,15 @@ namespace NetXP.DependencyInjection.Implementations.LamarDI
     public class LamarContainer : NetXP.DependencyInjection.IContainer
     {
         private readonly ServiceRegistry register;
-        private Container container;
 
-        private Container Container
-        {
-            get
-            {
-                if (this.container == null)
-                    this.container = new Container(register);
-                return this.container;
-            }
-        }
+        public Lamar.IContainer Container { get => (Lamar.Container)ServiceProvider; }
 
         public LamarContainer(ServiceRegistry register)
         {
             this.register = register;
         }
+
+        public IServiceProvider ServiceProvider { get; set; }
 
         public string Name { get; set; }
 
@@ -34,6 +27,7 @@ namespace NetXP.DependencyInjection.Implementations.LamarDI
                 return new LamarConfiguration(this.register);
             }
         }
+
 
         public void Dispose()
         {

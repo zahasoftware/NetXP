@@ -58,7 +58,7 @@ namespace NetXP.DependencyInjection.Implementations.LamarDI
             var use = @for.Use<TImplement>();
 
             var ctorSelectorExpression = new LamarSelectorExpression<TImplement, TInterface>();
-            ctorSelectorExpression.Register(@for, use, null, lifeTime, SetLifeTime);//Use, lifeTime, setLifeTime and Name only used for Empty constructors
+            ctorSelectorExpression.Register(use);//Use, lifeTime, setLifeTime and Name only used for Empty constructors
             ctorInjectorExpression(ctorSelectorExpression);
 
             SetLifeTime(lifeTime, use);
@@ -72,9 +72,10 @@ namespace NetXP.DependencyInjection.Implementations.LamarDI
         {
             var @for = this.configuration.For<TInterface>();
             var use = @for.Use<TImplement>();
+            use.Name = name;
 
             var ctorSelectorExpression = new LamarSelectorExpression<TImplement, TInterface>();
-            ctorSelectorExpression.Register(@for, use, name, lifeTime, SetLifeTime);//Use, lifeTime, setLifeTime and Name only used for Empty constructors
+            ctorSelectorExpression.Register(use);//Use, lifeTime, setLifeTime and Name only used for Empty constructors
             ctorInjectorExpression(ctorSelectorExpression);
 
             SetLifeTime(lifeTime, use);
