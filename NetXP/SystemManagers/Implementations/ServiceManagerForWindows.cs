@@ -26,7 +26,7 @@ namespace NetXP.SystemManagers.Implementations
 
         public void Create(string serviceName, string binPath, ServiceCreateOptions serviceCreateOptions = null)
         {
-            string createServiceString = $"/c sc create \"{serviceName}\" binPath= \"{binPath}\" ";
+            string createServiceString = $"/c sc.exe create \"{serviceName}\" binPath= \"{binPath}\""; //obj= \"NT Authority\\NetworkService\"";
 
             if (!string.IsNullOrEmpty(serviceCreateOptions?.DisplayName?.Trim()))
             {
@@ -57,7 +57,7 @@ namespace NetXP.SystemManagers.Implementations
                 }
                 restartTimeout = restartTimeout.Remove(restartTimeout.Length - 1, 1);
 
-                string serviceRestart = $"/c sc failure \"{serviceName}\" reset= 60 actions= \"{restartTimeout}\" ";
+                string serviceRestart = $"/c sc.exe failure \"{serviceName}\" reset= 60 actions= \"{restartTimeout}\" ";
 
                 output = this.terminal.Execute(new ProcessInput
                 {
@@ -78,7 +78,7 @@ namespace NetXP.SystemManagers.Implementations
             var output = this.terminal.Execute(new ProcessInput
             {
                 ShellName = "cmd",
-                Arguments = $"/c sc delete \"{serviceName}\""
+                Arguments = $"/c sc.exe delete \"{serviceName}\""
             });
 
             if (output.ExitCode != 0)
@@ -92,7 +92,7 @@ namespace NetXP.SystemManagers.Implementations
             var output = this.terminal.Execute(new ProcessInput
             {
                 ShellName = "cmd",
-                Arguments = $"/c sc start \"{serviceName}\""
+                Arguments = $"/c sc.exe start \"{serviceName}\""
             });
 
             if (output.ExitCode != 0)
@@ -106,7 +106,7 @@ namespace NetXP.SystemManagers.Implementations
             var output = this.terminal.Execute(new ProcessInput
             {
                 ShellName = "cmd",
-                Arguments = $"/c sc stop \"{serviceName}\""
+                Arguments = $"/c sc.exe stop \"{serviceName}\""
             });
 
             if (output.ExitCode != 0)
