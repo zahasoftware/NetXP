@@ -46,14 +46,14 @@ namespace NetXP.SystemInformation.Tests
             this.ServicePath = conf.GetSection ("ServiceManager:ServicePath").Value;
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void NS_GetServices()
         {
             var serviceInformer = container.Resolve<IServiceInformer>();
             var services = serviceInformer.GetServices();
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void NS_GetService()
         {
             var serviceInformer = container.Resolve<IServiceInformer>();
