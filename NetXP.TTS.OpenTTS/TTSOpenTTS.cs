@@ -24,6 +24,11 @@ namespace NetXP.TTS.OpenTTS
 
         public async Task<TTSAudio> Convert(TTSConvertOption ttsConvertOption)
         {
+            if (ttsConvertOption.Voice == null)
+            {
+                throw new NetXP.Exceptions.CustomApplicationException("Voice cannot be null in TTSConvertOption");
+            }
+
             //Query parameters
             var parameters = new
             {
@@ -73,7 +78,7 @@ namespace NetXP.TTS.OpenTTS
         public async Task<List<TTSVoice>> GetTTSVoices(string language)
         {
             //Sending otions 
-            var httpResponseMessage = await client.GetFromJsonAsync<Dictionary<string, OpenTtsModelResponse>>("/api/voices?language={language}");
+            var httpResponseMessage = await client.GetFromJsonAsync<Dictionary<string, OpenTtsModelResponse>>($"/api/voices?language={language}");
 
             var voices = new List<TTSVoice> { };
 

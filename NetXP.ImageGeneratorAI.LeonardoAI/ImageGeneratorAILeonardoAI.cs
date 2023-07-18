@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using System.Dynamic;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text;
 
 namespace NetXP.ImageGeneratorAI.LeonardoAI
 {
@@ -26,15 +27,15 @@ namespace NetXP.ImageGeneratorAI.LeonardoAI
         {
             dynamic mainContent = new
             {
-                oig.Prompt,
-                oig.NegativePrompt,
-                oig.Width,
-                oig.Height,
-                oig.ModelId,
-                oig.NumImages
+                prompt = oig.Prompt,
+                negative_prompt = oig.NegativePrompt,
+                width = oig.Width,
+                height = oig.Height,
+                modelId = oig.ModelId,
+                num_images = oig.NumImages
             };
 
-            dynamic mergedContent = TypeMerger.TypeMerger.Merge(mainContent, oig.ExtraOptions);
+            dynamic mergedContent = TypeMerger.TypeMerger.Merge(mainContent, oig.ExtraOptions ?? new { });
 
             var settings = new JsonSerializerSettings
             {
@@ -44,7 +45,8 @@ namespace NetXP.ImageGeneratorAI.LeonardoAI
             string contentOtptionsAsJsonString = JsonConvert.SerializeObject(mergedContent, settings);
 
             //Sending otions 
-            var httpResponseMessage = await client.PostAsJsonAsync("api/rest/v1/generations", contentOtptionsAsJsonString);
+            var httpContent = new StringContent(contentOtptionsAsJsonString, Encoding.UTF8, "application/json");
+            var httpResponseMessage = await client.PostAsync("api/rest/v1/generations", httpContent);
 
             if (!httpResponseMessage.IsSuccessStatusCode)
             {
@@ -57,27 +59,38 @@ namespace NetXP.ImageGeneratorAI.LeonardoAI
 
         public async Task<ResultImagesGenerated> GetImages(ResultGenerate resultGenerate)
         {
-            string content = JsonConvert.SerializeObject(resultGenerate);
-
-            var httpResponseMessage = await client.PostAsJsonAsync("api/rest/v1/generations/id", content);
+            var httpResponseMessage = await client.GetAsync($"api/rest/v1/generations/{resultGenerate.Id}");
 
             if (!httpResponseMessage.IsSuccessStatusCode)
             {
                 throw new Exception($"{await httpResponseMessage.Content.ReadAsStringAsync()}");
             }
 
-            var result = await httpResponseMessage.Content.ReadFromJsonAsync<GenerateImageLeonardoAIRoot>();
+            //var GenerateImageLeonardoAIRoot;
+            var stringResult = await httpResponseMessage.Content.ReadAsStringAsync();
+            GenerateImageLeonardoAIRoot result = JsonConvert.DeserializeObject<GenerateImageLeonardoAIRoot>(stringResult,
+                    new JsonSerializerSettings
+                    {
+                        NullValueHandling = NullValueHandling.Ignore,
+                        DateFormatString = "yyyy-MM-ddTHH:mm:ss.zzz"
+                    });
+
 
             var resultImagesGenerated = new ResultImagesGenerated();
 
-            if (result != null)
+            if (result == null || result.generations_by_pk.status == "PENDING")
+            {
+                return null;
+            }
+            else
             {
                 foreach (var r in result.generations_by_pk.generated_images)
                 {
                     resultImagesGenerated.Images.Add(new ImageGenerate
                     {
                         Id = r.id,
-                        Url = r.url
+                        Url = r.url,
+                        Image = await this.client.GetByteArrayAsync(r.url)
                     });
                 }
             }
@@ -85,5 +98,5 @@ namespace NetXP.ImageGeneratorAI.LeonardoAI
             return resultImagesGenerated;
         }
 
-          }
+    }
 }
