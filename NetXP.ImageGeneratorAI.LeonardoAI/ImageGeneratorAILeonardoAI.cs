@@ -78,7 +78,7 @@ namespace NetXP.ImageGeneratorAI.LeonardoAI
 
             var resultImagesGenerated = new ResultImagesGenerated();
 
-            if (result == null || result.generations_by_pk.status == "PENDING")
+            if (result == null || result.generations_by_pk == null || result.generations_by_pk.status == "PENDING")
             {
                 return null;
             }
