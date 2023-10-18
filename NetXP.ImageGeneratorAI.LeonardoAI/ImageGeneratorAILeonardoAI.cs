@@ -98,5 +98,14 @@ namespace NetXP.ImageGeneratorAI.LeonardoAI
             return resultImagesGenerated;
         }
 
+        public async Task Remove(ResultGenerate resultGenerate)
+        {
+            var httpResponseMessage = await client.DeleteAsync($"api/rest/v1/generations/{resultGenerate.Id}");
+
+            if (!httpResponseMessage.IsSuccessStatusCode)
+            {
+                throw new Exception($"{await httpResponseMessage.Content.ReadAsStringAsync()}");
+            }
+        }
     }
 }

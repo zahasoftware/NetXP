@@ -5,8 +5,9 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Web;
 using System.IO;
+using NetXP.TTS;
 
-namespace NetXP.TTS.OpenTTS
+namespace NetXP.TTSs.OpenTTS
 {
     public class TTSOpenTTS : ITTS
     {
@@ -32,7 +33,7 @@ namespace NetXP.TTS.OpenTTS
             //Query parameters
             var parameters = new
             {
-                voice = $"{ttsConvertOption.Voice.TtsName}:{ttsConvertOption.Voice.Id}",
+                voice = $"{ttsConvertOption.Voice.ModelId}:{ttsConvertOption.Voice.Id}",
                 text = ttsConvertOption.Text,
                 vocoder = "high",
                 denoiserStrength = 0.03,
@@ -89,7 +90,7 @@ namespace NetXP.TTS.OpenTTS
                     {
                         Id = httpResponseMessage[key].Id,
                         Gender = httpResponseMessage[key].Gender,
-                        TtsName = httpResponseMessage[key].tts_name,
+                        ModelId = httpResponseMessage[key].tts_name,
                         Language = httpResponseMessage[key].Language,
                         Name = httpResponseMessage[key].Name,
                     });

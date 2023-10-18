@@ -16,23 +16,6 @@
     <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Exceptions\enm\**" />
-    <Compile Remove="Network\Email\Implementation\**" />
-    <EmbeddedResource Remove="Exceptions\enm\**" />
-    <EmbeddedResource Remove="Network\Email\Implementation\**" />
-    <None Remove="Exceptions\enm\**" />
-    <None Remove="Network\Email\Implementation\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="icon.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="icon.ico" />
-    <Content Include="icon.png" Pack="true" PackagePath="" />
-  </ItemGroup>
 
   <ItemGroup>
     <None Include="..\icon.png">
@@ -42,14 +25,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
-    <PackageReference Include="System.IO" Version="4.3.0" />
-    <PackageReference Include="System.Linq.Expressions" Version="4.3.0" />
-    <PackageReference Include="System.Net.Http" Version="4.3.4" />
-    <PackageReference Include="System.Net.Security" Version="4.3.2" />
-    <PackageReference Include="System.ServiceProcess.ServiceController" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.4" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.1" />
+    <PackageReference Include="System.ServiceProcess.ServiceController" Version="7.0.1" />
   </ItemGroup>
 
   <ItemGroup>

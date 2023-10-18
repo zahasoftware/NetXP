@@ -21,7 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
     <PackageReference Include="Moq" Version="4.18.4" />
     <PackageReference Include="Moq.Contrib.HttpClient" Version="1.4.0" />
@@ -37,10 +38,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NetXP.CompositionRoots\NetXP.CompositionRoots.csproj" />
+    <ProjectReference Include="..\NetXP.Cryptography.Implementations\NetXP.Cryptography.Implementations.csproj" />
     <ProjectReference Include="..\NetXP.DependencyInjection.Implementations.StructureMaps\NetXP.DependencyInjection.Implementations.StructureMaps.csproj" />
     <ProjectReference Include="..\NetXP.ImageGeneratorAI.LeonardoAI\NetXP.ImageGeneratorAI.LeonardoAI.csproj" />
     <ProjectReference Include="..\NetXP.Network\NetXP.Network.csproj" />
-    <ProjectReference Include="..\NetXP.TTS.OpenTTS\NetXP.TTS.OpenTTS.csproj" />
+    <ProjectReference Include="..\NetXP.TTS.ElevenLabs\NetXP.TTSs.ElevenLabs.csproj" />
+    <ProjectReference Include="..\NetXP.TTS.OpenTTS\NetXP.TTSs.OpenTTS.csproj" />
     <ProjectReference Include="..\NetXP\NetXP.csproj" />
   </ItemGroup>
 

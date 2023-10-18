@@ -17,10 +17,17 @@ namespace NetXP.ImageGeneratorAI
         Task<ResultGenerate> Generate(OptionsImageGenerator options);
 
         /// <summary>
-        /// 
+        /// Get images (You need to call generate before to get ResultGenerate)
         /// </summary>
-        /// <param name="imageId"></param>
+        /// <param name="resultGenerate">Result generate is obtained from Generate method</param>
+        /// <returns>List of images</returns>
+        Task<ResultImagesGenerated> GetImages(ResultGenerate resultGenerate);
+
+        /// <summary>
+        /// Remove images of result genenerated
+        /// </summary>
+        /// <param name="resultGenerate">Result generate is obtained from Generate method</param>
         /// <returns></returns>
-        Task<ResultImagesGenerated> GetImages(ResultGenerate resultGeenrate);
+        Task Remove(ResultGenerate resultGenerate);
     }
 }

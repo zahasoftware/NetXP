@@ -42,7 +42,10 @@ namespace NetXP.NetCoreUnitTest.Processes.Implementations
             handler.SetupAnyRequest()
                    .ReturnsResponse(jsonPostResult);
 
-            var leoAI = new ImageGeneratorAILeonardoAI(opt.Object, client);
+            var clientFactory = new Mock<IHttpClientFactory>();
+            clientFactory.Setup(o => o.CreateClient()).Returns(client);
+
+            var leoAI = new ImageGeneratorAILeonardoAI(opt.Object, clientFactory.Object);
 
             //Do
             var result = leoAI.Generate(new OptionsImageGenerator
@@ -81,7 +84,10 @@ namespace NetXP.NetCoreUnitTest.Processes.Implementations
             handler.SetupAnyRequest()
                    .ReturnsResponse(jsonPost);
 
-            var leoAI = new ImageGeneratorAILeonardoAI(opt.Object, client);
+            var clientFactory = new Mock<IHttpClientFactory>();
+            clientFactory.Setup(o => o.CreateClient()).Returns(client);
+
+            var leoAI = new ImageGeneratorAILeonardoAI(opt.Object, clientFactory.Object);
 
             //Do
             var result = leoAI.GetImages(new ResultGenerate { }).Result;
@@ -89,6 +95,37 @@ namespace NetXP.NetCoreUnitTest.Processes.Implementations
             //Assert
             Assert.AreEqual(dynamicPostResult.generations_by_pk.generated_images.Length, 4);
         }
+
+        [TestMethod]
+        public void RemoveImages()
+        {
+            //Init options
+            var opt = new Mock<IOptions<ImageGeneratorAIOptions>>();
+            opt.Setup(o => o.Value).Returns(new ImageGeneratorAIOptions { Token = "test" });
+
+            //Init http
+            var handler = new Mock<HttpMessageHandler>();
+            var client = handler.CreateClient();
+
+            var jsonPost = "{\"generations_by_pk\":{\"generated_images\":[{\"url\":\"https://cdn.leonardo.ai/users/22155d31-658d-4b4f-9870-80245919790e/generations/b1fab176-8111-41ae-94a5-5e7f682989b8/Leonardo_Creative_Beautiful_girl_taking_picture_in_the_bathroo_0.jpg\",\"nsfw\":false,\"id\":\"70407bf8-3259-48f3-9a15-088ad7370aac\",\"likeCount\":0,\"generated_image_variation_generics\":[]},{\"url\":\"https://cdn.leonardo.ai/users/22155d31-658d-4b4f-9870-80245919790e/generations/b1fab176-8111-41ae-94a5-5e7f682989b8/Leonardo_Creative_Beautiful_girl_taking_picture_in_the_bathroo_1.jpg\",\"nsfw\":false,\"id\":\"b3f2cd39-50e2-4e48-a963-a1f1cba3aec9\",\"likeCount\":0,\"generated_image_variation_generics\":[]},{\"url\":\"https://cdn.leonardo.ai/users/22155d31-658d-4b4f-9870-80245919790e/generations/b1fab176-8111-41ae-94a5-5e7f682989b8/Leonardo_Creative_Beautiful_girl_taking_picture_in_the_bathroo_2.jpg\",\"nsfw\":false,\"id\":\"b39ec0a6-fa86-426a-8c9b-a5aaeee1e782\",\"likeCount\":0,\"generated_image_variation_generics\":[]},{\"url\":\"https://cdn.leonardo.ai/users/22155d31-658d-4b4f-9870-80245919790e/generations/b1fab176-8111-41ae-94a5-5e7f682989b8/Leonardo_Creative_Beautiful_girl_taking_picture_in_the_bathroo_3.jpg\",\"nsfw\":false,\"id\":\"c09cd4c1-39ce-4b9a-a0ba-a3be45deee69\",\"likeCount\":0,\"generated_image_variation_generics\":[]}],\"modelId\":\"6bef9f1b-29cb-40c7-b9df-32b51c1f67d3\",\"prompt\":\"Beautifulgirltakingpictureinthebathroom\",\"negativePrompt\":\"\",\"imageHeight\":512,\"imageWidth\":512,\"inferenceSteps\":30,\"seed\":123292160,\"public\":false,\"scheduler\":\"EULER_DISCRETE\",\"sdVersion\":\"v2\",\"status\":\"COMPLETE\",\"presetStyle\":null,\"initStrength\":null,\"guidanceScale\":7,\"id\":\"b1fab176-8111-41ae-94a5-5e7f682989b8\",\"createdAt\":\"2023-06-28T02:00:08.058\"}}";
+            //Init options
+
+            var dynamicPostResult = JsonConvert.DeserializeObject<GenerateImageLeonardoAIRoot>(jsonPost);
+            handler.SetupAnyRequest()
+                   .ReturnsResponse(jsonPost);
+
+            var clientFactory = new Mock<IHttpClientFactory>();
+            clientFactory.Setup(o => o.CreateClient()).Returns(client);
+
+            var leoAI = new ImageGeneratorAILeonardoAI(opt.Object, clientFactory.Object);
+
+            //Do
+            var result = leoAI.GetImages(new ResultGenerate { }).Result;
+
+            //Assert
+            Assert.AreEqual(dynamicPostResult.generations_by_pk.generated_images.Length, 4);
+        }
+
 
 
     }
