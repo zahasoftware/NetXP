@@ -36,6 +36,7 @@ namespace NetXP.UnitTest.Network.Proxy
             container.Configuration.Configure((IRegister cnf) =>
             {
                 cnf.RegisterAllNetXP();
+                cnf.RegisterInstance(container);
             });
 
         }
@@ -43,6 +44,11 @@ namespace NetXP.UnitTest.Network.Proxy
         [TestMethod]
         public void NCNF_TCP_Proxy()
         {
+            container.Configuration.Configure((IRegister cnf) =>
+            {
+                cnf.RegisterInstance<IOptions<ProxyOptions>>(new OptionsInstance<ProxyOptions>(null));
+            });
+
             var clientConnectorFactory = container.Resolve<IClientConnectorFactory>("proxy");
             var clientConnector = clientConnectorFactory.Create();
 

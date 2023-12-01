@@ -9,6 +9,9 @@ using NetXP.SystemInformation;
 using System.Net.NetworkInformation;
 using System.Linq;
 using NetXP.CompositionRoots;
+using Microsoft.Extensions.Options;
+using Moq;
+using NetXP.Processes.Implementations;
 
 namespace NetXP.SystemInformation.Tests
 {
@@ -30,22 +33,12 @@ namespace NetXP.SystemInformation.Tests
             container.Configuration.Configure((IRegister cnf) =>
             {
                 cnf.RegisterAllNetXP();
+
+                var mIOT = new Mock<IOptions<IOTerminalOptions>>();
+                mIOT.Setup(o => o.Value).Returns(new IOTerminalOptions { });
+                cnf.RegisterInstance(mIOT.Object);
             });
 
-            // Make a file with name unversionSettings.json with the follow data:
-            // {
-            //      "ServiceManager": {
-            //          "ServiceName": "DMC-Device-Debug",
-            //          "ServicePath": "C:\Program Files (x86)\DMC-Debug\DMC.Device.WindowService.exe"
-            //      }
-            // }
-            var confBuilder = new ConfigurationBuilder()
-                .AddJsonFile("unversionSettings.json");
-            var conf = confBuilder.Build();
-
-            //Extracting data
-            this.ServiceName = conf.GetSection("ServiceManager:ServiceName").Value;
-            this.ServicePath = conf.GetSection("ServiceManager:ServicePath").Value;
         }
 
         [TestMethod]

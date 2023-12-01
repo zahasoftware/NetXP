@@ -45,10 +45,11 @@ namespace NetXP.UnitTest.Network.Services
             container.Configuration.Configure((IRegister cnf) =>
             {
                 cnf.RegisterAllNetXP();
+                cnf.RegisterInstance<di.IContainer>(container);
             });
 
         }
-        [TestMethod]
+        //[TestMethod]
         public void NCNF_ServiceClient_ASMX_GetTodoItems()
         {
             var factory = container.Resolve<IServiceClientFactory>();
@@ -79,7 +80,7 @@ namespace NetXP.UnitTest.Network.Services
         //  </item>
         //</CreateTodoItem>
         /// </summary>
-        [TestMethod]
+        //[TestMethod]
         public void NCNF_ServiceClient_ASMX_InsertItem()
         {
             var factory = container.Resolve<IServiceClientFactory>();

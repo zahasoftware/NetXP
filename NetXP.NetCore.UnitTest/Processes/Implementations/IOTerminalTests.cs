@@ -1,8 +1,11 @@
+using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using NetXP.CompositionRoots;
 using NetXP.DependencyInjection;
 using NetXP.DependencyInjection.Implementations.StructureMaps;
 using NetXP.Processes;
+using NetXP.Processes.Implementations;
 using StructureMap;
 using System;
 using System.Linq;
@@ -22,7 +25,10 @@ namespace NetXP.NetCoreUnitTest.Processes.Implementations
             container = new SMContainer(smapContainer);
             container.Configuration.Configure((IRegister cnf) =>
                    {
+                       var mIOT = new Mock<IOptions<IOTerminalOptions>>();
+                       mIOT.Setup(o => o.Value).Returns(new IOTerminalOptions { });
                        cnf.RegisterAllNetXP();
+                       cnf.RegisterInstance(mIOT.Object);
                    });
         }
 
