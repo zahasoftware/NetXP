@@ -10,7 +10,7 @@ namespace NetXP.Auditory.Implementations
     {
         public Log4NetLogger()
         {
-            XmlDocument log4netConfig = new XmlDocument();
+            XmlDocument log4netConfig = new();
             log4netConfig.Load(File.OpenRead("log4net.config"));
 
             var repo = log4net.LogManager.CreateRepository(Assembly.GetEntryAssembly(), typeof(log4net.Repository.Hierarchy.Hierarchy));
@@ -21,9 +21,9 @@ namespace NetXP.Auditory.Implementations
         protected static ILog log = LogManager.GetLogger(typeof(ILogger));
 
         public virtual void Debug(string msg,
-                                [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
-                                [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "",
-                                [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
+                                [System.Runtime.CompilerServices.CallerMemberName] string   memberName = "",
+                                  [System.Runtime.CompilerServices.CallerFilePath] string   sourceFilePath = "",
+                                [System.Runtime.CompilerServices.CallerLineNumber] int      sourceLineNumber = 0)
         {
             ReloadConfig();
             string @class = Path.GetFileNameWithoutExtension(sourceFilePath);
