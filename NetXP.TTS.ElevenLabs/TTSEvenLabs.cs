@@ -110,7 +110,7 @@ namespace NetXP.TTSs.ElevenLabs
 
             if (!response.IsSuccessStatusCode)
             {
-                throw new Exception($"{await response.Content.ReadAsStringAsync(token)}");
+                throw new Exception($"Error when trying to get voice {await response.Content.ReadAsStringAsync(token)}");
             }
 
             var ttsVoices = new List<TTSVoice>();
