@@ -44,7 +44,7 @@ namespace NetXP.TTSs.ElevenLabs
                 }
             };
 
-            string json = JsonConvert.SerializeObject(body);   //using Newtonsoft.Json
+            string json = JsonConvert.SerializeObject(body);   
             StringContent httpContent = new(json, System.Text.Encoding.UTF8, "application/json");
 
             HttpResponseMessage response = await client.PostAsync(
@@ -78,12 +78,7 @@ namespace NetXP.TTSs.ElevenLabs
                 throw new Exception($"{await response.Content.ReadAsStringAsync()}");
             }
 
-            var audioToReturn = new TTSAudio()
-            {
-                Format = response?.Content?.Headers?.ContentType?.MediaType,
-                File = new MemoryStream()
-            };
-            var result = await response.Content.ReadFromJsonAsync<Root>();
+           var result = await response.Content.ReadFromJsonAsync<Root>();
 
             var ttsVoices = new List<TTSVoice>();
             foreach (var v in result.voices)
@@ -144,7 +139,7 @@ namespace NetXP.TTSs.ElevenLabs
         {
             if (ttsConvertOption.Voice == null)
             {
-                throw new NetXP.Exceptions.CustomApplicationException("Voice cannot be null in TTSConvertOption");
+                throw new CustomApplicationException("Voice cannot be null in TTSConvertOption");
             }
 
             //Query parameters
