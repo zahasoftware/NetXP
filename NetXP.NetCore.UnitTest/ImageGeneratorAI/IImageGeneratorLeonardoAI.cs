@@ -1,14 +1,11 @@
 using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using NetXP.CompositionRoots;
 using NetXP.DependencyInjection;
-using NetXP.DependencyInjection.Implementations.StructureMaps;
 using NetXP.ImageGeneratorAI;
 using NetXP.ImageGeneratorAI.LeonardoAI;
 using NetXP.Processes;
 using NetXP.Processes.Implementations;
-using StructureMap;
 using System;
 using System.Linq;
 using System.Net.Http;
@@ -125,8 +122,6 @@ namespace NetXP.NetCoreUnitTest.Processes.Implementations
             //Assert
             Assert.AreEqual(dynamicPostResult.generations_by_pk.generated_images.Length, 4);
         }
-
-
 
     }
 }
