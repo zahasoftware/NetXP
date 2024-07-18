@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Configurations>Debug;Release;Staging</Configurations>
     <VersionPrefix>1.31.0</VersionPrefix>
     <PackageIcon>icon.png</PackageIcon>
@@ -42,7 +42,7 @@
     <ProjectReference Include="..\NetXP.DependencyInjection.Implementations.StructureMaps\NetXP.DependencyInjection.Implementations.StructureMaps.csproj" />
     <ProjectReference Include="..\NetXP.ImageGeneratorAI.LeonardoAI\NetXP.ImageGeneratorAI.LeonardoAI.csproj" />
     <ProjectReference Include="..\NetXP.Network\NetXP.Network.csproj" />
-    <ProjectReference Include="..\NetXP.TTS.ElevenLabs\NetXP.TTSs.ElevenLabs.csproj" />
+    <ProjectReference Include="..\NetXP.TTS.ElevenLabs\NetXP.Tts.ElevenLabs.csproj" />
     <ProjectReference Include="..\NetXP.TTS.OpenTTS\NetXP.TTSs.OpenTTS.csproj" />
     <ProjectReference Include="..\NetXP\NetXP.csproj" />
   </ItemGroup>

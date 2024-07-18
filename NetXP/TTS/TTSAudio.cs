@@ -1,8 +1,8 @@
 ﻿using System.IO;
 
-namespace NetXP.TTS
+namespace NetXP.Tts
 {
-    public class TTSAudio
+    public class TtsAudio
     {
         public MemoryStream File { get; set; }
         public string Format { get; set; }

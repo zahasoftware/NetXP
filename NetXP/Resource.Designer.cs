@@ -61,6 +61,15 @@ namespace NetXP {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Argument {0} was null when {1}() was called.
+        /// </summary>
+        public static string ErrorArgumentNullWhenMethodWasCalled {
+            get {
+                return ResourceManager.GetString("ErrorArgumentNullWhenMethodWasCalled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error when trying to generate video from image: {0}.
         /// </summary>
         public static string ErrorImageGeneratorAIGenerateVideFromImage {

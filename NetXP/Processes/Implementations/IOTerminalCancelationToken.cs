@@ -99,15 +99,15 @@ namespace NetXP.Processes.Implementations
 
             var taskCompletionSource = new TaskCompletionSource<object>();
 
-            EventHandler handler = null;
-            handler = (sender, args) =>
+            void handler(object? sender, EventArgs args)
             {
                 process.Exited -= handler;
                 taskCompletionSource.TrySetResult(null);
-            };
+            }
+
             process.Exited += handler;
 
-            if (cancellationToken != default(CancellationToken))
+            if (cancellationToken != default)
             {
                 cancellationToken.Register(
                     () =>

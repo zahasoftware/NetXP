@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
+using NetXP.Exceptions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -162,7 +163,7 @@ namespace NetXP.ImageGeneratorAI.LeonardoAI
             response = await clientForAWS.PostAsync(url, formContent);
 
             //Validating the response   
-            if (response.StatusCode != System.Net.HttpStatusCode.OK 
+            if (response.StatusCode != System.Net.HttpStatusCode.OK
              && response.StatusCode != System.Net.HttpStatusCode.NoContent)
             {
                 responseContent = await response.Content.ReadAsStringAsync();
@@ -235,8 +236,32 @@ namespace NetXP.ImageGeneratorAI.LeonardoAI
             };
         }
 
+        public async Task<List<ImageModel>> GetModels()
+        {
+            using var response = await client.GetAsync("api/rest/v1/platformModels");
+            response.EnsureSuccessStatusCode();
+            var body = await response.Content.ReadAsStringAsync();
+            var models = JsonConvert.DeserializeObject<CustomModelRoot>(body)
+                ?? throw new CustomApplicationException($"The models are null when {nameof(IImageGeneratorAI)}.{nameof(this.GetModels)}() was called");
 
+            ArgumentNullException.ThrowIfNull(models.CustomModels, nameof(models.CustomModels));
 
+            var imageModels = new List<ImageModel>();
+            foreach (var model in models.CustomModels)
+            {
+                ArgumentNullException.ThrowIfNull(model.Id);
+
+                imageModels.Add(new ImageModel
+                {
+                    Id = model.Id,
+                    Name = model.Name,
+                    Description = model.Description,
+                    ImageUrl = model.GeneratedImage?.Url
+                });
+            }
+
+            return imageModels;
+        }
     }
 
 }

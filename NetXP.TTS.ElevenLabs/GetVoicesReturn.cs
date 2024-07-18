@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetXP.TTSs.ElevenLabs
+namespace NetXP.Tts.ElevenLabs
 {
     using System;
     using System.Collections.Generic;

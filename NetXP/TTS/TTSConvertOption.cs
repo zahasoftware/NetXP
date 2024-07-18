@@ -1,9 +1,9 @@
 ﻿
-namespace NetXP.TTS
+namespace NetXP.Tts
 {
-    public class TTSConvertOption
+    public class TtsConvertOption
     {
-        public TTSVoice Voice { get; set; }
+        public TtsVoice Voice { get; set; }
         public string Text { get; set; }
     }
 }

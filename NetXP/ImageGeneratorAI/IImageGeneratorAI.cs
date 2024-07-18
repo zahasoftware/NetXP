@@ -36,5 +36,12 @@ namespace NetXP.ImageGeneratorAI
         /// <param name="options">Options param to specify video generation options</param>
         /// <returns>Return the stream of the video generated or status pending o exception</returns>
         Task<VideoGenerated> GenerateVideoFromImage(ParameterVideoGenerator options);
+
+        /// <summary>
+        /// Get models of AI
+        /// </summary>
+        // make a request to get models
+        Task<List<ImageModel>> GetModels();
+
     }
 }

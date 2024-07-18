@@ -5,24 +5,24 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NetXP.TTS
+namespace NetXP.Tts
 {
-    public interface ITTS
+    public interface ITts
     {
         /// <summary>
         /// Get the audio from text
         /// </summary>
         /// <param name="text">Text you want to convert</param>
         /// <returns>Return TTSAudio object with the audio and format</returns>
-        Task<TTSAudio> Convert(TTSConvertOption ttsConvertOption);
-        Task<TTSAudio> Convert(TTSConvertOption ttsConvertOption, CancellationToken token);
+        Task<TtsAudio> Convert(TtsConvertOption ttsConvertOption);
+        Task<TtsAudio> Convert(TtsConvertOption ttsConvertOption, CancellationToken token);
 
         /// <summary>
-        /// Get availabe voices options
+        /// Get available voices options
         /// </summary>
         /// <returns></returns>
-        Task<List<TTSVoice>> GetTTSVoices(string language = null);
-        Task<List<TTSVoice>> GetTTSVoices(string language, CancellationToken token);
+        Task<List<TtsVoice>> GetTtsVoices(string? language = null);
+        Task<List<TtsVoice>> GetTtsVoices(string? language, CancellationToken token);
 
     }
 }

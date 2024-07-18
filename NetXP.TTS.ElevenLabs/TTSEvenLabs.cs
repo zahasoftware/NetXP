@@ -1,19 +1,19 @@
 ﻿using Microsoft.Extensions.Options;
 using NetXP.Exceptions;
-using NetXP.TTS;
+using NetXP.Tts;
 using Newtonsoft.Json;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Web;
 
-namespace NetXP.TTSs.ElevenLabs
+namespace NetXP.Tts.ElevenLabs
 {
-    public class TTSEvenLabs : ITTS
+    public class TtsEvenLabs : ITts
     {
-        private readonly IOptions<TTSElevenlabsOptions> options;
+        private readonly IOptions<TtsElevenlabsOptions> options;
         public readonly HttpClient client;
 
-        public TTSEvenLabs(IOptions<TTSElevenlabsOptions> options, IHttpClientFactory clientFactory)
+        public TtsEvenLabs(IOptions<TtsElevenlabsOptions> options, IHttpClientFactory clientFactory)
         {
             this.options = options;
 
@@ -23,7 +23,7 @@ namespace NetXP.TTSs.ElevenLabs
             this.client.DefaultRequestHeaders.Add("xi-api-key", $"{this.options.Value.APIKey}");
         }
 
-        public async Task<TTSAudio> Convert(TTSConvertOption ttsConvertOption)
+        public async Task<TtsAudio> Convert(TtsConvertOption ttsConvertOption)
         {
             if (ttsConvertOption.Voice == null)
             {
@@ -56,7 +56,7 @@ namespace NetXP.TTSs.ElevenLabs
                 throw new Exception($"{await response.Content.ReadAsStringAsync()}");
             }
 
-            var audioToReturn = new TTSAudio()
+            var audioToReturn = new TtsAudio()
             {
                 Format = response?.Content?.Headers?.ContentType?.MediaType,
                 File = new MemoryStream()
@@ -67,7 +67,7 @@ namespace NetXP.TTSs.ElevenLabs
             return audioToReturn;
         }
 
-        public async Task<List<TTSVoice>> GetTTSVoices(string language = null)
+        public async Task<List<TtsVoice>> GetTtsVoices(string language = null)
         {
             var finalUrl = this.options.Value.GetVoicesUri;
 
@@ -80,10 +80,10 @@ namespace NetXP.TTSs.ElevenLabs
 
            var result = await response.Content.ReadFromJsonAsync<Root>();
 
-            var ttsVoices = new List<TTSVoice>();
+            var ttsVoices = new List<TtsVoice>();
             foreach (var v in result.voices)
             {
-                ttsVoices.Add(new TTSVoice()
+                ttsVoices.Add(new TtsVoice()
                 {
                     Id = v.voice_id,
                     Gender = v.labels.gender,
@@ -97,7 +97,7 @@ namespace NetXP.TTSs.ElevenLabs
             return ttsVoices;
         }
 
-        public async Task<List<TTSVoice>> GetTTSVoices(string language, CancellationToken token)
+        public async Task<List<TtsVoice>> GetTtsVoices(string language, CancellationToken token)
         {
             var finalUrl = this.options.Value.GetVoicesUri;
 
@@ -108,10 +108,10 @@ namespace NetXP.TTSs.ElevenLabs
                 throw new Exception($"Error when trying to get voice {await response.Content.ReadAsStringAsync(token)}");
             }
 
-            var ttsVoices = new List<TTSVoice>();
+            var ttsVoices = new List<TtsVoice>();
             if (!token.IsCancellationRequested)
             {
-                var audioToReturn = new TTSAudio()
+                var audioToReturn = new TtsAudio()
                 {
                     Format = response?.Content?.Headers?.ContentType?.MediaType,
                     File = new MemoryStream()
@@ -120,7 +120,7 @@ namespace NetXP.TTSs.ElevenLabs
 
                 foreach (var v in result.voices)
                 {
-                    ttsVoices.Add(new TTSVoice()
+                    ttsVoices.Add(new TtsVoice()
                     {
                         Id = v.voice_id,
                         Gender = v.labels.gender,
@@ -135,7 +135,7 @@ namespace NetXP.TTSs.ElevenLabs
             return ttsVoices;
         }
 
-        public async Task<TTSAudio> Convert(TTSConvertOption ttsConvertOption, CancellationToken token)
+        public async Task<TtsAudio> Convert(TtsConvertOption ttsConvertOption, CancellationToken token)
         {
             if (ttsConvertOption.Voice == null)
             {
@@ -173,7 +173,7 @@ namespace NetXP.TTSs.ElevenLabs
                 throw new Exception($"{await response.Content.ReadAsStringAsync()}");
             }
 
-            var audioToReturn = new TTSAudio()
+            var audioToReturn = new TtsAudio()
             {
                 Format = response?.Content?.Headers?.ContentType?.MediaType,
                 File = new MemoryStream()

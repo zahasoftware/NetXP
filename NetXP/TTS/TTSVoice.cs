@@ -1,12 +1,12 @@
-﻿namespace NetXP.TTS
+﻿namespace NetXP.Tts
 {
-    public class TTSVoice
+    public class TtsVoice
     {
-        public string Id { get; set; }
-        public string Name { get; set; }
-        public string ModelId { get; set; }
-        public string Gender { get; set; }
-        public string Language { get; set; }
-        public string Tags { get; set; }
+        public string? Id { get; set; }
+        public string? Name { get; set; }
+        public string? ModelId { get; set; }
+        public string? Gender { get; set; }
+        public string? Language { get; set; }
+        public string? Tags { get; set; }
     }
 }

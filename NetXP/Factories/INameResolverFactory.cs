@@ -8,6 +8,6 @@ namespace NetXP.Factories
 {
     public interface INameResolverFactory<T> where T : class
     {
-        T Resolve(string name = null);
+        T Resolve(string? name = null);
     }
 }
