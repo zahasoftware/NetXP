@@ -21,17 +21,17 @@ namespace NetXP.ImageGeneratorAI.LeonardoAI
         public string? modelId { get; set; }
         public string?    prompt { get; set; }
         public string? negativePrompt { get; set; }
-        public int imageHeight { get; set; }
-        public int imageWidth { get; set; }
-        public int inferenceSteps { get; set; }
-        public int? seed { get; set; }
+        public long imageHeight { get; set; }
+        public long imageWidth { get; set; }
+        public long inferenceSteps { get; set; }
+        public long? seed { get; set; }
         public bool @public { get; set; }
         public string? scheduler { get; set; }
         public string? sdVersion { get; set; }
         public string? status { get; set; }
         public object? presetStyle { get; set; }
         public object? initStrength { get; set; }
-        public int guidanceScale { get; set; }
+        public long guidanceScale { get; set; }
         public string? id { get; set; }
         public DateTime? createdAt { get; set; }
     }

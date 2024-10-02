@@ -144,7 +144,7 @@ namespace NetXP.ImageGeneratorAI.LeonardoAI
             var imageId = jsonResponse["uploadInitImage"]["id"].ToString(); // For getting the image later
 
             //Validating the image
-            if (!System.IO.File.Exists(@params.ImageUrlOrPath))
+            if (!File.Exists(@params.ImageUrlOrPath))
             {
                 throw new Exception($"The image file {@params.ImageUrlOrPath} does not exist.");
             }

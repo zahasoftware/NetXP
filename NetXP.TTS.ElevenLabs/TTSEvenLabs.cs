@@ -44,7 +44,7 @@ namespace NetXP.Tts.ElevenLabs
                 }
             };
 
-            string json = JsonConvert.SerializeObject(body);   
+            string json = JsonConvert.SerializeObject(body);
             StringContent httpContent = new(json, System.Text.Encoding.UTF8, "application/json");
 
             HttpResponseMessage response = await client.PostAsync(
@@ -78,7 +78,7 @@ namespace NetXP.Tts.ElevenLabs
                 throw new Exception($"{await response.Content.ReadAsStringAsync()}");
             }
 
-           var result = await response.Content.ReadFromJsonAsync<Root>();
+            var result = await response.Content.ReadFromJsonAsync<Root>();
 
             var ttsVoices = new List<TtsVoice>();
             foreach (var v in result.voices)
@@ -87,10 +87,11 @@ namespace NetXP.Tts.ElevenLabs
                 {
                     Id = v.voice_id,
                     Gender = v.labels.gender,
-                    Language = null,
+                    Language = v.fine_tuning?.language?.ToString(),
                     Name = v.name,
                     ModelId = v.high_quality_base_model_ids.FirstOrDefault(),
-                    Tags = $"{v.category} {v.labels.use_case}",
+                    Tags = $"" +
+                    $"{v.labels.accent} {v.labels.use_case} {v.labels.age} {v.labels.description}",
                 });
             }
 

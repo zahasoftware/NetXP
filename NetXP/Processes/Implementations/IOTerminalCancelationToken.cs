@@ -35,7 +35,6 @@ namespace NetXP.Processes.Implementations
                 pro.StartInfo.RedirectStandardError = true;
                 //pro.StartInfo.WorkingDirectory
 
-
                 pro.Start();
 
                 ProcessOutputTemp pot = new ProcessOutputTemp();
