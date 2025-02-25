@@ -38,6 +38,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\NetXP.Auditory.Implementations\NetXP.Auditory.Implementations.csproj" />
     <ProjectReference Include="..\NetXP.Cryptography.Implementations\NetXP.Cryptography.Implementations.csproj" />
     <ProjectReference Include="..\NetXP.Network.Services.Implementations\NetXP.Network.Services.Implementations.csproj" />

@@ -108,7 +108,7 @@ namespace NetXP.ImageGeneratorAI.LeonardoAI
                     {
                         Id = r.id,
                         Url = r.url,
-                        Image = await client.GetByteArrayAsync(r.url)
+                        Image = await new HttpClient().GetByteArrayAsync(r.url)
                     });
                 }
             }
