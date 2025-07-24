@@ -3,10 +3,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using NetXP.CompositionRoots;
 using NetXP.DependencyInjection;
-using NetXP.DependencyInjection.Implementations.StructureMaps;
+using NetXP.DependencyInjection.Implementations.LamarDI;
 using NetXP.Processes;
 using NetXP.Processes.Implementations;
-using StructureMap;
 using System;
 using System.Linq;
 
@@ -20,9 +19,8 @@ namespace NetXP.NetCoreUnitTest.Processes.Implementations
         [TestInitialize]
         public void Init()
         {
-            Container smapContainer = new Container();
 
-            container = new SMContainer(smapContainer);
+            container = new LamarContainer([]);
             container.Configuration.Configure((IRegister cnf) =>
                    {
                        var mIOT = new Mock<IOptions<IOTerminalOptions>>();
@@ -71,7 +69,7 @@ namespace NetXP.NetCoreUnitTest.Processes.Implementations
             }
 
             Console.WriteLine(string.Join(",", result.StandardOutput));
-            Assert.AreNotEqual(result.StandardOutput, 0);
+            Assert.AreNotEqual(result.StandardOutput[0], "0");
         }
 
         private IIOTerminal CreateIOTerminal()

@@ -7,8 +7,6 @@ using System.Threading.Tasks;
 using System.Security.Cryptography;
 using NetXP.DependencyInjection;
 using NetXP.Cryptography;
-using NetXP.DependencyInjection.Implementations.StructureMaps;
-using StructureMap;
 using di = NetXP.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using NetXP.Network.Email;
@@ -21,6 +19,7 @@ using NetXP.Network.Services;
 using System.Runtime.Serialization;
 using System.Collections.ObjectModel;
 using NetXP.CompositionRoots;
+using NetXP.DependencyInjection.Implementations.LamarDI;
 
 namespace NetXP.UnitTest.Network.Services
 {
@@ -40,8 +39,7 @@ namespace NetXP.UnitTest.Network.Services
         [TestInitialize]
         public void Init()
         {
-            Container smapContainer = new Container();
-            container = new SMContainer(smapContainer);
+            container = new LamarContainer([]);
             container.Configuration.Configure((IRegister cnf) =>
             {
                 cnf.RegisterAllNetXP();

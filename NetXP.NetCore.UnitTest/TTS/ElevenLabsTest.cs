@@ -3,12 +3,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using NetXP.CompositionRoots;
 using NetXP.DependencyInjection;
-using NetXP.DependencyInjection.Implementations.StructureMaps;
 using NetXP.ImageGeneratorAI;
 using NetXP.ImageGeneratorAI.LeonardoAI;
 using NetXP.Processes;
 using NetXP.Processes.Implementations;
-using StructureMap;
 using System;
 using System.Linq;
 using System.Net.Http;
@@ -17,12 +15,12 @@ using System.Threading;
 using Moq.Contrib.HttpClient;
 using Newtonsoft.Json;
 using NetXP.TTSs.OpenTTS;
-using NetXP.TTS;
 using System.Collections.Generic;
 using System.IO;
-using NetXP.TTSs.ElevenLabs;
 using Moq.Protected;
 using System.Threading.Tasks;
+using NetXP.Tts.ElevenLabs;
+using NetXP.Tts;
 
 namespace NetXP.NetCoreUnitTest.Processes.Implementations
 {
@@ -30,14 +28,14 @@ namespace NetXP.NetCoreUnitTest.Processes.Implementations
     public class ElevenLabsTest
     {
         public DependencyInjection.IContainer container;
-        private Mock<IOptions<TTSElevenlabsOptions>> opt;
+        private Mock<IOptions<TtsElevenlabsOptions>> opt;
 
         [TestInitialize]
         public void Initialize()
         {
             //Init options
-            this.opt = new Mock<IOptions<TTSElevenlabsOptions>>();
-            opt.Setup(o => o.Value).Returns(new TTSElevenlabsOptions
+            this.opt = new Mock<IOptions<TtsElevenlabsOptions>>();
+            opt.Setup(o => o.Value).Returns(new TtsElevenlabsOptions
             {
                 URL = "http://localhost/",
                 APIKey = "testkey",
@@ -66,10 +64,10 @@ namespace NetXP.NetCoreUnitTest.Processes.Implementations
                 , ItExpr.IsAny<CancellationToken>()
                 ).ReturnsAsync(response);
 
-            var leoAI = new TTSEvenLabs(opt.Object, clientFactory.Object);
+            var leoAI = new TtsEvenLabs(opt.Object, clientFactory.Object);
 
             //Do
-            var result = leoAI.GetTTSVoices().Result;
+            var result = leoAI.GetTtsVoices().Result;
 
             //Assert
             Assert.AreEqual(result.Count, dynamicPostResult.voices.Count);
@@ -85,19 +83,19 @@ namespace NetXP.NetCoreUnitTest.Processes.Implementations
             var clientFactory = new Mock<IHttpClientFactory>();
             clientFactory.Setup(o => o.CreateClient(string.Empty)).Returns(client);
 
-            var expectedFile = File.ReadAllBytes("audio.wav");
+            var expectedFile = File.ReadAllBytes("TTS/audio.wav");
 
             handler.SetupAnyRequest()
                   .ReturnsResponse(new MemoryStream(expectedFile, 0, expectedFile.Length));
 
             //Init options
-            var leoAI = new TTSs.ElevenLabs.TTSEvenLabs(opt.Object, clientFactory.Object);
+            var leoAI = new Tts.ElevenLabs.TtsEvenLabs(opt.Object, clientFactory.Object);
 
             //Do
-            var result = leoAI.Convert(new TTSConvertOption
+            var result = leoAI.Convert(new TtsConvertOption
             {
                 Text = "Hola, probando.",
-                Voice = new TTSVoice
+                Voice = new TtsVoice
                 {
                     Id = "ZQe5CZNOzWyzPSCn5a3c",
                     ModelId = "eleven_multilingual_v1"

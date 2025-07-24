@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <Configurations>Debug;Release;Staging</Configurations>
     <VersionPrefix>1.31.0</VersionPrefix>
     <PackageIcon>icon.png</PackageIcon>
@@ -21,25 +21,24 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
-    <PackageReference Include="Moq" Version="4.18.4" />
+    <PackageReference Include="Lamar" Version="14.0.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+    <PackageReference Include="Microsoft.TestPlatform" Version="17.13.0" />
+    <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="Moq.Contrib.HttpClient" Version="1.4.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="2.2.10" />
-    <PackageReference Include="MSTest.TestFramework" Version="2.2.10" />
-    <PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.3.1" />
-    <PackageReference Include="System.Security.Cryptography.X509Certificates" Version="4.3.2" />
-    <PackageReference Include="System.ServiceModel.Duplex" Version="4.9.0" />
-    <PackageReference Include="System.ServiceModel.Http" Version="4.9.0" />
-    <PackageReference Include="System.ServiceModel.NetTcp" Version="4.9.0" />
-    <PackageReference Include="System.ServiceModel.Security" Version="4.9.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.8.3" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.8.3" />
+    <PackageReference Include="System.ServiceModel.Duplex" Version="6.0.0" />
+    <PackageReference Include="System.ServiceModel.Http" Version="8.1.2" />
+    <PackageReference Include="System.ServiceModel.NetTcp" Version="8.1.2" />
+    <PackageReference Include="System.ServiceModel.Security" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\NetXP.CompositionRoots\NetXP.CompositionRoots.csproj" />
     <ProjectReference Include="..\NetXP.Cryptography.Implementations\NetXP.Cryptography.Implementations.csproj" />
-    <ProjectReference Include="..\NetXP.DependencyInjection.Implementations.StructureMaps\NetXP.DependencyInjection.Implementations.StructureMaps.csproj" />
+    <ProjectReference Include="..\NetXP.DependencyInjection.Implementations.Lamar\NetXP.DependencyInjection.Implementations.LamarDI.csproj" />
+    <ProjectReference Include="..\NetXP.IAs.Chats.Ollama\NetXP.IAs.Chats.Ollama.csproj" />
     <ProjectReference Include="..\NetXP.ImageGeneratorAI.LeonardoAI\NetXP.ImageGeneratorAI.LeonardoAI.csproj" />
     <ProjectReference Include="..\NetXP.Network\NetXP.Network.csproj" />
     <ProjectReference Include="..\NetXP.TTS.ElevenLabs\NetXP.Tts.ElevenLabs.csproj" />

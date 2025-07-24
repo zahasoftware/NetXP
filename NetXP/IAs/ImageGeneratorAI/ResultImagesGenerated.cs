@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 
-namespace NetXP.ImageGeneratorAI
+namespace NetXP.IAs.ImageGeneratorAI
 {
     public class ResultImagesGenerated
     {
         public ResultImagesGenerated()
         {
-            this.Images = new List<ImageGenerate>();
+            Images = new List<ImageGenerate>();
         }
         public List<ImageGenerate> Images { get; set; }
     }

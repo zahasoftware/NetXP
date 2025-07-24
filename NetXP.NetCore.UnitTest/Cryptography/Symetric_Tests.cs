@@ -7,26 +7,22 @@ using System.Threading.Tasks;
 using System.Security.Cryptography;
 using NetXP.DependencyInjection;
 using NetXP.Cryptography;
-using NetXP.DependencyInjection.Implementations.StructureMaps;
-using StructureMap;
-using di = NetXP.DependencyInjection;
 using NetXP.CompositionRoots;
+using NetXP.DependencyInjection.Implementations.LamarDI;
 
 namespace NetXP.UnitTest.Cryptography.Tests
 {
     [TestClass()]
     public class Symetric_Tests
     {
-        private di.IContainer c;
+        private IContainer c;
 
         public ISymetricCrypt ISymetric { get; private set; }
 
         [TestInitialize]
         public void Init()
         {
-            Container smapContainer = new Container();
-
-            c = new SMContainer(smapContainer);
+            c = new LamarContainer([]);
             c.Configuration.Configure((IRegister cnf) =>
             {
                 cnf.RegisterAllNetXP();

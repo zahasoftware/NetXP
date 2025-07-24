@@ -1,8 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetXP.DependencyInjection;
 using NetXP.Cryptography;
-using NetXP.DependencyInjection.Implementations.StructureMaps;
-using StructureMap;
 using di = NetXP.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using NetXP.SystemInformation;
@@ -12,6 +10,7 @@ using NetXP.CompositionRoots;
 using Microsoft.Extensions.Options;
 using Moq;
 using NetXP.Processes.Implementations;
+using NetXP.DependencyInjection.Implementations.LamarDI;
 
 namespace NetXP.SystemInformation.Tests
 {
@@ -27,9 +26,8 @@ namespace NetXP.SystemInformation.Tests
         [TestInitialize]
         public void Init()
         {
-            Container smapContainer = new();
 
-            container = new SMContainer(smapContainer);
+            container = new LamarContainer([]);
             container.Configuration.Configure((IRegister cnf) =>
             {
                 cnf.RegisterAllNetXP();

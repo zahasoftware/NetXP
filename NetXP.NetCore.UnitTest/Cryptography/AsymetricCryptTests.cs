@@ -1,12 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetXP.Cryptography;
 using NetXP.DependencyInjection;
-using NetXP.DependencyInjection.Implementations.StructureMaps;
 using NetXP.Serialization;
 using System;
 using System.Text;
-using StructureMap;
 using NetXP.CompositionRoots;
+using NetXP.DependencyInjection.Implementations.LamarDI;
+using Lamar;
 
 /// NOTE: Rebuild project if fail
 namespace NetXP.Cryptography.Tests
@@ -20,9 +20,9 @@ namespace NetXP.Cryptography.Tests
         [TestInitialize]
         public void Init()
         {
-            Container smapContainer = new Container();
 
-            container = new SMContainer(smapContainer);
+            var serviceRegister = new ServiceRegistry();
+            container = new LamarContainer(serviceRegister);
             container.Configuration.Configure((IRegister cnf) =>
            {
                cnf.RegisterAllNetXP();

@@ -1,4 +1,4 @@
-﻿namespace NetXP.ImageGeneratorAI
+﻿namespace NetXP.IAs.ImageGeneratorAI
 {
     public class ImageGenerate
     {

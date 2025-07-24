@@ -13,6 +13,7 @@ using System.Net;
 using System.Threading;
 using Moq.Contrib.HttpClient;
 using Newtonsoft.Json;
+using NetXP.IAs.ImageGeneratorAI;
 
 namespace NetXP.NetCoreUnitTest.Processes.Implementations
 {

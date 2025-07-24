@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace NetXP.DependencyInjection.Implementations.LamarDI
 {
-    public class LamarContainer : NetXP.DependencyInjection.IContainer
+    public class LamarContainer : IContainer
     {
         private readonly ServiceRegistry register;
 
@@ -14,6 +14,7 @@ namespace NetXP.DependencyInjection.Implementations.LamarDI
         public LamarContainer(ServiceRegistry register)
         {
             this.register = register;
+            this.ServiceProvider = new Container(register);
         }
 
         public IServiceProvider ServiceProvider { get; set; }
@@ -35,7 +36,7 @@ namespace NetXP.DependencyInjection.Implementations.LamarDI
 
         public TInterface Resolve<TInterface>()
         {
-            return this.Container.GetService<TInterface>();
+            return Container.GetService<TInterface>();
         }
 
         public TInterface Resolve<TInterface>(string name)

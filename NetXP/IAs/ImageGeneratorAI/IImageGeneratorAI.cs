@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetXP.ImageGeneratorAI
+namespace NetXP.IAs.ImageGeneratorAI
 {   //Interface to make pictures with AI
     public interface IImageGeneratorAI
     {

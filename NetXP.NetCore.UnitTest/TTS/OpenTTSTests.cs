@@ -3,12 +3,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using NetXP.CompositionRoots;
 using NetXP.DependencyInjection;
-using NetXP.DependencyInjection.Implementations.StructureMaps;
 using NetXP.ImageGeneratorAI;
 using NetXP.ImageGeneratorAI.LeonardoAI;
 using NetXP.Processes;
 using NetXP.Processes.Implementations;
-using StructureMap;
 using System;
 using System.Linq;
 using System.Net.Http;
@@ -16,10 +14,10 @@ using System.Net;
 using System.Threading;
 using Moq.Contrib.HttpClient;
 using Newtonsoft.Json;
-using NetXP.TTSs.OpenTTS;
-using NetXP.TTS;
 using System.Collections.Generic;
 using System.IO;
+using NetXP.Tts;
+using NetXP.TTSs.OpenTTS;
 
 namespace NetXP.NetCoreUnitTest.Processes.Implementations
 {
@@ -32,8 +30,8 @@ namespace NetXP.NetCoreUnitTest.Processes.Implementations
         public void GetTTSVoices()
         {
             //Init options
-            var opt = new Mock<IOptions<TTSOptions>>();
-            opt.Setup(o => o.Value).Returns(new TTSOptions { URL = "http://localhost/" });
+            var opt = new Mock<IOptions<TtsOptions>>();
+            opt.Setup(o => o.Value).Returns(new TtsOptions { URL = "http://localhost/" });
 
             //Init http
             var handler = new Mock<HttpMessageHandler>();
@@ -73,7 +71,7 @@ namespace NetXP.NetCoreUnitTest.Processes.Implementations
             var leoAI = new TTSOpenTTS(opt.Object, clientFactory.Object);
 
             //Do
-            var result = leoAI.GetTTSVoices("es").Result;
+            var result = leoAI.GetTtsVoices("es").Result;
 
             //Assert
             Assert.AreEqual(result.Count, dynamicPostResult.Count);
@@ -83,8 +81,8 @@ namespace NetXP.NetCoreUnitTest.Processes.Implementations
         public void Convert()
         {
             //Init options
-            var opt = new Mock<IOptions<TTSOptions>>();
-            opt.Setup(o => o.Value).Returns(new TTSOptions { URL = "http://localhost:5500/" });
+            var opt = new Mock<IOptions<TtsOptions>>();
+            opt.Setup(o => o.Value).Returns(new TtsOptions { URL = "http://localhost:5500/" });
 
             //Init http
             var handler = new Mock<HttpMessageHandler>();
@@ -102,10 +100,10 @@ namespace NetXP.NetCoreUnitTest.Processes.Implementations
             var leoAI = new TTSOpenTTS(opt.Object, clientFactory.Object);
 
             //Do
-            var result = leoAI.Convert(new TTSConvertOption
+            var result = leoAI.Convert(new TtsConvertOption
             {
                 Text = "Hola, probando.",
-                Voice = new TTSVoice
+                Voice = new TtsVoice
                 {
                     Gender = "F",
                     Id = "es-ES",

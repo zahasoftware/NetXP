@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using NetXP.Exceptions;
+using NetXP.IAs.ImageGeneratorAI;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -17,7 +18,7 @@ namespace NetXP.ImageGeneratorAI.LeonardoAI
         private HttpClient client;
         private IHttpClientFactory clientFactory;
         private IOptions<ImageGeneratorAIOptions> options;
-        private HttpClient clientForAWS;
+        private HttpClient clientNoHeaders;
 
         public ImageGeneratorAILeonardoAI(IOptions<ImageGeneratorAIOptions> options, IHttpClientFactory clientFactory)
         {
@@ -29,8 +30,8 @@ namespace NetXP.ImageGeneratorAI.LeonardoAI
             client.DefaultRequestHeaders.Add("accept", "application/json");
             client.DefaultRequestHeaders.Add("authorization", $"Bearer {options.Value.Token}");
 
-            clientForAWS = clientFactory.CreateClient();
-            clientForAWS.DefaultRequestHeaders.Accept.Clear();
+            clientNoHeaders = clientFactory.CreateClient();
+            clientNoHeaders.DefaultRequestHeaders.Accept.Clear();
         }
 
         public async Task<ResultGenerate> Generate(OptionsImageGenerator oig)
@@ -160,7 +161,7 @@ namespace NetXP.ImageGeneratorAI.LeonardoAI
             }
             formContent.Add(imageContent, "file", Path.GetFileName(imageFilePath));
 
-            response = await clientForAWS.PostAsync(url, formContent);
+            response = await clientNoHeaders.PostAsync(url, formContent);
 
             //Validating the response   
             if (response.StatusCode != System.Net.HttpStatusCode.OK
@@ -226,7 +227,28 @@ namespace NetXP.ImageGeneratorAI.LeonardoAI
             }
 
             //Downloading the video using json.Url
-            var video = await client.GetByteArrayAsync(json.GenerationsByPk.GeneratedImages.FirstOrDefault().MotionMP4URL);
+            byte[] video = null;
+            int attempts = 0;
+            const int maxAttempts = 3;
+
+            while (attempts < maxAttempts)
+            {
+                try
+                {
+                    video = await clientNoHeaders.GetByteArrayAsync(json.GenerationsByPk.GeneratedImages.FirstOrDefault().MotionMP4URL);
+                    break; // Exit loop if successful
+                }
+                catch (HttpRequestException ex)
+                {
+                    attempts++;
+                    if (attempts >= maxAttempts)
+                    {
+                        throw new Exception("Failed to download video after 3 attempts.", ex);
+                    }
+                    await Task.Delay(1000); // Wait 1 second before retrying
+                }
+            }
+
 
             return new VideoGenerated
             {

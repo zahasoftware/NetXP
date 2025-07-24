@@ -1,12 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetXP.DependencyInjection;
 using NetXP.Cryptography;
-using NetXP.DependencyInjection.Implementations.StructureMaps;
-using StructureMap;
 using di = NetXP.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using NetXP.Network.Email;
 using NetXP.CompositionRoots;
+using NetXP.DependencyInjection.Implementations.LamarDI;
 
 namespace NetXP.UnitTest.Cryptography
 {
@@ -20,9 +19,8 @@ namespace NetXP.UnitTest.Cryptography
         [TestInitialize]
         public void Init()
         {
-            Container smapContainer = new Container();
 
-            container = new SMContainer(smapContainer);
+            container = new LamarContainer([]);
             container.Configuration.Configure((IRegister cnf) =>
             {
                 cnf.RegisterAllNetXP();

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NetXP.ImageGeneratorAI
+namespace NetXP.IAs.ImageGeneratorAI
 {
     public class ResultGenerate
     {
