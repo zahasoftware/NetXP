@@ -31,13 +31,6 @@ namespace NetXP.IAs.ImageGeneratorAI
         Task Remove(ResultGenerate resultGenerate);
 
         /// <summary>
-        /// This method generate a video from a image id
-        /// </summary>
-        /// <param name="options">Options param to specify video generation options</param>
-        /// <returns>Return the stream of the video generated or status pending o exception</returns>
-        Task<VideoGenerated> GenerateVideoFromImage(ParameterVideoGenerator options);
-
-        /// <summary>
         /// Get models of AI
         /// </summary>
         // make a request to get models
