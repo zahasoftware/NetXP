@@ -13,6 +13,11 @@ public class AzureTranslatorImplementation : ITranslator
     public AzureTranslatorImplementation(IOptions<AzureTranslatorOptions> options)
     {
         Options = options;
+        //validate the token
+        if (string.IsNullOrEmpty(Options.Value.Token))
+        {
+            throw new ArgumentException("Azure Translator Token is not set.");
+        }
     }
 
     public IOptions<AzureTranslatorOptions> Options { get; }
