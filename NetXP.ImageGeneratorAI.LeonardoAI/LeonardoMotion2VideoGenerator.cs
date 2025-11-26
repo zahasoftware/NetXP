@@ -57,6 +57,117 @@ namespace NetXP.ImageGeneratorAI.LeonardoAI
 
         public async Task<VideoGenerated> GenerateVideoAsync(VideoGenerationRequest request, CancellationToken token = default)
         {
+            // Route based on available source information
+            if (!string.IsNullOrWhiteSpace(request.SourceImageId))
+            {
+                return await ImageToVideo(request, token);
+            }
+            return await TextToVideo(request, token);
+        }
+
+        // Generate Motion2 video using an already generated image identifier
+        // Docs: https://docs.leonardo.ai/docs/generate-with-motion-2-using-generated-images
+        private async Task<VideoGenerated> ImageToVideo(VideoGenerationRequest request, CancellationToken token)
+        {
+            if (request == null) throw new ArgumentNullException(nameof(request));
+            if (request.Version != MotionVersion.Motion2)
+                throw new InvalidOperationException("This generator currently supports only Motion2 image-to-video.");
+            if (string.IsNullOrWhiteSpace(request.SourceImageId))
+                throw new ArgumentException("SourceImageId is required for image-to-video Motion2 generation.", nameof(request.SourceImageId));
+
+            token.ThrowIfCancellationRequested();
+
+            // infer resolution
+            string resolution = InferResolutionLabel(request.Height, request.Width) ?? "RESOLUTION_480";
+
+            // Build elements from ExtraOptions if provided; otherwise choose one random
+            IEnumerable<object> elements = Enumerable.Empty<object>();
+            if (request.ExtraOptions is not null)
+            {
+                try
+                {
+                    var extra = JObject.FromObject(request.ExtraOptions);
+                    var effectsToken = extra["elements"] ?? extra["effects"]; // allow both keys
+                    if (effectsToken is JArray arr && arr.Count > 0)
+                    {
+                        var names = arr.Values<string>().Where(s => !string.IsNullOrWhiteSpace(s));
+                        var mapped = names
+                            .Distinct(StringComparer.OrdinalIgnoreCase)
+                            .Select(n => Motion2EffectAkUuidMap.TryGetValue(n, out var id) ? new { akUUID = id, weight = 1 } : null)
+                            .Where(o => o != null)!;
+                        if (mapped.Any()) elements = mapped;
+                    }
+                }
+                catch { /* ignore */ }
+            }
+            if (!elements.Any())
+            {
+                var randomIndex = Random.Shared.Next(Motion2EffectAkUuidMap.Count);
+                var randomEntry = Motion2EffectAkUuidMap.ElementAt(randomIndex);
+                elements = new[] { new { akUUID = randomEntry.Value, weight = 1 } };
+            }
+
+            var payload = new
+            {
+                imageType = "GENERATED",
+                isPublic = false,
+                resolution,
+                imageId = request.SourceImageId,
+                prompt = request.Prompt,
+                frameInterpolation = true,
+                promptEnhance = true,
+                // model/variant
+                model = string.IsNullOrWhiteSpace(request.Variant) ? "MOTION_2" : request.Variant,
+                fps = request.Fps,
+                elements = elements
+            };
+
+            dynamic merged = TypeMerger.TypeMerger.Merge(payload, request.ExtraOptions ?? new { });
+
+            const string endpoint = "api/rest/v1/generations-image-to-video";
+            using var startResp = await _client.PostAsync(
+                endpoint,
+                new StringContent(JsonConvert.SerializeObject(merged, new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore
+                }), Encoding.UTF8, "application/json"),
+                token);
+
+            var startBody = await startResp.Content.ReadAsStringAsync(token);
+            if (!startResp.IsSuccessStatusCode)
+                throw new Exception($"Motion2 image-to-video start failed: {startResp.StatusCode} {startBody}");
+
+            var startJson = JObject.Parse(startBody);
+            var generationId = startJson["motionVideoGenerationJob"]?["generationId"]?.Value<string>()
+                ?? throw new Exception("generationId not found in start response.");
+
+            // poll
+            JObject pollObj;
+            while (true)
+            {
+                token.ThrowIfCancellationRequested();
+                await Task.Delay(1500, token);
+
+                using var pollResp = await _client.GetAsync($"api/rest/v1/generations/{generationId}", token);
+                var pollBody = await pollResp.Content.ReadAsStringAsync(token);
+                if (!pollResp.IsSuccessStatusCode)
+                    throw new Exception($"Polling failed: {pollResp.StatusCode} {pollBody}");
+
+                pollObj = JObject.Parse(pollBody) ?? throw new Exception("Null poll JSON.");
+                var status = pollObj["generations_by_pk"]?["status"]?.Value<string>();
+                if (status == "COMPLETE") break;
+                if (status == "FAILED") throw new Exception("Motion2 generation failed.");
+            }
+
+            var videoUrl = pollObj["generations_by_pk"]?["generated_images"]?[0]?["motionMP4URL"]?.Value<string>()
+                ?? throw new Exception("Motion2 video URL not found in completed generation.");
+
+            var videoBytes = await _clientNoHeaders.GetByteArrayAsync(videoUrl, token);
+            return new VideoGenerated { Id = generationId, Url = videoUrl, Video = videoBytes };
+        }
+
+        private async Task<VideoGenerated> TextToVideo(VideoGenerationRequest request, CancellationToken token)
+        {
             if (request == null) throw new ArgumentNullException(nameof(request));
             if (request.Version != MotionVersion.Motion2)
                 throw new InvalidOperationException("This generator currently supports only Motion2 prompt-based generation.");
@@ -173,117 +284,6 @@ namespace NetXP.ImageGeneratorAI.LeonardoAI
             var videoUrl =
                 pollObj["generations_by_pk"]?["generated_images"]?[0]?["motionMP4URL"]?.Value<string>()
                 ?? throw new Exception("Motion2 video URL not found in completed generation.");
-
-            var videoBytes = await _clientNoHeaders.GetByteArrayAsync(videoUrl, token);
-
-            return new VideoGenerated
-            {
-                Id = generationId,
-                Url = videoUrl,
-                Video = videoBytes
-            };
-        }
-
-        public async Task<VideoGenerated> GenerateVideoAsyncNotWorkingWithInitImageSoFar(VideoGenerationRequest request, CancellationToken token = default)
-        {
-            if (request.Version != MotionVersion.Motion2)
-                throw new InvalidOperationException("This generator handles only Motion2.");
-
-            // Motion 2 image-based requires an image already generated or uploaded similarly to Motion1:
-            string imageId;
-            if (!string.IsNullOrEmpty(request.SourceImageId))
-            {
-                imageId = request.SourceImageId;
-            }
-            else if (!string.IsNullOrEmpty(request.SourceImagePath) && File.Exists(request.SourceImagePath))
-            {
-                // Re-use Motion1 upload logic (init-image)
-                using var presigned = await _client.PostAsync("api/rest/v1/init-image",
-                    new StringContent(JsonConvert.SerializeObject(new { extension = "jpg" }), Encoding.UTF8, "application/json"), token);
-
-                var body = await presigned.Content.ReadAsStringAsync(token);
-                if (!presigned.IsSuccessStatusCode)
-                    throw new Exception($"Presign failed: {presigned.StatusCode} {body}");
-
-                var json = JObject.Parse(body);
-                var uploadNode = json["uploadInitImage"] ?? throw new Exception("uploadInitImage missing.");
-                var fields = JObject.Parse(uploadNode["fields"]!.ToString());
-                var uploadUrl = uploadNode["url"]!.ToString();
-                imageId = uploadNode["id"]!.ToString();
-
-
-                var form = new MultipartFormDataContent();
-                foreach (var f in fields)
-                    form.Add(new StringContent(f.Value!.ToString()), f.Key);
-
-
-                var bytes = await File.ReadAllBytesAsync(request.SourceImagePath, token);
-                var content = new ByteArrayContent(bytes);
-                content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
-                form.Add(content, "file", Path.GetFileName(request.SourceImagePath));
-                using var uploadResp = await _clientNoHeaders.PostAsync(uploadUrl, form, token);
-                if (!uploadResp.IsSuccessStatusCode && uploadResp.StatusCode != System.Net.HttpStatusCode.NoContent)
-                {
-                    var upBody = await uploadResp.Content.ReadAsStringAsync(token);
-                    throw new Exception($"Image upload failed: {uploadResp.StatusCode} {upBody}");
-                }
-
-            }
-            else
-            {
-                throw new ArgumentException("Provide either SourceImageId or a valid SourceImagePath for Motion2 image-based generation.");
-            }
-
-            // Start Motion2 image-based generation
-            // Placeholder endpoint; adjust if docs specify a different path.
-            const string motion2Endpoint = "api/rest/v1/generations-image-to-video"; // verify against docs
-            var payload = new
-            {
-                imageId,
-                isPublic = false,
-                prompt = request.Prompt,
-                model = request.Variant,          // MOTION_2 or MOTION_2_FAST
-                promptEnhance = false,
-                imageType = "GENERATED"
-            };
-            dynamic merged = TypeMerger.TypeMerger.Merge(payload, request.ExtraOptions ?? new { });
-
-            using var startResp = await _client.PostAsync(motion2Endpoint,
-                new StringContent(JsonConvert.SerializeObject(merged, new JsonSerializerSettings
-                {
-                    NullValueHandling = NullValueHandling.Ignore
-                }), Encoding.UTF8, "application/json"), token);
-
-            var startBody = await startResp.Content.ReadAsStringAsync(token);
-            if (!startResp.IsSuccessStatusCode)
-                throw new Exception($"Motion2 start failed: {startResp.StatusCode} {startBody}");
-
-            var startJson = JObject.Parse(startBody);
-            var generationId = startJson.SelectToken("motionGenerationJob.generationId")?.ToString()
-                               ?? startJson.SelectToken("motion2GenerationJob.generationId")?.ToString()
-                               ?? startJson.SelectToken("generationId")?.ToString()
-                               ?? throw new Exception("generationId not found in Motion2 start response.");
-
-            // Poll
-            LeonardoAIVideoGeneratedRoot pollObj;
-            while (true)
-            {
-                token.ThrowIfCancellationRequested();
-                await Task.Delay(1500, token);
-                using var pollResp = await _client.GetAsync($"api/rest/v1/generations/{generationId}", token);
-                var pollBody = await pollResp.Content.ReadAsStringAsync(token);
-                if (!pollResp.IsSuccessStatusCode)
-                    throw new Exception($"Polling failed: {pollResp.StatusCode} {pollBody}");
-                pollObj = JsonConvert.DeserializeObject<LeonardoAIVideoGeneratedRoot>(pollBody)
-                          ?? throw new Exception("Null Motion2 poll JSON.");
-                var status = pollObj.GenerationsByPk?.Status;
-                if (status == "COMPLETE") break;
-                if (status == "FAILED") throw new Exception("Motion2 generation failed.");
-            }
-
-            var videoUrl = pollObj.GenerationsByPk!.GeneratedImages.FirstOrDefault()?.MotionMP4URL
-                           ?? pollObj.GenerationsByPk.GeneratedImages.FirstOrDefault()?.Url
-                           ?? throw new Exception("Motion2 video URL not found.");
 
             var videoBytes = await _clientNoHeaders.GetByteArrayAsync(videoUrl, token);
 
