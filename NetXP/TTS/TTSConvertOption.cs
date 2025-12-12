@@ -5,5 +5,6 @@ namespace NetXP.Tts
     {
         public TtsVoice Voice { get; set; }
         public string Text { get; set; }
+        public object NextText { get; set; }
     }
 }

@@ -12,6 +12,7 @@ namespace NetXP.Tts.ElevenLabs
     {
         private readonly IOptions<TtsElevenlabsOptions> options;
         public readonly HttpClient client;
+        private string previousText;
 
         public TtsEvenLabs(IOptions<TtsElevenlabsOptions> options, IHttpClientFactory clientFactory)
         {
@@ -23,14 +24,18 @@ namespace NetXP.Tts.ElevenLabs
             this.client.DefaultRequestHeaders.Add("xi-api-key", $"{this.options.Value.APIKey}");
         }
 
-        public async Task<TtsAudio> Convert(TtsConvertOption ttsConvertOption)
+        public Task<TtsAudio> Convert(TtsConvertOption ttsConvertOption)
+        {
+            return Convert(ttsConvertOption, CancellationToken.None);
+        }
+
+        public async Task<TtsAudio> Convert(TtsConvertOption ttsConvertOption, CancellationToken token)
         {
             if (ttsConvertOption.Voice == null)
             {
-                throw new NetXP.Exceptions.CustomApplicationException("Voice cannot be null in TTSConvertOption");
+                throw new CustomApplicationException("Voice cannot be null in TTSConvertOption");
             }
 
-            //Query parameters
             var body = new
             {
                 text = ttsConvertOption.Text,
@@ -38,22 +43,29 @@ namespace NetXP.Tts.ElevenLabs
                 voice_settings = new
                 {
                     stability = 0.5,
-                    similarity_boost = 0.5,
-                    style = 0.5,
+                    similarity_boost = 0.75,
+                    style = 0,
                     use_speaker_boost = true
-                }
+                },
+                previous_text = previousText,
+                next_text = ttsConvertOption.NextText,
             };
+
+            previousText = ttsConvertOption.Text;
 
             string json = JsonConvert.SerializeObject(body);
             StringContent httpContent = new(json, System.Text.Encoding.UTF8, "application/json");
 
             HttpResponseMessage response = await client.PostAsync(
-                  string.Format(this.options.Value.TextToSpeechUri, ttsConvertOption.Voice.Id)
-                , httpContent);
+                string.Format(this.options.Value.TextToSpeechUri, ttsConvertOption.Voice.Id),
+                httpContent,
+                token);
+
+            token.ThrowIfCancellationRequested();
 
             if (!response.IsSuccessStatusCode)
             {
-                throw new Exception($"{await response.Content.ReadAsStringAsync()}");
+                throw new Exception($"{await response.Content.ReadAsStringAsync(token)}");
             }
 
             var audioToReturn = new TtsAudio()
@@ -61,41 +73,16 @@ namespace NetXP.Tts.ElevenLabs
                 Format = response?.Content?.Headers?.ContentType?.MediaType,
                 File = new MemoryStream()
             };
-            var streamResponse = await response.Content.ReadAsStreamAsync();
-            await streamResponse.CopyToAsync(audioToReturn.File);
+            
+            var streamResponse = await response.Content.ReadAsStreamAsync(token);
+            await streamResponse.CopyToAsync(audioToReturn.File, token);
 
             return audioToReturn;
         }
 
-        public async Task<List<TtsVoice>> GetTtsVoices(string language = null)
+        public Task<List<TtsVoice>> GetTtsVoices(string language = null)
         {
-            var finalUrl = this.options.Value.GetVoicesUri;
-
-            HttpResponseMessage response = await client.GetAsync(finalUrl);
-
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new Exception($"{await response.Content.ReadAsStringAsync()}");
-            }
-
-            var result = await response.Content.ReadFromJsonAsync<Root>();
-
-            var ttsVoices = new List<TtsVoice>();
-            foreach (var v in result.voices)
-            {
-                ttsVoices.Add(new TtsVoice()
-                {
-                    Id = v.voice_id,
-                    Gender = v.labels.gender,
-                    Language = v.fine_tuning?.language?.ToString(),
-                    Name = v.name,
-                    ModelId = v.high_quality_base_model_ids.FirstOrDefault(),
-                    Tags = $"" +
-                    $"{v.labels.accent} {v.labels.use_case} {v.labels.age} {v.labels.description}",
-                });
-            }
-
-            return ttsVoices;
+            return GetTtsVoices(language, CancellationToken.None);
         }
 
         public async Task<List<TtsVoice>> GetTtsVoices(string language, CancellationToken token)
@@ -109,80 +96,25 @@ namespace NetXP.Tts.ElevenLabs
                 throw new Exception($"Error when trying to get voice {await response.Content.ReadAsStringAsync(token)}");
             }
 
+            token.ThrowIfCancellationRequested();
+
+            var result = await response.Content.ReadFromJsonAsync<Root>(cancellationToken: token);
+
             var ttsVoices = new List<TtsVoice>();
-            if (!token.IsCancellationRequested)
+            foreach (var v in result.voices)
             {
-                var audioToReturn = new TtsAudio()
+                ttsVoices.Add(new TtsVoice()
                 {
-                    Format = response?.Content?.Headers?.ContentType?.MediaType,
-                    File = new MemoryStream()
-                };
-                var result = await response.Content.ReadFromJsonAsync<Root>();
-
-                foreach (var v in result.voices)
-                {
-                    ttsVoices.Add(new TtsVoice()
-                    {
-                        Id = v.voice_id,
-                        Gender = v.labels.gender,
-                        Language = null,
-                        Name = v.name,
-                        ModelId = v.high_quality_base_model_ids.FirstOrDefault(),
-                        Tags = $"{v.category} {v.labels.use_case}",
-                    });
-                }
-
+                    Id = v.voice_id,
+                    Gender = v.labels.gender,
+                    Language = v.fine_tuning?.language?.ToString(),
+                    Name = v.name,
+                    ModelId = v.high_quality_base_model_ids.FirstOrDefault(),
+                    Tags = $"{v.category} {v.labels.accent} {v.labels.use_case} {v.labels.age} {v.labels.description}",
+                });
             }
+
             return ttsVoices;
-        }
-
-        public async Task<TtsAudio> Convert(TtsConvertOption ttsConvertOption, CancellationToken token)
-        {
-            if (ttsConvertOption.Voice == null)
-            {
-                throw new CustomApplicationException("Voice cannot be null in TTSConvertOption");
-            }
-
-            //Query parameters
-            var body = new
-            {
-                text = ttsConvertOption.Text,
-                model_id = ttsConvertOption.Voice.ModelId,
-                voice_settings = new
-                {
-                    stability = 0.5,
-                    similarity_boost = 0.5,
-                    style = 0.5,
-                    use_speaker_boost = true
-                }
-            };
-
-            string json = JsonConvert.SerializeObject(body);   //using Newtonsoft.Json
-            StringContent httpContent = new(json, System.Text.Encoding.UTF8, "application/json");
-
-            HttpResponseMessage response = await client.PostAsync(
-                  string.Format(this.options.Value.TextToSpeechUri, ttsConvertOption.Voice.Id)
-                , httpContent, token);
-
-            if (token.IsCancellationRequested)
-            {
-                throw new CustomApplicationException("Operation Cancelled by User");
-            }
-
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new Exception($"{await response.Content.ReadAsStringAsync()}");
-            }
-
-            var audioToReturn = new TtsAudio()
-            {
-                Format = response?.Content?.Headers?.ContentType?.MediaType,
-                File = new MemoryStream()
-            };
-            var streamResponse = await response.Content.ReadAsStreamAsync(token);
-            await streamResponse.CopyToAsync(audioToReturn.File);
-
-            return audioToReturn;
         }
     }
 }
