@@ -9,5 +9,6 @@ namespace NetXP
     public interface ITranslator
     {
         Task<string> TranslateTextAsync(string text, string toLanguage);
+        Task<string> TranslateTextAsync(string text, string toLanguage, string instruction);
     }
 }

@@ -43,6 +43,7 @@
     <ProjectReference Include="..\NetXP.Network\NetXP.Network.csproj" />
     <ProjectReference Include="..\NetXP.TTS.ElevenLabs\NetXP.Tts.ElevenLabs.csproj" />
     <ProjectReference Include="..\NetXP.TTS.OpenTTS\NetXP.TTSs.OpenTTS.csproj" />
+    <ProjectReference Include="..\NetXP.Translators.OllamaTranslator\NetXP.Translators.OllamaTranslator.csproj" />
     <ProjectReference Include="..\NetXP\NetXP.csproj" />
   </ItemGroup>
 

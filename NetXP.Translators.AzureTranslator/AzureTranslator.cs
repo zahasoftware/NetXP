@@ -44,5 +44,10 @@ public class AzureTranslatorImplementation : ITranslator
 
         return json[0]["translations"][0]["text"].ToString();
     }
+
+    public Task<string> TranslateTextAsync(string text, string toLanguage, string instruction)
+    {
+        return TranslateTextAsync(text, toLanguage);
+    }
 }
 
