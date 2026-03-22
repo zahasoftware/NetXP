@@ -1,14 +1,12 @@
 # NetXP
-Cross-Platform framework for .Net, Starting From NetStandard To NetCore, And Xamarin.
-
-For more information about Net Standard visit: [Net Standard](https://docs.microsoft.com/en-us/dotnet/articles/standard/library).
+Cross-Platform framework for .Net.
 
 ### Source Or Nugets
 Download source code or download from nuget.
 
 | Package          | Comment
 |------------------|----------------------------------------------------------------------------------------|
-|NetXP.NetStandard | Main Reference (Contains all interfaces and some implementations)
+|NetXP | Main Reference (Contains all interfaces and some implementations)
 |NetXP.CompositionRoot | Initialize implementations of Auditory, Cryptogrqaphy, Network.Services, Serialization).
 |NetXP.DependencyInjection				|					Interface to work with dependency injection.
 |NetXP.DependencyInjection.Implementations.StructureMap	| Implement depency injection interface to work with StructureMap. 
@@ -19,7 +17,6 @@ Download source code or download from nuget.
 ### Initialization in ASP.Net Core (Just for Cryptography Example) 
 Download Nuget Packages:
 - NetXP.Cryptography.Implementations 
-- NetXP.DependencyInjection.Implementations.StructureMaps
 
 ```csharp
 
@@ -59,8 +56,6 @@ See unit tests projects for examples.
 
 **NOTES:** 
 - UnitTest projects are optional.
-- Current NetStandard Version Is Set To 2.1
-- Not compatible with net framework.
 
 ### License
 [MIT](https://choosealicense.com/licenses/mit/)
