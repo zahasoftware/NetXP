@@ -39,6 +39,7 @@
     <ProjectReference Include="..\NetXP.Cryptography.Implementations\NetXP.Cryptography.Implementations.csproj" />
     <ProjectReference Include="..\NetXP.DependencyInjection.Implementations.Lamar\NetXP.DependencyInjection.Implementations.LamarDI.csproj" />
     <ProjectReference Include="..\NetXP.IAs.Chats.Ollama\NetXP.IAs.Chats.Ollama.csproj" />
+    <ProjectReference Include="..\NetXP.ImageGeneratorAI.ComfyBridgeApi\NetXP.ImageGeneratorAI.ComfyBridgeApi.csproj" />
     <ProjectReference Include="..\NetXP.ImageGeneratorAI.LeonardoAI\NetXP.ImageGeneratorAI.LeonardoAI.csproj" />
     <ProjectReference Include="..\NetXP.Network\NetXP.Network.csproj" />
     <ProjectReference Include="..\NetXP.TTS.ElevenLabs\NetXP.Tts.ElevenLabs.csproj" />

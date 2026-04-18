@@ -36,7 +36,7 @@ namespace NetXP.Translators.OllamaTranslator
 
         public async Task<string> TranslateTextAsync(string text, string toLanguage, string instruction)
         {
-            var prompt = $"{instruction}\n\nText to translate:\n{text}";
+            var prompt = $"{instruction}\n\nText to translate to {toLanguage}:\n{text}";
 
             var requestBody = new
             {
