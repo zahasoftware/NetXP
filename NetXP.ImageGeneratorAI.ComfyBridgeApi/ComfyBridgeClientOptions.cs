@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace NetXP.ImageGeneratorAI.ComfyBridgeApi
 {
@@ -11,6 +12,7 @@ namespace NetXP.ImageGeneratorAI.ComfyBridgeApi
         public int JobTimeoutSeconds { get; set; } = 120;
         public string? TemplateName { get; set; }
         public string? Category { get; set; }
+        public Dictionary<string, object?> ExtraOptions { get; set; } = new(StringComparer.OrdinalIgnoreCase);
 
         public TimeSpan GetPollInterval()
         {

@@ -77,6 +77,58 @@ namespace NetXP.NetCoreUnitTest.ImageGeneratorAI
         }
 
         [TestMethod]
+        public async Task Generate_MapsConfiguredExtraOptionsInputs()
+        {
+            var handler = new QueueMessageHandler();
+            handler.EnqueueJson(HttpStatusCode.OK,
+                """
+                {
+                  "templates": [
+                    {
+                      "name": "text2image",
+                      "version": "1.0",
+                      "category": "image",
+                      "inputs": {
+                        "prompt": { "type": "string" },
+                        "seed": { "type": "number" },
+                        "cfg": { "type": "number" }
+                      }
+                    }
+                  ]
+                }
+                """);
+            handler.EnqueueJson(HttpStatusCode.OK, "{ \"jobId\": \"job-456\", \"status\": \"Queued\" }");
+
+            var client = CreateClient(handler, o =>
+            {
+                o.ExtraOptions = new Dictionary<string, object?>(StringComparer.OrdinalIgnoreCase)
+                {
+                    ["seed"] = 41,
+                    ["cfg"] = 7
+                };
+            });
+
+            var result = await client.Generate(new OptionsImageGenerator
+            {
+                Prompt = "A futuristic robot",
+                Width = 1024,
+                Height = 768,
+                NumImages = 1
+            });
+
+            Assert.AreEqual("job-456", result.Id);
+
+            var postRequest = handler.CapturedRequests.Single(r =>
+                r.Method == HttpMethod.Post && r.Path == "/api/v1/image/text2image");
+
+            using var payloadDocument = JsonDocument.Parse(postRequest.Body ?? "{}");
+            var payloadRoot = payloadDocument.RootElement;
+
+            Assert.AreEqual(41, payloadRoot.GetProperty("seed").GetInt32());
+            Assert.AreEqual(7, payloadRoot.GetProperty("cfg").GetInt32());
+        }
+
+        [TestMethod]
         public async Task GetImages_PollsUntilCompleted_AndDownloadsOutputs()
         {
             var handler = new QueueMessageHandler();
@@ -177,19 +229,25 @@ namespace NetXP.NetCoreUnitTest.ImageGeneratorAI
             Assert.AreEqual("upscaler (2.0)", models[1].Name);
         }
 
-        private static ComfyBridgeImageGeneratorClient CreateClient(QueueMessageHandler handler)
+        private static ComfyBridgeImageGeneratorClient CreateClient(
+            QueueMessageHandler handler,
+            Action<ComfyBridgeClientOptions>? configureOptions = null)
         {
             var httpClient = new HttpClient(handler)
             {
                 BaseAddress = new Uri("http://localhost")
             };
 
-            var options = Options.Create(new ComfyBridgeClientOptions
+            var optionsModel = new ComfyBridgeClientOptions
             {
                 BaseUrl = "http://localhost",
                 PollIntervalMs = 1,
                 JobTimeoutSeconds = 5
-            });
+            };
+
+            configureOptions?.Invoke(optionsModel);
+
+            var options = Options.Create(optionsModel);
 
             return new ComfyBridgeImageGeneratorClient(
                 httpClient,

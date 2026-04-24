@@ -296,7 +296,7 @@ namespace NetXP.ImageGeneratorAI.ComfyBridgeApi
             return score;
         }
 
-        private static Dictionary<string, object?> BuildPayload(TemplateDescriptor template, OptionsImageGenerator options)
+        private Dictionary<string, object?> BuildPayload(TemplateDescriptor template, OptionsImageGenerator options)
         {
             var payload = new Dictionary<string, object?>(StringComparer.OrdinalIgnoreCase);
 
@@ -306,6 +306,15 @@ namespace NetXP.ImageGeneratorAI.ComfyBridgeApi
             AddMappedValue(template, payload, HeightFields, options.Height);
             AddMappedValue(template, payload, NumImagesFields, options.NumImages);
             AddMappedValue(template, payload, ModelFields, options.ModelId);
+
+            foreach (var configuredOption in ToDictionary(_clientOptions.ExtraOptions))
+            {
+                var key = template.ResolveInputKey(configuredOption.Key);
+                if (key != null)
+                {
+                    payload[key] = configuredOption.Value;
+                }
+            }
 
             foreach (var extraOption in ToDictionary(options.ExtraOptions))
             {
