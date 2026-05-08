@@ -12,6 +12,8 @@ namespace NetXP.ImageGeneratorAI.ComfyBridgeApi
         public int JobTimeoutSeconds { get; set; } = 120;
         public string? TemplateName { get; set; }
         public string? Category { get; set; }
+        public string? VideoTemplateName { get; set; }
+        public string? VideoCategory { get; set; } = "image2video";
         public Dictionary<string, object?> ExtraOptions { get; set; } = new(StringComparer.OrdinalIgnoreCase);
 
         public TimeSpan GetPollInterval()

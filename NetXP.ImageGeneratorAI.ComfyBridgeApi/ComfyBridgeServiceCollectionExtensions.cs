@@ -42,7 +42,18 @@ namespace NetXP.ImageGeneratorAI.ComfyBridgeApi
                 client.BaseAddress = new Uri(options.BaseUrl);
             });
 
+            services.AddHttpClient<ComfyBridgeVideoGeneratorClient>((serviceProvider, client) =>
+            {
+                var options = serviceProvider
+                    .GetRequiredService<IOptions<ComfyBridgeClientOptions>>()
+                    .Value;
+
+                client.BaseAddress = new Uri(options.BaseUrl);
+            });
+
             services.TryAddTransient<ComfyBridgeImageGeneratorClient>();
+            services.TryAddTransient<ComfyBridgeVideoGeneratorClient>();
+            services.TryAddSingleton<IVideoGeneratorFactory, ComfyBridgeVideoGeneratorFactory>();
 
             return services;
         }
